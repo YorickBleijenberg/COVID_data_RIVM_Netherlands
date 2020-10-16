@@ -1,16 +1,14 @@
 #library(cbsodataR)
 #library(sf)
-library(dplyr)
+#library(dplyr)
 #library(extrafont)
 #library(ggplot2)
-#library(tidyverse)
 #library(RcppRoll)
 #require(data.table)
+library(tidyverse)
 library(zoo)
 
 ##read the files we need
-
-
 
 ####copy.aantal.landelijk.gem.dag <- RIVM_casus_landelijk
 read.aantal.landelijk.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_casus_landelijk.csv",sep="")
@@ -18,11 +16,10 @@ read.aantal.landelijk.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date
 copy.aantal.landelijk.gem.dag <- read.csv(read.aantal.landelijk.path,sep=";")
 AgeFill <- read.csv(read.aantal.landelijk.path,sep=";")
 
-
-
 ######copy.aantal.gem.dag   <-   aantallen_gemeente_per_dag
 read.aantal.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv", sep = "")
 copy.aantal.gem.dag <- read.csv(read.aantal.path,sep=";")
+
 
 ##filter the cases. hosp. and deceased
 copy_cases <- aggregate(copy.aantal.gem.dag$Total_reported,     by=list(dateInTable=copy.aantal.gem.dag$date), FUN=sum)
@@ -33,6 +30,7 @@ colnames(copy_cases) <- c("dateInTable", "cases")
 colnames(copy_hosp) <- c("dateInTable", "hosp")
 colnames(copy_dead) <- c("dateInTable", "dead")
 cases_hosp <- merge(copy_cases,copy_hosp, by.x= "dateInTable")
+
 
 ##### datafile aantallen_gemeente_per_dag
 Merged_data <- merge(copy_dead,cases_hosp, by.x= "dateInTable")

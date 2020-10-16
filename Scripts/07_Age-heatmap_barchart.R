@@ -1,11 +1,11 @@
-library(cbsodataR)
-library(sf)
-library(dplyr)
+#library(cbsodataR)
+#library(sf)
+#library(dplyr)
 #library(extrafont)
-library(ggplot2)
+#library(ggplot2)
 library(tidyverse)
 library(RcppRoll)
-require(data.table)
+#require(data.table)
 
 
 #bla <-cases_per_day
@@ -42,7 +42,7 @@ geom_tile(size=1.5,color="#F5F5F5")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 40, 41 & 42 zullen nog sterk stijgen",fill=NULL,
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 41 & 42 zullen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM / CBS ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -93,7 +93,7 @@ ggplot(bla,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 40, 41 & 42 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 41 & 42 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS ",Sys.Date()))+
   
@@ -122,7 +122,7 @@ ggplot(bla,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 40 and 41 will still rise.",
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 41 and 42 will still rise.",
        fill="Week",
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -250,7 +250,7 @@ ggplot(AgeFill_4, aes(date,cases_avg,fill=age_grouping))+
   guides(fill = guide_legend(reverse = TRUE))+
   
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 40 and 41 will still rise.",fill=NULL,
+       subtitle = "relationship between the age groups, based on the 7 day moving average",fill=NULL,
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   #scale_x_discrete(breaks = AgeFill_4$date[seq(1, length(AgeFill_4$date), by =  330)])+            #155)])+
   theme(plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
@@ -273,14 +273,3 @@ ggsave("data/03_EN_leeftijd_relatief.png",width=16, height = 9)
 #scale_fill_brewer(palette="Blues")+
 #scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f4b183', '#f8cbad' )) # Use custom colors
 # scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ))
-
-
-
-
-
-
-
-
-
-
-

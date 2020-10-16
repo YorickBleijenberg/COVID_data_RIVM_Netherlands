@@ -103,7 +103,7 @@ tweet.cases.tweet <- sprintf(tweet.cases.tweet,
 Encoding(tweet.cases.tweet) <- "UTF-8"
 
 #   post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"))    # "data/06_new_cases_log.png",
-post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.tweet,  media = c("data/05_EN_new_cases.png", "data/05_EN_growth_cases.png", "data/07_EN_cases_type1.png", "data/08_EN_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
 
  #  post_tweet(tweet.cases.tweet)  #
 
@@ -129,18 +129,18 @@ if(b == maxValueHosp){
   dagRecordHosp <- "."}
 
 if (b < o) {
-  more.less.day.hosp <- paste("minder",intToUtf8(0x2B07), "dan gisteren.")
+  more.less.day.hosp <- paste("less",intToUtf8(0x2B07), "than yesterday.")
 } else if (b > o) {
-  more.less.day.hosp <- paste("meer",intToUtf8(0x2197), "dan gisteren.")
+  more.less.day.hosp <- paste("more",intToUtf8(0x2197), "than yesterday.")
 } else
-  more.less.day.hosp <- paste("meer", intToUtf8(0x2194),"dan gisteren. (gelijk)")
+  more.less.day.hosp <- paste("more", intToUtf8(0x2194),"than yesterday. (same)")
 
 if (b < y) {
-  more.less.week.hosp <- paste("minder",intToUtf8(0x2B07), "dan een week geleden.")
+  more.less.week.hosp <- paste("less",intToUtf8(0x2B07), "than a week ago.")
 } else if (b > y) {
-  more.less.week.hosp <- paste("meer",intToUtf8(0x2197), "dan een week geleden.")
+  more.less.week.hosp <- paste("more",intToUtf8(0x2197), "than a week ago.")
 } else
-  more.less.week.hosp <- paste("meer", intToUtf8(0x2194),"dan een week geleden. (gelijk)")
+  more.less.week.hosp <- paste("more", intToUtf8(0x2194),"than a week ago. (same)")
 
 
 if (b < o) {
@@ -158,24 +158,20 @@ if (b < y) {
   more.less.week.hosp.dot <- intToUtf8(0x1F7E1)
 
 
-tweet.hosp.tweet <- "Nieuw gemelde opnames ziekenhuis (zonder correcties):
+tweet.hosp.tweet <- "New reported hospitalisations:
 
-+%s vandaag%s
++%s today%s
 
-Indicatoren (exponenti%sle) groei / krimp:
-%s Dat is %s %s
-%s Dat is %s %s"
+Indicators (exponential) growth / decay:
+%s that is %s %s
+%s that is %s %s"
 
 tweet.hosp.tweet <- sprintf(tweet.hosp.tweet,
                             b, dagRecordHosp,
-                            deE,
                             more.less.day.hosp.dot,  diff.hosp.day,   more.less.day.hosp,
                             more.less.week.hosp.dot, diff.hosp.week,  more.less.week.hosp)
 Encoding(tweet.hosp.tweet) <- "UTF-8"
-post_tweet(tweet.hosp.tweet,  media = c("data/09_new_hosp.png","data/02_leeftijd_heatmap-hosp.png"), in_reply_to_status_id = get_reply_id()) 
-
-
-
+post_tweet(tweet.hosp.tweet,  media = c("data/02_EN_leeftijd_heatmap-hosp.png","data/09_EN_new_hosp.png", "data/05_EN_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -191,23 +187,23 @@ dagRecorddead <- "."
 
 
 if(c == maxValuedead){
-  dagRecorddead <- paste(". (Nieuw dagrecord",intToUtf8(0x26a0), ")",sep = "")
+  dagRecorddead <- paste(". (New daily record",intToUtf8(0x26a0), ")",sep = "")
 }else {
   dagRecorddead <- "."}
 
 if (c < p) {
-  more.less.day.dead <- paste("minder",intToUtf8(0x2B07), "dan gisteren.")
+  more.less.day.dead <- paste("less",intToUtf8(0x2B07), "than yesterday.")
 } else if (c > p) {
-  more.less.day.dead <- paste("meer",intToUtf8(0x2197), "dan gisteren.")
+  more.less.day.dead <- paste("more",intToUtf8(0x2197), "than yesterday.")
 } else
-  more.less.day.dead <- paste("meer", intToUtf8(0x2194),"dan gisteren. (gelijk)")
+  more.less.day.dead <- paste("more", intToUtf8(0x2194),"than yesterday. (same)")
 
 if (c < z) {
-  more.less.week.dead <- paste("minder",intToUtf8(0x2B07), "dan een week geleden.")
+  more.less.week.dead <- paste("less",intToUtf8(0x2B07), "than a week ago.")
 } else if (c > z) {
-  more.less.week.dead <- paste("meer",intToUtf8(0x2197), "dan een week geleden.")
+  more.less.week.dead <- paste("more",intToUtf8(0x2197), "than a week ago.")
 } else
-  more.less.week.dead <- paste("meer", intToUtf8(0x2194),"dan een week geleden. (gelijk)")
+  more.less.week.dead <- paste("more", intToUtf8(0x2194),"than a week ago. (same)")
 
 
 if (c < p) {
@@ -225,29 +221,27 @@ if (c < z) {
   more.less.week.dead.dot <- intToUtf8(0x1F7E1)
 
 
-tweet.dead.tweet <- "Overleden:
+tweet.dead.tweet <- "New reported deaths:
 
-+%s vandaag gemeld (excl. corr.)%s
++%s today%s
 
-Indicatoren (exponenti%sle) groei / krimp:
-%s Dat is %s %s
-%s Dat is %s %s"
+Indicators (exponential) growth / decay:
+%s that is %s %s
+%s that is %s %s"
 
 tweet.dead.tweet <- sprintf(tweet.dead.tweet,
                             c, dagRecorddead,
-                            deE,
                             more.less.day.dead.dot,  diff.dead.day,   more.less.day.dead,
                             more.less.week.dead.dot, diff.dead.week,  more.less.week.dead)
 Encoding(tweet.dead.tweet) <- "UTF-8"
-post_tweet(tweet.dead.tweet,  media = c("data/02_leeftijd_heatmap-dead.png","data/13_new_deceased.png", "data/15_dead_diff.png"), in_reply_to_status_id = get_reply_id()) 
+post_tweet(tweet.dead.tweet,  media = c("data/02_EN_leeftijd_heatmap-dead.png","data/13_EN_new_deceased.png", "data/15_EN_dead_diff.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
 
-
-tweet.age.tweet <- paste("Leeftijden en leeftijdsverdeling gemelde gevallen")
+tweet.age.tweet <- paste("Ages and age distribution of the reported cases.")
 post_tweet(status = tweet.age.tweet, 
-           media = c("data/01_leeftijd_barchart.png","data/02_leeftijd_heatmap.png", "data/03_leeftijd_relatief.png"), 
+           media = c("data/01_EN_leeftijd_barchart.png","data/02_EN_leeftijd_heatmap.png", "data/03_EN_leeftijd_relatief.png"), 
            in_reply_to_status_id = get_reply_id()
 )
 
@@ -285,26 +279,30 @@ PersCoKroeg = as.Date("2020-09-18",'%Y-%m-%d')
 PersCoKroegDays <- as.numeric(difftime(Sys.Date(),PersCoKroeg, units = c("days")))
 PersCoPaniek = as.Date("2020-09-28",'%Y-%m-%d')
 PersCoPaniekDays <- as.numeric(difftime(Sys.Date(),PersCoPaniek, units = c("days")))   
+PersCoSemiLockdown = as.Date("2020-10-13",'%Y-%m-%d')
+PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))  
 
-tweet.data.tweet <- "Dagen sinds:
+tweet.data.tweet <- "Days since:
 
-[%s] de persCo: 'kroeg uurtje eerder dicht' - regionale maatregelen
+%s - press conference: 'Bar closes an hour early'
 
-[%s] de persoCo: 'We gaan voor R=0,9' - landelijke maatregelen"
+%s - press conference: 'We want R=0,9'
+
+%s  - press conference: 'semi-lockdown'"
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
-                            PersCoKroegDays,PersCoPaniekDays 
+                            PersCoKroegDays,PersCoPaniekDays,PersCoSemiLockdownDays
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
 
 
 
-tweet.cases.diff.tweet <- "Besmette personen, verschil met gisteren."
+tweet.cases.diff.tweet <- "New cases:  difference compared to yesterday."
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/07_cases_diff.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/07_EN_cases_diff.png"), in_reply_to_status_id = get_reply_id())
 
 
 

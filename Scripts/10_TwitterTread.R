@@ -18,6 +18,7 @@ a <- Working_Set$cases[3]
 b <- Working_Set$hosp[3]
 c <- Working_Set$dead[3]
 e <- Working_Set$MACases[3]
+g <- Working_Set$MAhosp[3]
 
 #yesterday
 n <- Working_Set$cases[2]
@@ -29,6 +30,7 @@ x <- Working_Set$cases[1]
 y <- Working_Set$hosp[1]
 z <- Working_Set$dead[1]
 f <- Working_Set$MACases[1]
+h <- Working_Set$MAhosp[1]
 
 
 diff.cases.day <- abs(a-n)
@@ -105,7 +107,6 @@ Encoding(tweet.cases.tweet) <- "UTF-8"
 #   post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"))    # "data/06_new_cases_log.png",
 post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
 
-post_tweet(tweet.cases.tweet)  #
 
 
 
@@ -119,6 +120,13 @@ post_tweet(tweet.cases.tweet)  #
 
 diff.hosp.day <- abs(b-o)
 diff.hosp.week <- abs(b-y)
+
+
+growth.hosp.week <- Working_Set$gf_h[3]
+doubling.hosp.week <- round(log(2)/(log(g/h)/7), digits = 1)
+growth.hosp.week <- round(growth.hosp.week, digits = 0)
+
+
 maxValueHosp <- max(copy_hosp$hosp, na.rm = TRUE)
 dagRecordHosp <- "."
 
@@ -157,22 +165,36 @@ if (b < y) {
 } else
   more.less.week.hosp.dot <- intToUtf8(0x1F7E1)
 
+if (doubling.hosp.week < 0) {
+  doubling.hosp.week_text <- paste("halvering")
+} 
+if (doubling.hosp.week > 0) {
+  doubling.hosp.week_text <- paste("verdubbeling")
+} 
 
-tweet.hosp.tweet <- "Nieuw gemelde opnames ziekenhuis (zonder correcties):
+
+
+tweet.hosp.tweet <- "Nieuw gemelde opnames ziekenhuis (RIVM):
 
 +%s vandaag%s
 
 Indicatoren (exponenti%sle) groei / krimp:
 %s Dat is %s %s
-%s Dat is %s %s"
+%s Dat is %s %s
+
+%s --> groeifactor: %s%s week op week.
+%s --> %s: elke %s dagen."
+
 
 tweet.hosp.tweet <- sprintf(tweet.hosp.tweet,
                              b, dagRecordHosp,
                              deE,
                              more.less.day.hosp.dot,  diff.hosp.day,   more.less.day.hosp,
-                             more.less.week.hosp.dot, diff.hosp.week,  more.less.week.hosp)
+                             more.less.week.hosp.dot, diff.hosp.week,  more.less.week.hosp,
+                             more.less.week.case.dot, growth.hosp.week,deP,
+                             more.less.week.case.dot, doubling.hosp.week_text, doubling.hosp.week )
 Encoding(tweet.hosp.tweet) <- "UTF-8"
-post_tweet(tweet.hosp.tweet,  media = c("data/09_new_hosp.png","data/02_leeftijd_heatmap-hosp.png"), in_reply_to_status_id = get_reply_id()) 
+post_tweet(tweet.hosp.tweet,  media = c("data/02_leeftijd_heatmap-hosp.png","data/09_new_hosp.png", "data/05_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -227,7 +249,7 @@ if (c < z) {
 
   tweet.dead.tweet <- "Overleden:
 
-+%s vandaag gemeld (excl. corr.)%s
++%s vandaag %s
 
 Indicatoren (exponenti%sle) groei / krimp:
 %s Dat is %s %s
@@ -284,27 +306,32 @@ tweet.age.tweet <- paste("Leeftijden en leeftijdsverdeling gemelde gevallen")
   PersCoKroeg = as.Date("2020-09-18",'%Y-%m-%d')
   PersCoKroegDays <- as.numeric(difftime(Sys.Date(),PersCoKroeg, units = c("days")))
   PersCoPaniek = as.Date("2020-09-28",'%Y-%m-%d')
-  PersCoPaniekDays <- as.numeric(difftime(Sys.Date(),PersCoPaniek, units = c("days")))   
+  PersCoPaniekDays <- as.numeric(difftime(Sys.Date(),PersCoPaniek, units = c("days")))
+  PersCoSemiLockdown = as.Date("2020-10-13",'%Y-%m-%d')
+  PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))  
   
 tweet.data.tweet <- "Dagen sinds:
 
 [%s] de persCo: 'kroeg uurtje eerder dicht' - regionale maatregelen
 
-[%s] de persoCo: 'We gaan voor R=0,9' - landelijke maatregelen"
+[%s] de persoCo: 'We gaan voor R=0,9' - landelijke maatregelen
+
+[%s] de persoCo: 'Semi-lockdown'"
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
-                            PersCoKroegDays,PersCoPaniekDays 
+                            PersCoKroegDays,PersCoPaniekDays,PersCoSemiLockdownDays
                             )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
 
 
 
-tweet.cases.diff.tweet <- "Besmette personen, verschil met gisteren."
+tweet.cases.diff.tweet <- "1) Besmette personen, verschil met gisteren.
+2) maandagen"
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/07_cases_diff.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/07_cases_diff.png", "data/07_cases_type1-monday.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 

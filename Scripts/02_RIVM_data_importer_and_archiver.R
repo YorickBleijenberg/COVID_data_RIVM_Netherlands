@@ -1,6 +1,6 @@
-require(tidyverse)
-require(rjson)
-require(data.table)
+#require(tidyverse)
+#require(rjson)
+#require(data.table)
 
 rm(list=ls())
 
@@ -21,10 +21,7 @@ RIVM_aantallen_gemeente_cumulatief<-read.csv("https://data.rivm.nl/covid-19/COVI
 RIVM_aantallen_gemeente_cumulatief$date<-as.Date(RIVM_aantallen_gemeente_cumulatief$Date_of_report)   #Adding a date to the case
 RIVM_aantallen_gemeente_cumulatief$week<-strftime(RIVM_aantallen_gemeente_cumulatief$date,format = "%V")   #adding week_number to the case
 
-
-
-RIVM_rioolwaterdata <-read.csv("https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.csv",sep=";")
-
+RIVM_rioolwaterdata <-read.csv("https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.csv",sep=",")
 
 dirname <- paste("data/",Sys.Date(),sep = "")
 dir.create(dirname)
@@ -35,7 +32,6 @@ File_date_1b <- paste0("rivm-data/","COVID-19_casus_landelijk_", format(Sys.time
 File_date_2 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_per_dag.csv")  
 File_date_3 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_cumulatief.csv")
 File_date_4 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_RIVM_rioolwaterdata.csv")
-
 
 
 #writing the files
