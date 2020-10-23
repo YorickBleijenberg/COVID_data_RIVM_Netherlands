@@ -112,100 +112,6 @@ post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growt
 
 
 
-
-
-
- #"data/07_new_cases_DoD.png",
-
-
-diff.hosp.day <- abs(b-o)
-diff.hosp.week <- abs(b-y)
-
-
-growth.hosp.week <- Working_Set$gf_h[3]
-doubling.hosp.week <- round(log(2)/(log(g/h)/7), digits = 1)
-growth.hosp.week <- round(growth.hosp.week, digits = 0)
-
-
-maxValueHosp <- max(copy_hosp$hosp, na.rm = TRUE)
-dagRecordHosp <- "."
-
-
-if(b == maxValueHosp){
-  dagRecordHosp <- paste(". (Nieuw dagrecord",intToUtf8(0x26a0), ")",sep = "")
-}else {
-  dagRecordHosp <- "."}
-
-if (b < o) {
-  more.less.day.hosp <- paste("minder",intToUtf8(0x2B07), "dan gisteren.")
-} else if (b > o) {
-  more.less.day.hosp <- paste("meer",intToUtf8(0x2197), "dan gisteren.")
-} else
-  more.less.day.hosp <- paste("meer", intToUtf8(0x2194),"dan gisteren. (gelijk)")
-
-if (b < y) {
-  more.less.week.hosp <- paste("minder",intToUtf8(0x2B07), "dan een week geleden.")
-} else if (b > y) {
-  more.less.week.hosp <- paste("meer",intToUtf8(0x2197), "dan een week geleden.")
-} else
-  more.less.week.hosp <- paste("meer", intToUtf8(0x2194),"dan een week geleden. (gelijk)")
-
-
-if (b < o) {
-  more.less.day.hosp.dot <- intToUtf8(0x1F7E2)
-} else if (b > o) {
-  more.less.day.hosp.dot <- intToUtf8(0x1F534)
-} else
-  more.less.day.hosp.dot <- intToUtf8(0x1F7E1)
-
-if (b < y) {
-  more.less.week.hosp.dot <- intToUtf8(0x1F7E2)
-} else if (b > y) {
-  more.less.week.hosp.dot <- intToUtf8(0x1F534)
-} else
-  more.less.week.hosp.dot <- intToUtf8(0x1F7E1)
-
-if (doubling.hosp.week < 0) {
-  doubling.hosp.week_text <- paste("halvering")
-} 
-if (doubling.hosp.week > 0) {
-  doubling.hosp.week_text <- paste("verdubbeling")
-} 
-
-
-
-tweet.hosp.tweet <- "Nieuw gemelde opnames ziekenhuis (RIVM):
-
-+%s vandaag%s
-
-Indicatoren (exponenti%sle) groei / krimp:
-%s Dat is %s %s
-%s Dat is %s %s
-
-%s --> groeifactor: %s%s week op week.
-%s --> %s: elke %s dagen."
-
-
-tweet.hosp.tweet <- sprintf(tweet.hosp.tweet,
-                             b, dagRecordHosp,
-                             deE,
-                             more.less.day.hosp.dot,  diff.hosp.day,   more.less.day.hosp,
-                             more.less.week.hosp.dot, diff.hosp.week,  more.less.week.hosp,
-                             more.less.week.case.dot, growth.hosp.week,deP,
-                             more.less.week.case.dot, doubling.hosp.week_text, doubling.hosp.week )
-Encoding(tweet.hosp.tweet) <- "UTF-8"
-post_tweet(tweet.hosp.tweet,  media = c("data/02_leeftijd_heatmap-hosp.png","data/09_new_hosp.png", "data/05_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
-
-
-
-
-
-
-
-
-
-
-
 diff.dead.day <- abs(c-p)
 diff.dead.week <- abs(c-z)
 maxValuedead <- max(copy_hosp$hosp, na.rm = TRUE)
@@ -249,7 +155,7 @@ if (c < z) {
 
   tweet.dead.tweet <- "Overleden:
 
-+%s vandaag %s
++%s vandaag%s
 
 Indicatoren (exponenti%sle) groei / krimp:
 %s Dat is %s %s
@@ -265,6 +171,109 @@ tweet.dead.tweet <- sprintf(tweet.dead.tweet,
 
 
 
+    
+    
+    
+    
+    
+    
+    
+    #"data/07_new_cases_DoD.png",
+    
+    
+    diff.hosp.day <- abs(b-o)
+    diff.hosp.week <- abs(b-y)
+    
+    
+    growth.hosp.week <- Working_Set$gf_h[3]
+    doubling.hosp.week <- round(log(2)/(log(g/h)/7), digits = 1)
+    growth.hosp.week <- round(growth.hosp.week, digits = 0)
+    
+    
+    maxValueHosp <- max(copy_hosp$hosp, na.rm = TRUE)
+    dagRecordHosp <- "."
+    
+    
+    if(b == maxValueHosp){
+      dagRecordHosp <- paste(". (Nieuw dagrecord",intToUtf8(0x26a0), ")",sep = "")
+    }else {
+      dagRecordHosp <- "."}
+    
+    if (b < o) {
+      more.less.day.hosp <- paste("minder",intToUtf8(0x2B07), "dan gisteren.")
+    } else if (b > o) {
+      more.less.day.hosp <- paste("meer",intToUtf8(0x2197), "dan gisteren.")
+    } else
+      more.less.day.hosp <- paste("meer", intToUtf8(0x2194),"dan gisteren. (gelijk)")
+    
+    if (b < y) {
+      more.less.week.hosp <- paste("minder",intToUtf8(0x2B07), "dan een week geleden.")
+    } else if (b > y) {
+      more.less.week.hosp <- paste("meer",intToUtf8(0x2197), "dan een week geleden.")
+    } else
+      more.less.week.hosp <- paste("meer", intToUtf8(0x2194),"dan een week geleden. (gelijk)")
+    
+    
+    if (b < o) {
+      more.less.day.hosp.dot <- intToUtf8(0x1F7E2)
+    } else if (b > o) {
+      more.less.day.hosp.dot <- intToUtf8(0x1F534)
+    } else
+      more.less.day.hosp.dot <- intToUtf8(0x1F7E1)
+    
+    if (b < y) {
+      more.less.week.hosp.dot <- intToUtf8(0x1F7E2)
+    } else if (b > y) {
+      more.less.week.hosp.dot <- intToUtf8(0x1F534)
+    } else
+      more.less.week.hosp.dot <- intToUtf8(0x1F7E1)
+    
+    if (doubling.hosp.week < 0) {
+      doubling.hosp.week_text <- paste("halvering")
+    } 
+    if (doubling.hosp.week > 0) {
+      doubling.hosp.week_text <- paste("verdubbeling")
+    } 
+    
+    
+    
+    tweet.hosp.tweet <- "Nieuw gemelde opnames ziekenhuis (RIVM):
+
++%s vandaag%s
+
+Indicatoren (exponenti%sle) groei / krimp:
+%s Dat is %s %s
+%s Dat is %s %s
+
+%s --> groeifactor: %s%s week op week.
+%s --> %s: elke %s dagen."
+    
+    
+    tweet.hosp.tweet <- sprintf(tweet.hosp.tweet,
+                                b, dagRecordHosp,
+                                deE,
+                                more.less.day.hosp.dot,  diff.hosp.day,   more.less.day.hosp,
+                                more.less.week.hosp.dot, diff.hosp.week,  more.less.week.hosp,
+                                more.less.week.case.dot, growth.hosp.week,deP,
+                                more.less.week.case.dot, doubling.hosp.week_text, doubling.hosp.week )
+    Encoding(tweet.hosp.tweet) <- "UTF-8"
+    post_tweet(tweet.hosp.tweet,  media = c("data/02_leeftijd_heatmap-hosp.png","data/09_new_hosp.png", "data/05_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 tweet.age.tweet <- paste("Leeftijden en leeftijdsverdeling gemelde gevallen")
@@ -275,6 +284,12 @@ tweet.age.tweet <- paste("Leeftijden en leeftijdsverdeling gemelde gevallen")
 
 
 
+    
+    
+    
+    
+    
+    
     
     
     
@@ -328,10 +343,12 @@ post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id())
 
 
 tweet.cases.diff.tweet <- "1) Besmette personen, verschil met gisteren.
-2) maandagen"
+2) maandagen
+3) aantal mensen op de IC
+4) aantal mensen in het ziekenhuis met COVID-19"
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/07_cases_diff.png", "data/07_cases_type1-monday.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/07_cases_diff.png", "data/07_cases_type1-monday.png", "data/17_IC_only.png", "data/16_IC_hosp.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 

@@ -14,10 +14,21 @@ Merged_data_short$observation <- 1:nrow(Merged_data_short)
 Merged_data_short$fixedDate <- as.Date(Merged_data_short$dateInTable,format="%Y-%m-%d")
 
 
+#dates_vline_vak <- as.Date(c("2020-08-16", "2020-08-30", "2020-8-23"))
+#dates_vline_vak2 <- which((Merged_data_short$fixedDate %in% dates_vline_vak))
+
+
+
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
-    scale_fill_manual(values=c("#96afde"))+
+    
+    #geom_vline(xintercept = as.numeric(Merged_data_short$fixedDate[dates_vline_vak2]),
+     #          col = "darkgray", lwd = 1, linetype= "dashed")+
+        scale_fill_manual(values=c("#96afde"))+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
+    
+   
+    
     theme_classic()+
     xlab("")+ 
     ylab("")+
@@ -38,7 +49,7 @@ ggplot(Merged_data_short)+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
-ggsave("data/05_new_cases.png",width=16, height = 9)
+ggsave("data/05_new_cases_school.png",width=16, height = 9)
 
 
 

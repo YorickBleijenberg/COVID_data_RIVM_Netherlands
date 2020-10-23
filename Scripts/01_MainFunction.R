@@ -26,10 +26,12 @@ require(data.table)
 
 rm(list=ls())
 
+source("C:\\Rdir\\Rscripts\\geom_stream.R")
 
-
+source("C:\\Rdir\\Rscripts\\00_lcps_data_graph.R")
 
 source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
+
 
 source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 
@@ -78,7 +80,8 @@ source("C:\\Rdir\\Rscripts\\09A_growth.R")
 source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
 
-source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+
+  source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 
 
