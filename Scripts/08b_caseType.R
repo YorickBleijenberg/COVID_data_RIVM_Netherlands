@@ -46,31 +46,25 @@ df$DPL_diff <- df$DPL - df$DPL_old
 df2 <- df[,c("Datum", "DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff" )]
 
 
+
+
+
+
+
+
+
 keycol <- "Datum"
 valuecol <- "type"
 gathercols <- c("DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff")
-df3 <- gather(df2, keycol, valuecol, gathercols)
 
+df3 <- gather(df2, keycol, valuecol, gathercols)
 df3$Datum <- as.Date(df3$Datum)
 
 
 df4 <- df3
 
 
-##mondays
-#dates_vline <- as.Date(c("2020-08-17",
-      #                   "2020-08-24",
-       #                  "2020-08-31",
-       #                  "2020-09-07",
-      #                   "2020-09-14",
-      #                   "2020-09-21",
-      #                   "2020-09-28",
-      #                   "2020-10-05",
-                   #      "2020-10-12"
-       #                  ))   ###, "2020-10-9"))
-
-                         
-                         
+                  
                          
 ### press events                         
 dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13"))
@@ -80,8 +74,7 @@ dates_vline <- which((df4$Datum %in% dates_vline))
 
 
 
-
-ggplot(df4, aes(x=Datum, y=valuecol, fill = keycol, width=.7)) +
+ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
  geom_col()+
 
 theme_classic()+
@@ -93,9 +86,13 @@ theme_classic()+
                limits = as.Date(c("2020-07-01", Sys.Date() ))
                )+
 
-    scale_fill_manual(values=c("#c55a11", "#548235", "#F8CBAD", "#C5E0B4", "#203864", "#B4C7E7"), 
-                      labels=c(    "Melding aan GGD (nieuw/correctie)", "Eerste ziektedag (nieuw/correctie)",
-                                   "Melding aan GGD", "Eerste ziektedag", "Positieve labuitslag (nieuw/correctie)", "Positieve labuitslag"))+
+    scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
+                      labels=c(   "Positieve labuitslag (nieuw/correctie)",
+                                  "Positieve labuitslag",
+                                  "Eerste ziektedag (nieuw/correctie)",
+                                  "Eerste ziektedag",
+                                  "Melding aan GGD (nieuw/correctie)",
+                                  "Melding aan GGD"))+
   
    geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
          col = "darkgray", lwd = 1, linetype= "dashed")+
@@ -104,7 +101,7 @@ theme_classic()+
   
   
 labs(title = "Besmette personen: verschil met gisteren",
-     subtitle = "18-Sep: kroeg uurtje eerder dicht\n28-Sep: we gaan voor een R van 0,9\n13-okt: semi-lockdown", #  OMT: 'Een lagere R is beter'",
+     subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown", #  OMT: 'Een lagere R is beter'",
      caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
    theme(legend.position = c(0.2, 0.8),
@@ -134,7 +131,7 @@ ggsave("data/07_cases_type1.png",width=16, height = 9)
 
 
 
-ggplot(df4, aes(x=Datum, y=valuecol, fill = keycol, width=.7)) +
+ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
   geom_col()+
   
   theme_classic()+
@@ -144,11 +141,14 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = keycol, width=.7)) +
   scale_x_date(date_breaks = "7 day", 
                date_labels= format("%d-%b"),
                limits = as.Date(c("2020-07-01", Sys.Date()+5)))+
-  scale_fill_manual(values=c("#c55a11", "#548235", "#F8CBAD", "#C5E0B4", "#203864", "#B4C7E7"), 
-                    labels=c(    "Notification to GGD (new/correction)", "First day with symptoms (new/correction)", 
-                                 "Notification to GGD", "First day with symptoms", "Positive lab result", "Positive lab result (new/correction)"))+
-  
-                                                                             
+
+  scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
+                    labels=c(   "Positive lab result",
+                                "Positive lab result (new/correction)",
+                                "First day with symptoms (new/correction)", 
+                                "First day with symptoms",
+                                "Notification to GGD (new/correction)",
+                                "Notification to GGD"))+                                                               
   
   
   geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
@@ -216,20 +216,25 @@ dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))
 
 
 
-
-
-ggplot(df4, aes(x=Datum, y=valuecol, fill = keycol, width=.7)) +
+ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
   geom_col()+
-    theme_classic()+
+
+  theme_classic()+
   xlab("")+ 
   ylab("")+
     scale_x_date(date_breaks = "1 week", 
                date_labels= format("%d-%b"),
                limits = as.Date(c("2020-07-01", Sys.Date() ))
   )+
-    scale_fill_manual(values=c("#c55a11", "#548235", "#F8CBAD", "#C5E0B4", "#203864", "#B4C7E7"), 
-                    labels=c(    "Melding aan GGD (nieuw/correctie)", "Eerste ziektedag (nieuw/correctie)",
-                                 "Melding aan GGD", "Eerste ziektedag", "Positieve labuitslag (nieuw/correctie)", "Positieve labuitslag"))+
+  
+  scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
+                    labels=c(   "Positieve labuitslag (nieuw/correctie)",
+                                "Positieve labuitslag",
+                                "Eerste ziektedag (nieuw/correctie)",
+                                "Eerste ziektedag",
+                                "Melding aan GGD (nieuw/correctie)",
+                                "Melding aan GGD"))+
+  
     geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),
              col = "darkgray", lwd = 1, linetype= "dashed")+
     # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +

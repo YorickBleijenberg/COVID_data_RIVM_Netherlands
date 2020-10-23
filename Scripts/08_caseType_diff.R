@@ -73,11 +73,17 @@ dat_wide_small <- within(dat_wide_small, rm(DOO, DON, DPL))
 
 # transform the data using dplyr and tidyr and plot the bars using fill to
 # get the three bars per Type
-dat_wide_small %>%
-gather(key, value, -Datum) %>% 
 
-   
-ggplot(aes(x=Datum, y=value, fill = key, width=.7)) +
+
+
+
+key <- "Datum"
+value <- "type"
+gathercols <- c("DPL_diff","DON_diff","DOO_diff")
+
+date_wide_small_long <- gather(dat_wide_small, key, value, gathercols) 
+  
+ggplot(date_wide_small_long, aes(x=Datum, y=value, fill = factor(key, levels=c("DOO_diff","DPL_diff","DON_diff")), width=.7)) +
   geom_col(position = position_dodge(width = 0.65))+
   
   theme_classic()+
@@ -88,11 +94,11 @@ ggplot(aes(x=Datum, y=value, fill = key, width=.7)) +
   scale_x_date(date_breaks = "1 day", 
                date_labels= format("%d-%b"),
                limits = as.Date(c(Sys.Date()-14, Sys.Date())))+
-
-  scale_fill_manual(values=c("#c55a11", "#548235", "#2f5597"), labels=c(    "Melding aan GGD (nieuw/correctie)", 
-              "Eerste ziektedag (nieuw/correctie)", 
-              "Positieve labuitslag (nieuw/correctie)"))+
   
+  scale_fill_manual(values=c("#548235", "#2f5597", "#c55a11"), labels=c( "Eerste ziektedag (nieuw/correctie)",
+                                                                         "Positieve labuitslag (nieuw/correctie)",
+                                                                         "Melding aan GGD (nieuw/correctie)"
+                                                                         ))+
   
   labs(title = "Besmette personen: toegevoegd / gecorrigeerd",
      #subtitle = "met 7 daags voortschrijdend gemiddelde",
@@ -121,17 +127,15 @@ ggplot(aes(x=Datum, y=value, fill = key, width=.7)) +
 ggsave("data/07_cases_diff.png",width=16, height = 9)  
 
 
-
-
-
-dat_wide_small %>%
-  gather(key, value, -Datum) %>% 
-
-ggplot(aes(x=Datum, y=value, fill = key, width=.7)) +
+  
+  
+#date_wide_small_long <- gather(dat_wide_small, key, value, -Datum)
+  
+    
+  ggplot(date_wide_small_long, aes(x=Datum, y=value, fill = factor(key, levels=c("DOO_diff","DPL_diff","DON_diff")), width=.7)) +
   geom_col(position = position_dodge(width = 0.65))+
   
   theme_classic()+
-  
   xlab("")+ 
   ylab("")+
   
@@ -139,10 +143,10 @@ ggplot(aes(x=Datum, y=value, fill = key, width=.7)) +
                date_labels= format("%d-%b"),
                limits = as.Date(c(Sys.Date()-14, Sys.Date())))+
   
-  scale_fill_manual(values=c("#c55a11", "#548235", "#2f5597"), labels=c(    "Notification to GGD (new/correction)", 
-                                                                            "First day with symptoms (new/correction)", 
-                                                                            "Positive lab result (new/correction)"))+
-  
+  scale_fill_manual(values=c("#548235", "#2f5597", "#c55a11"), labels=c( "Notification to GGD (new/correction)",
+                                                                         "First day with symptoms (new/correction)",
+                                                                         "Positive lab result (new/correction)"
+                                                                         ))+
   
   labs(title = "New cases: added / corrected today",
        #subtitle = "met 7 daags voortschrijdend gemiddelde",
