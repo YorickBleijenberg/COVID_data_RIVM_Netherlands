@@ -87,10 +87,10 @@ theme_classic()+
                )+
 
     scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
-                      labels=c(   "Positieve labuitslag (nieuw/correctie)",
-                                  "Positieve labuitslag",
-                                  "Eerste ziektedag (nieuw/correctie)",
+                      labels=c(   "Eerste ziektedag (nieuw/correctie)",
                                   "Eerste ziektedag",
+                                  "Positieve labuitslag (nieuw/correctie)",
+                                  "Positieve labuitslag",
                                   "Melding aan GGD (nieuw/correctie)",
                                   "Melding aan GGD"))+
   
@@ -143,10 +143,10 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
                limits = as.Date(c("2020-07-01", Sys.Date()+5)))+
 
   scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
-                    labels=c(   "Positive lab result",
-                                "Positive lab result (new/correction)",
-                                "First day with symptoms (new/correction)", 
+                    labels=c(   "First day with symptoms (new/correction)", 
                                 "First day with symptoms",
+                                "Positive lab result",
+                                "Positive lab result (new/correction)",
                                 "Notification to GGD (new/correction)",
                                 "Notification to GGD"))+                                                               
   
@@ -228,10 +228,10 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
   )+
   
   scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
-                    labels=c(   "Positieve labuitslag (nieuw/correctie)",
+                    labels=c(    "Eerste ziektedag (nieuw/correctie)",
+                                 "Eerste ziektedag",
+                                 "Positieve labuitslag (nieuw/correctie)",
                                 "Positieve labuitslag",
-                                "Eerste ziektedag (nieuw/correctie)",
-                                "Eerste ziektedag",
                                 "Melding aan GGD (nieuw/correctie)",
                                 "Melding aan GGD"))+
   

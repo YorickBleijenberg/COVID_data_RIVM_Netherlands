@@ -16,7 +16,7 @@
   #           date_labels= format("%d-%b"),
    #          limits = as.Date(c("2020-07-01", Sys.Date()+5)))+
 
-### check selected dates
+#### check selected dates ####
 
 library(tidyverse)
 library(zoo)
@@ -26,9 +26,14 @@ require(data.table)
 
 rm(list=ls())
 
+dirname <- paste("data/",Sys.Date(),sep = "")
+dir.create(dirname)
+
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
 
 source("C:\\Rdir\\Rscripts\\00_lcps_data_graph.R")
+
+#### Start  ####
 
 source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 
@@ -36,6 +41,7 @@ source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 
 #  source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
+
 
 source("C:\\Rdir\\Rscripts\\04_DataPrep.R")
 
@@ -76,12 +82,19 @@ source("C:\\Rdir\\Rscripts\\09A_growth.R")
     ## 05_growth_dead.png
     ## scale x-axes (date)
 
+source("C:\\Rdir\\Rscripts\\12_cities.R")
 
-source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+source("C:\\Rdir\\Rscripts\\14_provincies.R")
 
 
 
-  source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+
+#### check correct last tweet ####
+
+##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+
+
+ ### source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 
 

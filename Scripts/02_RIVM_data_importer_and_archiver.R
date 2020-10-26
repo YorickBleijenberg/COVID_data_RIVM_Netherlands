@@ -23,8 +23,6 @@ RIVM_aantallen_gemeente_cumulatief$week<-strftime(RIVM_aantallen_gemeente_cumula
 
 RIVM_rioolwaterdata <-read.csv("https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.csv",sep=",")
 
-dirname <- paste("data/",Sys.Date(),sep = "")
-dir.create(dirname)
 
 # adding date to the file names, and adding to the data folder
 File_date_1a <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_casus_landelijk.csv")

@@ -110,6 +110,61 @@ post_tweet(tweet.cases.tweet,  media = c("data/05_EN_new_cases.png", "data/05_EN
 
 
 
+diff.dead.day <- abs(c-p)
+diff.dead.week <- abs(c-z)
+maxValuedead <- max(copy_hosp$hosp, na.rm = TRUE)
+dagRecorddead <- "."
+
+
+if(c == maxValuedead){
+  dagRecorddead <- paste(". (New daily record",intToUtf8(0x26a0), ")",sep = "")
+}else {
+  dagRecorddead <- "."}
+
+if (c < p) {
+  more.less.day.dead <- paste("less",intToUtf8(0x2B07), "than yesterday.")
+} else if (c > p) {
+  more.less.day.dead <- paste("more",intToUtf8(0x2197), "than yesterday.")
+} else
+  more.less.day.dead <- paste("more", intToUtf8(0x2194),"than yesterday. (same)")
+
+if (c < z) {
+  more.less.week.dead <- paste("less",intToUtf8(0x2B07), "than a week ago.")
+} else if (c > z) {
+  more.less.week.dead <- paste("more",intToUtf8(0x2197), "than a week ago.")
+} else
+  more.less.week.dead <- paste("more", intToUtf8(0x2194),"than a week ago. (same)")
+
+
+if (c < p) {
+  more.less.day.dead.dot <- intToUtf8(0x1F7E2)
+} else if (c > p) {
+  more.less.day.dead.dot <- intToUtf8(0x1F534)
+} else
+  more.less.day.dead.dot <- intToUtf8(0x1F7E1)
+
+if (c < z) {
+  more.less.week.dead.dot <- intToUtf8(0x1F7E2)
+} else if (c > z) {
+  more.less.week.dead.dot <- intToUtf8(0x1F534)
+} else
+  more.less.week.dead.dot <- intToUtf8(0x1F7E1)
+
+
+tweet.dead.tweet <- "New reported deaths:
+
++%s today%s
+
+Indicators (exponential) growth / decay:
+%s that is %s %s
+%s that is %s %s"
+
+tweet.dead.tweet <- sprintf(tweet.dead.tweet,
+                            c, dagRecorddead,
+                            more.less.day.dead.dot,  diff.dead.day,   more.less.day.dead,
+                            more.less.week.dead.dot, diff.dead.week,  more.less.week.dead)
+Encoding(tweet.dead.tweet) <- "UTF-8"
+post_tweet(tweet.dead.tweet,  media = c("data/02_EN_leeftijd_heatmap-dead.png","data/13_EN_new_deceased.png", "data/15_EN_dead_diff.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -180,61 +235,6 @@ post_tweet(tweet.hosp.tweet,  media = c("data/02_EN_leeftijd_heatmap-hosp.png","
 
 
 
-diff.dead.day <- abs(c-p)
-diff.dead.week <- abs(c-z)
-maxValuedead <- max(copy_hosp$hosp, na.rm = TRUE)
-dagRecorddead <- "."
-
-
-if(c == maxValuedead){
-  dagRecorddead <- paste(". (New daily record",intToUtf8(0x26a0), ")",sep = "")
-}else {
-  dagRecorddead <- "."}
-
-if (c < p) {
-  more.less.day.dead <- paste("less",intToUtf8(0x2B07), "than yesterday.")
-} else if (c > p) {
-  more.less.day.dead <- paste("more",intToUtf8(0x2197), "than yesterday.")
-} else
-  more.less.day.dead <- paste("more", intToUtf8(0x2194),"than yesterday. (same)")
-
-if (c < z) {
-  more.less.week.dead <- paste("less",intToUtf8(0x2B07), "than a week ago.")
-} else if (c > z) {
-  more.less.week.dead <- paste("more",intToUtf8(0x2197), "than a week ago.")
-} else
-  more.less.week.dead <- paste("more", intToUtf8(0x2194),"than a week ago. (same)")
-
-
-if (c < p) {
-  more.less.day.dead.dot <- intToUtf8(0x1F7E2)
-} else if (c > p) {
-  more.less.day.dead.dot <- intToUtf8(0x1F534)
-} else
-  more.less.day.dead.dot <- intToUtf8(0x1F7E1)
-
-if (c < z) {
-  more.less.week.dead.dot <- intToUtf8(0x1F7E2)
-} else if (c > z) {
-  more.less.week.dead.dot <- intToUtf8(0x1F534)
-} else
-  more.less.week.dead.dot <- intToUtf8(0x1F7E1)
-
-
-tweet.dead.tweet <- "New reported deaths:
-
-+%s today%s
-
-Indicators (exponential) growth / decay:
-%s that is %s %s
-%s that is %s %s"
-
-tweet.dead.tweet <- sprintf(tweet.dead.tweet,
-                            c, dagRecorddead,
-                            more.less.day.dead.dot,  diff.dead.day,   more.less.day.dead,
-                            more.less.week.dead.dot, diff.dead.week,  more.less.week.dead)
-Encoding(tweet.dead.tweet) <- "UTF-8"
-post_tweet(tweet.dead.tweet,  media = c("data/02_EN_leeftijd_heatmap-dead.png","data/13_EN_new_deceased.png", "data/15_EN_dead_diff.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -299,10 +299,33 @@ post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id())
 
 
 
-tweet.cases.diff.tweet <- "New cases:  difference compared to yesterday."
+tweet.cases.diff.tweet <- "1) New cases:  difference compared to yesterday.
+2) mondays
+3) Number of people on the ICU
+4) number of people in the hospital with COVID-19"
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/07_EN_cases_diff.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.cases.diff.tweet,  media = c("data/07_cases_diff.png", "data/07_cases_type1-monday.png", "data/17_IC_only.png", "data/16_IC_hosp.png"), in_reply_to_status_id = get_reply_id())
+
+
+#### provence tweet ####
+
+tweet.16city.tweet <- "New cases in the provences"
+tweet.16city.tweet <- sprintf(tweet.16city.tweet)
+Encoding(tweet.16city.tweet) <- "UTF-8"
+post_tweet(tweet.16city.tweet,  media = c("data/20_EN_prov_new.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+
+
+#### 16 cities tweet ####
+
+tweet.16city.tweet <- "New cases in the 16 big cities"
+tweet.16city.tweet <- sprintf(tweet.16city.tweet)
+Encoding(tweet.16city.tweet) <- "UTF-8"
+post_tweet(tweet.16city.tweet,  media = c("data/18_EN_city_new.png"), in_reply_to_status_id = get_reply_id())  #
+
+
 
 
 

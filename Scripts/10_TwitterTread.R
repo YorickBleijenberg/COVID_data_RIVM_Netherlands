@@ -84,6 +84,11 @@ if (doubling.cases.week > 0) {
 } 
 
 
+
+#### cases tweet ####
+
+
+
 tweet.cases.tweet <- "Nieuw gemelde besmettingen:
 
 +%s vandaag%s
@@ -98,18 +103,18 @@ Indicatoren (exponenti%sle) groei / krimp:
 
 tweet.cases.tweet <- sprintf(tweet.cases.tweet,
                              a, dagRecordCase, deE,
-                             more.less.day.case.dot, diff.cases.day,more.less.day.case,
+                                                          more.less.day.case.dot, diff.cases.day,more.less.day.case,
                              more.less.week.case.dot, diff.cases.week, more.less.week.case,
                              more.less.week.case.dot, growth.cases.week,deP,
                              more.less.week.case.dot, doubling.cases.week_text, doubling.cases.week )
 Encoding(tweet.cases.tweet) <- "UTF-8"
 
-#   post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"))    # "data/06_new_cases_log.png",
-post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
+  post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"))    # "data/06_new_cases_log.png",
+# post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
-
+  #### dead tweet ####
 
 
 diff.dead.day <- abs(c-p)
@@ -155,7 +160,7 @@ if (c < z) {
 
   tweet.dead.tweet <- "Overleden:
 
-+%s vandaag%s
++%s vandaag gemeld%s
 
 Indicatoren (exponenti%sle) groei / krimp:
 %s Dat is %s %s
@@ -349,6 +354,27 @@ tweet.cases.diff.tweet <- "1) Besmette personen, verschil met gisteren.
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
 post_tweet(tweet.cases.diff.tweet,  media = c("data/07_cases_diff.png", "data/07_cases_type1-monday.png", "data/17_IC_only.png", "data/16_IC_hosp.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+#### provence tweet ####
+
+
+tweet.16city.tweet <- "Nieuwe gevallen in de provincies"
+tweet.16city.tweet <- sprintf(tweet.16city.tweet)
+Encoding(tweet.16city.tweet) <- "UTF-8"
+post_tweet(tweet.16city.tweet,  media = c("data/20_prov_new.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+
+#### 16 cities tweet ####
+
+
+tweet.16city.tweet <- "Nieuwe gevallen in de 16 grote steden"
+tweet.16city.tweet <- sprintf(tweet.16city.tweet)
+Encoding(tweet.16city.tweet) <- "UTF-8"
+post_tweet(tweet.16city.tweet,  media = c("data/18_city_new.png"), in_reply_to_status_id = get_reply_id())  #
+
+
 
 
 

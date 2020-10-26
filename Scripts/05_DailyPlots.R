@@ -49,7 +49,7 @@ ggplot(Merged_data_short)+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
-ggsave("data/05_new_cases_school.png",width=16, height = 9)
+ggsave("data/05_new_cases.png",width=16, height = 9)
 
 
 
