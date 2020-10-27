@@ -2,19 +2,14 @@
 
 ###   
 ###   Make GR line smooth
-###   other potision for caseType 8b
-###   "Bron: RIVM | Plot: @YorickB | ",Sys.Date()
-###   Cities
-###     Cumulatieve getallen
+###   Cumulatieve getallen
 
 ###  grid color
 
 
 
 
-#scale_x_date(date_breaks = "1 week", 
-  #           date_labels= format("%d-%b"),
-   #          limits = as.Date(c("2020-07-01", Sys.Date()+5)))+
+
 
 #### check selected dates ####
 
@@ -91,12 +86,25 @@ source("C:\\Rdir\\Rscripts\\14_provincies.R")
 
 #### check correct last tweet ####
 
-##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+###  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
 
- ### source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+### source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 
+
+
+
+
+#### notes ####
+
+
+
+
+
+#scale_x_date(date_breaks = "1 week", 
+#           date_labels= format("%d-%b"),
+#          limits = as.Date(c("2020-07-01", Sys.Date()+5)))+
 
 
 ###

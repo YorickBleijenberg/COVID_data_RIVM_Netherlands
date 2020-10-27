@@ -29,7 +29,11 @@ df_today_2 <- table(df_today$weekOfDead)
 df_today_3 <-as.data.frame(df_today_2)
 
 
-df_merge <- merge(df_today_3, df_yesterday_3, by=c("Var1"))
+
+df_merge <- merge(df_today_3, df_yesterday_3, by=c("Var1"), all.x = TRUE)
+
+df_merge[is.na(df_merge)] <- 0
+
 colnames(df_merge) <- c("week","vandaag", "gisteren")
 
 

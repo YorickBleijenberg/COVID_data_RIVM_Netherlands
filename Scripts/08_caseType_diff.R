@@ -93,7 +93,7 @@ ggplot(date_wide_small_long, aes(x=Datum, y=value, fill = factor(key, levels=c("
   
   scale_x_date(date_breaks = "1 day", 
                date_labels= format("%d-%b"),
-               limits = as.Date(c(Sys.Date()-14, Sys.Date())))+
+               limits = as.Date(c(Sys.Date()-14, Sys.Date()+1)))+
   
   scale_fill_manual(values=c("#548235", "#2f5597", "#c55a11"), labels=c( "Eerste ziektedag (nieuw/correctie)",
                                                                          "Positieve labuitslag (nieuw/correctie)",
@@ -143,9 +143,9 @@ ggsave("data/07_cases_diff.png",width=16, height = 9)
                date_labels= format("%d-%b"),
                limits = as.Date(c(Sys.Date()-14, Sys.Date()+1)))+
   
-  scale_fill_manual(values=c("#548235", "#2f5597", "#c55a11"), labels=c( "Notification to GGD (new/correction)",
-                                                                         "First day with symptoms (new/correction)",
-                                                                         "Positive lab result (new/correction)"
+  scale_fill_manual(values=c("#548235", "#2f5597", "#c55a11"), labels=c( "First day with symptoms (new/correction)",
+                                                                         "Positive lab result (new/correction)",
+                                                                         "Notification to GGD (new/correction)"
                                                                          ))+
   
   labs(title = "New cases: added / corrected today",

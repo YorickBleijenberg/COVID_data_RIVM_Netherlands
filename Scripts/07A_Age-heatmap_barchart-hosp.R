@@ -38,8 +38,8 @@ bla3_3 <- bla3_3[complete.cases(bla3_3), ]  #remove N/A
 weeknumber<-strftime(Sys.Date(),format = "%V")
 
 
-bla2_2<- bla2_2[bla2_2$week>25&bla2_2$week<=43,]
-bla3_3<- bla3_3[bla3_3$weekOfDead>25&bla3_3$weekOfDead<=43,]
+bla2_2<- bla2_2[bla2_2$week>25&bla2_2$week<=44,]
+bla3_3<- bla3_3[bla3_3$weekOfDead>25&bla3_3$weekOfDead<=44,]
 
 
 
@@ -55,7 +55,7 @@ geom_tile(size=1.5,color="#E4ECFC")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Opnames in het ziekenhuis",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 41, 42 & 43 kunnen nog sterk stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 42, 43 & 44 kunnen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM, ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -80,7 +80,7 @@ ggplot(bla2_2,aes(week,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Hospitalization",
-       subtitle = "Number of cases within each agegroup. Week 42 and 43 will still rise.",fill=NULL,
+       subtitle = "Number of cases within each agegroup. Week 43 and 44 will still rise.",fill=NULL,
        caption = paste("Source: RIVM  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -113,7 +113,7 @@ ggplot(bla3_3,aes(weekOfDead,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Overleden aan COVID-19",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 41, 42 & 43 kunnen nog sterk stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 42, 43 & 44 kunnen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM, ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),
@@ -137,7 +137,7 @@ ggplot(bla3_3,aes(weekOfDead,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Deceased COVID-19",
-       subtitle = "Number of deaths, within each agegroup. Week 42 and 43 will still rise.",fill=NULL,
+       subtitle = "Number of deaths, within each agegroup. Week 43 and 44 will still rise.",fill=NULL,
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),

@@ -94,7 +94,7 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, fill = ty
   
   
   
-  labs(title="COVID-19 patienten in het ziekenhuis",
+  labs(title="(non-) COVID-19 patienten op de IC",
        # subtitle=" ",
        caption = paste("Source: LCPS & NICE | Plot: @YorickB | ",Sys.Date()))+
   
