@@ -48,7 +48,7 @@ bla3_3<- bla3_3[bla3_3$weekOfDead>25&bla3_3$weekOfDead<=44,]
 ggplot(bla2_2,aes(week,Agegroup,fill=n))+
 geom_tile(size=1.5,color="#E4ECFC")+
   geom_text(label=bla2_2$n,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 5, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 6, 
                        high = "#c00000")+
   theme_minimal()+
   xlab("")+
