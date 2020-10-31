@@ -25,6 +25,7 @@ ggplot(Merged_data_short)+
     #geom_vline(xintercept = as.numeric(Merged_data_short$fixedDate[dates_vline_vak2]),
      #          col = "darkgray", lwd = 1, linetype= "dashed")+
         scale_fill_manual(values=c("#96afde"))+
+    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
     
    
@@ -56,6 +57,7 @@ ggsave("data/05_new_cases.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#96afde"))+
+    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
     theme_classic()+
     xlab("")+ 
@@ -85,6 +87,7 @@ ggsave("data/05_EN_new_cases.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#96afde"))+
+    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
     theme_classic()+
     xlab("")+ 
@@ -116,6 +119,7 @@ ggsave("data/06_new_cases_log.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#96afde"))+
+    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
     theme_classic()+
     xlab("")+ 
@@ -148,6 +152,7 @@ ggsave("data/06_EN_new_cases_log.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=hosp, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#f4b183"))+
+    geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#c55a11",lwd = 2)+
     theme_classic()+
     xlab("")+ 
@@ -177,6 +182,7 @@ ggsave("data/09_new_hosp.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=hosp, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#f4b183"))+
+    geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#c55a11",lwd = 2)+
     theme_classic()+
     xlab("")+ 
@@ -206,6 +212,7 @@ ggsave("data/09_EN_new_hosp.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=dead, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#fab0b0"))+
+    geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#ff0505",lwd = 2)+
     theme_classic()+
     xlab("")+ 
@@ -233,6 +240,7 @@ ggsave("data/13_new_deceased.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=dead, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#fab0b0"))+
+    geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#ff0505",lwd = 2)+
     theme_classic()+
     xlab("")+ 

@@ -38,18 +38,13 @@ cases_per_day_long_spread_diff <- cases_per_day_long_spread
 cases_per_day_long_spread_diff <- as.data.frame(cases_per_day_long_spread_diff)
 cases_per_day_long_spread_diff$diff <- 0
 cases_per_day_long_spread_diff[is.na(cases_per_day_long_spread_diff)] <- 0
+
 df <- cases_per_day_long_spread_diff
 df$DON_diff <- df$DON - df$DON_old
 df$DOO_diff <- df$DOO - df$DOO_old
 df$DPL_diff <- df$DPL - df$DPL_old
 
 df2 <- df[,c("Datum", "DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff" )]
-
-
-
-
-
-
 
 
 

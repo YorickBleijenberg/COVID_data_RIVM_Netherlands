@@ -144,10 +144,12 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
        #subtitle = "", fill="Week",
        caption = paste("Data: RIVM | plot door @YorickB ",Sys.Date()))+
   
+  theme_classic()+
+  
   xlab("")+ 
   ylab("")+
   
-  theme_classic()+  #base_size = 20)+
+  #theme_classic()+  #base_size = 20)+
   
   theme(axis.title.x=element_blank(),
         axis.text = element_text(size=14,color = "black",face = "bold"),
@@ -161,6 +163,10 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
     axis.text = element_text(size=14,color = "black",face = "bold"),
     #axis.ticks.length = unit(0.5, "cm"),
     axis.line = element_line(colour = "#F5F5F5"),
+    
+    panel.grid.major.y = element_line(colour= "black", linetype = "dashed"),
+    panel.grid.minor.y = element_line(colour= "black", linetype = "dashed"),
+    
   )
 ggsave("data/07_new_cases_DoD.png",width=16, height = 9)  
 

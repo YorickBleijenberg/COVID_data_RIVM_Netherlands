@@ -7,6 +7,9 @@
 ###  grid color
 
 
+### Facets styling and resizing.
+
+
 
 
 
@@ -27,6 +30,7 @@ dir.create(dirname)
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
 
 source("C:\\Rdir\\Rscripts\\00_lcps_data_graph.R")
+
 
 #### Start  ####
 
@@ -86,9 +90,9 @@ source("C:\\Rdir\\Rscripts\\14_provincies.R")
 
 #### check correct last tweet ####
 
-##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+ # source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
-##  source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+#  source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 
 

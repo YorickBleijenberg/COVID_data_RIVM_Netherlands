@@ -73,10 +73,9 @@ number_new_city <- number_new_city[number_new_city$Date>"2020-07-01"&number_new_
 
 ggplot(data = number_new_city, ) + 
   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
- # geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), fill = "#8FAADC")+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
   facet_wrap(~ City,  scales = "free_y")+
-  theme_classic()+
+  theme_bw() + 
   xlab("")+ 
   ylab("")+
   labs(title = "16 grote steden",
@@ -92,22 +91,25 @@ ggplot(data = number_new_city, ) +
          axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
          axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
          axis.ticks.length = unit(0.5, "cm"),
-         axis.line = element_line(colour = "#F5F5F5"),
+         #axis.line = element_line(colour = "#F5F5F5"),
         
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
-         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         panel.grid.minor.y = element_blank(),
+  )
 
 ggsave("data/18_city_new.png",width=16, height = 9)
 
 
 ggplot(data = number_new_city, ) + 
   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
-  # geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), fill = "#8FAADC")+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
   facet_wrap(~ City,  scales = "free_y")+
-  theme_classic()+
+  theme_bw() + 
   xlab("")+ 
   ylab("")+
   labs(title = "16 big cities",
@@ -123,12 +125,16 @@ ggplot(data = number_new_city, ) +
          axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
          axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
          axis.ticks.length = unit(0.5, "cm"),
-         axis.line = element_line(colour = "#F5F5F5"),
+        # axis.line = element_line(colour = "#F5F5F5"),
          
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
-         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         panel.grid.minor.y = element_blank(),
+  )
 
 
 ggsave("data/18_EN_city_new.png",width=16, height = 9)
