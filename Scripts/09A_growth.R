@@ -24,6 +24,7 @@ ggplot(Merged_data_short)+
   # scale_fill_manual(values=c("#96afde"))+
 
    geom_line(mapping = aes(x=fixedDate, y=0), color = "black",lwd = 2)+
+   geom_line(mapping = aes(x=fixedDate, y=gf_c), color = "#F5F5F5",lwd = 4)+
    geom_line(mapping = aes(x=fixedDate, y=gf_c), color = "#44546a",lwd = 3)+
    
    theme_classic()+

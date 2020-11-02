@@ -5,17 +5,16 @@ library(zoo)
 
 ## import from RIVM website
 
- RIVM_aantallen_gemeente_cumulatief<-read.csv("https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.csv",sep=";")  #import from RIVM website
+# RIVM_aantallen_gemeente_cumulatief<-read.csv("https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.csv",sep=";")  #import from RIVM website
 
 ## import from local file
 
-## File_date_3 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_cumulatief.csv")
-##RIVM_aantallen_gemeente_cumulatief<-read.csv(File_date_3,sep=";")
+File_date_3 <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_cumulatief.csv")
+RIVM_aantallen_gemeente_cumulatief<-read.csv(File_date_3,sep=";")
 
 ## temp store
 
 number_muni_cum <- RIVM_aantallen_gemeente_cumulatief   #File_date_3
-
 
 ####   select only the Province, Date of Report and sum of total reported  ####
 
@@ -104,7 +103,6 @@ ggplot(data = number_new_city, ) +
 
 ggsave("data/18_city_new.png",width=16, height = 9)
 
-
 ggplot(data = number_new_city, ) + 
   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
@@ -136,35 +134,36 @@ ggplot(data = number_new_city, ) +
          panel.grid.minor.y = element_blank(),
   )
 
-
 ggsave("data/18_EN_city_new.png",width=16, height = 9)
 
 
 #### write.csv2(number_cum_city_spread_small, "steden.csv", row.names=FALSE) 
 
 
- number_cum_city_spread_small <- number_cum_city_spread[,c("Date",
-                                                          "Goes",
-                                                          "Middelburg",
-                                                          "Maastricht",
-                                                          "Amsterdam"
-)]
+# number_cum_city_spread_small <- number_cum_city_spread[,c("Date",
+#                                                          "Goes",
+#                                                          "Middelburg",
+#                                                          "Maastricht",
+#                                                          "Amsterdam"
+#  )]
 
- number_cum_city_spread_small <- number_cum_city_spread[,c("Date",
-                                                           "Amsterdam",
-                                                           "Rotterdam",
-                                                           "'s-Gravenhage",
-                                                           "Utrecht",
-                                                           "Eindhoven",
-                                                           "Groningen",
-                                                           "Tilburg",
-                                                           "Almere",
-                                                           "Breda",
-                                                           "Nijmegen",
-                                                           "Apeldoorn",
-                                                           "Haarlem",
-                                                           "Arnhem",
-                                                           "Enschede",
-                                                           "Amersfoort",
-                                                           "Haarlemmermeer"
- )]
+ #  number_cum_city_spread_small <- number_cum_city_spread[,c("Date",
+ #                                                          "Amsterdam",
+#                                                           "Rotterdam",
+ #                                                          "'s-Gravenhage",
+  #                                                         "Utrecht",
+   #                                                        "Eindhoven",
+    #                                                       "Groningen",
+     #                                                      "Tilburg",
+      #                                                     "Almere",
+       #                                                    "Breda",
+        #                                                   "Nijmegen",
+         #                                                  "Apeldoorn",
+          #                                                 "Haarlem",
+           #                                                "Arnhem",
+            #                                               "Enschede",
+             #                                              "Amersfoort",
+              #                                             "Haarlemmermeer"
+ #   )]
+
+ 

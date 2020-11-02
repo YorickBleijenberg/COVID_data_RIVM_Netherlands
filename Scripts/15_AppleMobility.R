@@ -1,6 +1,7 @@
 library(tidyverse)
 library(rtweet)
 library(data.table)
+library(zoo)
 
 ### Apple mobility ###
 
@@ -51,30 +52,24 @@ Apple_mob_nl_short$MAauto  <- (round(rollmeanr(Apple_mob_nl_short$auto,  7, fill
 Apple_mob_nl_short$MAOV    <- (round(rollmeanr(Apple_mob_nl_short$OV,    7, fill = 0),digits = 1)-100)
 Apple_mob_nl_short$MAlopen <- (round(rollmeanr(Apple_mob_nl_short$lopen, 7, fill = 0),digits = 1)-100)
 
-
-Apple_mob_nl_short <- Apple_mob_nl_short[-1,]
-Apple_mob_nl_short <- Apple_mob_nl_short[-1,]
-Apple_mob_nl_short <- Apple_mob_nl_short[-1,]
-Apple_mob_nl_short <- Apple_mob_nl_short[-1,]
-Apple_mob_nl_short <- Apple_mob_nl_short[-1,]
-Apple_mob_nl_short <- Apple_mob_nl_short[-1,]
+Apple_mob_nl_short <- Apple_mob_nl_short[-1:-6,]
 
 
 
 #### gather the table ####
 
-keycol_am <- "Date"
-valuecol_am <- "type"
-gathercols_am <- c("Auto", "OV","Lopen")
+#keycol_am <- "Date"
+#valuecol_am <- "type"
+#gathercols_am <- c("Auto", "OV","Lopen")
 
-AppleMobility_gather <- gather(Apple_mob_nl_short, keycol_am, valuecol_am, gathercols_am)
+#AppleMobility_gather <- gather(Apple_mob_nl_short, keycol_am, valuecol_am, gathercols_am)
 
 #### set the right valuetype ####
-AppleMobility_gather$keycol_am <- factor(AppleMobility_gather$keycol_am)
-AppleMobility_gather$valuecol_am <- as.numeric(AppleMobility_gather$valuecol_am)
+#AppleMobility_gather$keycol_am <- factor(AppleMobility_gather$keycol_am)
+#AppleMobility_gather$valuecol_am <- as.numeric(AppleMobility_gather$valuecol_am)
 
 
-colnames(AppleMobility_gather) <- c("Datum","Type","valuecol_am")
+#colnames(AppleMobility_gather) <- c("Datum","Type","valuecol_am")
 
 
 

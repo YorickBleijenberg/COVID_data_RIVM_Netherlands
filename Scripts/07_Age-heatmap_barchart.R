@@ -34,7 +34,7 @@ bla <- bla[bla$week>24&bla$week<=44,]
 ggplot(bla,aes(week,Agegroup,fill=phd))+
 geom_tile(size=1.5,color="#F5F5F5")+
   geom_text(label=bla$phd,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 9.5, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 10, 
                        high = "#c00000")+
   #ggtitle("Aantal geconstateerde besmettingen per 100.000 per week")+
   theme_minimal()+
@@ -57,7 +57,7 @@ ggsave("data/02_leeftijd_heatmap.png",width=16, height = 9)
 ggplot(bla,aes(week,Agegroup,fill=phd))+
   geom_tile(size=1.5,color="#F5F5F5")+
   geom_text(label=bla$phd,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 8, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 10, 
                        high = "#c00000")+
   #ggtitle("cases per 100.000 per week")+
   theme_minimal()+
@@ -79,7 +79,7 @@ ggsave("data/02_EN_leeftijd_heatmap.png",width=16, height = 9)
 
 
 #Gewenste weken subsetten
-bla <- bla[bla$week>35&bla$week<=43,]
+bla <- bla[bla$week>36&bla$week<=44,]
 
 
 #barchart
@@ -199,7 +199,7 @@ draw_key_polygon3 <- function(data, params, size) {
 GeomBar$draw_key = draw_key_polygon3
 
 ggplot(AgeFill_4, aes(date,cases_avg,fill=age_grouping))+
-geom_bar(stat="identity", position=position_fill(), width=1) + scale_y_reverse() +
+  geom_bar(stat="identity", position=position_fill(), width=1) + scale_y_reverse() +
  
   theme_classic()+
   theme(legend.position = "right", legend.direction = "vertical", legend.background =element_rect(fill = "#F5F5F5") , legend.spacing.y = unit(0, "cm"), legend.key.size = unit(1, "cm"))+  #legend.spacing =0.5

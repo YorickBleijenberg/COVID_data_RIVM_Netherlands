@@ -1,3 +1,12 @@
+library(tidyverse)
+library(rtweet)
+library(zoo)
+
+get_reply_id <- function(rel_increase) {
+  my_timeline <- get_timeline(rtweet:::home_user()) ## Pull my own tweets
+  reply_id <- my_timeline$status_id[1] ## Status ID for reply
+  return(reply_id)
+}
 
 
 ##### Google mobility #####
@@ -43,12 +52,8 @@ Google_mob_NL_short$MA_openbaar_vervoer     <- round(rollmeanr(Google_mob_NL_sho
 Google_mob_NL_short$MA_werk                 <- round(rollmeanr(Google_mob_NL_short$werk,    7, fill = NA),digits = 1)
 Google_mob_NL_short$MA_thuis                <- round(rollmeanr(Google_mob_NL_short$thuis, 7, fill = NA),digits = 1)
 
-Google_mob_NL_short <- Google_mob_NL_short[-1,]
-Google_mob_NL_short <- Google_mob_NL_short[-1,]
-Google_mob_NL_short <- Google_mob_NL_short[-1,]
-Google_mob_NL_short <- Google_mob_NL_short[-1,]
-Google_mob_NL_short <- Google_mob_NL_short[-1,]
-Google_mob_NL_short <- Google_mob_NL_short[-1,]
+Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
+
 
 ####   Plot the Google Mobility data 7d MA ####
 
@@ -68,8 +73,7 @@ theme_classic()+
   
   labs(title = "Google Mobility - Nederland",
       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n"),
-       caption = paste("Source: Google | Plot: @YorickB | ",Sys.Date()))+
-  
+      caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position = c(0.7,0.15),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
@@ -231,24 +235,28 @@ ggplot(Google_mob_prov_short) +
  # geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2)+
 
   
+  geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dotted", color = "darkgreen",size = 1.5) +
+  geom_vline(xintercept = as.Date("2020-10-18"), linetype = "dotted", color = "darkgreen",size = 1.5) +
+  geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dotted", size = 1.5) +
+  geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dotted", size = 1.5)+
   
-  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") +
-  geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dashed") +
-  geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dashed") +
-  geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dashed") +
+  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "red", size = 1.5)+
+  
+ #  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") +
+ #  geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dashed") +
+ #  geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dashed") +
+ #  geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dashed") +
   
   facet_wrap(~Provincie)+
 
   #scale_colour_brewer(palette = "Set1")+
-   scale_color_manual(values=c("#999999", "#56B4E9", "darkred"))+
+   scale_color_manual(values=c("#008f91", "#204ad4", "#cc2929"))+
  # scale_color_manual(values=wes_palette(n=3, name="Rushmore1"))+
   
   
   theme_bw() + 
   xlab("")+ 
   ylab("")+
-  
-
   
   labs(title = "Google Mobility - Nederland",
        subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", 
@@ -257,9 +265,8 @@ ggplot(Google_mob_prov_short) +
                         "- semi-lockdown op 14 oktober\n",
                         "- Herfstvakantie midden/zuid: 17-25 oktober"
                         ),
-       
-       
-       caption = paste("Source: Google | Plot: @YorickB | ",Sys.Date()))+
+       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",
+                       Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   
   
   theme(

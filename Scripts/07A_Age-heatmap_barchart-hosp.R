@@ -16,6 +16,13 @@ bla <-RIVM_casus_landelijk
 bla2 <- bla
 bla2 <- bla2[bla2$Hospital_admission == 'Yes',]
 
+
+
+bla2 = filter(bla2, Agegroup != "<50" & Agegroup !="Unknown")
+
+
+
+
 bla3 <- bla
 bla3 <- bla3[bla3$Deceased == 'Yes',]
 

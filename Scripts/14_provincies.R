@@ -13,8 +13,8 @@ library(zoo)
 
 ## import from local file
 
-## File_date_3 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_cumulatief.csv")
-## RIVM_aantallen_gemeente_cumulatief<-read.csv(File_date_3,sep=";")
+File_date_35 <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_cumulatief.csv")
+RIVM_aantallen_gemeente_cumulatief<-read.csv(File_date_35,sep=";")
 
 ## temp store
 
@@ -53,8 +53,8 @@ number_new_prov_short <- number_new_prov[number_new_prov$Date>"2020-07-01"&numbe
 #### Province plot new  facet ####
 
 ggplot(data = number_new_prov_short, ) + 
-  geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
-   #geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
+  #geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
+   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
   facet_wrap(~ Province,  scales = "free_y")+
   theme_bw() + 
@@ -84,7 +84,7 @@ ggplot(data = number_new_prov_short, ) +
   )
 
 
-ggsave("data/20_prov_new-bar.png",width=16, height = 9)
+ggsave("data/20_prov_new.png",width=16, height = 9)
 
 
 
@@ -133,16 +133,16 @@ ggsave("data/20_EN_prov_new.png",width=16, height = 9)
 
 ##### plot province new cases ####
 
-Zuid-Holland
-Friesland
-Gelderland
-Limburg
-Overijssel
-Utrecht
+#Zuid-Holland
+#Friesland
+#Gelderland
+#Limburg
+#Overijssel
+#Utrecht
 
-,"Noord-Holland","Noord-Brabant","Groningen","Zeeland","Flevoland"
+#,"Noord-Holland","Noord-Brabant","Groningen","Zeeland","Flevoland"
 
-ggplot(data = number_new_prov_short, mapping = aes(x = Date, y = MAnewCases, fill = factor(Province, levels=c("Drenthe"))))+ 
+ggplot(data = number_new_prov_short, mapping = aes(x = Date, y = MAnewCases, fill = factor(Province, levels=c("Drenthe", "Groningen"))))+ 
 
   geom_line(size = 2)+
   theme_classic()+
@@ -185,7 +185,6 @@ ggplot(data = number_muni_cum_prov_agg, mapping = aes(x = Date, y = x, color = P
   theme_classic()+
   xlab("")+ 
   ylab("")+
-  scale_y_continuous(trans='log2')+
   labs(title = "Provincies, cumulatief",
        #subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
@@ -225,7 +224,7 @@ ggplot(data = number_muni_cum_prov_agg, mapping = aes(x = Date, y = x, color = P
          axis.line = element_line(colour = "#F5F5F5"),
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
 
-ggsave("data/18_Province_cumulative-log.png",width=16, height = 9)
+# ggsave("data/18_Province_cumulative-log.png",width=16, height = 9)
 
 
 

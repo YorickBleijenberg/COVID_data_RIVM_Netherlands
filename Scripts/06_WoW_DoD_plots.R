@@ -63,7 +63,7 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
   theme(
     plot.background = element_rect(fill = "#f5f5f5"),
     panel.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5", size = 0.5, linetype = "solid"),
-    plot.title = element_text(hjust = 0.5,size = 25,face = "bold"),
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
     plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
     axis.text = element_text(size=14,color = "black",face = "bold"),
     #axis.ticks.length = unit(0.5, "cm"),
@@ -91,7 +91,7 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
   theme(
     plot.background = element_rect(fill = "#f5f5f5"),
     panel.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5", size = 0.5, linetype = "solid"),
-    plot.title = element_text(hjust = 0.5,size = 25,face = "bold"),
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
     plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
     axis.text = element_text(size=14,color = "black",face = "bold"),
     #axis.ticks.length = unit(0.5, "cm"),
@@ -158,7 +158,7 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
   theme(
     plot.background = element_rect(fill = "#f5f5f5"),
     panel.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5", size = 0.5, linetype = "solid"),
-    plot.title = element_text(hjust = 0.5,size = 25,face = "bold"),
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
     plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
     axis.text = element_text(size=14,color = "black",face = "bold"),
     #axis.ticks.length = unit(0.5, "cm"),
