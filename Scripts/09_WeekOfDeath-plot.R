@@ -50,6 +50,13 @@ df_merge3_diff$week  <-  levels(df_merge3_diff$week)[df_merge3_diff$week]
 
 weeknumber<-strftime(Sys.Date(),format = "%V")
 df_merge_3_short <- df_merge3_diff[df_merge3_diff$week>26&df_merge3_diff$week<=weeknumber,]
+df_merge_3_short_old <- df_merge3_diff[df_merge3_diff$week>11&df_merge3_diff$week<=40,]
+
+
+df_merge_3_short_old <- df_merge_3_short_old[ -c(1,2,3)]
+
+diff.dead.old <- sum(df_merge_3_short_old$diff)
+
 
 
 
@@ -87,7 +94,7 @@ ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
        subtitle = "naar week van overlijden",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.2, 0.9),
+  theme(legend.position = c(0.5, 0.9),
      legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
        legend.title = element_blank(),
         legend.text = element_text(colour="black", size=27, face="bold"))+

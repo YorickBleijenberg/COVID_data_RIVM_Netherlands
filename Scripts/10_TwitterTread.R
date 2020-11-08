@@ -92,7 +92,7 @@ if (doubling.cases.week > 0) {
   doubling.cases.week_dot <- intToUtf8(0x1F534)
 } 
 
-
+doubling.cases.week <- abs(doubling.cases.week)
 
 #### tweet.cases.tweet ####
 
@@ -124,6 +124,7 @@ post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growt
 
 
 #### dead tweet ####
+
 
 
 diff.dead.day <- abs(n-o)
@@ -180,6 +181,10 @@ if (doubling.dead.week > 0) {
   doubling.dead.week_dot <- intToUtf8(0x1F534)
 } 
 
+doubling.dead.week <- abs(doubling.dead.week)
+
+
+
 #### tweet.dead.tweet ####
 
 tweet.dead.tweet <- "Overleden:
@@ -191,7 +196,10 @@ Indicatoren (exponenti%sle) groei / krimp:
 %s Dat is %s %s
   
 %s --> groeifactor: %s%s week op week.
-%s --> %s: elke %s dagen."
+%s --> %s: elke %s dagen.
+
+Aantal overleden voor week 40:
+%s"
 
 
 tweet.dead.tweet <- sprintf(tweet.dead.tweet,
@@ -200,7 +208,8 @@ tweet.dead.tweet <- sprintf(tweet.dead.tweet,
                             more.less.day.dead.dot,  diff.dead.day,   more.less.day.dead,
                             more.less.week.dead.dot, diff.dead.week,  more.less.week.dead,
                             doubling.dead.week_dot, growth.dead.week, deP,
-                            doubling.dead.week_dot, doubling.dead.week_text, doubling.dead.week)
+                            doubling.dead.week_dot, doubling.dead.week_text, doubling.dead.week,
+                            diff.dead.old)
 Encoding(tweet.dead.tweet) <- "UTF-8"
 
 post_tweet(tweet.dead.tweet,  media = c("data/15_dead_diff.png",
@@ -264,6 +273,8 @@ if (doubling.hosp.week > 0) {
   doubling.hosp.week_text <- paste("verdubbeling")
   doubling.hosp.week_dot <- intToUtf8(0x1F534)
 } 
+
+doubling.hosp.week <- abs(doubling.hosp.week)
 
 #### tweet.hosp.tweet ####
 
@@ -355,6 +366,14 @@ Encoding(tweet.growth.tweet) <- "UTF-8"
 post_tweet(tweet.growth.tweet,  media = c("data/07_new_cases_DoD.png", "data/05_growth_cases.png", "data/05_growth_hosp.png","data/05_growth_dead.png"), in_reply_to_status_id = get_reply_id()) 
 
 
+#### tweet.carehomes.tweet ####
+
+
+tweet.carehomes.tweet <- "Verpleeghuizen
+"
+tweet.carehomes.tweet <- sprintf(tweet.carehomes.tweet)
+Encoding(tweet.carehomes.tweet) <- "UTF-8"
+post_tweet(tweet.carehomes.tweet,  media = c("data/52_Verpleeg_loc.png", "data/51_Verpleeg_dead.png", "data/50_Verpleeg_cases.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -365,7 +384,9 @@ PersCoKroegDays <- as.numeric(difftime(Sys.Date(),PersCoKroeg, units = c("days")
 PersCoPaniek = as.Date("2020-09-28",'%Y-%m-%d')
 PersCoPaniekDays <- as.numeric(difftime(Sys.Date(),PersCoPaniek, units = c("days")))
 PersCoSemiLockdown = as.Date("2020-10-13",'%Y-%m-%d')
-PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))  
+PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))
+PersCoSemitwoWeeks = as.Date("2020-11-03",'%Y-%m-%d')
+PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))  
 
 tweet.data.tweet <- "Dagen sinds:
 
@@ -373,13 +394,16 @@ tweet.data.tweet <- "Dagen sinds:
 
 [%s] de persoCo: 'We gaan voor R=0,9' - landelijke maatregelen
 
-[%s] de persoCo: 'Semi-lockdown'"
+[%s] de persoCo: 'Semi-lockdown'
+
+[%s]  de persoCo: 'verzwaring semi-lockdown'"
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
                             PersCoKroegDays,
                             PersCoPaniekDays,
-                            PersCoSemiLockdownDays
+                            PersCoSemiLockdownDays,
+                            PersCoSemitwoWeeksDays
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
@@ -428,5 +452,6 @@ tweet.16city.tweet <- "Nieuwe gevallen in de provincies"
 tweet.16city.tweet <- sprintf(tweet.16city.tweet)
 Encoding(tweet.16city.tweet) <- "UTF-8"
 post_tweet(tweet.16city.tweet,  media = c("data/20_prov_new.png"), in_reply_to_status_id = get_reply_id())  #
+
 
 

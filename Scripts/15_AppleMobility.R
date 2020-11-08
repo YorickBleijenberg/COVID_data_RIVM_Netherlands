@@ -15,12 +15,21 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ###
 ###  download file from: https://covid19.apple.com/mobility
 ###
+###  https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev29/v3/en-us/applemobilitytrends-2020-11-03.csv
+###  https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev31/v3/en-us/applemobilitytrends-2020-11-05.csv
+###  https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev32/v3/en-us/applemobilitytrends-2020-11-06.csv
+
 
 Yesterday <- Sys.Date()-1
 
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev32/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+
 
 #### read the latested Apple mobility report from disk ####
-Apple_mob_raw <- read.csv(paste("C:\\Rdir\\Mobility\\Apple\\applemobilitytrends-", Yesterday,".csv",sep=""))
+#  Apple_mob_raw <- read.csv(paste("C:\\Rdir\\Mobility\\Apple\\applemobilitytrends-", Yesterday,".csv",sep=""))
+Apple_mob_raw <- read.csv(paste(Apple.file ,sep=""))
+
+
 
 #### filter only the Netherlands ####
 Apple_mob_raw_nl <-Apple_mob_raw %>% filter(region == "Netherlands")
@@ -115,9 +124,10 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
   
   geom_hline(yintercept=0) +
-  geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-10-13"), linetype = "dotted") 
+  geom_vline(xintercept = as.Date("2020-09-19"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2020-09-29"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") 
 
 
 ggsave("data/31_Apple_data_raw.png",width=16, height = 9)
@@ -126,16 +136,33 @@ ggsave("data/31_Apple_data_raw.png",width=16, height = 9)
 
 ####   Plot the Apple Mobility data ####
 
+
+
+
+persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03")), 
+             event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown"))
+
+
+
+
+
 ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=Type))+ 
+  
+  geom_hline(yintercept=0) +
+  
+  geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
+  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
+  
   geom_line(aes(x=date, y = MAauto, color = "Auto"), lwd=2) +
-  geom_line(aes(x=date, y = MAOV, color = "Openbaar vervoer"), lwd=2) +
   geom_line(aes(x=date, y = MAlopen, color = "Lopen"), lwd=2) +
+  geom_line(aes(x=date, y = MAOV),color = "#F5F5F5", lwd=3) +
+  geom_line(aes(x=date, y = MAOV, color = "Openbaar vervoer"), lwd=2) +
   
   theme_classic()+
   xlab("")+ 
   ylab("")+
   
-  scale_y_continuous(expand = c(0,10), limits = c(-100, NA)) +
+  scale_y_continuous(expand = c(0,5), limits = c(-100, NA)) +
   
   labs(title = "Apple Mobility Trends",
        subtitle = paste("7-daags zwevend gemiddele\n","Actueel tot:", Yesterday),
@@ -163,12 +190,19 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
-         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))
   
-  geom_hline(yintercept=0) +
-  geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-10-13"), linetype = "dotted") + 
+
+  
+ # geom_vline(xintercept = as.Date("2020-09-19"), linetype = "dotted") + 
+ # geom_vline(xintercept = as.Date("2020-09-29"), linetype = "dotted") + 
+ # geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") + 
+ # geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") 
+
+
+
+
+
   
   
   ggsave("data/30_Apple_data.png",width=16, height = 9)
@@ -224,5 +258,5 @@ Encoding(tweet.appleM.tweet) <- "UTF-8"
 
 
 
-##  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png"))
+#  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png"))
 

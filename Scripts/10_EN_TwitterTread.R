@@ -90,7 +90,7 @@ if (doubling.cases.week > 0) {
   doubling.cases.week_dot <- intToUtf8(0x1F534)
 } 
 
-
+doubling.cases.week <- abs(doubling.cases.week)
 
 #### tweet.cases.EN.tweet ####
 
@@ -114,8 +114,8 @@ tweet.cases.EN.tweet <- sprintf(tweet.cases.EN.tweet,
                              doubling.cases.week_dot, doubling.cases.week_text, doubling.cases.week )
 Encoding(tweet.cases.EN.tweet) <- "UTF-8"
 
- #  post_tweet(tweet.cases.EN.tweet,  media = c("data/05_EN_new_cases.png", "data/05_EN_growth_cases.png", "data/07_EN_cases_type1.png", "data/08_EN_new_cases_WoW.png"))    # "data/06_new_cases_log.png",
-  post_tweet(tweet.cases.EN.tweet,  media = c("data/05_EN_new_cases.png", "data/05_EN_growth_cases.png", "data/07_EN_cases_type1.png", "data/08_EN_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
+## post_tweet(tweet.cases.EN.tweet,  media = c("data/05_EN_new_cases.png", "data/05_EN_growth_cases.png", "data/07_EN_cases_type1.png", "data/08_EN_new_cases_WoW.png"))    # "data/06_new_cases_log.png",
+ post_tweet(tweet.cases.EN.tweet,  media = c("data/05_EN_new_cases.png", "data/05_EN_growth_cases.png", "data/07_EN_cases_type1.png", "data/08_EN_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
 
  #  post_tweet(tweet.cases.EN.tweet)  #
 
@@ -174,6 +174,9 @@ if (doubling.dead.week > 0) {
   doubling.dead.week_dot <- intToUtf8(0x1F534)
 } 
 
+doubling.dead.week <- abs(doubling.dead.week)
+  
+  
   #### tweet.dead.EN.tweet ####
   
 
@@ -257,6 +260,8 @@ if (doubling.hosp.week > 0) {
   doubling.hosp.week_text <- paste("doubling")
   doubling.hosp.week_dot <- intToUtf8(0x1F534)
 } 
+
+doubling.hosp.week <- abs(doubling.hosp.week)
 
 #### tweet.hosp.EN.tweet ####
 
@@ -395,7 +400,7 @@ No.
 
 (But it's still fun to watch)"
 
-tweet.16city.tweet <- sprintf(tweet.16city.tweet)
+tweet.vakantie.tweet <- sprintf(tweet.vakantie.tweet)
 Encoding(tweet.vakantie.tweet) <- "UTF-8"
 post_tweet(tweet.vakantie.tweet,  media = c("data/40_EN_niet-noord-phd.png"), in_reply_to_status_id = get_reply_id())  #
 

@@ -27,7 +27,7 @@ weeknumber<-strftime(Sys.Date(),format = "%V")
 
 
 #Gewenste weken subsetten
-bla <- bla[bla$week>24&bla$week<=44,]
+bla <- bla[bla$week>24&bla$week<=45,]
 
 
 #Heatmap
@@ -42,7 +42,7 @@ geom_tile(size=1.5,color="#F5F5F5")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 43 & 44 zullen nog sterk stijgen",fill=NULL,
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 44 & 45 zullen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM / CBS ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -65,7 +65,7 @@ ggplot(bla,aes(week,Agegroup,fill=phd))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 43 and 44 will still rise.",fill=NULL,
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 44 and 45 will still rise.",fill=NULL,
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -79,7 +79,7 @@ ggsave("data/02_EN_leeftijd_heatmap.png",width=16, height = 9)
 
 
 #Gewenste weken subsetten
-bla <- bla[bla$week>36&bla$week<=44,]
+bla <- bla[bla$week>37&bla$week<=45,]
 
 
 #barchart
@@ -93,7 +93,7 @@ ggplot(bla,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 43 & 44 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 44 & 45 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS ",Sys.Date()))+
   
@@ -122,7 +122,7 @@ ggplot(bla,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 43 and 44 will still rise.",
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 44 and 45 will still rise.",
        fill="Week",
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   

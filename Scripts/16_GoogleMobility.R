@@ -69,7 +69,18 @@ theme_classic()+
   xlab("")+ 
   ylab("")+
 
-  scale_colour_brewer(palette = "Set1")+
+#  scale_colour_brewer(palette = "Set1")+
+  
+  
+  #fe8003
+  
+  #54b251
+  #9951a4
+  
+  
+  
+  scale_color_manual(values = c("#3c81b9", "#54b251", "#fe8003", "#9951a4", "#e5292b"))+
+  
   
   labs(title = "Google Mobility - Nederland",
       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n"),
@@ -228,19 +239,24 @@ library(wesanderson)
 
 
 ggplot(Google_mob_prov_short) + 
-  geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2) +
-    geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2) +
- # geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2) +
-  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), lwd=2) +
- # geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2)+
-
-  
+ 
   geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dotted", color = "darkgreen",size = 1.5) +
   geom_vline(xintercept = as.Date("2020-10-18"), linetype = "dotted", color = "darkgreen",size = 1.5) +
   geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dotted", size = 1.5) +
   geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dotted", size = 1.5)+
   
-  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "red", size = 1.5)+
+  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "violet", size = 1.5)+
+  
+  
+   geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2) +
+    geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2) +
+ # geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2) +
+  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), color = "#F5F5F5", lwd=3) +
+  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), lwd=2) +
+ # geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2)+
+
+  
+
   
  #  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") +
  #  geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dashed") +
@@ -275,7 +291,8 @@ ggplot(Google_mob_prov_short) +
         legend.pos = "bottom",
         legend.direction = "horizontal",
         #legend.margin = margin(3, 3, 3, 3),
-        legend.text = element_text(colour="black", size=12, face="bold")
+        legend.text = element_text(colour="black", size=12, face="bold"),
+        legend.key = element_rect(fill = "#F5F5F5", color = NA),
         #legend.position = c(0.7,0.15),
         )+
   
@@ -305,7 +322,7 @@ ggplot(Google_mob_prov_short) +
  
 
 
-ggsave("data/37_Google_data_prov.png",width=16, height = 9)
+ggsave("data/37_Google_data_prov.png",width=16, height = 12)
 
 
 

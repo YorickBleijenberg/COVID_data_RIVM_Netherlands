@@ -5,11 +5,33 @@
 ##  Connect to online:
 ## https://happygitwithr.com/
 
-## compare R prediction
-##
+## https://www.r-graph-gallery.com/233-add-annotations-on-ggplot2-chart.html
+## https://rdrr.io/cran/ggplot2/man/scale_gradient.html
+## https://aosmith.rbind.io/2019/10/14/background-color_gradient/
+
+## De maatregelenpakketten van september en oktober zouden moeten leiden tot een verwachte ## R-waarde van 0.88 (met een bandbreedte van 0.75 - 0.99).
+
+## Met het nu aangekondigde maatregelenpakket streven we naar een R-waarde
+## tussen de 0,72 en 0,91 (terwijl de nagestreefde R-waarde voor het oktober-pakket
+## tussen de 0,75 en 0.99 ligt)
 
 
+## Nieuwe maatregelen toevoegen - bieb dicht - 4 november
 
+## vakantie effect per veiligheidsregio
+
+####   format numbers in tweet  1.200
+
+#### ECDC - ANIMATION
+
+#### R ANIMATION
+
+
+####Check LSPC update 
+LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")  
+LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
+LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
+(LCPS_datafeed)
 
 
 
@@ -85,12 +107,12 @@ source("C:\\Rdir\\Rscripts\\14_provincies.R")
 
 source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
 
+source("C:\\Rdir\\Rscripts\\20_carehomes.R")
+
 
 
 #### check correct last tweet ####
-
 ## source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
-
-##source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+## source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
