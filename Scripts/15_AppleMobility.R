@@ -19,10 +19,13 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ###  https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev31/v3/en-us/applemobilitytrends-2020-11-05.csv
 ###  https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev32/v3/en-us/applemobilitytrends-2020-11-06.csv
 
+##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev36/v3/en-us/applemobilitytrends-2020-11-10.csv
+##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev9/v3/en-us/applemobilitytrends-2020-11-12.csv
+
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev32/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev9/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -153,9 +156,9 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
   geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
   geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
   
-  geom_line(aes(x=date, y = MAauto, color = "Auto"), lwd=2) +
   geom_line(aes(x=date, y = MAlopen, color = "Lopen"), lwd=2) +
-  geom_line(aes(x=date, y = MAOV),color = "#F5F5F5", lwd=3) +
+  geom_line(aes(x=date, y = MAauto, color = "Auto"), lwd=2) +
+    geom_line(aes(x=date, y = MAOV),color = "#F5F5F5", lwd=3) +
   geom_line(aes(x=date, y = MAOV, color = "Openbaar vervoer"), lwd=2) +
   
   theme_classic()+
@@ -258,5 +261,5 @@ Encoding(tweet.appleM.tweet) <- "UTF-8"
 
 
 
-#  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png"))
-
+##  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png"))
+##  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png") , in_reply_to_status_id = get_reply_id()) 

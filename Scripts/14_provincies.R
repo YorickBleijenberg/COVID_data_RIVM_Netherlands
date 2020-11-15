@@ -142,15 +142,15 @@ ggsave("data/20_EN_prov_new.png",width=16, height = 9)
 
 #,"Noord-Holland","Noord-Brabant","Groningen","Zeeland","Flevoland"
 
-ggplot(data = number_new_prov_short, mapping = aes(x = Date, y = MAnewCases, fill = factor(Province, levels=c("Drenthe", "Groningen"))))+ 
+#ggplot(data = number_new_prov_short, mapping = aes(x = Date, y = MAnewCases, fill = factor(Province, levels=c("Drenthe", "Groningen"))))+ 
 
-  geom_line(size = 2)+
-  theme_classic()+
-  xlab("")+ 
-  ylab("")+
-  labs(title = "Provincies, Nieuwe gevallen per dag",
-       subtitle = "7 daags voortschrijdend gemiddelde",
-       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+ #  geom_line(size = 2)+
+ # theme_classic()+
+  #xlab("")+ 
+ # ylab("")+
+ # labs(title = "Provincies, Nieuwe gevallen per dag",
+#       subtitle = "7 daags voortschrijdend gemiddelde",
+#       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
 
  # scale_color_paletteer_d("nord::aurora")
@@ -158,23 +158,21 @@ ggplot(data = number_new_prov_short, mapping = aes(x = Date, y = MAnewCases, fil
   # scale_colour_brewer(type = "seq", palette = "Spectral")+
   #scale_colour_brewer(palette = "Set1")
   # scale_colour_brewer(palette = "Set3")+
-
-
-  
-  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
-         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+#
+#  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+ #        panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
          # legend.position = "none",   # no legend
-         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
-         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
-         axis.text = element_text(size=14,color = "black",face = "bold"),
-         axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
-         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
-         axis.ticks.length = unit(0.5, "cm"),
-         axis.line = element_line(colour = "#F5F5F5"),
-         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
-         )
+#         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+#         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+ #        axis.text = element_text(size=14,color = "black",face = "bold"),
+ #        axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+  #       axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+  #       axis.ticks.length = unit(0.5, "cm"),
+ #        axis.line = element_line(colour = "#F5F5F5"),
+ #        panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+ #        )
 
-ggsave("data/18_Province_newCasesMA-set3.png",width=16, height = 9)
+#ggsave("data/18_Province_newCasesMA-set3.png",width=16, height = 9)
 
 
 

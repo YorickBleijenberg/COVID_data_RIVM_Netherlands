@@ -18,21 +18,17 @@
 
 ## Nieuwe maatregelen toevoegen - bieb dicht - 4 november
 
-## vakantie effect per veiligheidsregio
-
-####   format numbers in tweet  1.200
+####   format numbers in plots  1.200
 
 #### ECDC - ANIMATION
 
 #### R ANIMATION
 
+###  auto upload to git
 
-####Check LSPC update 
-LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")  
-LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
-LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
-(LCPS_datafeed)
+###  set-up remote
 
+##### vakantie effect per veiligheidsregio  #####
 
 
 #### check selected dates ####
@@ -50,16 +46,34 @@ dir.create(dirname)
 
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
 
-source("C:\\Rdir\\Rscripts\\00_lcps_data_graph.R")
+
+####Check LSPC update 
+LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")
+LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
+LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
+(LCPS_datafeed)
+
 
 
 #### Start  ####
 
+ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
+ # source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
+
+
+editionname <- "lazy sunday"
+editienaam  <- "buiten-regen-binnen-The-Crown"
+
+
+source("C:\\Rdir\\Rscripts\\00_lcps_data_graph.R")
+### Warning messages:
+#1: package 'ggrepel' was built under R version 4.0.3 
+#2: Removed 18 rows containing missing values (position_stack). 
+#3: Removed 460 rows containing missing values (position_stack).
+
+
 source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 
-
-  source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
-##  source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
 
 source("C:\\Rdir\\Rscripts\\04_DataPrep.R")
@@ -109,9 +123,12 @@ source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
 
 source("C:\\Rdir\\Rscripts\\20_carehomes.R")
 
+source("C:\\Rdir\\Rscripts\\22_prediction.R")
+
 
 
 #### check correct last tweet ####
+
 ## source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
 ## source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")

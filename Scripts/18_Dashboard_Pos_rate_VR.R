@@ -1,16 +1,20 @@
 library(jsonlite)
 library(tidyverse)
+library(gganimate)
+library(lubridate)
+library(zoo)
+
+
 
 
 vr <- "C:\\Rdir\\data-contstant\\veiligheidsregios.csv"
 VR <- read.csv(vr,sep=";")  
-colnames(VR) = c("vrcode", "Regio_Naam")
+colnames(VR) = c("vrcode", "Regio_Naam", "inwoners")
+
+VR$inwoners <- as.integer(VR$inwoners)
 
 FR_a <- intToUtf8(0xC2)  #Encoding(FR_b) <- "UTF-8"
 FR_b <- paste0("Frysl", FR_a,"n")
-
-
-
 VR$Regio_Naam <- str_replace(VR$Regio_Naam, "Fryslân", FR_b)  ##fout / goed
 
 
@@ -19,34 +23,43 @@ VR$Regio_Naam <- str_replace(VR$Regio_Naam, "Fryslân", FR_b)  ##fout / goed
 tot<-data.frame()
 i=1
 
+#### https://coronadashboard.rijksoverheid.nl/_next/data/Zu6pE8P0LzYqDDvmsb8WQ/veiligheidsregio/VR22/positief-geteste-mensen.json
+####02/positief-geteste-mensen.json
+
+
+db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/Zu6pE8P0LzYqDDvmsb8WQ/veiligheidsregio/VR22/positief-geteste-mensen.json"))
+db<-db[["pageProps"]][["data"]][["ggd"]][["values"]]
 
 
 for (i in 1:25) {
   if(i<10){
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/OJmUmnz4EyrzdV1PiUuO0//veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/TtTqx1URGaEt7QGeaxKZA/veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
   }else{
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/OJmUmnz4EyrzdV1PiUuO0//veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/TtTqx1URGaEt7QGeaxKZA/veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
   }
   db<-db[["pageProps"]][["data"]][["ggd"]][["values"]]
   tot<-rbind(tot,db)
 }
 
-#### Merge df's and clean ip ####
+#### Merge df's and clean up ####
 
-VR__poss_rate_values <- merge(tot,VR)
+VR_poss_rate_values <- merge(tot,VR)
 
-
-VR__poss_rate_values$date <- as.Date(as.POSIXct(VR__poss_rate_values$week_unix, origin="1970-01-01"))
+VR_poss_rate_values$date <- as.Date(as.POSIXct(VR_poss_rate_values$week_unix, origin="1970-01-01"))
 
 File_date_VR <- paste0("rivm-dashboard/VR/VR_", format(Sys.time(), "%Y-%m-%d"),".csv")
-write.csv2(VR__poss_rate_values, File_date_VR, row.names=FALSE)
+write.csv2(VR_poss_rate_values, File_date_VR, row.names=FALSE)
 
 #### plot positivity regions ####
 
-ggplot(VR__poss_rate_values, aes(x=date, y=infected_percentage, fill = Regio_Naam))+
+ggplot(VR_poss_rate_values, aes(x=date, y=infected_percentage, fill = Regio_Naam))+
  
-  geom_line(mapping = aes(x=date, y=5), color = "darkgreen",lwd = 1, linetype = "twodash")+
-  geom_line(mapping = aes(x=date, y=3), color = "black",lwd = 1,linetype = "dotted")+
+  
+  annotate("rect", xmin = as.Date("2020-06-01"), xmax = as.Date("2020-11-10"), ymin = 0, ymax =4, color = "black", fill = "lightgreen", alpha = 0.3)+
+  annotate("rect", xmin = as.Date("2020-06-01"), xmax = as.Date("2020-11-10"), ymin = 4, ymax =5, color = "black", fill = "orange", alpha = 0.3)+
+  
+  #geom_line(mapping = aes(x=date, y=5), color = "darkgreen",lwd = 1, linetype = "twodash")+
+  #geom_line(mapping = aes(x=date, y=3), color = "black",lwd = 1,linetype = "dotted")+
   
    geom_line(colour = "darkred", size =1.5)+
   facet_wrap(~Regio_Naam,)+
@@ -60,7 +73,7 @@ ggplot(VR__poss_rate_values, aes(x=date, y=infected_percentage, fill = Regio_Naa
        x = "",
        y = "", #Percentage positief",
       # color = "Legend"
-      subtitle = "groen - WHO grens: 5% \n zwart - ECDC grens:  3%",
+      subtitle = "orange - WHO grens: 5% \n groen - ECDC grens:  4%",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   
@@ -88,6 +101,12 @@ ggplot(VR__poss_rate_values, aes(x=date, y=infected_percentage, fill = Regio_Naa
   
   
   ggsave("data/50_percentage_positief_VR.png",width=15, height = 15)
+  
+  
+  
+  
+  
+
 
   
   

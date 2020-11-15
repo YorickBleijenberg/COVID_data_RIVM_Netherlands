@@ -62,7 +62,7 @@ df4 <- df3
                   
                          
 ### press events                         
-dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13"))
+dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
 dates_vline <- which((df4$Datum %in% dates_vline))
 
 
@@ -96,7 +96,7 @@ theme_classic()+
   
   
 labs(title = "Besmette personen: verschil met gisteren",
-     subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown", #  OMT: 'Een lagere R is beter'",
+     subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown\n4-nov, Perso verzwaring semi-lockdown", #  OMT: 'Een lagere R is beter'",
      caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
    theme(legend.position = c(0.2, 0.8),
@@ -187,10 +187,7 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
 
 
 ##mondays
-dates_vline_mondays <- as.Date(c(
-  "2020-08-10"                ,
-  "2020-08-17",
-                   "2020-08-24",
+dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2020-08-31",
                   "2020-09-07",
                    "2020-09-14",
@@ -200,14 +197,10 @@ dates_vline_mondays <- as.Date(c(
                    "2020-10-12",
                   "2020-10-19",
                   "2020-10-26",
-                  "2020-11-02"
-                 ))   ###, "2020-10-9"))
+                  "2020-11-02",
+                  "2020-11-09"
+                 ))   
 
-
-
-
-### press events                         
-#dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13"))
 dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))
 
 

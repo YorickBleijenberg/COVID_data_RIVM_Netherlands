@@ -55,6 +55,13 @@ Google_mob_NL_short$MA_thuis                <- round(rollmeanr(Google_mob_NL_sho
 Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 
 
+persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25")), 
+                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie"))
+
+
+
+
+
 ####   Plot the Google Mobility data 7d MA ####
 
 ggplot(Google_mob_NL_short)+  
@@ -78,15 +85,14 @@ theme_classic()+
   #9951a4
   
   
-  
   scale_color_manual(values = c("#3c81b9", "#54b251", "#fe8003", "#9951a4", "#e5292b"))+
   
   
   labs(title = "Google Mobility - Nederland",
-      subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n"),
+      subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.7,0.15),
+  theme(legend.position = c(0.5,0.15),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.margin = margin(3, 3, 3, 3),
@@ -112,7 +118,10 @@ theme_classic()+
   #geom_hline(yintercept=0) +
   #geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
  # geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") +
+  ## geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") +
+  
+  geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
+  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
   
   # geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dashed") +
   # geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dashed") +

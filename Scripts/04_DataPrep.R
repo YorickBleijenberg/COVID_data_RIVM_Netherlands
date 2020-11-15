@@ -36,12 +36,6 @@ cases_hosp <- merge(copy_cases,copy_hosp, by.x= "dateInTable")
 Merged_data <- merge(copy_dead,cases_hosp, by.x= "dateInTable")
 
 
-#Date <- Sys.Date()
-#Dateyesterday <- Sys.Date()-1
-#DateAweekAgo <- Sys.Date()-7
-
-#Merged_data_7MA <- Merged_data
-#Working_Set <- subset(Merged_data, dateInTable==Date | dateInTable==DateAweekAgo | dateInTable==Dateyesterday )
 
 Merged_data_2 <- Merged_data
 Merged_data_2$MACases  <- rollmeanr(Merged_data_2$cases, 7, fill = 0)

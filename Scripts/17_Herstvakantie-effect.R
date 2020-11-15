@@ -53,8 +53,9 @@ noord.zuid.short.4 <-filter(noord.zuid.short.4, datum > "2020-09-15")
 #### vanaties | regio plot ####
 
 ggplot(noord.zuid.short.4, aes(x=datum, y = posrate))+
+  
   geom_bar(stat='identity', fill = "#96afde")+
-   geom_line(mapping = aes(x=datum, y=MA_posrate), color = "#F5F5F5",lwd = 3)+
+  geom_line(mapping = aes(x=datum, y=MA_posrate), color = "#F5F5F5",lwd = 3)+
   geom_line(mapping = aes(x=datum, y=MA_posrate), color = "#44546a",lwd = 2)+
   
   facet_wrap(~regio)+
@@ -66,9 +67,9 @@ ggplot(noord.zuid.short.4, aes(x=datum, y = posrate))+
   
   labs(title = "Vakanties",
        subtitle = paste("Per 100.000  ||  7-daags zwevend gemiddele",
-                        "\n\n - groen - Herfstvakantie Noord: 10-18 oktober \n",
-                        "- rood = semi-lockdown op 14 oktober\n",
-                        "- zwart - Herfstvakantie midden/zuid: 17-25 oktober"
+                        "\n\n - rood - Herfstvakantie Noord: 10-18 oktober \n",
+                        "- zwart = semi-lockdown op 14 oktober\n",
+                        "- blauw - Herfstvakantie midden/zuid: 17-25 oktober"
                                                 ),
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
@@ -89,13 +90,15 @@ ggplot(noord.zuid.short.4, aes(x=datum, y = posrate))+
          strip.text.x = element_text(size = 13, color = "black"),
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
   
-   geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dotted", color = "darkgreen",size = 1.5) +
-   geom_vline(xintercept = as.Date("2020-10-18"), linetype = "dotted", color = "darkgreen",size = 1.5) +
-   geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dotted", size = 1.5) +
-   geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dotted", size = 1.5)+
+  # geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dotted", color = "darkgreen",size = 1.5) +
+  # geom_vline(xintercept = as.Date("2020-10-18"), linetype = "dotted", color = "darkgreen",size = 1.5) +
+  # geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dotted", size = 1.5) +
+  # geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dotted", size = 1.5)+
   
-   geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "red", size = 1.5)+
-  
+  annotate("rect", xmin = as.Date("2020-10-10"), xmax = as.Date("2020-10-18"), ymin = -Inf, ymax = Inf, fill = "red", alpha = 0.2)+
+  annotate("rect", xmin = as.Date("2020-10-17"), xmax = as.Date("2020-10-25"), ymin = -Inf, ymax = Inf, fill = "blue", alpha = 0.2)+
+  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "black", size = 1.5)+
+ 
 ggsave("data/40_niet-noord-phd.png",width=16, height = 9)          
 
 
@@ -147,3 +150,88 @@ ggplot(noord.zuid.short.4, aes(x=datum, y = posrate))+
   
   ggsave("data/40_EN_niet-noord-phd.png",width=16, height = 9)    
 
+
+
+
+
+
+# library(plyr) 
+
+# library(ggthemes)
+
+testdf3 <- noord.zuid.short.4
+testdf3$regio <- as.factor(testdf3$regio)
+
+
+
+f_labels <- data.frame(regio = c("Noord", "Niet-Noord"), label = c("4wd", "Front"))
+
+
+rec3 <- data.frame(xmin = c(as.Date("2020-10-10"), as.Date("2020-10-17")),
+                    xmax = c(as.Date("2020-10-18"), as.Date("2020-10-25")),
+                    ymin = c(-Inf, 0.30),
+                    ymax = Inf,
+                    regio = c("Noord", "Niet-Noord"))
+
+
+
+ggplot(testdf3, aes(x=datum, y = posrate))+
+  
+  geom_bar(stat='identity', fill = "#96afde")+
+  geom_line(mapping = aes(x=datum, y=MA_posrate), color = "#F5F5F5",lwd = 3)+
+  geom_line(mapping = aes(x=datum, y=MA_posrate), color = "#44546a",lwd = 2)+
+  
+  #geom_rect(data = testdf3(regio == Noord), aes(xmin = as.Date("2020-10-10"), xmax = as.Date("2020-10-18"), ymin = -Inf, ymax = Inf), fill = "red", alpha = 0.005, inherit.aes = FALSE)+
+  
+  facet_wrap(~regio, ncol =1)+
+
+   #geom_rect(subset = .(regio == 'Noord'), aes(xmin = as.Date("2020-10-10"), xmax = as.Date("2020-10-18"), ymin = -Inf, ymax = Inf), fill = "red", alpha = 0.005, inherit.aes = FALSE)+
+  # data = testdf3(regio = Noord),
+  
+  theme_classic()+
+  xlab("")+ 
+  ylab("")+
+  scale_x_date(name="")
+  #geom_text(x = as.Date("2020-10-10"), y = 40, aes(label = label), data = f_labels)
+  #geom_rect(xmin = as.Date("2020-10-10"), xmax = as.Date("2020-10-18"), ymin = -Inf, ymax = Inf, fill = "red", aes(label = label), data = f_labels)
+  
+ 
+
+
+
+
+
+
+d=data.frame(x1=c(1,3,1,5,4), x2=c(2,4,3,6,6), y1=c(1,1,4,1,3), y2=c(2,2,5,3,5), t=c('a','a','a','b','b'), r=c(1,2,3,4,5))
+ggplot() + 
+  scale_x_continuous(name="x") + 
+  scale_y_continuous(name="y") +
+  geom_rect(data=d, mapping=aes(xmin=x1, xmax=x2, ymin=y1, ymax=y2, fill=t), color="black", alpha=0.5) +
+  geom_text(data=d, aes(x=x1+(x2-x1)/2, y=y1+(y2-y1)/2, label=r), size=4) 
+  
+  
+  
+  df <- data.frame(x = rnorm(20),
+                   y = runif(20),
+                   facet = sample(c("A", "B"),
+                                  20,
+                                  replace = TRUE))
+  
+  
+  rect2 <- data.frame(xmin = c(-1, 0),
+                      xmax = c(0, 2),
+                      ymin = c(-Inf, 0.25),
+                      ymax = Inf,
+                      facet = c("B", "A"))
+  
+  ggplot() + 
+    geom_rect(data = rect2 , aes(xmin = xmin,
+                                 xmax = xmax,
+                                 ymin = ymin,
+                                 ymax = ymax,
+                                 fill = facet),
+              alpha = 0.2) +
+    geom_point(data = df, aes(x = x, y = y))+
+    facet_wrap(~facet)
+
+  

@@ -92,6 +92,10 @@ if (doubling.cases.week > 0) {
 
 doubling.cases.week <- abs(doubling.cases.week)
 
+a  <- format( a, big.mark="." ,decimal.mark=",")
+diff.cases.day  <- format( diff.cases.day, big.mark="." ,decimal.mark=",")
+diff.cases.week  <- format( diff.cases.week, big.mark="." ,decimal.mark=",")
+
 #### tweet.cases.EN.tweet ####
 
 tweet.cases.EN.tweet <- "New reported cases:
@@ -176,6 +180,9 @@ if (doubling.dead.week > 0) {
 
 doubling.dead.week <- abs(doubling.dead.week)
   
+n  <- format( n, big.mark="." ,decimal.mark=",")
+diff.dead.day  <- format( diff.dead.day, big.mark="." ,decimal.mark=",")
+diff.dead.week  <- format( diff.dead.week, big.mark="." ,decimal.mark=",")
   
   #### tweet.dead.EN.tweet ####
   
@@ -202,6 +209,15 @@ post_tweet(tweet.dead.EN.tweet,  media = c("data/02_EN_leeftijd_heatmap-dead.png
 
 
 #"data/07_new_cases_DoD.png",
+
+
+#### tweet.age.tweet ####
+
+tweet.age.tweet <- paste("Ages and age distribution of the reported cases.")
+post_tweet(status = tweet.age.tweet, 
+           media = c("data/01_EN_leeftijd_barchart.png","data/02_EN_leeftijd_heatmap.png", "data/03_EN_leeftijd_relatief.png"), 
+           in_reply_to_status_id = get_reply_id()
+)
 
 ### Hosp tweet ####
 
@@ -263,6 +279,10 @@ if (doubling.hosp.week > 0) {
 
 doubling.hosp.week <- abs(doubling.hosp.week)
 
+h  <- format( h, big.mark="." ,decimal.mark=",")
+diff.hosp.day  <- format( diff.hosp.day, big.mark="." ,decimal.mark=",")
+diff.hosp.week  <- format( diff.hosp.week, big.mark="." ,decimal.mark=",")
+
 #### tweet.hosp.EN.tweet ####
 
 tweet.hosp.tweet <- "New reported hospitalisations:
@@ -287,13 +307,14 @@ post_tweet(tweet.hosp.tweet,  media = c("data/02_EN_leeftijd_heatmap-hosp.png","
 
 
 
-#### tweet.age.tweet ####
+#### tweet.carehomes.tweet ####
 
-tweet.age.tweet <- paste("Ages and age distribution of the reported cases.")
-post_tweet(status = tweet.age.tweet, 
-           media = c("data/01_EN_leeftijd_barchart.png","data/02_EN_leeftijd_heatmap.png", "data/03_EN_leeftijd_relatief.png"), 
-           in_reply_to_status_id = get_reply_id()
-)
+
+tweet.carehomes.tweet <- "Verpleeghuizen
+"
+tweet.carehomes.tweet <- sprintf(tweet.carehomes.tweet)
+Encoding(tweet.carehomes.tweet) <- "UTF-8"
+post_tweet(tweet.carehomes.tweet,  media = c("data/52_Verpleeg_loc.png", "data/51_Verpleeg_dead.png", "data/50_Verpleeg_cases.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -360,7 +381,9 @@ PersCoKroegDays <- as.numeric(difftime(Sys.Date(),PersCoKroeg, units = c("days")
 PersCoPaniek = as.Date("2020-09-28",'%Y-%m-%d')
 PersCoPaniekDays <- as.numeric(difftime(Sys.Date(),PersCoPaniek, units = c("days")))   
 PersCoSemiLockdown = as.Date("2020-10-13",'%Y-%m-%d')
-PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))  
+PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))
+PersCoSemitwoWeeks = as.Date("2020-11-03",'%Y-%m-%d')
+PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))  
 
 tweet.data.tweet <- "Days since:
 
@@ -368,11 +391,13 @@ tweet.data.tweet <- "Days since:
 
 %s - press conference: 'We want R=0,9'
 
-%s  - press conference: 'semi-lockdown'"
+%s  - press conference: 'semi-lockdown'
+
+%s - press conference: 'stricter semi-lockdown'"
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
-                            PersCoKroegDays,PersCoPaniekDays,PersCoSemiLockdownDays
+                            PersCoKroegDays,PersCoPaniekDays,PersCoSemiLockdownDays,PersCoSemitwoWeeksDays
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 

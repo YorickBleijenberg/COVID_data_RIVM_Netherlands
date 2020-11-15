@@ -45,8 +45,8 @@ bla3_3 <- bla3_3[complete.cases(bla3_3), ]  #remove N/A
 weeknumber<-strftime(Sys.Date(),format = "%V")
 
 
-bla2_2<- bla2_2[bla2_2$week>25&bla2_2$week<=45,]
-bla3_3<- bla3_3[bla3_3$weekOfDead>25&bla3_3$weekOfDead<=45,]
+bla2_2<- bla2_2[bla2_2$week>25&bla2_2$week<=46,]
+bla3_3<- bla3_3[bla3_3$weekOfDead>25&bla3_3$weekOfDead<=46,]
 
 
 

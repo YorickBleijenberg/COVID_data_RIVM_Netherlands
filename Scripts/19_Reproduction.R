@@ -11,26 +11,38 @@ reproduction.raw <- fromJSON(repro.name)
 
 #reproduction.raw.old <- reproduction.raw.old[order(reproduction.raw.old$Type, reproduction.raw.old$Datum),]
 
-last.date.old.2 <- tail(reproduction.raw$Date, 1)
-reproduction.raw$Date <- as.Date(reproduction.raw$Date)
+last.date <- tail(reproduction.raw$Date, 1)
+
+
+# last.date <- format(Sys.time(), "%Y-%m-%d")
 
 File_date_6 <- paste0("rivm-data/reproduction/",last.date,"_COVID-19_reproductiegetal.csv")
 write.csv2(reproduction.raw, File_date_6, row.names=FALSE) 
 
 last.date.old.wide.2 <- reproduction.raw
 
+last.date.old.wide.2$Date <- as.Date(last.date.old.wide.2$Date)
 
+last.date.old.wide$Rt_low <- as.numeric(sub("," , ".", last.date.old.wide$Rt_low))
+last.date.old.wide$Rt_avg <- as.numeric(sub("," , ".", last.date.old.wide$Rt_avg))
+last.date.old.wide$Rt_up  <- as.numeric(sub("," , ".", last.date.old.wide$Rt_up))
 
 #################### old
-repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-10-27_COVID-19_reproductiegetal.csv"
+repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-11-05_COVID-19_reproductiegetal.csv"
 reproduction.raw.old <- read.csv(repro.name.old,sep=",")  
 
-last.date.old <- tail(reproduction.raw.old$Datum, 1)
-reproduction.raw.old$Datum <- as.Date(reproduction.raw.old$Datum)
+last.date.old.wide <-reproduction.raw.old
+
+last.date.old <- tail(last.date.old.wide$Datum, 1)
+last.date.old.wide$Datum <- as.Date(last.date.old.wide$Datum)
 
 last.date.old.wide <- spread(reproduction.raw.old, key="Type", value="Waarde")
 colnames(last.date.old.wide) = c("Date","Rt_up", "Rt_low", "Rt_avg" )
+
+last.date.old.wide$Date <- as.Date(last.date.old.wide$Date)
+
 ####################
+
 ################### newer
    repro.name.old.2 <- "C:\\Rdir\\rivm-data\\reproduction\\2020-10-27_COVID-19_reproductiegetal.csv"
    reproduction.raw.old.2 <- read.csv(repro.name.old.2,sep=",")  
@@ -52,7 +64,7 @@ r.estimate.df = data.frame(date_start=as.Date(c("2020-09-19", "2020-09-29", "202
                            ) 
    
    
-ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
+ggplot(last.date.old.wide, aes(x=Date, y=Rt_avg, group = 1))+
  
      geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
      geom_text(data=persco.df, mapping=aes(x=date, y=0.1, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+    
@@ -91,14 +103,14 @@ ggplot(last.date.old.wide, aes(x=Date, y=Rt_avg))+
   geom_line(data=last.date.old.wide.2, aes(y = Rt_low), lwd=0.6) +
   geom_line(data=last.date.old.wide.2, aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(data=last.date.old.wide.2, aes(ymin=Rt_low,ymax=Rt_up), fill="darkred",  alpha = 0.6) +
-  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "  3 november"), lwd=2) + 
+  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "  10 november"), lwd=2) + 
   
   
   ## old prediction
   geom_line(aes(y = Rt_low), lwd=0.6) +
   geom_line(aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(aes(ymin=Rt_low, ymax=Rt_up), color="lightblue", fill="lightblue", alpha = 0.4) +
-  geom_line(aes(y = Rt_avg, colour = "27 oktober"), lwd=1.2)+
+  geom_line(aes(y = Rt_avg, colour = "3 november"), lwd=1.2)+
   
   
   scale_color_manual(values = c("darkred", "darkblue"))+
