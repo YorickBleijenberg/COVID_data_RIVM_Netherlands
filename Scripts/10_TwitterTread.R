@@ -234,8 +234,8 @@ post_tweet(tweet.dead.tweet,  media = c("data/15_dead_diff.png",
 ###   35      -   874
 
 kerst.niveau.week <- df.predict.kerst$MACases_2[days.to.kerst+2]
-kest.niveau.text.week <- paste("waakzaam")
-if (kerst.niveau.week > 875) {
+kest.niveau.text.week <- paste("waakzaam")     
+if (kerst.niveau.week > 1250) {                      #875
   kest.niveau.text.week <- paste("zorgelijk")
 }
 if (kerst.niveau.week > 3750) {
@@ -246,8 +246,8 @@ if (kerst.niveau.week > 6250) {
 }
 
 kerst.niveau.dag <- df.predict.kerst$MACases[days.to.kerst+8]
-kest.niveau.text.dag <- paste("waakzaam")
-if (kerst.niveau.dag > 875) {
+kest.niveau.text.dag <- paste("waakzaam")      
+if (kerst.niveau.dag > 1250) {                      #875
   kest.niveau.text.dag <- paste("zorgelijk")
 }
 if (kerst.niveau.dag > 3750) {
@@ -265,7 +265,7 @@ label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen")
 
 
 df.to.subset <-df.predict.kerst
-df.to.subset<- df.to.subset[df.to.subset$MACases<=875,]
+df.to.subset<- df.to.subset[df.to.subset$MACases<=1250,]     #875
 days.until.lvl2 <- df.to.subset$fixedDate[1]
 today  <- Sys.Date()
 days.until.lvl2<- as.vector(difftime(days.until.lvl2, today, units='days'))
@@ -284,7 +284,7 @@ Week-op-week (rood):
 . Niveau tijdens kerst: [%s]
 
 
-Dag-op-dag (zwart):
+Dag-op-dag (donkerblauw):
 . %s elke %s dagen,
 . niveau tijdens kerst: [%s]
 "
@@ -297,7 +297,7 @@ tweet.kerst.tweet <- sprintf(tweet.kerst.tweet, emoji_kerst, emoji_snowman, emoj
                              kest.niveau.text.week
 )
 Encoding(tweet.kerst.tweet) <- "UTF-8"
-post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
+ post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -482,24 +482,29 @@ PersCoPaniekDays <- as.numeric(difftime(Sys.Date(),PersCoPaniek, units = c("days
 PersCoSemiLockdown = as.Date("2020-10-13",'%Y-%m-%d')
 PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))
 PersCoSemitwoWeeks = as.Date("2020-11-03",'%Y-%m-%d')
-PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))  
+PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))
+PersCoSemitwoWeeksdone = as.Date("2020-11-17",'%Y-%m-%d')
+PersCoSemitwoWeeksdoneDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeksdone, units = c("days")))  
 
 tweet.data.tweet <- "Dagen sinds:
 
-[%s] de persCo: 'kroeg uurtje eerder dicht' - regionale maatregelen
+[%s] de persCo: 'Kroeg uurtje eerder dicht' - regionale maatregelen
 
 [%s] de persoCo: 'We gaan voor R=0,9' - landelijke maatregelen
 
 [%s] de persoCo: 'Semi-lockdown'
 
-[%s]  de persoCo: 'verzwaring semi-lockdown'"
+[%s]  de persoCo: 'Verzwaring semi-lockdown'
+
+[%s]  de persoCo: 'Einde verzwaring semi-lockdown'"
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
                             PersCoKroegDays,
                             PersCoPaniekDays,
                             PersCoSemiLockdownDays,
-                            PersCoSemitwoWeeksDays
+                            PersCoSemitwoWeeksDays,
+                            PersCoSemitwoWeeksdoneDays
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
@@ -532,7 +537,7 @@ Nee.
 
 tweet.vakantie.tweet <- sprintf(tweet.vakantie.tweet)
 Encoding(tweet.vakantie.tweet) <- "UTF-8"
-post_tweet(tweet.vakantie.tweet,  media = c("data/40_niet-noord-phd.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.vakantie.tweet,  media = c("data/40_niet-noord-raw.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 

@@ -31,14 +31,11 @@ df_today_3 <-as.data.frame(df_today_2)
 
 
 df_merge <- merge(df_today_3, df_yesterday_3, by=c("Var1"), all.x = TRUE)
-
 df_merge[is.na(df_merge)] <- 0
-
 colnames(df_merge) <- c("week","vandaag", "gisteren")
 
 
 df_merge2 <-df_merge
-
 
 df_merge3_diff <- df_merge2 %>% 
   select(week,vandaag,gisteren) %>%
@@ -50,11 +47,10 @@ df_merge3_diff$week  <-  levels(df_merge3_diff$week)[df_merge3_diff$week]
 
 weeknumber<-strftime(Sys.Date(),format = "%V")
 df_merge_3_short <- df_merge3_diff[df_merge3_diff$week>26&df_merge3_diff$week<=weeknumber,]
-df_merge_3_short_old <- df_merge3_diff[df_merge3_diff$week>11&df_merge3_diff$week<=40,]
 
-
+### deceased before week 40
+df_merge_3_short_old <- df_merge3_diff[df_merge3_diff$week>11&df_merge3_diff$week<=40,]  
 df_merge_3_short_old <- df_merge_3_short_old[ -c(1,2,3)]
-
 diff.dead.old <- sum(df_merge_3_short_old$diff)
 
 
@@ -67,9 +63,6 @@ gathercols <- c("gisteren", "diff")
 df_merge_trans_long <- gather(df_merge_3_short, keycol, valuecol, gathercols)  #value = c("vandaag", "gisteren", "diff") # %>% 
  
 #df_merge_trans_long_sort <- df_merge_trans_long[order(df_merge_trans_long$week),]
-
-
-
 
 
 ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
@@ -94,7 +87,7 @@ ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
        subtitle = "naar week van overlijden",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.5, 0.9),
+  theme(legend.position = c(0.5, 0.925),
      legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
        legend.title = element_blank(),
         legend.text = element_text(colour="black", size=27, face="bold"))+
@@ -139,7 +132,7 @@ ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
        subtitle = "By week of death",
        caption = paste("Source: RIVM  | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.2, 0.9),
+  theme(legend.position = c(0.5, 0.925),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=27, face="bold"))+

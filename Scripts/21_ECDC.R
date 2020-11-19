@@ -1,10 +1,12 @@
-library(gganimate)
-library(zoo)
-library(jsonlite)
 library(tidyverse)
+library(gganimate)
+
+library(jsonlite)
 library(lubridate)
 
 
+library(zoo)
+require(data.table)
 
 
 
@@ -30,6 +32,8 @@ pos.rate.nl$p.rate <- as.double(pos.rate.nl$cases / pos.rate.nl$tested *100)
 pos.rate.nl$MAcase <- (rollmeanr(pos.rate.nl$cases, 2, fill = 0))*2
 
 pos.rate.nl$vdphd <- pos.rate.nl$MAcase/17461543*100000
+
+
 
 ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
   
@@ -100,7 +104,7 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
   VR <- read.csv(vr,sep=";")  
   colnames(VR) = c("vrcode", "vregio", "inwoners")
   
-  FR_a <- intToUtf8(0xC2)  #Encoding(FR_b) <- "UTF-8"
+  FR_a <- intToUtf8(0x00E2)  #Encoding(FR_b) <- "UTF-8"
   FR_b <- paste0("Frysl", FR_a,"n")
   
   VR$vregio <- str_replace(VR$vregio, "Fryslân", FR_b)  ##fout / goed
@@ -109,14 +113,17 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
   VR$inwoners <- as.integer(VR$inwoners)
   pos.rate.vr$week2 <- isoweek(as.Date(as.POSIXct(pos.rate.vr$week, origin="1970-01-01"), format = "%V"))
   
+  VR <- VR[ -c(1,4,5)]
+  pos.rate.vr <- pos.rate.vr[ -c(1,3,6:9)]
+
+  VR_2 <- merge(VR,pos.rate.vr) #,"vregio")
   
-  VR_2 <- merge(VR, pos.rate.vr)
   VR_2$MAcase <- (rollmeanr(VR_2$cases, 2, fill = 0))*2
-  VR_2 <- VR_2[VR_2$week2>23 & VR_2$week2<= 46,]
+  VR_2 <- VR_2[VR_2$week2>41 & VR_2$week2<= 46,]
   
   VR_2$posphd <- as.double(VR_2$MAcase / VR_2$inwoners*100000)
   VR_2$p.pos <- as.double(VR_2$cases / VR_2$tested*100)
-  VR_2 <- VR_2[ -c(2,4,5,6,7,8)]
+  #VR_2 <- VR_2[ -c(2,4,5,6,7,8)]
   
   VR_2$perc_pos <- as.numeric(VR_2$perc_pos)
   VR_3 <- VR_2[VR_2$week2>41 & VR_2$week2<= 46,]

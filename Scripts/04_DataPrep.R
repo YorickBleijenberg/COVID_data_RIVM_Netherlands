@@ -1,10 +1,4 @@
-#library(cbsodataR)
-#library(sf)
-#library(dplyr)
-#library(extrafont)
-#library(ggplot2)
-#library(RcppRoll)
-#require(data.table)
+
 library(tidyverse)
 library(zoo)
 
@@ -13,8 +7,9 @@ library(zoo)
 ####copy.aantal.landelijk.gem.dag <- RIVM_casus_landelijk
 read.aantal.landelijk.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_casus_landelijk.csv",sep="")
 
-copy.aantal.landelijk.gem.dag <- read.csv(read.aantal.landelijk.path,sep=";")
-AgeFill <- read.csv(read.aantal.landelijk.path,sep=";")
+
+# copy.aantal.landelijk.gem.dag <- read.csv(read.aantal.landelijk.path,sep=";")
+
 
 ######copy.aantal.gem.dag   <-   aantallen_gemeente_per_dag
 read.aantal.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv", sep = "")

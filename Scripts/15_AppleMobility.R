@@ -22,10 +22,13 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2019HotfixDev36/v3/en-us/applemobilitytrends-2020-11-10.csv
 ##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev9/v3/en-us/applemobilitytrends-2020-11-12.csv
 
+##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev11/v3/en-us/applemobilitytrends-2020-11-14.csv
+##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev12/v3/en-us/applemobilitytrends-2020-11-15.csv
+
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev9/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev14/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -263,3 +266,5 @@ Encoding(tweet.appleM.tweet) <- "UTF-8"
 
 ##  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png"))
 ##  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png") , in_reply_to_status_id = get_reply_id()) 
+
+  

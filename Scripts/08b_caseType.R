@@ -1,6 +1,7 @@
 library(tidyverse)
 
-
+require(zoo)
+require(data.table)
 
 ##############  How to plot factors in a specified order in ggplot
 
@@ -52,6 +53,9 @@ keycol <- "Datum"
 valuecol <- "type"
 gathercols <- c("DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff")
 
+#df4 <- gather(df2, keycol, valuecol, gathercols)
+#df4$Datum <- as.Date(df4$Datum)
+
 df3 <- gather(df2, keycol, valuecol, gathercols)
 df3$Datum <- as.Date(df3$Datum)
 
@@ -59,14 +63,15 @@ df3$Datum <- as.Date(df3$Datum)
 df4 <- df3
 
 
-                  
-                         
 ### press events                         
-dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
-dates_vline <- which((df4$Datum %in% dates_vline))
+#dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
+#dates_vline <- which((df4$Datum %in% dates_vline))
+
+dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04")),
+                          event=c("uurtje","nulnegen","semilock","verzwaring"))
 
 
-
+df4 <- df4[df4$Datum>"2020-07-01",]
 
 
 ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
@@ -89,10 +94,13 @@ theme_classic()+
                                   "Melding aan GGD (nieuw/correctie)",
                                   "Melding aan GGD"))+
   
-   geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
-         col = "darkgray", lwd = 1, linetype= "dashed")+
- 
-   # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
+  # geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
+   #      col = "darkgray", lwd = 1, linetype= "dashed")+
+    # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
+  
+  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
+ # geom_text(data=dates_vline  , mapping=aes(x=date, y=6500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
+  
   
   
 labs(title = "Besmette personen: verschil met gisteren",
@@ -117,7 +125,7 @@ labs(title = "Besmette personen: verschil met gisteren",
     
     #axis.labels.x=date_format("%d-%b"),
     
-    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+ #,
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed")) #,
 #panel.grid.major.x = element_line(colour= "darkgray", linetype = "solid"))
 
 ggsave("data/07_cases_type1.png",width=16, height = 9)  
@@ -146,14 +154,14 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
                                 "Notification to GGD"))+                                                               
   
   
-  geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
-             col = "darkgray", lwd = 1, linetype= "dashed")+
+  #geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
+  #           col = "darkgray", lwd = 1, linetype= "dashed")+
   #geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
-  
+  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
   
   
   labs(title = "Cases: compared to yesterday",
-       subtitle = "18-Sep: Press conference 'bars close an hour early'\n28-Sep: Press conference 'We aim for an R of 0.9'\n13-oct: Press conferencesemi-lockdown",
+       subtitle = "18-Sep: Press conference 'bars close an hour early'\n28-Sep: Press conference 'We aim for an R of 0.9'\n13-oct: Press conference semi-lockdown \n 4-nov Press conference more semi-lockdown",
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position = c(0.2, 0.8),
@@ -198,7 +206,8 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2020-10-19",
                   "2020-10-26",
                   "2020-11-02",
-                  "2020-11-09"
+                  "2020-11-09",
+                  "2020-11-16"
                  ))   
 
 dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))

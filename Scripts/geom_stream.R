@@ -265,3 +265,11 @@ geom_stream <- function(mapping = NULL, data = NULL, geom = "polygon",
     params = list(na.rm = na.rm, bw = bw, center_fun = center_fun, n_grid = n_grid, method = method, ...)
   )
 }
+
+
+
+
+
+
+
+

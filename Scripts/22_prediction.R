@@ -12,8 +12,24 @@ library(tidyverse)
 ###   35      -   874
 
 
-df.predict  <-  last(Merged_data_short)
-df.predict <- df.predict[ -c(1:4,6:14)]
+
+Merged_data_7MA <- Merged_data_2
+
+
+#Gewenste dagen subsetten
+Merged_data_short <- Merged_data_7MA[Merged_data_7MA$dateInTable>"2020-07-01"&Merged_data_7MA$dateInTable<=Sys.Date(),]
+Merged_data_short$observation <- 1:nrow(Merged_data_short) 
+
+
+Merged_data_short$fixedDate <- as.Date(Merged_data_short$dateInTable,format="%Y-%m-%d")
+
+
+
+
+#df.predict.2  <-  last(Merged_data_short)
+
+df.predict  <-  tail(Merged_data_short,1)
+df.predict  <- df.predict[ -c(1:4,6:8,10:14)]
 
 today <- as.Date(df.predict$fixedDate)
 pred.MAcases  <- df.predict$MACases
@@ -48,7 +64,7 @@ df.predict.kerst$Date <- c(today-7)
 
 
 i=2 
-while (i < 100) {
+while (i < 200) {
 ma.cases.pred <- df.predict.kerst$MACases[i-1]  /100*doublingdayZ.2
 ma.cases.pred.2 <- df.predict.kerst$MACases_2[i-1]/100*doublingdayZ.3
 df.predict.kerst <- add_row(df.predict.kerst, NumDays = i, MACases = ma.cases.pred, MACases_2 = ma.cases.pred.2)
@@ -74,8 +90,8 @@ emoji_santa <- intToUtf8(0x1F385)
 
 
 ### press events                         
-dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
-dates_vline <- which((df4$Datum %in% dates_vline))
+#dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
+#dates_vline <- which((df4$Datum %in% dates_vline))
 
 kerst <- paste("kerst  ",emoji_kerst,emoji_snowman,emoji_snow )
 Encoding(kerst) <- "UTF-8"
@@ -100,6 +116,7 @@ if (doublingdayZ.1<0){
 }  
 
 
+##  Merged_data_short$cases <- format(Merged_data_short$cases, big.mark="." ,decimal.mark=",")
 
 #### prediction plot ####
   
@@ -107,13 +124,13 @@ ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#96afde"))+
  
-  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-01-05"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.6)+
-  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-01-05"), ymin =3750, ymax = 6250, color = "black",fill = "orange", alpha = 0.5)+
-  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-01-05"), ymin =875, ymax = 3750, color = "black",fill = "yellow", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-01-05"), ymin =0, ymax = 875, color = "black",fill = "green", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-02-05"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.6)+
+  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-02-05"), ymin =3750, ymax = 6250, color = "black",fill = "orange", alpha = 0.5)+
+  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-02-05"), ymin =1250, ymax = 3750, color = "black",fill = "yellow", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-02-05"), ymin =0, ymax = 1250, color = "black",fill = "green", alpha = 0.3)+ 
   
   ###ECDC
-  annotate("rect", xmin = as.Date("2020-08-01"), xmax =as.Date("2021-01-05"), ymin =0, ymax = 315, color = "black",fill = "green", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2020-08-01"), xmax =as.Date("2021-02-05"), ymin =0, ymax = 315, color = "black",fill = "green", alpha = 0.3)+ 
    
   ###routekaart kleuren ###
   #annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2020-12-31"), ymin =6250, ymax = Inf, color = "black",fill = "#68032F", alpha = 1)+
@@ -130,12 +147,12 @@ ggplot(Merged_data_short)+
   
   annotate("text", x = as.Date("2020-07-02"), y = 6360, label = "250/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
   annotate("text", x = as.Date("2020-07-02"), y = 3860, label = "150/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-07-02"), y = 960, label = "35/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-07-02"), y = 1320, label = "50/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
   annotate("text", x = as.Date("2020-10-26"), y = 390, label = "25/100K/ 2 weken", size=2,color = "black",face = "bold", hjust ="left")+
   
   
    ## ECDC
-  annotate("text", x = as.Date("2020-10-01"), y = 600,  label = "ECDC niveau 'groen'", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-09-27"), y = 600,  label = "ECDC niveau 'groen'", size=4,color = "black",face = "bold", hjust ="left")+
   annotate("curve", x = as.Date("2020-10-20"), xend =as.Date("2020-10-25"), 
            y = 600, yend = 375, curvature = -0.2,
            colour = "black", size=2, alpha=0.8, arrow =arrow(type = "closed",length = unit(2,"mm")))+
@@ -152,12 +169,7 @@ ggplot(Merged_data_short)+
   geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "black")+
   
 
-  annotate("text", x = as.Date("2020-11-16"), y = 7000,  label = "halvering elke 4 weken", size=5,angle=-50, color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-11-06"), y = 6000,  label = "halvering elke 7 dagen", size=5,angle=-75, color = "black",face = "bold", hjust ="left")+
-
- # annotate("text", x = as.Date("2020-11-16"), y = 5500,  label = paste( doublingdayZ.1.text, "elke",doublingdayZ.1.int, "dagen"), size=5,angle=-40, color = "black",face = "bold", hjust ="left")+
- # annotate("text", x = as.Date("2020-11-16"), y = 4000,  label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen"), size=5,angle=-50, color = "black",face = "bold", hjust ="left")+
-
+ 
   geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
   geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
   
@@ -174,7 +186,16 @@ ggplot(Merged_data_short)+
   geom_point(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 1.5, color = "darkred")+
  # geom_line(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 0.6, color = "black")+ 
   geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1.5, color = "#F5F5F5")+ 
-  geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1, color = "black")+ 
+  geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a")+ 
+  
+  
+  annotate("text", x = as.Date("2020-11-17"), y = 7000,  label = "halvering elke 4 weken", size=5,angle=-55, color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-11-06"), y = 6000,  label = "halvering elke 7 dagen", size=5,angle=-80, color = "black",face = "bold", hjust ="left")+
+  
+  # annotate("text", x = as.Date("2020-11-16"), y = 5500,  label = paste( doublingdayZ.1.text, "elke",doublingdayZ.1.int, "dagen"), size=5,angle=-40, color = "black",face = "bold", hjust ="left")+
+  # annotate("text", x = as.Date("2020-11-16"), y = 4000,  label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen"), size=5,angle=-50, color = "black",face = "bold", hjust ="left")+
+  
+  
   
   
   theme_classic()+
@@ -189,10 +210,10 @@ ggplot(Merged_data_short)+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%d %b"),
-               limits = as.Date(c("2020-07-01", "2021-01-05")))+
+               limits = as.Date(c("2020-07-01", "2021-02-05")))+
   
   labs(title = "De 'kunnen we kerst vieren?' grafiek",
-         subtitle = "met 7 daags voortschrijdend gemiddelde",
+         subtitle = "met 7-daags voortschrijdend gemiddelde",
          caption = paste("Bron: RIVM | Plot: @YorickB  | ",Sys.Date()))+
   theme(
       plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)

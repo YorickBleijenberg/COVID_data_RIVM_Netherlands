@@ -1,5 +1,5 @@
-library(tidyverse)
-library(jsonlite)
+#library(tidyverse)
+#library(jsonlite)
 require(data.table)
 
 ### Herstvakantie-effect ###
@@ -155,83 +155,104 @@ ggplot(noord.zuid.short.4, aes(x=datum, y = posrate))+
 
 
 
-# library(plyr) 
-
-# library(ggthemes)
-
-testdf3 <- noord.zuid.short.4
-testdf3$regio <- as.factor(testdf3$regio)
 
 
 
-f_labels <- data.frame(regio = c("Noord", "Niet-Noord"), label = c("4wd", "Front"))
+
+vr <- "C:\\Rdir\\data-contstant\\veiligheidsregios.csv"
+VR <- read.csv(vr,sep=";")  
+colnames(VR) = c("vrcode", "Regio_Naam", "inwoners", "regio_vac", "Municipal_health_service")
+
+FR_a <- intToUtf8(0x00E2)  #Encoding(FR_b) <- "UTF-8"
+FR_b <- paste0("Frysl", FR_a,"n")
+FR_c <- paste0("GGD Frysl", FR_a,"n")
+VR$Regio_Naam <- str_replace(VR$Regio_Naam, "Fryslân", FR_b)  ##fout / goed
+VR$Municipal_health_service <- str_replace(VR$Municipal_health_service, "GGD Fryslân", FR_c)  ##fout / goed
 
 
-rec3 <- data.frame(xmin = c(as.Date("2020-10-10"), as.Date("2020-10-17")),
+
+read.aantal.landelijk.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_casus_landelijk.csv",sep="")
+cases_per_day <- read.csv(read.aantal.landelijk.path,sep=";")
+
+cases_per_day$date  <- as.Date(cases_per_day$date)
+
+FR_a <- intToUtf8(0x00E2)  #Encoding(FR_b) <- "UTF-8"
+FR_b <- paste0("Frysl", FR_a,"n")
+cases_per_day$Municipal_health_service <- str_replace(cases_per_day$Municipal_health_service, "Fryslân", FR_b)  ##fout / goed
+
+cases_per_day.2 <- cases_per_day[ -c(1,2,4:9,12)]
+
+cases_per_day.3 <- merge(VR, cases_per_day.2)
+
+cases_per_day.3 <- cases_per_day.3[cases_per_day.3$date>"2020-09-01",]
+cases_per_day.3$Date_statistics_type <- as.factor(cases_per_day.3$Date_statistics_type) 
+
+cases_per_day.3$value <- 1
+
+rect2 <- data.frame(xmin = c(as.Date("2020-10-10"), as.Date("2020-10-17")),
                     xmax = c(as.Date("2020-10-18"), as.Date("2020-10-25")),
-                    ymin = c(-Inf, 0.30),
-                    ymax = Inf,
-                    regio = c("Noord", "Niet-Noord"))
+                    ymin = c(0, 0),
+                    ymax = c(Inf, Inf),
+                    regio_vac = c("Noord", "Niet-Noord")
+)
 
+ggplot()+
+  geom_col(data= cases_per_day.3, aes(x=date , y = value, fill = factor(Date_statistics_type, levels=c("DOO","DPL","DON") )))+
+  
+  scale_fill_manual(values=c("#f8766d", "#00ba38", "#203864","red","blue"),
+                    labels=c(   "Melding aan GGD",
+                                "Eerste ziektedag",
+                                "Positieve labuitslag",
+                                "Vakantie Niet-Noord",
+                                "Vakantie Noord"))+
+  
+  geom_rect(data = rect2 , aes(xmin = xmin,
+                               xmax = xmax,
+                               ymin = ymin,
+                               ymax = ymax,
+                               fill = regio_vac),
+            alpha = 0.5) +
 
-
-ggplot(testdf3, aes(x=datum, y = posrate))+
+  facet_wrap(~regio_vac)+ 
   
-  geom_bar(stat='identity', fill = "#96afde")+
-  geom_line(mapping = aes(x=datum, y=MA_posrate), color = "#F5F5F5",lwd = 3)+
-  geom_line(mapping = aes(x=datum, y=MA_posrate), color = "#44546a",lwd = 2)+
-  
-  #geom_rect(data = testdf3(regio == Noord), aes(xmin = as.Date("2020-10-10"), xmax = as.Date("2020-10-18"), ymin = -Inf, ymax = Inf), fill = "red", alpha = 0.005, inherit.aes = FALSE)+
-  
-  facet_wrap(~regio, ncol =1)+
-
-   #geom_rect(subset = .(regio == 'Noord'), aes(xmin = as.Date("2020-10-10"), xmax = as.Date("2020-10-18"), ymin = -Inf, ymax = Inf), fill = "red", alpha = 0.005, inherit.aes = FALSE)+
-  # data = testdf3(regio = Noord),
-  
-  theme_classic()+
+  theme_bw() + 
   xlab("")+ 
   ylab("")+
-  scale_x_date(name="")
-  #geom_text(x = as.Date("2020-10-10"), y = 40, aes(label = label), data = f_labels)
-  #geom_rect(xmin = as.Date("2020-10-10"), xmax = as.Date("2020-10-18"), ymin = -Inf, ymax = Inf, fill = "red", aes(label = label), data = f_labels)
+  scale_x_date()+
   
- 
+  theme(legend.position = "top",
+        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10, face="bold"))+
+  
+  labs(title = "Vakanties - casus data",
+       subtitle = paste("Herfstvakantie Noord: 10-18 oktober \n",
+                        "semi-lockdown op 14 oktober\n",
+                        "Herfstvakantie midden/zuid: 17-25 oktober"),
+       caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+         
+         axis.text = element_text(size=14,color = "black",face = "bold"),
+         axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
+         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+         axis.ticks.length = unit(0.5, "cm"),
+         axis.line = element_line(colour = "black"),
+         
+         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+         ### facet label custom
+         strip.text.x = element_text(size = 13, color = "black"),
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         panel.grid.minor.y = element_blank()
+  )+
+  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "black", size = 1.5)
+
+ggsave("data/40_niet-noord-raw.png",width=16, height = 9)
 
 
 
-
-
-
-d=data.frame(x1=c(1,3,1,5,4), x2=c(2,4,3,6,6), y1=c(1,1,4,1,3), y2=c(2,2,5,3,5), t=c('a','a','a','b','b'), r=c(1,2,3,4,5))
-ggplot() + 
-  scale_x_continuous(name="x") + 
-  scale_y_continuous(name="y") +
-  geom_rect(data=d, mapping=aes(xmin=x1, xmax=x2, ymin=y1, ymax=y2, fill=t), color="black", alpha=0.5) +
-  geom_text(data=d, aes(x=x1+(x2-x1)/2, y=y1+(y2-y1)/2, label=r), size=4) 
-  
-  
-  
-  df <- data.frame(x = rnorm(20),
-                   y = runif(20),
-                   facet = sample(c("A", "B"),
-                                  20,
-                                  replace = TRUE))
-  
-  
-  rect2 <- data.frame(xmin = c(-1, 0),
-                      xmax = c(0, 2),
-                      ymin = c(-Inf, 0.25),
-                      ymax = Inf,
-                      facet = c("B", "A"))
-  
-  ggplot() + 
-    geom_rect(data = rect2 , aes(xmin = xmin,
-                                 xmax = xmax,
-                                 ymin = ymin,
-                                 ymax = ymax,
-                                 fill = facet),
-              alpha = 0.2) +
-    geom_point(data = df, aes(x = x, y = y))+
-    facet_wrap(~facet)
-
-  
