@@ -37,6 +37,8 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
   ylab("")+
   theme_classic()+  #base_size = 20)+
   
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
   theme(axis.title.x=element_blank(),
         axis.text = element_text(size=14,color = "black",face = "bold"),
         axis.ticks.x=element_blank())+
@@ -63,6 +65,9 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
        caption = paste("Source: RIVM | plot: @YorickB | ",Sys.Date()))+
   xlab("")+ 
   ylab("")+
+  
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
   theme_classic()+  #base_size = 20)+
   
   theme(axis.title.x=element_blank(),
@@ -116,6 +121,7 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
   xlab("")+ 
   ylab("")+
   
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   #theme_classic()+  #base_size = 20)+
   
   theme(axis.title.x=element_blank(),

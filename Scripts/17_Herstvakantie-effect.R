@@ -64,7 +64,7 @@ ggplot(noord.zuid.short.4, aes(x=datum, y = posrate))+
   xlab("")+ 
   ylab("")+
   scale_x_date(name="")+
-  
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   labs(title = "Vakanties",
        subtitle = paste("Per 100.000  ||  7-daags zwevend gemiddele",
                         "\n\n - rood - Herfstvakantie Noord: 10-18 oktober \n",
@@ -115,7 +115,7 @@ ggplot(noord.zuid.short.4, aes(x=datum, y = posrate))+
   xlab("")+ 
   ylab("")+
   scale_x_date(name="")+
-  
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   labs(title = "Vacations",
        subtitle = paste("Per 100.000  ||  7-day moving average",
                         "\n\n - green - Fall vacation region 'North': 10-18 october \n",
@@ -205,7 +205,7 @@ ggplot()+
                                 "Positieve labuitslag",
                                 "Vakantie Niet-Noord",
                                 "Vakantie Noord"))+
-  
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   geom_rect(data = rect2 , aes(xmin = xmin,
                                xmax = xmax,
                                ymin = ymin,

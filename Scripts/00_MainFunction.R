@@ -18,7 +18,6 @@
 
 ## Nieuwe maatregelen toevoegen - bieb dicht - 4 november
 
-####   format numbers in plots  1.200
 
 #### ECDC - ANIMATION
 
@@ -40,6 +39,7 @@ library(tidyverse)
 library(zoo)
 library(RcppRoll)
 require(data.table)
+library(scales)
 
 
 rm(list=ls())
@@ -52,8 +52,7 @@ dir.create(dirname)
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
-(LCPS_datafeed)
-
+last(LCPS_datafeed,2)
 
 
 #### Start  ####
@@ -62,8 +61,8 @@ LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
 ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
 
-editionname <- "EU-one-person-dying-from-covid-19-every-17-seconds"
-editienaam  <- "elk-17-seconden-iemand-dood-in-de-EU-door-covid-19"
+editionname <- "Herd-immunity-but-people-are-not-animals"
+editienaam  <- "groepsimmiuniteit"
 
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 
@@ -103,9 +102,15 @@ source("C:\\Rdir\\Rscripts\\20_carehomes.R")
 
 source("C:\\Rdir\\Rscripts\\22_prediction.R")
 
+source("C:\\Rdir\\Rscripts\\29_coronamelder.R")
+
 #### check correct last tweet ####
 
+
+
 ## source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+
+source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
 ## source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 

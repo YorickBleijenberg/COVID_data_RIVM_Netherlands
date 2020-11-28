@@ -55,11 +55,14 @@ Google_mob_NL_short$MA_thuis                <- round(rollmeanr(Google_mob_NL_sho
 Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 
 
-persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25")), 
-                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie"))
+persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17")), 
+                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring"))
 
 
 
+#last.date.old.wide.mob  <- last.date.old.wide.2
+
+#last.date.old.wide.mob$Rt_avg10 <- (last.date.old.wide.mob$Rt_avg *100)-100
 
 
 ####   Plot the Google Mobility data 7d MA ####
@@ -71,6 +74,8 @@ ggplot(Google_mob_NL_short)+
   geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2)+
   geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2) +
 
+  #geom_line(data = last.date.old.wide.mob, aes(x = Date, y = Rt_avg10, color = "Effectieve R"), color = "black",lwd=2) +
+  
   
 theme_classic()+
   xlab("")+ 
@@ -115,17 +120,17 @@ theme_classic()+
          strip.text.x = element_text(size = 13, color = "black"),
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
   
-  #geom_hline(yintercept=0) +
-  #geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
- # geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
-  ## geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") +
+  geom_hline(yintercept=0) +
+  geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
+#  geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") +
   
   geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
-  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
+  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)
   
   # geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dashed") +
   # geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dashed") +
-   geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dashed") 
+   #geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dashed") 
 
 
 ggsave("data/36_Google_data_NL.png",width=16, height = 9)

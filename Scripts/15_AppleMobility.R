@@ -25,10 +25,12 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev11/v3/en-us/applemobilitytrends-2020-11-14.csv
 ##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev12/v3/en-us/applemobilitytrends-2020-11-15.csv
 
+##https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev17/v3/en-us/applemobilitytrends-2020-11-18.csv
+
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev14/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev25/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -145,8 +147,8 @@ ggsave("data/31_Apple_data_raw.png",width=16, height = 9)
 
 
 
-persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03")), 
-             event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown"))
+persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-11-17")), 
+             event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "einde verzwaring"))
 
 
 

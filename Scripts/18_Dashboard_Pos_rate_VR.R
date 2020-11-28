@@ -31,12 +31,14 @@ i=1
 #db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/Zu6pE8P0LzYqDDvmsb8WQ/veiligheidsregio/VR22/positief-geteste-mensen.json"))
 #db<-db[["pageProps"]][["data"]][["ggd"]][["values"]]
 
+## https://coronadashboard.rijksoverheid.nl/_next/data/3FKVnqBALfN-kkgnQjArx/veiligheidsregio/VR02/positief-geteste-mensen.json
+
 
 for (i in 1:25) {
   if(i<10){
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/UyESCPJzLw4zcicplcw77/veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/3FKVnqBALfN-kkgnQjArx/veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
   }else{
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/UyESCPJzLw4zcicplcw77/veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/3FKVnqBALfN-kkgnQjArx/veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
   }
   db<-db[["pageProps"]][["data"]][["ggd"]][["values"]]
   tot<-rbind(tot,db)

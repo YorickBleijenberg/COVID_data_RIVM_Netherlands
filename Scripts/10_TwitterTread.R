@@ -20,6 +20,10 @@ f <- Working_Set$MACases[1]
 
 h <- Working_Set$hosp[3]
 i <- Working_Set$hosp[2]
+
+
+
+
 j <- Working_Set$hosp[1]
 
 k <- Working_Set$MAhosp[3]
@@ -270,6 +274,8 @@ days.until.lvl2 <- df.to.subset$fixedDate[1]
 today  <- Sys.Date()
 days.until.lvl2<- as.vector(difftime(days.until.lvl2, today, units='days'))
 
+days.until.lvl2[is.na(days.until.lvl2)] <- paste("> 365")
+
 emoji_kerst <- intToUtf8(0x1F384)
 emoji_snowman <- intToUtf8(0x2603)
 emoji_snow <- intToUtf8(0x2744)
@@ -515,10 +521,11 @@ post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id())
 tweet.cases.diff.tweet <- "1) provincies 
 2) Besmette personen toegevoegd / verschil met gisteren.
 3) Besmette personen, verschil met gisteren.  | maandagen
+4) CoronaMelder App authorisaties
 "
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/18_Province_cumulative_log.png", "data/07_cases_diff.png", "data/07_cases_type1-monday.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png", "data/07_cases_diff.png", "data/07_cases_type1-monday.png", "data/81_coronamelder.png"), in_reply_to_status_id = get_reply_id())  #
 
 ###    media = c("data/17_IC_only.png", "data/16_IC_hosp.png")
 
@@ -541,6 +548,54 @@ post_tweet(tweet.vakantie.tweet,  media = c("data/40_niet-noord-raw.png"), in_re
 
 
 
+#### all muni tweet ####
+
+tweet.all.muni.tweet <- "Alle gemeenten
+
+Groen: dalende trend
+Geel: Meh
+Donkerrood: stijgende trend
+Rood:  Alarm!
+
+"
+tweet.all.muni.tweet <- sprintf(tweet.all.muni.tweet)
+Encoding(tweet.all.muni.tweet) <- "UTF-8"
+post_tweet(tweet.all.muni.tweet,  media = c("data/75_Municipality-day-phd.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+#"
+#7-daags gemiddelde (7ma)
+
+#Groen: 
+#Het 7ma is lager dan 7 EN 14 dagen geleden
+
+#Donkerrood:
+#het 7ma is hoger dan 7 OF 14 dagen geleden
+
+#Rood:
+#Het 7ma is (veel) hoger dan 7 dagen geleden
+
+#Geel:
+#De rest
+
+#  kleur <- paste(yellow)
+#  if (((aa > cc+2) | (aa > dd+3))&(aa < dd+13)) {
+#    kleur <- paste(red)
+#  } else if (aa > dd+13) {
+#    kleur <- paste(help)
+#  } else if (((aa < cc-2) & (aa < dd-2))| (aa<1)) {
+#    kleur <- paste(green)
+#  }
+  
+#"
+
+
+
+
+
+
+
+
 #### 16 cities tweet ####
 
 tweet.16city.tweet <- "Nieuwe gevallen in de 16 grote steden"
@@ -554,7 +609,7 @@ post_tweet(tweet.16city.tweet,  media = c("data/18_city_new.png"), in_reply_to_s
 tweet.16city.tweet <- "Nieuwe gevallen in de provincies"
 tweet.16city.tweet <- sprintf(tweet.16city.tweet)
 Encoding(tweet.16city.tweet) <- "UTF-8"
-post_tweet(tweet.16city.tweet,  media = c("data/20_prov_new.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.16city.tweet,  media = c("data/20_prov_new.png", "data/20_prov_phd.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 

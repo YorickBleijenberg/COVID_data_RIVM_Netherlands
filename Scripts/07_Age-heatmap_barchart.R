@@ -28,14 +28,14 @@ weeknumber<-strftime(Sys.Date(),format = "%V")
 
 
 #Gewenste weken subsetten
-casus.working <- casus.working[casus.working$week>24&casus.working$week<=47,]
+casus.working <- casus.working[casus.working$week>24&casus.working$week<=48,]
 
 
 #Heatmap
 ggplot(casus.working,aes(week,Agegroup,fill=phd))+
 geom_tile(size=1.5,color="#F5F5F5")+
   geom_text(label=casus.working$phd,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 10, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 13, 
                        high = "#c00000")+
   #ggtitle("Aantal geconstateerde besmettingen per 100.000 per week")+
   theme_minimal()+
@@ -43,7 +43,7 @@ geom_tile(size=1.5,color="#F5F5F5")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 46 & 47 zullen nog sterk stijgen",fill=NULL,
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 47 & 48 zullen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -58,7 +58,7 @@ ggsave("data/02_leeftijd_heatmap.png",width=16, height = 9)
 ggplot(casus.working,aes(week,Agegroup,fill=phd))+
   geom_tile(size=1.5,color="#F5F5F5")+
   geom_text(label=casus.working$phd,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 10, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 13, 
                        high = "#c00000")+
   #ggtitle("cases per 100.000 per week")+
   theme_minimal()+
@@ -66,7 +66,7 @@ ggplot(casus.working,aes(week,Agegroup,fill=phd))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 46 and 47 will still rise.",fill=NULL,
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 47 and 48 will still rise.",fill=NULL,
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -80,7 +80,7 @@ ggsave("data/02_EN_leeftijd_heatmap.png",width=16, height = 9)
 
 
 #Gewenste weken subsetten
-casus.working <- casus.working[casus.working$week>39&casus.working$week<=47,]
+casus.working <- casus.working[casus.working$week>40&casus.working$week<=48,]
 
 
 #barchart
@@ -94,7 +94,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 46 & 47 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 47 & 48 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -123,7 +123,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 46 and 47 will still rise.",
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 47 and 48 will still rise.",
        fill="Week",
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -146,8 +146,8 @@ ggsave("data/01_EN_leeftijd_barchart.png",width=16, height = 9)
 
 casus.working = filter(RIVM_casus_landelijk, Agegroup != "<50" & Agegroup !="Unknown")
 
-casus.working <- casus.working %>% mutate(age_grouping = case_when(str_detect(Agegroup, "0-9") ~ '0-19', 
-                                                           str_detect(Agegroup, "10-19") ~ '0-19',
+casus.working <- casus.working %>% mutate(age_grouping = case_when(str_detect(Agegroup, "0-9") ~ '0-9', 
+                                                           str_detect(Agegroup, "10-19") ~ '10-19',
                                                            str_detect(Agegroup, "20-29") ~ '20-39',
                                                            str_detect(Agegroup, "30-39") ~ '20-39',
                                                            str_detect(Agegroup, "40-49") ~ '40-59',
@@ -202,6 +202,11 @@ ggplot(casus.working, aes(date,cases_avg,fill=age_grouping))+
                date_labels= format("%b"),
                limits = as.Date(c("2020-02-27", Sys.Date())))+
   
+ # scale_y_continuous( label = percent_format(), sec.axis = sec_axis(~ . * 1, label = percent_format()))+
+  
+  
+  scale_fill_manual(values=c("darkgray", '#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5'))+ # Use custom colors
+  
   guides(fill = guide_legend(reverse = TRUE))+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
@@ -218,7 +223,6 @@ ggplot(casus.working, aes(date,cases_avg,fill=age_grouping))+
         axis.text.y = element_blank(),
         axis.ticks.length = unit(0.1, "cm"),
         axis.line = element_line(colour = "#F5F5F5"))+ 
-   scale_fill_manual(values=c('#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5')) # Use custom colors
 
 ggsave("data/03_leeftijd_relatief.png",width=16, height = 9)
 
@@ -249,7 +253,7 @@ ggplot(casus.working, aes(date,cases_avg,fill=age_grouping))+
         axis.text.y = element_blank(),
         axis.ticks.length = unit(0.1, "cm"),
         axis.line = element_line(colour = "#F5F5F5"))+ 
-   scale_fill_manual(values=c('#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5')) # Use custom colors
+   scale_fill_manual(values=c("darkgrey", '#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5')) # Use custom colors
 
 ggsave("data/03_EN_leeftijd_relatief.png",width=16, height = 9)
 

@@ -13,7 +13,7 @@ casus.working$week<-strftime(casus.working$date,format = "%V")   #adding week_nu
 casus.working <- casus.working[casus.working$Hospital_admission == 'Yes',]
 casus.working = filter(casus.working, Agegroup != "<50" & Agegroup !="Unknown")
 casus.working<-count(casus.working,week,Agegroup)
-casus.working<- casus.working[casus.working$week>25&casus.working$week<=47,]
+casus.working<- casus.working[casus.working$week>25&casus.working$week<=48,]
 
 
 
@@ -21,14 +21,14 @@ casus.working<- casus.working[casus.working$week>25&casus.working$week<=47,]
 ggplot(casus.working,aes(week,Agegroup,fill=n))+
 geom_tile(size=1.5,color="#E4ECFC")+
   geom_text(label=casus.working$n,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 7, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 8, 
                        high = "#c00000")+
   theme_minimal()+
   xlab("")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Opnames in het ziekenhuis",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 45, 46 & 47 kunnen nog sterk stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 46, 47 & 48 kunnen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -45,14 +45,14 @@ ggsave("data/02_leeftijd_heatmap-hosp.png",width=16, height = 9)
 ggplot(casus.working,aes(week,Agegroup,fill=n))+
   geom_tile(size=1.5,color="#E4ECFC")+
   geom_text(label=casus.working$n,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 7, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 8, 
                        high = "#c00000")+
   theme_minimal()+
   xlab("")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Hospitalization",
-       subtitle = "Number of cases within each agegroup. Week 46 and 47 will still rise.",fill=NULL,
+       subtitle = "Number of cases within each agegroup. Week 47 and 48 will still rise.",fill=NULL,
        caption = paste("Source: RIVM  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -75,7 +75,7 @@ casus.working <- casus.working[casus.working$Deceased == 'Yes',]
 casus.working$weekOfDead<-substr(casus.working$Week_of_death,5,6)
 casus.working<-count(casus.working,weekOfDead,Agegroup)
 casus.working <- casus.working[complete.cases(casus.working), ]  #remove N/A
-casus.working<- casus.working[casus.working$weekOfDead>25&casus.working$weekOfDead<=47,]
+casus.working<- casus.working[casus.working$weekOfDead>25&casus.working$weekOfDead<=48,]
 
 
 
@@ -83,7 +83,7 @@ casus.working<- casus.working[casus.working$weekOfDead>25&casus.working$weekOfDe
 ggplot(casus.working,aes(weekOfDead,Agegroup,fill=n))+
   geom_tile(size=1.5,color="#FDE3E3")+
   geom_text(label=casus.working$n,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 6, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 8, 
                        high = "#c00000")+
   ggtitle("Overleden aan COVID-19")+
   theme_minimal()+
@@ -91,7 +91,7 @@ ggplot(casus.working,aes(weekOfDead,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Overleden aan COVID-19",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 45, 46 & 47 kunnen nog sterk stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 46, 47 & 48 kunnen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),
@@ -109,7 +109,7 @@ ggsave("data/02_leeftijd_heatmap-dead.png",width=16, height = 9)
 ggplot(casus.working,aes(weekOfDead,Agegroup,fill=n))+
   geom_tile(size=1.5,color="#FDE3E3")+
   geom_text(label=casus.working$n,size=5)+
-  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 6, 
+  scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 8, 
                        high = "#c00000")+
   ggtitle("Overleden aan COVID-19")+
   theme_minimal()+
@@ -117,7 +117,7 @@ ggplot(casus.working,aes(weekOfDead,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Deceased COVID-19",
-       subtitle = "Number of deaths, within each agegroup. Week 45, 46 and 47 will still rise.",fill=NULL,
+       subtitle = "Number of deaths, within each agegroup. Week 46, 47 and 48 will still rise.",fill=NULL,
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),

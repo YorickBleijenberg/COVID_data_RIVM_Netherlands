@@ -3,7 +3,7 @@ library(data.table)
 library(zoo)
 
 #library(paletteer)
-#library(ggrepel)
+library(ggrepel)
 
 
 ##### import from RIVM website ####
@@ -84,7 +84,7 @@ ggplot(data = number_new_prov_short, ) +
   )
 
 
-ggsave("data/20_prov_new.png",width=16, height = 9)
+ggsave("data/20_prov_new-no-color.png",width=16, height = 9)
 
 
 
@@ -198,7 +198,7 @@ ggplot(data = number_muni_cum_prov_agg, mapping = aes(x = Date, y = x, color = P
          axis.line = element_line(colour = "#F5F5F5"),
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
 
-ggsave("data/18_Province_cumulative_log.png",width=16, height = 9)
+#ggsave("data/18_Province_cumulative_log.png",width=16, height = 9)
 
 ####  plot province cumulative LOGARIMIC  ####
 ggplot(data = number_muni_cum_prov_agg, mapping = aes(x = Date, y = x, color = Province)) + 
@@ -263,4 +263,187 @@ ggplot(data = number_new_prov_short, ) +
 
 
 ggsave("data/20_prov_new-fixed-scale.png",width=16, height = 9)
+
+
+
+#### Province plot new NO FACET SCALES ####
+
+
+
+today <- Sys.Date()
+
+inwo_prov <- "C:\\Rdir\\data-contstant\\provincies.csv"
+prov.inwoners <- read.csv(inwo_prov,sep=";")  
+colnames(prov.inwoners) = c("Province", "Prov_getal", "Prov_inwoners")
+
+
+prov.combi <- merge(number_new_prov_short, prov.inwoners)
+
+
+prov.combi$phd <- (prov.combi$MAnewCases/prov.combi$Prov_inwoners)*100000
+
+
+kleur.table.prov  = data.frame()
+
+i=1
+while (i < 13)
+{
+  
+  test.data.8 <- prov.combi
+  test.data.8 <- test.data.8[test.data.8$Prov_getal == i,]
+  
+  ff <- last(test.data.8$phd)
+  gg <- last(test.data.8$phd,15)
+  ii <- head(tail(test.data.8$phd, n=8), n=1)
+  hh <- head(tail(test.data.8$phd, n=15), n=1)
+  
+  
+  kleur <- paste("yellow")
+  if (((ff > hh+2) | (ff > ii+2))&(ff < ii+5)) {
+    kleur <- paste("red")
+  } else if (ff > ii+5) {
+    kleur <- paste("help")
+  } else if (((ff < hh-2) & (ff < ii-2))| (ff<1)) {
+    kleur <- paste("green")
+  }
+  
+  kleur.table.prov = rbind(kleur.table.prov, data.frame(Prov_getal=i,kleur=kleur))
+  
+  i <- i+1
+}
+
+
+prov.combi.all <- merge(prov.combi, kleur.table.prov)
+
+
+
+
+
+
+
+#number_new_prov_short$Province <- as.factor(number_new_prov_short$Province)
+
+ggplot(data = prov.combi.all) + 
+  #geom_point(stat='identity', mapping = aes(x = Date, y = phd,), colour = "gray", size = 2)+
+  geom_line(mapping = aes(x = Date, y = phd, color = kleur), size =2)+   #, colour = "darkred"
+
+  scale_color_manual(values=c("green", "darkred", "red", "orange"))+
+    facet_wrap(~ Province,)+  # scales = "free_y")+
+
+  theme_bw() + 
+  xlab("")+ 
+  ylab("")+
+  
+labs(title = "Provincies",
+       subtitle = "Nieuwe gevallen per 100.000 inwoners, 7-daags zwevend gemiddelde",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+      legend.position = "none",   # no legend
+         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+         
+         axis.text = element_text(size=14,color = "black",face = "bold"),
+         axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
+         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+         axis.ticks.length = unit(0.5, "cm"),
+         # axis.line = element_line(colour = "#F5F5F5"),
+         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+         ### facet label custom
+         strip.text.x = element_text(size = 13, color = "black"),
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         panel.grid.minor.y = element_blank(),
+  )
+
+ggsave("data/20_prov_phd.png",width=16, height = 9)
+
+
+
+
+#number_new_prov_short$Province <- as.factor(number_new_prov_short$Province)
+
+ggplot(data = prov.combi.all) + 
+  geom_point(stat='identity', mapping = aes(x = Date, y = newCases,), colour = "gray", size = 2)+
+  geom_line(mapping = aes(x = Date, y = MAnewCases, color = kleur), size =1.5)+   #, colour = "darkred"
+  
+  scale_color_manual(values=c("green", "darkred", "red", "orange"))+
+  facet_wrap(~ Province,)+  # scales = "free_y")+
+ 
+  theme_bw() + 
+  xlab("")+ 
+  ylab("")+
+  
+  labs(title = "Provincies",
+       subtitle = "Nieuwe gevallen, 7-daags zwevend gemiddelde",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+         legend.position = "none",   # no legend
+         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+         
+         axis.text = element_text(size=14,color = "black",face = "bold"),
+         axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
+         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+         axis.ticks.length = unit(0.5, "cm"),
+         # axis.line = element_line(colour = "#F5F5F5"),
+         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+         ### facet label custom
+         strip.text.x = element_text(size = 13, color = "black"),
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         panel.grid.minor.y = element_blank(),
+  )
+
+ggsave("data/20_prov_new.png",width=16, height = 9)
+
+
+
+
+
+
+
+
+
+
+
+
+ggplot(data = prov.combi.all) + 
+  geom_line(mapping = aes(x = Date, y = MAnewCases, color = Province), size =1.5)+   #, colour = "darkred"
+
+ #  scale_color_manual(values=c("green", "darkred", "red", "orange"))+
+ #  facet_wrap(~ Province,)+  # scales = "free_y")+
+  
+  theme_bw() + 
+  xlab("")+ 
+  ylab("")+
+  
+  labs(title = "Provincies",
+       subtitle = "Nieuwe gevallen, 7-daags zwevend gemiddelde",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+        # legend.position = "none",   # no legend
+         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+         
+         axis.text = element_text(size=14,color = "black",face = "bold"),
+         axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
+         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+         axis.ticks.length = unit(0.5, "cm"),
+         # axis.line = element_line(colour = "#F5F5F5"),
+         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+         ### facet label custom
+         strip.text.x = element_text(size = 13, color = "black"),
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         panel.grid.minor.y = element_blank(),
+  )
+
+ggsave("data/20_prov_new-test.png",width=16, height = 9)
+
 

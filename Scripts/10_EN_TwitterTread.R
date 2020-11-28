@@ -412,7 +412,7 @@ tweet.cases.diff.tweet <- "1) Provinces
 "
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/18_Province_cumulative_log.png", "data/07_EN_cases_diff.png", "data/07_cases_type1-monday.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png", "data/07_EN_cases_diff.png", "data/07_cases_type1-monday.png"), in_reply_to_status_id = get_reply_id())  #
 
 ###    media = c("data/17_IC_only.png", "data/16_IC_hosp.png")
 

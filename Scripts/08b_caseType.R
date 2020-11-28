@@ -67,8 +67,8 @@ df4 <- df3
 #dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
 #dates_vline <- which((df4$Datum %in% dates_vline))
 
-dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04")),
-                          event=c("uurtje","nulnegen","semilock","verzwaring"))
+dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", "2020-11-18")),
+                          event=c("uurtje","nulnegen","semilock","verzwaring", "einde verzwaring"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]
@@ -101,10 +101,10 @@ theme_classic()+
   geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
  # geom_text(data=dates_vline  , mapping=aes(x=date, y=6500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
   
-  
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
 labs(title = "Besmette personen: verschil met gisteren",
-     subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown\n4-nov, Perso verzwaring semi-lockdown", #  OMT: 'Een lagere R is beter'",
+     subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown\n5 t/m 18 nov, verzwaring semi-lockdown", #  OMT: 'Een lagere R is beter'",
      caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
    theme(legend.position = c(0.2, 0.8),
@@ -152,7 +152,7 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
                                 "Positive lab result (new/correction)",
                                 "Notification to GGD (new/correction)",
                                 "Notification to GGD"))+                                                               
-  
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   #geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
   #           col = "darkgray", lwd = 1, linetype= "dashed")+
@@ -161,7 +161,7 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
   
   
   labs(title = "Cases: compared to yesterday",
-       subtitle = "18-Sep: Press conference 'bars close an hour early'\n28-Sep: Press conference 'We aim for an R of 0.9'\n13-oct: Press conference semi-lockdown \n 4-nov Press conference more semi-lockdown",
+       subtitle = "18-Sep: Press conference 'bars close an hour early'\n28-Sep: Press conference 'We aim for an R of 0.9'\n13-oct: Press conference semi-lockdown \n 5 - 19 nov heavier semi-lockdown",
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position = c(0.2, 0.8),
@@ -207,7 +207,8 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2020-10-26",
                   "2020-11-02",
                   "2020-11-09",
-                  "2020-11-16"
+                  "2020-11-16",
+                  "2020-11-23"
                  ))   
 
 dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))

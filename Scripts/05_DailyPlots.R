@@ -23,7 +23,7 @@ ggplot(Merged_data_short)+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
     
-   
+    scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
     
     theme_classic()+
     xlab("")+ 
@@ -57,6 +57,7 @@ ggplot(Merged_data_short)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
+    scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
     labs(title = "New cases",
          subtitle = "with 7 day moving average",
          caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
@@ -87,7 +88,7 @@ ggplot(Merged_data_short)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
-    scale_y_continuous(trans='log2')+
+    scale_y_continuous(trans='log2', labels = label_comma(big.mark = ".", decimal.mark = ","))+
     #lims(x= c(NA, NA), y = c(16, NA))+
     #ylim(16, NA)+
     labs(title = "Nieuw gemelde besmettingen, logaritmisch",
@@ -119,7 +120,7 @@ ggplot(Merged_data_short)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
-    scale_y_continuous(trans='log2')+
+    scale_y_continuous(trans='log2',labels = label_comma(big.mark = ".", decimal.mark = ","))+
     #lims(x= c(NA, NA), y = c(16, NA))+
     #ylim(16, NA)+
     labs(title = "New cases, logaritmic scale",

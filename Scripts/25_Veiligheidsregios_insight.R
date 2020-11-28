@@ -70,7 +70,7 @@ ggplot()+
   #        alpha = 0.5) +
   
   
-  facet_wrap(~Municipal_health_service ,  scales = "free_y")+
+  facet_wrap(~Regio_Naam ,  scales = "free_y")+
   
   theme_bw() + 
   xlab("")+ 
@@ -122,21 +122,33 @@ ggsave("data/70_Security_region-casus.png",width=16, height = 16)
 
 
 read.aantal.gemeente.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv",sep="")
-RIVM_aantallen_gemeente_per_dag.2 <- read.csv(read.aantal.gemeente.path,sep=";")
+RIVM_aantallen_vr_per_dag.2 <- read.csv(read.aantal.gemeente.path,sep=";")
 
-RIVM_aantallen_gemeente_per_dag.2$date <- as.Date(RIVM_aantallen_gemeente_per_dag.2$date)
-RIVM_aantallen_gemeente_per_dag.3  <- RIVM_aantallen_gemeente_per_dag.2[ -c(1,2,3,4,5,9)]
-RIVM_aantallen_gemeente_per_dag.3 <- subset(RIVM_aantallen_gemeente_per_dag.3, Security_region_name !='')
-RIVM_aantallen_gemeente_per_dag.3 <- RIVM_aantallen_gemeente_per_dag.3[RIVM_aantallen_gemeente_per_dag.3$date>"2020-07-01",]
+RIVM_aantallen_vr_per_dag.2$date <- as.Date(RIVM_aantallen_vr_per_dag.2$date)
+RIVM_aantallen_vr_per_dag.3  <- RIVM_aantallen_vr_per_dag.2[ -c(1,2,3,4,5,9)]
+
 today <- Sys.Date()
 
-RIVM_aantallen_gemeente_per_dag.3$Security_region_name <- str_replace(RIVM_aantallen_gemeente_per_dag.3$Security_region_name, "Fryslân", FR_b)  ##fout / goed
 
-ggplot(data= RIVM_aantallen_gemeente_per_dag.3, aes(x=date , y = Total_reported))+
-  geom_bar(stat='identity',  color = "#96afde")+
-  #geom_point()+
+RIVM_aantallen_vr_per_dag.3 <- aggregate(RIVM_aantallen_vr_per_dag.2$Total_reported,     by=list(dateInTable=RIVM_aantallen_vr_per_dag.2$date,
+                                                                                                             secure=RIVM_aantallen_vr_per_dag.2$Security_region_name), 
+                                               FUN=sum)
+colnames(RIVM_aantallen_vr_per_dag.3) = c("date", "Security_region_name", "Total_reported")
+
+RIVM_aantallen_vr_per_dag.3$Security_region_name <- str_replace(RIVM_aantallen_vr_per_dag.3$Security_region_name, "Fryslân", FR_b)  ##fout / goed
+RIVM_aantallen_vr_per_dag.3 <- subset(RIVM_aantallen_vr_per_dag.3, Security_region_name !='')
+
+#RIVM_aantallen_gemeente_per_dag.3 <- subset(RIVM_aantallen_gemeente_per_dag.3, Security_region_name == 'Drenthe')
+
+RIVM_aantallen_vr_per_dag.3 <- RIVM_aantallen_vr_per_dag.3[RIVM_aantallen_vr_per_dag.3$date>"2020-09-01",]
+
+
+ggplot(data= RIVM_aantallen_vr_per_dag.3, aes(x=date , y = Total_reported))+
+  #geom_bar(stat='identity',  fill = "#96afde")+
+  geom_line()+
+  geom_point(size = 2)+
   
-facet_wrap(~Security_region_name,  scales = "free_y")+
+#facet_wrap(~Security_region_name,  scales = "free_y")+
 #  scale_x_date(date_breaks = "1 day", 
  #             date_labels= format("%d %b"),
   #           limits = as.Date(c("2020-11-12", today)))+
