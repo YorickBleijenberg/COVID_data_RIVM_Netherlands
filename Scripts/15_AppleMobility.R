@@ -26,18 +26,18 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ##   https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev12/v3/en-us/applemobilitytrends-2020-11-15.csv
 
 ##https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev17/v3/en-us/applemobilitytrends-2020-11-18.csv
+##  https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev34/v3/en-us/applemobilitytrends-2020-12-01.csv
+##https://covid19-static.cdn-apple.com/covid19-mobility-data/2022HotfixDev13/v3/en-us/applemobilitytrends-2020-12-03.csv
 
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev25/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2022HotfixDev14/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
 #  Apple_mob_raw <- read.csv(paste("C:\\Rdir\\Mobility\\Apple\\applemobilitytrends-", Yesterday,".csv",sep=""))
 Apple_mob_raw <- read.csv(paste(Apple.file ,sep=""))
-
-
 
 #### filter only the Netherlands ####
 Apple_mob_raw_nl <-Apple_mob_raw %>% filter(region == "Netherlands")
@@ -89,66 +89,13 @@ Apple_mob_nl_short <- Apple_mob_nl_short[-1:-6,]
 #colnames(AppleMobility_gather) <- c("Datum","Type","valuecol_am")
 
 
-
-####   Plot the RAW Apple Mobility data ####
-
-ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=Type))+ 
-  geom_line(aes(x=date, y = auto, color = "Auto"), lwd=2) +
-  geom_line(aes(x=date, y = OV, color = "Openbaar vervoer"), lwd=2) +
-  geom_line(aes(x=date, y = lopen, color = "Lopen"), lwd=2) +
-  
-  theme_classic()+
-  xlab("")+ 
-  ylab("")+
-  
-  scale_y_continuous(expand = c(0,10), limits = c(-100, NA)) +
-  
-  labs(title = "Apple Mobility Trends",
-       subtitle = paste("7-daags zwevend gemiddele\n","Actueel tot:", Yesterday),
-       caption = paste("Source: Apple | Plot: @YorickB | ",Sys.Date()))+
-  
-  
-  theme(legend.position = c(0.2,1),
-        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
-        legend.title = element_blank(),
-        legend.margin = margin(3, 3, 3, 3),
-        legend.text = element_text(colour="black", size=20, face="bold"))+
-  
-  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
-         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
-         #legend.position = "none",   # no legend
-         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
-         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
-         
-         axis.text = element_text(size=14,color = "black",face = "bold"),
-         axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
-         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
-         axis.ticks.length = unit(0.5, "cm"),
-         axis.line = element_line(colour = "#F5F5F5"),
-         
-         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
-         ### facet label custom
-         strip.text.x = element_text(size = 13, color = "black"),
-         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
-  
-  geom_hline(yintercept=0) +
-  geom_vline(xintercept = as.Date("2020-09-19"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-09-29"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") 
-
-
-ggsave("data/31_Apple_data_raw.png",width=16, height = 9)
-
-            
-
 ####   Plot the Apple Mobility data ####
 
 
 
 
-persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-11-17")), 
-             event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "einde verzwaring"))
+persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05")), 
+                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas"))
 
 
 

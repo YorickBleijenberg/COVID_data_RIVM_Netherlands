@@ -1,0 +1,282 @@
+library(tidyverse)
+
+today <- Sys.Date()
+
+
+inwo_gem_bible <- "C:\\Rdir\\data-contstant\\biblebeltURK.csv"
+gemeente.inwoners.bible <- read.csv(inwo_gem_bible,sep=";")
+colnames(gemeente.inwoners.bible) = c("Municipality_code", "Gemeente_Naam", "inwoners", "gemeente_getal", "bible", "bible_inw")
+gemeente.inwoners.bible <- gemeente.inwoners.bible[ -c(2:4)]
+
+inwo_gem <- "C:\\Rdir\\data-contstant\\CBS_inwoners_gemeente.csv"
+gemeente.inwoners <- read.csv(inwo_gem,sep=";")  
+colnames(gemeente.inwoners) = c("Municipality_code", "Gemeente_Naam", "inwoners", "gemeente_getal")
+
+read.aantal.gemeente.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv",sep="")
+RIVM_aantallen_gemeente_per_dag <- read.csv(read.aantal.gemeente.path,sep=";")
+
+RIVM_aantallen_gemeente_per_dag$date <- as.Date(RIVM_aantallen_gemeente_per_dag$date)
+RIVM_aantallen_gemeente_per_dag.1  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,4:9)]
+
+
+gemeente.combi <- merge(gemeente.inwoners,gemeente.inwoners.bible, by = "Municipality_code", all.x = TRUE)
+
+gemeente.combi$bible[is.na(gemeente.combi$bible)] <- "not_bible"
+gemeente.combi$bible_inw[is.na(gemeente.combi$bible_inw)] <- 16351492 # 15851498
+
+
+
+RIVM_aantallen_gemeente_per_dag.combi <- merge(RIVM_aantallen_gemeente_per_dag.1,  gemeente.combi)
+
+RIVM_aantallen_gemeente_per_dag.combi.bible<- merge(RIVM_aantallen_gemeente_per_dag.1,  gemeente.combi)
+
+
+
+
+RIVM_aantallen_gemeente_per_dag.combi$phd <- (RIVM_aantallen_gemeente_per_dag.combi$Total_reported/RIVM_aantallen_gemeente_per_dag.combi$inwoners)*100000
+
+combi.1 <- aggregate(RIVM_aantallen_gemeente_per_dag.combi$phd,     by=list(date=RIVM_aantallen_gemeente_per_dag.combi$date,
+                                                                                                            gemeente_Naam=RIVM_aantallen_gemeente_per_dag.combi$Gemeente_Naam,
+                                                                                                            gemeente_getal=RIVM_aantallen_gemeente_per_dag.combi$gemeente_getal), 
+                                               FUN=sum)
+colnames(combi.1) = c("date", "gemeente_Naam", "gemeente_getal","phd")
+
+combi.1 <- subset(combi.1, gemeente_Naam !='')
+
+
+
+combi.1 <- combi.1[combi.1$date>"2020-09-01",]
+
+
+  #### Calculate the 7 day MA per gemeente per day ####
+
+
+combi.2 <- combi.1 %>% 
+             group_by(gemeente_Naam) %>% 
+                mutate(MAphd = rollapply(phd, 7, mean, fill = NA, align = "right"))
+
+
+# RIVM_aantallen_gemeente_per_dag.combi.2 <- subset(RIVM_aantallen_gemeente_per_dag.combi.2, Municipality_name == 'Urk')
+
+
+
+
+kleur.table  = data.frame()
+
+i=1
+while (i < 356)
+{
+  
+  combi.iteration <- combi.2    #copy the merged municipality data
+  combi.iteration <- combi.iteration[combi.iteration$gemeente_getal == i,]  #select only one municipality to evaluate.
+  
+  v_today <- last(combi.iteration$MAphd)                       ### get the current value (per 100K).  MAphd = moving average per 100K
+  bb <- last(combi.iteration$MAphd,15)
+  v_14d <- head(tail(combi.iteration$MAphd, n=15), n=1)       ### get the value (per 100K) of 14 days ago
+  v_7d <- head(tail(combi.iteration$MAphd, n=8), n=1)        ### get the value (per 100K) of 7 days ago
+  
+  ### assign color value to municipality, according to the current trend.
+  kleur <- paste("yellow")                              ### default value = yellow
+  if (((v_today > v_14d+2) | (v_today > v_7d+3))&(v_today < v_7d+13)) {       ### red if the current value is high than 14d ago+2 OR higher than 7 days ago +3
+    kleur <- paste("red")
+  } else if (v_today > v_7d+13) {                              ### darkred if the the different is more than +13
+    kleur <- paste("help")
+  } else if (((v_today < v_14d-2) & (v_today < v_7d-2))| (v_today<1)) {
+    kleur <- paste("green")  ### green if value is lower than 7 days AND 14 days ago (with at least a margin of 2 per 100K) OR lower than 1 per 100K
+  }
+  
+  kleur.table = rbind(kleur.table, data.frame(gemeente_getal=i,kleur=kleur))
+  
+  i <- i+1
+}
+
+
+
+
+
+RIVM_aantallen_gemeente_per_dag.combi.3 <- merge(combi.2, kleur.table)
+
+
+#RIVM_aantallen_gemeente_per_dag.combi.filter <- RIVM_aantallen_gemeente_per_dag.combi.3[RIVM_aantallen_gemeente_per_dag.combi.3$gemeente_Naam == "Oostzaan",]
+#RIVM_aantallen_gemeente_per_dag.combi.filter <- RIVM_aantallen_gemeente_per_dag.combi.filter[RIVM_aantallen_gemeente_per_dag.combi.filter$date > "2020-11-01",]
+
+
+ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.3)+
+  
+#  geom_point(stat='identity', mapping = aes(x = date, y = phd), colour = "gray", size = 0.5)+
+  
+ # geom_smooth(mapping = aes(x = date, y = MAphd, colour = kleur), size =0.5, span = 0.3)+  
+   geom_line(mapping = aes(x = date, y = MAphd, colour = kleur), size =0.6)+
+  scale_color_manual(values=c("green", "red", "darkred", "orange"))+
+  
+  
+  #geom_bar(stat='identity',  fill = "#96afde")+
+ # geom_line(color = "red")+
+ # geom_point(size = 2)+
+  
+facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
+#  scale_x_date(date_breaks = "1 day", 
+ #             date_labels= format("%d %b"),
+  #           limits = as.Date(c("2020-11-12", today)))+
+  theme_bw() + 
+  xlab("")+ 
+  ylab("")+
+  
+  labs(title = "Alle gemeenten",
+       subtitle = "Nieuwe gevallen, per 100.000 inwoners, 7-daags zwevend gemiddelde", # (Y-as wisselt)",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+ 
+   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+     legend.position = "none",   # no legend
+         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+         
+         axis.text = element_text(size=6,color = "black",face = "bold"),
+         axis.text.y = element_text(face="bold", color="black", size=6),
+         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+         axis.ticks.length = unit(0.2, "cm"),
+         #axis.line = element_line(colour = "#F5F5F5"),
+         
+         #panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+         ### facet label custom
+         strip.text.x = element_text(size = 5, color = "black"),
+         strip.background = element_rect(fill="gray"),  #, color="black"), #, size=0.2, linetype="solid"),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         panel.grid.major.y = element_blank(),
+         panel.grid.minor.y = element_blank(),
+  )
+
+ggsave("data/75_Municipality-day-phd_bible.png",width=16, height = 9)
+
+
+
+##  ## post_tweet("test",  media = c("data/75_Municipality-day-phd.png"))
+
+
+
+
+
+#  RIVM_aantallen_gemeente_per_dag.combi.5 <- merge(RIVM_aantallen_gemeente_per_dag.combi, kleur.table)
+#  RIVM_aantallen_gemeente_per_dag.combi.5 <- RIVM_aantallen_gemeente_per_dag.combi.5[RIVM_aantallen_gemeente_per_dag.combi.5$date>"2020-09-01",]
+
+####  RIVM_aantallen_gemeente_per_dag.combi.filter <- RIVM_aantallen_gemeente_per_dag.combi.3[RIVM_aantallen_gemeente_per_dag.combi.3$gemeente_Naam == "Oostzaan",]
+####  RIVM_aantallen_gemeente_per_dag.combi.filter <- RIVM_aantallen_gemeente_per_dag.combi.filter[RIVM_aantallen_gemeente_per_dag.combi.filter$date > "2020-11-01",]
+
+
+
+
+#ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.5)+
+#   geom_line(mapping = aes(x = date, y = Total_reported, colour = kleur))+
+#   scale_color_manual(values=c("green", "red", "darkred", "orange"))+
+#   facet_wrap(~Gemeente_Naam)+ #, scales = "free_y")+
+#   theme_bw() + 
+#  xlab("")+ 
+#  ylab("")+
+#  labs(title = "Alle gemeenten",
+#      subtitle = "Nieuwe gevallen", # (Y-as wisselt)",
+#      caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+#  theme(plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+#  panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+#     legend.position = "none",   # no legend
+#           plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+#           plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+           
+#           axis.text = element_text(size=6,color = "black",face = "bold"),
+#           axis.text.y = element_text(face="bold", color="black", size=6),
+#           axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+#           axis.ticks.length = unit(0.2, "cm"),
+#           strip.text.x = element_text(size = 5, color = "black"),
+#           strip.background = element_rect(fill="gray"),  #, color="black"), #, size=0.2, linetype="solid"),
+#           panel.grid.major.x = element_blank(),
+#           panel.grid.minor.x = element_blank(),
+#           panel.grid.major.y = element_blank(),
+#           panel.grid.minor.y = element_blank(),
+#  )
+
+#ggsave("data/75_Municipality-perdag-1.png",width=13, height = 13)
+
+
+
+RIVM_aantallen_gemeente_per_dag.combi.bible<- merge(RIVM_aantallen_gemeente_per_dag.1,  gemeente.combi)
+
+# 1556260
+#17407758
+#15851498
+
+#1056266
+#16.351.492
+
+
+
+RIVM_aantallen_gemeente_per_dag.combi.bible$phd <- (RIVM_aantallen_gemeente_per_dag.combi.bible$Total_reported/RIVM_aantallen_gemeente_per_dag.combi.bible$bible_inw)*100000
+
+
+
+
+
+
+
+combi.3 <- aggregate(RIVM_aantallen_gemeente_per_dag.combi.bible$phd,     by=list(date=RIVM_aantallen_gemeente_per_dag.combi.bible$date,
+                                                                            gemeente_Naam=RIVM_aantallen_gemeente_per_dag.combi.bible$bible,
+                                                                            gemeente_getal=RIVM_aantallen_gemeente_per_dag.combi.bible$gemeente_getal), 
+                     FUN=sum)
+colnames(combi.3) = c("date", "bible", "gemeente_getal","phd")
+
+combi.3 <- combi.3[combi.3$date>"2020-09-15",]
+
+combi.3$bible <- as.factor(combi.3$bible)
+
+
+combi.33 <- combi.3 %>% 
+  group_by(bible) %>% 
+  mutate(MAphd = rollapply(phd, 7, mean, fill = NA, align = "right"))
+
+combi.3 <- combi.3[combi.3$date>"2020-09-01",]
+
+ggplot(combi.3)+
+  geom_col(aes(x=date, y=phd, fill=bible))+
+#  facet_grid(~bible)+
+
+ggsave("data/75_Municipality-bible-URK.png",width=16, height = 09)
+
+combi.33$date <- as.Date(combi.33$date)
+
+combi.33 <- combi.33[combi.33$date>"2020-09-15",]
+
+
+ggplot(combi.33)+
+  geom_line(aes(x=date, y=MAphd, color=bible))+
+
+  ggsave("data/75_Municipality-bible-ma-URK.png",width=16, height = 09)
+
+
+
+
+
+
+combi.3$date <- as.Date(combi.3$date)
+
+key <- "date"
+value <- "bible"
+gathercols <- c("MAphd")
+
+combi.34 <- gather(combi.33, key, value, all_of(gathercols))
+
+
+ggplot(combi.33, aes(x=date, y=MAphd, fill = bible))+
+  geom_col(position = "dodge")+
+ 
+  
+  ggsave("data/75_Municipality-bible-line-URK.png",width=16, height = 09)
+
+
+
+
+
+
+
+
+

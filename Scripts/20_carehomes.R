@@ -53,7 +53,7 @@ theme_classic()+
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
-  ggsave("data/50_Verpleeg_cases.png",width=18, height = 9)
+  ggsave("data/50_Verpleeg_cases.png",width=15, height = 9)
 
 
 
@@ -92,7 +92,7 @@ ggplot(verpleeg.sm)+
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
-  ggsave("data/51_Verpleeg_dead.png",width=18, height = 9)
+  ggsave("data/51_Verpleeg_dead.png",width=15, height = 9)
 
 
 
@@ -130,5 +130,5 @@ ggplot(verpleeg.sm)+
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
-  ggsave("data/52_Verpleeg_loc.png",width=18, height = 18)
+  ggsave("data/52_Verpleeg_loc.png",width=14, height = 18)
 

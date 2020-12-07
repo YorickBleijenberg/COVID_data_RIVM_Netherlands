@@ -247,9 +247,7 @@ lcps.both.df <- lcps.both.df[lcps.both.df$date>"2020-10-13",]
 
 
 ggplot(data = lcps.both.df, mapping = aes(x = date, y = number, color = type, fill = type))+
-  
 
-  
   geom_bar(stat='identity', position = "dodge")+
   geom_hline(yintercept=3)+
   geom_hline(yintercept=10)+
@@ -280,11 +278,10 @@ ggplot(data = lcps.both.df, mapping = aes(x = date, y = number, color = type, fi
           axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
-          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
-  
-
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
 
 ggsave("data/16c_hosp_new.png",width=19, height = 9)
+
 
 ##### geom_stream  ######
 
@@ -416,6 +413,104 @@ ggsave("data/16d_wave_ic-hosp.png",width=19, height = 9)
 
 
 
+LCPS_datafeed_predict <- LCPS_datafeed
+LCPS_datafeed_predict <- LCPS_datafeed_predict[order(LCPS_datafeed_predict$Datum ),]   #order by date
+#### Calculate the 7 day MA per gemeente per day ####
+ 
+LCPS_datafeed_predict <- LCPS_datafeed_predict %>% 
+  mutate(MA_IC = rollapply(IC_Nieuwe_Opnames_COVID, 7, mean, fill = NA, align = "right"))
+LCPS_datafeed_predict <- LCPS_datafeed_predict %>% 
+  mutate(MA_clin = rollapply(Kliniek_Nieuwe_Opnames_COVID, 7, mean, fill = NA, align = "right"))
+
+
+ggplot(LCPS_datafeed_predict)+
+
+   geom_col(position = "dodge",  aes(x=Datum, y=Kliniek_Nieuwe_Opnames_COVID ), fill = "#F4B183")+  
+   geom_line(aes(x=Datum, y=MA_clin), size =3, color = "#DAE3F3")+
+   geom_line(aes(x=Datum, y=MA_clin), size =2)+
+
+    scale_x_date(date_breaks = "1 month", 
+               date_labels= format("%d %b"),
+               name="",
+               limits = as.Date(c("2020-10-20", "2020-12-8")))+
+    geom_hline(yintercept=12, size = 1.5)+
+    geom_hline(yintercept=40, size = 1)+
+
+   ylab("")+
+  labs(title="Aantal nieuwe opnames Kliniek", 
+       #subtitle=wave.subtitle,
+       caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
+  
+  
+  theme_classic()+
+  theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
+  
+   theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
+          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+          plot.subtitle = element_text(hjust = 0.5,size = 20,face = "italic"),
+          panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
+          axis.text = element_text(size=14,color = "black",face = "bold"),
+          axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+          axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
+          axis.ticks.length = unit(0.5, "cm"),
+          axis.line = element_line(colour = "#DAE3F3"),
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+  
+ggsave("data/16x_hosp_pred.png",width=16, height = 9)
+
+
+
+ggplot(LCPS_datafeed_predict)+
+  
+  geom_col(position = "dodge", aes(x=Datum, y=IC_Nieuwe_Opnames_COVID ), fill = "#4472C4")+
+  geom_line(aes(x=Datum, y=MA_IC), size =3, color = "#DAE3F3")+
+  geom_line(aes(x=Datum, y=MA_IC), size =2)+
+  
+  scale_x_date(date_breaks = "1 month", 
+               date_labels= format("%d %b"),
+               limits = as.Date(c("2020-10-15", "2020-12-8")))+
+  geom_hline(yintercept=3,  size = 1.5)+
+    geom_hline(yintercept=10, size = 1)+
+
+  ylab("")+
+  
+  labs(title="Aantal nieuwe opnames IC", 
+       #subtitle=wave.subtitle,
+       caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme_classic()+
+  theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
+  
+  
+  annotate("text", x = as.Date("2020-10-16"), y = 15, label = "Ernstig", size=10,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-16"), y = 7, label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-16"), y = 1,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="left")+
+  
+  
+  annotate("text", x = as.Date("2020-10-15"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-15"), y = 4, label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  
+  
+  theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
+          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+          plot.subtitle = element_text(hjust = 0.5,size = 20,face = "italic"),
+          panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
+          axis.text = element_text(size=14,color = "black",face = "bold"),
+          axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+          axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
+          axis.ticks.length = unit(0.5, "cm"),
+          axis.line = element_line(colour = "#DAE3F3"),
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+  
+ggsave("data/16x_IC_pred.png",width=16, height = 9)
+
+
+
+
+
+
+
+
 
 
 
@@ -475,18 +570,18 @@ if (hosp.new.b < hosp.new.a) {
 #### we-zijn-er-nog-lang-niet
 
 
-tweet.LCPS.EN.tweet <- "Day %s, %s edition
+tweet.LCPS.EN.tweet <- "Day %s, The %s edition
 
 Patients currently in the hospital:
 (difference with yesterday)
 
-%s (%s%s)
+%s%s (%s)
 
 %sClinic:  %s (%s)
 %sICU:       %s (%s)
 
 Newly hospitalized: 
-%s (%s%s)
+%s%s (%s)
 
 Clinic: %s (%s)
 ICU:       %s (%s)
@@ -497,12 +592,12 @@ ICU:       %s (%s)
 tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             days.covid.in.nl, editionname,
                             
-                            hosp.total.b,     hosp.total.dot, hosp.total.c,
+                            hosp.total.dot,   hosp.total.b,     hosp.total.c,
                            
                             clinic.total.dot, hosp.total.b1,  hosp.total.c1,
                             ic.total.dot,     hosp.IC.b2,  hosp.IC.c2,
                           
-                            hosp.new.b,       hosp.new.dot,   hosp.new.c,
+                            hosp.new.dot, hosp.new.b,       hosp.new.c,
                             hosp.new.b1,      hosp.new.c1,
                             hosp.new.b2,      hosp.new.c2
                             
@@ -511,8 +606,8 @@ Encoding(tweet.LCPS.EN.tweet) <- "UTF-8"
 
 post_tweet(tweet.LCPS.EN.tweet,  media = c("data/16a_IC_hosp.png",
                                            "data/16b_IC_only.png",
-                                           "data/16c_hosp_new.png",
-                                           "data/16d_wave_ic-hosp.png"
+                                           "data/16x_hosp_pred.png",
+                                           "data/16x_IC_pred.png"
                                            ))
 
 

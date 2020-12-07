@@ -14,6 +14,9 @@ Merged_data_short$observation <- 1:nrow(Merged_data_short)
 Merged_data_short$fixedDate <- as.Date(Merged_data_short$dateInTable,format="%Y-%m-%d")
 
 
+test.date.df =data.frame(date=as.Date(c("2020-12-01")),event="verruiming testbeleid")
+
+
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     
@@ -24,6 +27,10 @@ ggplot(Merged_data_short)+
     geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
     
     scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+    
+    geom_vline(data=test.date.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "black")+
+    geom_text(data=test.date.df  , mapping=aes(x=date, y=11000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+    
     
     theme_classic()+
     xlab("")+ 

@@ -208,7 +208,8 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2020-11-02",
                   "2020-11-09",
                   "2020-11-16",
-                  "2020-11-23"
+                  "2020-11-23",
+                  "2020-11-30"
                  ))   
 
 dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))

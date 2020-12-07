@@ -280,21 +280,21 @@ emoji_kerst <- intToUtf8(0x1F384)
 emoji_snowman <- intToUtf8(0x2603)
 emoji_snow <- intToUtf8(0x2744)
 
-tweet.kerst.tweet <- "Halen we de kerst? %s %s %s
+tweet.kerst.tweet <- "Halen we de kerst?
 
 Voorspelling met 7-daags gemiddelde:
 
 Week-op-week (rood): 
-. %s elke %s dagen,
-. Waakzaam over: %s dagen
-. Niveau tijdens kerst: [%s]
+- %s elke %s dagen,
+- Waakzaam over: %s dagen
+- Niveau tijdens kerst: [%s]
 
 
 Dag-op-dag (donkerblauw):
-. %s elke %s dagen,
-. niveau tijdens kerst: [%s]
+- %s elke %s dagen,
+- niveau tijdens kerst: [%s]
 "
-tweet.kerst.tweet <- sprintf(tweet.kerst.tweet, emoji_kerst, emoji_snowman, emoji_snow,
+tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,
                              doublingdayZ.text,   doublingdayZ.int,
                              days.until.lvl2,
                              kest.niveau.text.dag,
@@ -428,7 +428,8 @@ growth.cases.day <- round((((Working_Set$MACases[3]/Working_Set$MACases[2])-1)*1
 growth.cases.day_act <- round((((Working_Set$cases[3]/Working_Set$cases[2])-1)*100), digits = 1)
 
 
-
+doubling.dead.day_dot <- intToUtf8(0x1F7E1)
+doubling.dead.day_act_dot <- intToUtf8(0x1F7E1)
 if (growth.cases.day < 0) {
   doubling.dead.day_dot <- intToUtf8(0x1F7E2)
 } 
@@ -592,24 +593,45 @@ post_tweet(tweet.all.muni.tweet,  media = c("data/75_Municipality-day-phd.png"),
 
 
 
+#### Combi.tweet ####
 
-
-
+tweet.combi.2.tweet <- "1) 16 grote steden
+2) procincies
+3) Routekaart
+4) Weektotalen"
+tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
+Encoding(tweet.combi.2.tweet) <- "UTF-8"
+post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_phd.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
 #### 16 cities tweet ####
 
 tweet.16city.tweet <- "Nieuwe gevallen in de 16 grote steden"
 tweet.16city.tweet <- sprintf(tweet.16city.tweet)
 Encoding(tweet.16city.tweet) <- "UTF-8"
-post_tweet(tweet.16city.tweet,  media = c("data/18_city_new.png"), in_reply_to_status_id = get_reply_id())  #
+#post_tweet(tweet.16city.tweet,  media = c("data/18_city_new.png"), in_reply_to_status_id = get_reply_id())  #
 
 #### province tweet ####
-
 
 tweet.16city.tweet <- "Nieuwe gevallen in de provincies"
 tweet.16city.tweet <- sprintf(tweet.16city.tweet)
 Encoding(tweet.16city.tweet) <- "UTF-8"
-post_tweet(tweet.16city.tweet,  media = c("data/20_prov_new.png", "data/20_prov_phd.png"), in_reply_to_status_id = get_reply_id())  #
+#post_tweet(tweet.16city.tweet,  media = c("data/20_prov_phd.png"), in_reply_to_status_id = get_reply_id())  #
 
 
+#### Week totals tweet ####
+
+tweet.week_num.tweet <- "Nieuwe gevallen per week"
+tweet.week_num.tweet <- sprintf(tweet.week_num.tweet)
+Encoding(tweet.week_num.tweet) <- "UTF-8"
+#post_tweet(tweet.week_num.tweet,  media = c("data/65_Cases_by_week_test_ Darjeeling1"), in_reply_to_status_id = get_reply_id())  #
+
+
+
+
+#### Combi.tweet ####
+
+tweet.combi.2.tweet <- "De gaat-deze-week-boven-vorige-week-uitkomen? grafiek"
+tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
+Encoding(tweet.combi.2.tweet) <- "UTF-8"
+post_tweet(tweet.combi.2.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  #
 

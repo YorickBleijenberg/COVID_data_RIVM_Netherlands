@@ -55,8 +55,8 @@ Google_mob_NL_short$MA_thuis                <- round(rollmeanr(Google_mob_NL_sho
 Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 
 
-persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17")), 
-                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring"))
+persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05")), 
+                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas"))
 
 
 
@@ -280,7 +280,7 @@ ggplot(Google_mob_prov_short) +
   facet_wrap(~Provincie)+
 
   #scale_colour_brewer(palette = "Set1")+
-   scale_color_manual(values=c("#008f91", "#204ad4", "#cc2929"))+
+   scale_color_manual(values=c("#204ad4", "#008f91", "#cc2929"))+  #"#008f91", "#204ad4", "#cc2929"
  # scale_color_manual(values=wes_palette(n=3, name="Rushmore1"))+
   
   

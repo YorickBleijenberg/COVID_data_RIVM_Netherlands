@@ -1,0 +1,164 @@
+
+#library(jsonlite)
+#library(ggrepel)
+#library(rtweet)
+#library(tidyverse)
+#library(zoo)
+#library(RcppRoll)
+#require(data.table)
+#library(scales)
+
+
+#library(viridis)  
+library(wesanderson)
+
+# week cijfers
+
+current.week <- as.integer(format(Sys.Date(), "%V"))
+
+read.aantal.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv", sep = "")
+weeknumber.df <- read.csv(read.aantal.path,sep=";")
+
+
+weeknumber.df.sh <- weeknumber.df[ -c(1:9,11:12)]
+
+weeknumber.df.sh$date <- as.Date(weeknumber.df.sh$date)
+
+weeknumber.df.sh$week_day <- weekdays(weeknumber.df.sh$date)
+
+weeknumber.df.sh$week_day <- as.factor(weeknumber.df.sh$week_day)
+
+weeknumber.df.sh.2 <- weeknumber.df.sh[weeknumber.df.sh$week > 26,]
+
+
+
+ggplot(weeknumber.df.sh.2, aes(x=week, y=Total_reported, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+  geom_bar(stat='identity')+
+  
+  scale_x_continuous(limits = c(27,current.week+2))+
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
+  #scale_fill_brewer(palette = "RdYlBu")+
+  #scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+
+  scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+ 
+  
+  theme_classic()+
+  xlab("")+ 
+  ylab("")+
+  
+  theme(
+    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+    #legend.position = "none",   # no legend
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+    axis.text = element_text(size=14,color = "black",face = "bold"),
+    axis.text.y = element_text(face="bold", color="black", size=14), 
+    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#F5F5F5"))+
+  
+  labs(title = "Nieuw gemelde besmettingen per week",
+       #subtitle = "met 7 daags voortschrijdend gemiddelde",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme(legend.position = c(0.95, 0.5),
+        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10, face="bold"))+
+  
+  
+  geom_text(mapping=aes(x=28, y=10500, label="Waakzaam "), size=7)+
+  geom_text(mapping=aes(x=28, y=7600, label="8750 nieuwe gevallen per week"), size=4)+
+  
+    geom_hline(yintercept=8750, linetype = "dashed")+
+
+ggsave("data/65_Cases_by_week.png",width=16, height = 9)
+
+
+weeknumber.df.sh.3 <- weeknumber.df.sh.2
+weeknumber.df.sh.3$week_day <- as.character(weeknumber.df.sh.3$week_day)
+
+#weeknumber.df.sh.3$week_day <-  as.factor(weeknumber.df.sh.3$week_day, levels=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday") )
+
+weeknumber.df.sh.3$week_day <- factor(weeknumber.df.sh.3$week_day, levels = c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))
+
+  
+ #   c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
+ #   c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday")
+
+
+rect2 <- data.frame(xmin = c(as.Date("2020-10-10"), as.Date("2020-10-17")),
+                    xmax = c(as.Date("2020-10-18"), as.Date("2020-10-25")),
+                    ymin = c(0, 0),
+                    ymax = c(Inf, Inf),
+                    regio_vac = c("Noord", "Niet-Noord")
+)
+
+
+
+
+
+
+
+
+ggplot(weeknumber.df.sh.3, aes(x=week, y=Total_reported,fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+   #levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+  
+  geom_rect( aes(xmin = current.week-0.5,
+                 xmax = current.week+0.5,
+                 ymin = 0,
+                 ymax = Inf,
+                 ), fill = "gray", alpha = 0.025)+
+  
+  
+  geom_bar(stat='identity')+
+  
+  scale_x_continuous(limits = c(35,current.week+1))+
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
+  #scale_fill_brewer(palette = "RdYlBu")+
+  #scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+
+  scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+ 
+  
+
+  
+  
+  
+    facet_grid(~week_day)+  #, levels=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))+
+  
+  theme_bw() +
+  xlab("")+ 
+  ylab("")+
+  
+  theme(
+    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+   legend.position = "none",   # no legend
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+   
+   axis.text = element_text(size=10,color = "black",face = "bold"),
+   axis.text.y = element_text(face="bold", color="black", size=8),
+   axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+   axis.ticks.length = unit(0.2, "cm"),
+   
+   # axis.line = element_line(colour = "black"),
+   
+   strip.text.x = element_text(size = 15, color = "black"),
+   strip.background = element_rect(fill="gray"),  #, color="black"), #, size=0.2, linetype="solid"),
+   panel.grid.major.x = element_blank(),
+   panel.grid.minor.x = element_blank(),
+   panel.grid.major.y = element_blank(),
+   panel.grid.minor.y = element_blank(),
+   
+   
+   )+
+  
+
+  
+  labs(title = "Nieuw gemelde besmettingen per week",
+       #subtitle = "met 7 daags voortschrijdend gemiddelde",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+ggsave("data/65_Cases_by_week_facet-grid.png",width=16, height = 9)
+

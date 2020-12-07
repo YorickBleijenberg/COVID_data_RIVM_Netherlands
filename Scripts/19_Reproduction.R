@@ -28,7 +28,7 @@ last.date.old.wide.2$Date <- as.Date(last.date.old.wide.2$Date)
 last.date.old.2 <- tail(last.date.old.wide.2$Date, 1)
 
 #################### old
-repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-11-17_COVID-19_reproductiegetal.csv"
+repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-11-24_COVID-19_reproductiegetal.csv"
 reproduction.raw.old <- read.csv(repro.name.old,sep=";")  
 
 last.date.old.wide <-reproduction.raw.old
@@ -73,7 +73,7 @@ persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-1
   
 
 
-last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < "2020-11-10",]
+last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < "2020-11-15",]
 
 ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
  
@@ -94,7 +94,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, RIVM model 24 november",
+  labs(title = "Reproductiegetal, RIVM model 1 december",
        subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
  
@@ -174,7 +174,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, model 24 november",
+  labs(title = "Reproductiegetal, model 1 december",
        subtitle = "Beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
@@ -238,17 +238,17 @@ ggplot(last.date.old.wide, aes(x=Date, y=Rt_avg))+
   geom_line(data=last.date.old.wide.2, aes(y = Rt_low), lwd=0.6) +
   geom_line(data=last.date.old.wide.2, aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(data=last.date.old.wide.2, aes(ymin=Rt_low,ymax=Rt_up), fill="darkred",  alpha = 0.6) +
-  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "24 november"), lwd=2) +    #nieuwe file --> 17
+  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "1 december"), lwd=2) +    #nieuwe file --> 17
   
   
   ## old prediction
   geom_line(aes(y = Rt_low), lwd=0.6) +
   geom_line(aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(aes(ymin=Rt_low, ymax=Rt_up), color="lightblue", fill="lightblue", alpha = 0.4) +
-  geom_line(aes(y = Rt_avg, colour = "17 november"), lwd=1.2)+
+  geom_line(aes(y = Rt_avg, colour = "24 november"), lwd=1.2)+
   
   
-  scale_color_manual(values = c("darkblue", "darkred"))+
+  scale_color_manual(values = c("darkred", "darkblue"))+
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   
   scale_x_date(date_breaks = "1 week",

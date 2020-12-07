@@ -129,7 +129,7 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
   VR_3 <- VR_2[VR_2$week2>41 & VR_2$week2<= 46,]
   
   
-  ggplot(VR_3, aes(x = p.pos, y=posphd, colour = vregio))+
+  ggplot(VR_3, aes(x = p.pos, y=posphd))+ #  , colour = vregio))+
     annotate("rect", xmin = 0, xmax = 4, ymin = 0, ymax = 25, fill = "green", alpha = 0.75)+
     annotate("rect", xmin = 4, xmax = 27, ymin = 0, ymax = 25, fill = "orange", alpha = 0.5)+
     
@@ -144,7 +144,7 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
     
     scale_color_viridis_d()+
     
-    geom_path(show.legend = FALSE,  size =1, arrow = arrow(angle = 15, ends= "last", type="closed",))+
+    geom_path(show.legend = FALSE,  size =0.75, arrow = arrow(angle = 15, ends= "last", type="closed",))+
     geom_point(show.legend = FALSE, alpha = 0.8, size = 2, color = "black")+
     geom_point(show.legend = FALSE, alpha = 0.8, size = 1)+
     

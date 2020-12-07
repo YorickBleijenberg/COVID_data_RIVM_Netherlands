@@ -383,21 +383,30 @@ PersCoPaniekDays <- as.numeric(difftime(Sys.Date(),PersCoPaniek, units = c("days
 PersCoSemiLockdown = as.Date("2020-10-13",'%Y-%m-%d')
 PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, units = c("days")))
 PersCoSemitwoWeeks = as.Date("2020-11-03",'%Y-%m-%d')
-PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))  
+PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))
+PersCoSemitwoWeeksdone = as.Date("2020-11-17",'%Y-%m-%d')
+PersCoSemitwoWeeksdoneDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeksdone, units = c("days")))  
+
 
 tweet.data.tweet <- "Days since:
 
-%s - press conference: 'Bar closes an hour early'
+%s press conference: 'Bar closes an hour early'
 
-%s - press conference: 'We want R=0,9'
+%s press conference: 'We want R=0,9'
 
-%s  - press conference: 'semi-lockdown'
+%s press conference: 'semi-lockdown'
 
-%s - press conference: 'stricter semi-lockdown'"
+%s press conference: 'stricter semi-lockdown'
+
+%s press conference: 'end of stricter semi-lockdown'
+
+"
+#### 17 - press conference: End of 'stricter semi-lockdown'
+
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
-                            PersCoKroegDays,PersCoPaniekDays,PersCoSemiLockdownDays,PersCoSemitwoWeeksDays
+                            PersCoKroegDays,PersCoPaniekDays,PersCoSemiLockdownDays,PersCoSemitwoWeeksDays,PersCoSemitwoWeeksdoneDays
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
@@ -430,19 +439,32 @@ Encoding(tweet.vakantie.tweet) <- "UTF-8"
 post_tweet(tweet.vakantie.tweet,  media = c("data/40_EN_niet-noord-phd.png"), in_reply_to_status_id = get_reply_id())  #
 
 
+#### Combi.tweet ####
+
+tweet.combi.2.tweet <- "1) New cases in the 16 big cities
+2) New cases in the provinces
+3) Routekaart
+4) Weekly totals"
+tweet.combi.2.tweet <- sprintf(tweet.16city.tweet)
+Encoding(tweet.combi.2.tweet) <- "UTF-8"
+post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_phd.png","data/60_routekaart.png", "data/65_Cases_by_week_test_ Darjeeling1" ), in_reply_to_status_id = get_reply_id())  #
+
+
+
+
 #### 16 cities tweet ####
 
 tweet.16city.tweet <- "New cases in the 16 big cities"
 tweet.16city.tweet <- sprintf(tweet.16city.tweet)
 Encoding(tweet.16city.tweet) <- "UTF-8"
-post_tweet(tweet.16city.tweet,  media = c("data/18_EN_city_new.png"), in_reply_to_status_id = get_reply_id())  #
+#post_tweet(tweet.16city.tweet,  media = c("data/18_EN_city_new.png"), in_reply_to_status_id = get_reply_id())  #
 
 #### provence tweet ####
 
 tweet.16city.tweet <- "New cases in the provinces"
 tweet.16city.tweet <- sprintf(tweet.16city.tweet)
 Encoding(tweet.16city.tweet) <- "UTF-8"
-post_tweet(tweet.16city.tweet,  media = c("data/20_EN_prov_new.png"), in_reply_to_status_id = get_reply_id())  #
+#post_tweet(tweet.16city.tweet,  media = c("data/20_EN_prov_new.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 

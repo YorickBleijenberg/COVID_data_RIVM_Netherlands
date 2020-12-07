@@ -20,7 +20,7 @@ RIVM_casus_landelijk$date<-as.Date(RIVM_casus_landelijk$Date_statistics)   #Addi
 #reading from RIVM website, adding date and weeknumber for easy prossessing down the line.
 RIVM_aantallen_gemeente_per_dag<-read.csv("https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.csv",sep=";")  #import from RIVM website
 RIVM_aantallen_gemeente_per_dag$date<-as.Date(RIVM_aantallen_gemeente_per_dag$Date_of_publication)   #Adding a date to the case
-#RIVM_aantallen_gemeente_per_dag$week<-strftime(RIVM_aantallen_gemeente_per_dag$date,format = "%V")   #adding week_number to the case
+RIVM_aantallen_gemeente_per_dag$week<-strftime(RIVM_aantallen_gemeente_per_dag$date,format = "%V")   #adding week_number to the case
 
 
 
