@@ -68,7 +68,7 @@ ggplot(c19.app)+
   ggplot(app.percentage_gather, aes(date, value, fill=type))+
     geom_col()+
     
-    scale_fill_manual(values=c("#96afde","#44546a"),labels=c("Aantal testen zonder melding","Aantal testen met melding via de app"))+
+   # scale_fill_manual(values=c("#96afde","#44546a"),labels=c("Aantal testen zonder melding","Aantal testen met melding via de app"))+
     
     theme_classic() + 
     xlab("")+ 

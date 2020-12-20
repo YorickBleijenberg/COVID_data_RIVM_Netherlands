@@ -126,7 +126,7 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
   #VR_2 <- VR_2[ -c(2,4,5,6,7,8)]
   
   VR_2$perc_pos <- as.numeric(VR_2$perc_pos)
-  VR_3 <- VR_2[VR_2$week2>41 & VR_2$week2<= 46,]
+  VR_3 <- VR_2[VR_2$week2>42 & VR_2$week2<= 46,]
   
   
   ggplot(VR_3, aes(x = p.pos, y=posphd))+ #  , colour = vregio))+

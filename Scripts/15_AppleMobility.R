@@ -28,11 +28,12 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ##https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev17/v3/en-us/applemobilitytrends-2020-11-18.csv
 ##  https://covid19-static.cdn-apple.com/covid19-mobility-data/2021HotfixDev34/v3/en-us/applemobilitytrends-2020-12-01.csv
 ##https://covid19-static.cdn-apple.com/covid19-mobility-data/2022HotfixDev13/v3/en-us/applemobilitytrends-2020-12-03.csv
-
+## https://covid19-static.cdn-apple.com/covid19-mobility-data/2022HotfixDev27/v3/en-us/applemobilitytrends-2020-12-15.csv
+## https://covid19-static.cdn-apple.com/covid19-mobility-data/2023HotfixDev10/v3/en-us/applemobilitytrends-2020-12-17.csv
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2022HotfixDev14/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2023HotfixDev12/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -94,8 +95,8 @@ Apple_mob_nl_short <- Apple_mob_nl_short[-1:-6,]
 
 
 
-persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05")), 
-                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas"))
+persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05", "2020-12-15")), 
+                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
 
 
 

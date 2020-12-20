@@ -129,6 +129,96 @@ post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growt
 
 
 
+#### week.tweet ####
+
+tweet.week.tweet <- "De gaat-deze-week-boven-vorige-week-uitkomen? grafiek."
+tweet.week.tweet <- sprintf(tweet.week.tweet)
+Encoding(tweet.week.tweet) <- "UTF-8"
+post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
+
+
+
+
+#### kerst tweet ####
+
+###  NL
+###  250      -  6240
+###  150      -  3744
+###   50      -  1248
+###   35      -   874
+
+kerst.niveau.week <- df.predict.kerst$MACases_2[days.to.kerst+2]
+kest.niveau.text.week <- paste("waakzaam")     
+if (kerst.niveau.week > 1250) {                      #875
+  kest.niveau.text.week <- paste("zorgelijk")
+}
+if (kerst.niveau.week > 3750) {
+  kest.niveau.text.week <- paste("ernstig")
+}
+if (kerst.niveau.week > 6250) {
+  kest.niveau.text.week <- paste("zeer ernstig")
+}
+
+kerst.niveau.dag <- df.predict.kerst$MACases[days.to.kerst+8]
+kest.niveau.text.dag <- paste("waakzaam")      
+if (kerst.niveau.dag > 1250) {                      #875
+  kest.niveau.text.dag <- paste("zorgelijk")
+}
+if (kerst.niveau.dag > 3750) {
+  kest.niveau.text.dag <- paste("ernstig")
+}
+if (kerst.niveau.dag > 6250) {
+  kest.niveau.text.dag <- paste("zeer ernstig")
+}
+
+
+label = paste( doublingdayZ.1.text, "elke",doublingdayZ.1.int, "dagen")
+label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen")
+
+
+
+
+df.to.subset <-df.predict.kerst
+df.to.subset<- df.to.subset[df.to.subset$MACases<=1250,]     #875
+days.until.lvl2 <- df.to.subset$fixedDate[1]
+today  <- Sys.Date()
+days.until.lvl2<- as.vector(difftime(days.until.lvl2, today, units='days'))
+
+days.until.lvl2[is.na(days.until.lvl2)] <- paste("> 365")
+
+emoji_kerst <- intToUtf8(0x1F384)
+emoji_snowman <- intToUtf8(0x2603)
+emoji_snow <- intToUtf8(0x2744)
+
+tweet.kerst.tweet <- "Halen we de kerst?%s%s
+
+Voorspelling met 7-daags gemiddelde:
+
+Week-op-week (rood): 
+- %s elke %s dagen,
+- Waakzaam over: %s dagen
+- Niveau tijdens kerst: [%s]
+
+
+Dag-op-dag (donkerblauw):
+- %s elke %s dagen,
+- niveau tijdens kerst: [%s]
+"
+tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,emoji_kerst,emoji_snowman,
+                             doublingdayZ.text,   doublingdayZ.int,
+                             days.until.lvl2,
+                             kest.niveau.text.dag,
+                             
+                             doublingdayZ.1.text, doublingdayZ.1.int,
+                             kest.niveau.text.week
+)
+Encoding(tweet.kerst.tweet) <- "UTF-8"
+post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+
+
+
 #### dead tweet ####
 
 
@@ -225,86 +315,6 @@ post_tweet(tweet.dead.tweet,  media = c("data/15_dead_diff.png",
                                         "data/13_new_deceased.png", 
                                         "data/05_growth_dead.png"
 ), in_reply_to_status_id = get_reply_id()) 
-
-
-
-
-#### kerst tweet ####
-
-###  NL
-###  250      -  6240
-###  150      -  3744
-###   50      -  1248
-###   35      -   874
-
-kerst.niveau.week <- df.predict.kerst$MACases_2[days.to.kerst+2]
-kest.niveau.text.week <- paste("waakzaam")     
-if (kerst.niveau.week > 1250) {                      #875
-  kest.niveau.text.week <- paste("zorgelijk")
-}
-if (kerst.niveau.week > 3750) {
-  kest.niveau.text.week <- paste("ernstig")
-}
-if (kerst.niveau.week > 6250) {
-  kest.niveau.text.week <- paste("zeer ernstig")
-}
-
-kerst.niveau.dag <- df.predict.kerst$MACases[days.to.kerst+8]
-kest.niveau.text.dag <- paste("waakzaam")      
-if (kerst.niveau.dag > 1250) {                      #875
-  kest.niveau.text.dag <- paste("zorgelijk")
-}
-if (kerst.niveau.dag > 3750) {
-  kest.niveau.text.dag <- paste("ernstig")
-}
-if (kerst.niveau.dag > 6250) {
-  kest.niveau.text.dag <- paste("zeer ernstig")
-}
-
-
-label = paste( doublingdayZ.1.text, "elke",doublingdayZ.1.int, "dagen")
-label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen")
-
-
-
-
-df.to.subset <-df.predict.kerst
-df.to.subset<- df.to.subset[df.to.subset$MACases<=1250,]     #875
-days.until.lvl2 <- df.to.subset$fixedDate[1]
-today  <- Sys.Date()
-days.until.lvl2<- as.vector(difftime(days.until.lvl2, today, units='days'))
-
-days.until.lvl2[is.na(days.until.lvl2)] <- paste("> 365")
-
-emoji_kerst <- intToUtf8(0x1F384)
-emoji_snowman <- intToUtf8(0x2603)
-emoji_snow <- intToUtf8(0x2744)
-
-tweet.kerst.tweet <- "Halen we de kerst?
-
-Voorspelling met 7-daags gemiddelde:
-
-Week-op-week (rood): 
-- %s elke %s dagen,
-- Waakzaam over: %s dagen
-- Niveau tijdens kerst: [%s]
-
-
-Dag-op-dag (donkerblauw):
-- %s elke %s dagen,
-- niveau tijdens kerst: [%s]
-"
-tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,
-                             doublingdayZ.text,   doublingdayZ.int,
-                             days.until.lvl2,
-                             kest.niveau.text.dag,
-                             
-                             doublingdayZ.1.text, doublingdayZ.1.int,
-                             kest.niveau.text.week
-)
-Encoding(tweet.kerst.tweet) <- "UTF-8"
- post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
-
 
 
 
@@ -492,18 +502,26 @@ PersCoSemitwoWeeks = as.Date("2020-11-03",'%Y-%m-%d')
 PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))
 PersCoSemitwoWeeksdone = as.Date("2020-11-17",'%Y-%m-%d')
 PersCoSemitwoWeeksdoneDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeksdone, units = c("days")))  
+PersCoDoNothing = as.Date("2020-12-08",'%Y-%m-%d')
+PersCoDoNothingDays <- as.numeric(difftime(Sys.Date(),PersCoDoNothing, units = c("days")))  
+PersColockdown = as.Date("2020-12-14",'%Y-%m-%d')
+PersColockdownDays <- as.numeric(difftime(Sys.Date(),PersColockdown, units = c("days")))  
 
-tweet.data.tweet <- "Dagen sinds:
+tweet.data.tweet <- "Dagen sinds persco:
 
-[%s] de persCo: 'Kroeg uurtje eerder dicht' - regionale maatregelen
+[%s] Kroeg uurtje eerder dicht - regionale maatregelen
 
-[%s] de persoCo: 'We gaan voor R=0,9' - landelijke maatregelen
+[%s] We gaan voor R=0,9 - landelijke maatregelen
 
-[%s] de persoCo: 'Semi-lockdown'
+[%s] Semi-lockdown
 
-[%s]  de persoCo: 'Verzwaring semi-lockdown'
+[%s] Verzwaring semi-lockdown
 
-[%s]  de persoCo: 'Einde verzwaring semi-lockdown'"
+[%s] Einde verzwaring semi-lockdown
+
+[%s] Zorgelijk, maar we doen niets.
+
+[%s] lockdown"
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
@@ -511,7 +529,9 @@ tweet.data.tweet <- sprintf(tweet.data.tweet,
                             PersCoPaniekDays,
                             PersCoSemiLockdownDays,
                             PersCoSemitwoWeeksDays,
-                            PersCoSemitwoWeeksdoneDays
+                            PersCoSemitwoWeeksdoneDays,
+                            PersCoDoNothingDays,
+                            PersColockdownDays
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
@@ -545,7 +565,7 @@ Nee.
 
 tweet.vakantie.tweet <- sprintf(tweet.vakantie.tweet)
 Encoding(tweet.vakantie.tweet) <- "UTF-8"
-post_tweet(tweet.vakantie.tweet,  media = c("data/40_niet-noord-raw.png"), in_reply_to_status_id = get_reply_id())  #
+##  post_tweet(tweet.vakantie.tweet,  media = c("data/40_niet-noord-raw.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -596,12 +616,12 @@ post_tweet(tweet.all.muni.tweet,  media = c("data/75_Municipality-day-phd.png"),
 #### Combi.tweet ####
 
 tweet.combi.2.tweet <- "1) 16 grote steden
-2) procincies
+2) provincies
 3) Routekaart
 4) Weektotalen"
 tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
 Encoding(tweet.combi.2.tweet) <- "UTF-8"
-post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_phd.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_new-no-color.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
 #### 16 cities tweet ####
 
@@ -628,10 +648,5 @@ Encoding(tweet.week_num.tweet) <- "UTF-8"
 
 
 
-#### Combi.tweet ####
 
-tweet.combi.2.tweet <- "De gaat-deze-week-boven-vorige-week-uitkomen? grafiek"
-tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
-Encoding(tweet.combi.2.tweet) <- "UTF-8"
-post_tweet(tweet.combi.2.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  #
 

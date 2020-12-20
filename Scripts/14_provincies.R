@@ -327,7 +327,7 @@ ggplot(data = prov.combi.all) +
   #geom_point(stat='identity', mapping = aes(x = Date, y = phd,), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = phd, color = kleur), size =2)+   #, colour = "darkred"
 
-  scale_color_manual(values=c("green", "darkred", "red", "orange"))+
+  scale_color_manual(values=c("red", "darkred", "green", "orange"))+
     facet_wrap(~ Province,)+  # scales = "free_y")+
 
   theme_bw() + 

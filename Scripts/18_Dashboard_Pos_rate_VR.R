@@ -34,12 +34,16 @@ i=1
 ## https://coronadashboard.rijksoverheid.nl/_next/data/3FKVnqBALfN-kkgnQjArx/veiligheidsregio/VR02/positief-geteste-mensen.json
 
 ##https://coronadashboard.rijksoverheid.nl/_next/data/HdJ2_iFQS-7oP1Ai6FYcE/veiligheidsregio/VR01/positief-geteste-mensen.json
+## https://coronadashboard.rijksoverheid.nl/_next/data/3ZIVZhkAR6rBxrEeP76NV/veiligheidsregio/VR02/positief-geteste-mensen.json
+##  https://coronadashboard.rijksoverheid.nl/_next/data/t2wAB-7DRJX-70LsMhdEt/veiligheidsregio/VR02/positief-geteste-mensen.json
+
+
 
 for (i in 1:25) {
   if(i<10){
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/HdJ2_iFQS-7oP1Ai6FYcE/veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/t2wAB-7DRJX-70LsMhdEt/veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
   }else{
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/HdJ2_iFQS-7oP1Ai6FYcE/veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/t2wAB-7DRJX-70LsMhdEt/veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
   }
   db<-db[["pageProps"]][["data"]][["ggd"]][["values"]]
   tot<-rbind(tot,db)

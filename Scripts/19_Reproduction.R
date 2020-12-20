@@ -28,7 +28,7 @@ last.date.old.wide.2$Date <- as.Date(last.date.old.wide.2$Date)
 last.date.old.2 <- tail(last.date.old.wide.2$Date, 1)
 
 #################### old
-repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-11-24_COVID-19_reproductiegetal.csv"
+repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-12-01_COVID-19_reproductiegetal.csv"
 reproduction.raw.old <- read.csv(repro.name.old,sep=";")  
 
 last.date.old.wide <-reproduction.raw.old
@@ -59,13 +59,13 @@ last.date.old <- tail(last.date.old.wide$Date, 1)
 
 #### Reproduction latest ####
 
-persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18")), 
-                        event=c("|Kroeg uurtje eerder dicht", "|We gaan voor R=0,9","|Semi-lockdown\n(0.75-0.99)", "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring"),
-                     yas=c(1.01, 0.9, 0.75, 0.72,0.75)
+persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18","2020-12-14")), 
+                        event=c("|Kroeg uurtje eerder dicht", "|We gaan voor\nR=0,9","|Semi-lockdown\n(0.75-0.99)", "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring","| lockdown, R=0.8"),
+                     yas=c(1.01, 0.85, 0.75, 0.72,0.75,0.75)
                      )
 
-persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18")),
-                                     event=c("19 sep", "29 sep", "14 okt", "5 nov","18 nov"))
+persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18", "2020-12-14")),
+                                     event=c("19 sep", "29 sep", "14 okt", "5 nov","18 nov", "14 Dec"))
 
 #r.estimate.df = data.frame(date_start=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04")), 
 #                           date_end=as.Date(c("2020-11-17", "2020-10-14", "2020-11-17", "2020-11-17"))
@@ -73,7 +73,7 @@ persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-1
   
 
 
-last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < "2020-11-15",]
+last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < "2020-11-30",]
 
 ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
  
@@ -83,7 +83,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
   xlab("")+ 
   ylab("")+
     
-  scale_x_date(limits=as.Date(c("2020-9-1", today)), date_breaks = "1 week", date_labels = "%b %d") +
+  scale_x_date(limits=as.Date(c("2020-9-1", today)), date_breaks = "2 week", date_labels = "%b %d") +
   scale_y_continuous(expand = c(0, 0), limits = c(0.5, 1.5), breaks = c(0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5)) +
   
   theme(axis.title.x=element_blank(),
@@ -94,7 +94,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, RIVM model 1 december",
+  labs(title = "Reproductiegetal, RIVM model 15 december",
        subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
  
@@ -115,7 +115,8 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
   annotate("rect", xmin = as.Date("2020-09-29"), xmax = as.Date("2020-10-14"), ymin = 0.95, ymax = 0.85, fill = "red", alpha = 0.3)+
   annotate("rect", xmin = as.Date("2020-10-14"), xmax = as.Date("2020-11-04"), ymin = 0.75, ymax = 0.99, fill = "blue", alpha = 0.2)+
   annotate("rect", xmin = as.Date("2020-11-04"), xmax = as.Date("2020-11-18"), ymin = 0.72, ymax = 0.91, fill = "green", alpha = 0.3)+
-  annotate("rect", xmin = as.Date("2020-11-18"), xmax = as.Date("2020-12-03"), ymin = 0.75, ymax = 0.99, fill = "blue", alpha = 0.2)+
+  annotate("rect", xmin = as.Date("2020-11-18"), xmax = as.Date("2020-12-14"), ymin = 0.75, ymax = 0.99, fill = "blue", alpha = 0.2)+
+  annotate("rect", xmin = as.Date("2020-12-14"), xmax = as.Date("2021-01-19"), ymin = 0.75, ymax = 0.85, fill = "red", alpha = 0.3)+
   
   geom_text(data=persco.df, mapping=aes(x=date, y=yas, label=event), size=6, angle=0, vjust=-0.4, hjust=0.012, face="bold")+
 
@@ -140,7 +141,7 @@ ggsave("data/40_reproduction.png",width=16, height = 9)
 
 
 persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18")), 
-                     event=c("|Kroeg uurtje eerder dicht", "|We gaan voor R=0,9","|Semi-lockdown\n(0.75-0.99)", "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring"),
+                     event=c("|Kroeg uurtje eerder dicht", "|We gaan voorR=0,9","|Semi-lockdown\n(0.75-0.99)", "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring"),
                      yas=c(1.01, 0.9, 0.75, 0.72,0.75)
 )
 
@@ -238,17 +239,17 @@ ggplot(last.date.old.wide, aes(x=Date, y=Rt_avg))+
   geom_line(data=last.date.old.wide.2, aes(y = Rt_low), lwd=0.6) +
   geom_line(data=last.date.old.wide.2, aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(data=last.date.old.wide.2, aes(ymin=Rt_low,ymax=Rt_up), fill="darkred",  alpha = 0.6) +
-  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "1 december"), lwd=2) +    #nieuwe file --> 17
+  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "8 december"), lwd=2) +    #nieuwe file --> 17
   
   
   ## old prediction
   geom_line(aes(y = Rt_low), lwd=0.6) +
   geom_line(aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(aes(ymin=Rt_low, ymax=Rt_up), color="lightblue", fill="lightblue", alpha = 0.4) +
-  geom_line(aes(y = Rt_avg, colour = "24 november"), lwd=1.2)+
+  geom_line(aes(y = Rt_avg, colour = "1 december"), lwd=1.2)+
   
   
-  scale_color_manual(values = c("darkred", "darkblue"))+
+  scale_color_manual(values = c("darkblue", "darkred"))+
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   
   scale_x_date(date_breaks = "1 week",

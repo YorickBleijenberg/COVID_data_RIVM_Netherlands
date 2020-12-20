@@ -20,6 +20,7 @@ LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
 last(LCPS_datafeed,2)
 
+
 ## Nieuwe maatregelen toevoegen - bieb dicht - 4 november
 
 
@@ -45,7 +46,6 @@ library(RcppRoll)
 require(data.table)
 library(scales)
 
-
 rm(list=ls())
 
 dirname <- paste("data/",Sys.Date(),sep = "")
@@ -58,9 +58,8 @@ dir.create(dirname)
  source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
-
-editionname <- "COVID-19-could-cause-erectile-dysfunction"
-editienaam  <- "niveau-[Zeer Ernstig]-6.250-besmettingen-per-dag"
+editionname <- "winter-is-coming-(tomorrow)"  ##"hope-for-the-best-prepare-for-the-worst"
+editienaam  <- "winter-is-coming-(tomorrow)"  ##"hope-for-the-best-prepare-for-the-worst"   #### 1.218 --> 10x signaalwaarde
 
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 
@@ -71,8 +70,6 @@ source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 source("C:\\Rdir\\Rscripts\\04_DataPrep.R")
 
 print(Working_Set)
-
-
 
 source("C:\\Rdir\\Rscripts\\05_DailyPlots.R")
 
@@ -106,9 +103,9 @@ source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
 #### check correct last tweet ####
 
- source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+## source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
- source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+## source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 

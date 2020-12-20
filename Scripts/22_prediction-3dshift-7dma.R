@@ -18,17 +18,15 @@ Merged_data_7MA <- Merged_data_2
 
 #Gewenste dagen subsetten
 Merged_data_short <- Merged_data_7MA[Merged_data_7MA$dateInTable>"2020-07-01"&Merged_data_7MA$dateInTable<=Sys.Date(),]
-Merged_data_short$observation <- 1:nrow(Merged_data_short) 
-
+Merged_data_short$observation <- 1:nrow(Merged_data_short)
 
 Merged_data_short$fixedDate <- as.Date(Merged_data_short$dateInTable,format="%Y-%m-%d")
 
 
 
-
 #df.predict.2  <-  last(Merged_data_short)
 
-df.predict  <-  tail(Merged_data_short,1)
+df.predict  <-  tail(Merged_data_short,4)
 df.predict  <- df.predict[ -c(1:4,6:8,10:14)]
 
 today <- as.Date(df.predict$fixedDate)
@@ -362,7 +360,7 @@ ggplot(Merged_data_short)+
   ylab("")+
   
 
-  scale_y_continuous(limits = c(0, 13500),breaks = c(2500, 5000, 7500,10000,12500), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 11500),breaks = c(2500, 5000, 7500,10000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   coord_cartesian(expand = FALSE)+
   
@@ -480,7 +478,7 @@ annotate("text", x = as.Date("2020-11-16"), y = 5000,  label = "Waakzaam tijdens
   ylab("")+
   
   
-  scale_y_continuous(limits = c(0, 13500),breaks = c(2500, 5000, 7500,10000,12500), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 11500),breaks = c(2500, 5000, 7500,10000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   coord_cartesian(expand = FALSE)+
   

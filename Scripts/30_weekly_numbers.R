@@ -33,10 +33,15 @@ weeknumber.df.sh.2 <- weeknumber.df.sh[weeknumber.df.sh$week > 26,]
 
 
 ggplot(weeknumber.df.sh.2, aes(x=week, y=Total_reported, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+  
+  # geom_hline(yintercept=87500, linetype = "dashed", color = "gray")+
+  
   geom_bar(stat='identity')+
   
-  scale_x_continuous(limits = c(27,current.week+2))+
+  scale_x_continuous(breaks=seq(27,current.week+2,1), limits = c(27,current.week+2))+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
+  
   
   #scale_fill_brewer(palette = "RdYlBu")+
   #scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+
@@ -67,11 +72,12 @@ ggplot(weeknumber.df.sh.2, aes(x=week, y=Total_reported, fill = factor(week_day,
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
   
-  
   geom_text(mapping=aes(x=28, y=10500, label="Waakzaam "), size=7)+
   geom_text(mapping=aes(x=28, y=7600, label="8750 nieuwe gevallen per week"), size=4)+
+  #geom_text(mapping=aes(x=30, y=67000, label="Weekrecord: week 44 - 68.488 gevallen"), size=4)+
   
-    geom_hline(yintercept=8750, linetype = "dashed")+
+  
+  geom_hline(yintercept=8750, linetype = "dashed")
 
 ggsave("data/65_Cases_by_week.png",width=16, height = 9)
 
@@ -119,10 +125,6 @@ ggplot(weeknumber.df.sh.3, aes(x=week, y=Total_reported,fill = factor(week_day, 
   #scale_fill_brewer(palette = "RdYlBu")+
   #scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+
   scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+ 
-  
-
-  
-  
   
     facet_grid(~week_day)+  #, levels=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))+
   

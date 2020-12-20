@@ -6,6 +6,8 @@ library(rtweet)
 #library(paletteer)
 #library(scales)
 
+today <- Sys.Date()
+
 
 get_reply_id <- function(rel_increase) {
   my_timeline <- get_timeline(rtweet:::home_user()) ## Pull my own tweets
@@ -280,7 +282,7 @@ ggplot(data = lcps.both.df, mapping = aes(x = date, y = number, color = type, fi
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
 
-ggsave("data/16c_hosp_new.png",width=19, height = 9)
+#ggsave("data/16c_hosp_new.png",width=19, height = 9)
 
 
 ##### geom_stream  ######
@@ -405,9 +407,9 @@ ggplot(wave.compare.gather, aes(wave, value, fill= type))+
           axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
-          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
 
-ggsave("data/16d_wave_ic-hosp.png",width=19, height = 9)
+ggsave("data/16z_wave_ic-hosp.png",width=19, height = 9)
 
 
 
@@ -432,7 +434,7 @@ ggplot(LCPS_datafeed_predict)+
     scale_x_date(date_breaks = "1 month", 
                date_labels= format("%d %b"),
                name="",
-               limits = as.Date(c("2020-10-20", "2020-12-8")))+
+               limits = as.Date(c("2020-10-20", NA)))+
     geom_hline(yintercept=12, size = 1.5)+
     geom_hline(yintercept=40, size = 1)+
 
@@ -458,7 +460,8 @@ ggplot(LCPS_datafeed_predict)+
   
 ggsave("data/16x_hosp_pred.png",width=16, height = 9)
 
-
+#hosp_IC <- paste0("IC:            ",hosp.IC.b2, "   (", hosp.IC.c2 , ")")
+hosp_new_IC.2 <- paste0("Aantal nieuwe opnames IC:  ",hosp.new.b2)
 
 ggplot(LCPS_datafeed_predict)+
   
@@ -466,29 +469,30 @@ ggplot(LCPS_datafeed_predict)+
   geom_line(aes(x=Datum, y=MA_IC), size =3, color = "#DAE3F3")+
   geom_line(aes(x=Datum, y=MA_IC), size =2)+
   
-  scale_x_date(date_breaks = "1 month", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels= format("%d %b"),
-               limits = as.Date(c("2020-10-15", "2020-12-8")))+
+               limits = as.Date(c("2020-10-10", NA)))+
   geom_hline(yintercept=3,  size = 1.5)+
     geom_hline(yintercept=10, size = 1)+
 
+  xlab("")+
   ylab("")+
   
-  labs(title="Aantal nieuwe opnames IC", 
-       #subtitle=wave.subtitle,
+  labs(title=hosp_new_IC.2, 
+      # subtitle=hosp_new_IC.2,
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
   
   
-  annotate("text", x = as.Date("2020-10-16"), y = 15, label = "Ernstig", size=10,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-16"), y = 7, label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-16"), y = 1,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-11"), y = 15, label = "Ernstig", size=8,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-11"), y = 7, label = "Zorgelijk", size=8,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-11"), y = 1.5,  label = "Waakzaam", size=7,color = "black",face = "bold", hjust ="left")+
   
   
-  annotate("text", x = as.Date("2020-10-15"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-15"), y = 4, label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-10"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-10"), y = 4, label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
   
   
   theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
@@ -501,6 +505,9 @@ ggplot(LCPS_datafeed_predict)+
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+  
+#  coord_cartesian(expand = FALSE)+
+  
   
 ggsave("data/16x_IC_pred.png",width=16, height = 9)
 
@@ -550,12 +557,29 @@ if (hosp.IC.b2 < hosp.IC.a2) {
 } else
   ic.total.dot <- intToUtf8(0x1F7E1)     ### geel
 
+
 if (hosp.new.b < hosp.new.a) {
   hosp.new.dot <- intToUtf8(0x1F7E2)     ### groen
 } else if (hosp.new.b > hosp.new.a) {
   hosp.new.dot <- intToUtf8(0x1F534)     ### rood
 } else
   hosp.new.dot <- intToUtf8(0x1F7E1)     ### geel
+
+
+if (hosp.new.b1 < hosp.new.a1) {
+  hosp.cl.new.dot <- intToUtf8(0x1F7E2)     ### groen
+} else if (hosp.new.b1 > hosp.new.a1) {
+  hosp.cl.new.dot <- intToUtf8(0x1F534)     ### rood
+} else
+  hosp.cl.new.dot <- intToUtf8(0x1F7E1)     ### geel
+
+if (hosp.new.b2 < hosp.new.a2) {
+  hosp.ic.new.dot <- intToUtf8(0x1F7E2)     ### groen
+} else if (hosp.new.b2 > hosp.new.a2) {
+  hosp.ic.new.dot <- intToUtf8(0x1F534)     ### rood
+} else
+  hosp.ic.new.dot <- intToUtf8(0x1F7E1)     ### geel
+
 
 #### tweet.LCPS.tweet ####
 
@@ -569,6 +593,10 @@ if (hosp.new.b < hosp.new.a) {
 #### de-kosten-van-falend-corona-beleid-zijn-mensenlevens.
 #### we-zijn-er-nog-lang-niet
 
+hosp.total.b  <- format( hosp.total.b,  big.mark="." ,decimal.mark=",")
+hosp.total.b1 <- format( hosp.total.b1, big.mark="." ,decimal.mark=",")
+#hosp.total.b2 <- format( hosp.total.b2, big.mark="." ,decimal.mark=",")
+hosp.new.b    <- format( hosp.new.b,    big.mark="." ,decimal.mark=",")
 
 tweet.LCPS.EN.tweet <- "Day %s, The %s edition
 
@@ -583,8 +611,8 @@ Patients currently in the hospital:
 Newly hospitalized: 
 %s%s (%s)
 
-Clinic: %s (%s)
-ICU:       %s (%s)
+%sClinic: %s (%s)
+%sICU:       %s (%s)
 
 #corona #stayhome"
 
@@ -598,8 +626,8 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             ic.total.dot,     hosp.IC.b2,  hosp.IC.c2,
                           
                             hosp.new.dot, hosp.new.b,       hosp.new.c,
-                            hosp.new.b1,      hosp.new.c1,
-                            hosp.new.b2,      hosp.new.c2
+                            hosp.cl.new.dot, hosp.new.b1,      hosp.new.c1,
+                            hosp.ic.new.dot, hosp.new.b2,      hosp.new.c2
                             
                             )
 Encoding(tweet.LCPS.EN.tweet) <- "UTF-8"
@@ -609,6 +637,8 @@ post_tweet(tweet.LCPS.EN.tweet,  media = c("data/16a_IC_hosp.png",
                                            "data/16x_hosp_pred.png",
                                            "data/16x_IC_pred.png"
                                            ))
+
+
 
 
 tweet.LCPS.tweet <- "Dag %s, de %s editie

@@ -67,8 +67,8 @@ df4 <- df3
 #dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
 #dates_vline <- which((df4$Datum %in% dates_vline))
 
-dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", "2020-11-18")),
-                          event=c("uurtje","nulnegen","semilock","verzwaring", "einde verzwaring"))
+dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", "2020-11-18", "2020-12-15")),
+                          event=c("uurtje","nulnegen","semilock","verzwaring", "einde verzwaring", "lockdown"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]
@@ -81,7 +81,7 @@ theme_classic()+
     xlab("")+ 
   ylab("")+
   
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "2 week", 
                date_labels= format("%d-%b"),
                limits = as.Date(c("2020-07-01", Sys.Date() ))
                )+
@@ -104,7 +104,7 @@ theme_classic()+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
 labs(title = "Besmette personen: verschil met gisteren",
-     subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown\n5 t/m 18 nov, verzwaring semi-lockdown", #  OMT: 'Een lagere R is beter'",
+    # subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown\n5 t/m 18 nov, verzwaring semi-lockdown", #  OMT: 'Een lagere R is beter'",
      caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
    theme(legend.position = c(0.2, 0.8),
@@ -141,7 +141,7 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
   xlab("")+ 
   ylab("")+
   
-  scale_x_date(date_breaks = "7 day", 
+  scale_x_date(date_breaks = "14 day", 
                date_labels= format("%d-%b"),
                limits = as.Date(c("2020-07-01", Sys.Date()+5)))+
 
@@ -209,7 +209,9 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2020-11-09",
                   "2020-11-16",
                   "2020-11-23",
-                  "2020-11-30"
+                  "2020-11-30",
+                  "2020-12-07",
+                  "2020-12-14"
                  ))   
 
 dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))
@@ -223,7 +225,7 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
   theme_classic()+
   xlab("")+ 
   ylab("")+
-    scale_x_date(date_breaks = "1 week", 
+    scale_x_date(date_breaks = "2 week", 
                date_labels= format("%d-%b"),
                limits = as.Date(c("2020-07-01", Sys.Date() ))
   )+

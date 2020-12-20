@@ -17,19 +17,42 @@ Merged_data_short$fixedDate <- as.Date(Merged_data_short$dateInTable,format="%Y-
 test.date.df =data.frame(date=as.Date(c("2020-12-01")),event="verruiming testbeleid")
 
 
+
+persco.df=data.frame(date=as.Date(c("2020-10-14",   "2020-12-15", "2020-12-25", "2021-01-01", "2021-01-12","2021-01-19")), 
+                     event=c("Semi-lockdown",   "lockdown", "kerst", "1 jan", "persco", "einde lockdown?"))
+
+persco.df.2=data.frame(date=as.Date(c("2020-12-25", "2021-01-01", "2021-01-12","2021-01-19")), 
+                     event=c( "kerst", "1 jan", "persco", "einde lockdown?"))
+
+
+
+
+
+
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     
     #geom_vline(xintercept = as.numeric(Merged_data_short$fixedDate[dates_vline_vak2]),
      #          col = "darkgray", lwd = 1, linetype= "dashed")+
         scale_fill_manual(values=c("#96afde"))+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 2)+
+    #geom_line(mapping = aes(x=fixedDate, y=ma_c_lag), color = "red",lwd = 2)+
+    
+  #  scale_x_date(date_breaks = "1 month", 
+  #               date_labels= format("%b"),
+  #               limits = as.Date(c("2020-09-01", "2021-02-05")))+
     
     scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
     
-    geom_vline(data=test.date.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "black")+
-    geom_text(data=test.date.df  , mapping=aes(x=date, y=11000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+    #geom_vline(data=test.date.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "black")+
+    #geom_text(data=test.date.df  , mapping=aes(x=date, y=11000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+    
+    #geom_vline(data=persco.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+   # geom_text(data=persco.df  , mapping=aes(x=date, y=3000, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+    
+    #geom_vline(data=persco.df.2,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "darkgray")+
+   # geom_text(data=persco.df.2  , mapping=aes(x=date, y=3000, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "darkgray")+
     
     
     theme_classic()+
@@ -59,15 +82,15 @@ ggsave("data/05_new_cases.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#96afde"))+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 2)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
     scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
     labs(title = "New cases",
          subtitle = "with 7 day moving average",
-         caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
+         caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
     theme(
         plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -90,8 +113,8 @@ ggsave("data/05_EN_new_cases.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#96afde"))+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 2)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
@@ -122,8 +145,8 @@ ggsave("data/06_new_cases_log.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#96afde"))+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 2)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
@@ -132,7 +155,7 @@ ggplot(Merged_data_short)+
     #ylim(16, NA)+
     labs(title = "New cases, logaritmic scale",
          subtitle = "with 7 day moving average",
-         caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
+         caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
     theme(
         plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -155,8 +178,8 @@ ggsave("data/06_EN_new_cases_log.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=hosp, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#f4b183"))+
-    geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#c55a11",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_h_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_h_lead), color = "#c55a11",lwd = 2)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
@@ -185,14 +208,14 @@ ggsave("data/09_new_hosp.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=hosp, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#f4b183"))+
-    geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MAhosp), color = "#c55a11",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_h_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_h_lead), color = "#c55a11",lwd = 2)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
     labs(title = "New hospitalizations",
          subtitle = "with 7 day moving average",
-         caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
+         caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
     theme(
         plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -215,8 +238,8 @@ ggsave("data/09_EN_new_hosp.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=dead, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#fab0b0"))+
-    geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#ff0505",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_d_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_d_lead), color = "#ff0505",lwd = 2)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
@@ -243,8 +266,8 @@ ggsave("data/13_new_deceased.png",width=16, height = 9)
 ggplot(Merged_data_short)+
     geom_bar(stat='identity', mapping = aes(x=fixedDate, y=dead, fill = "x"))+     #, color = "#96afde"
     scale_fill_manual(values=c("#fab0b0"))+
-    geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#F5F5F5",lwd = 3)+
-    geom_line(mapping = aes(x=fixedDate, y=MAdead), color = "#ff0505",lwd = 2)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_d_lead), color = "#F5F5F5",lwd = 3)+
+    geom_line(mapping = aes(x=fixedDate, y=ma_d_lead), color = "#ff0505",lwd = 2)+
     theme_classic()+
     xlab("")+ 
     ylab("")+

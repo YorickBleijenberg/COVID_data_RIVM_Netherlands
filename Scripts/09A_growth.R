@@ -32,7 +32,7 @@ ggplot(Merged_data_short)+
    xlab("")+ 
    ylab("")+
    
-   labs(title = paste("Groei factor week op week nieuwe besmettingen is nu: ", gf_c_last, "%"),
+   labs(title = paste("Groeifactor week-op-week nieuwe besmettingen is nu: ", gf_c_last, "%"),
         subtitle = "gebaseerd op het 7 daags voortschrijdend gemiddelde",
         caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
    
@@ -112,7 +112,7 @@ ggplot(Merged_data_short)+
    xlab("")+ 
    ylab("")+
    
-   labs(title = paste("Groei week op week nieuwe opnames is nu: ", gf_h_last, "%"),
+   labs(title = paste("Groei week-op-week nieuwe opnames is nu: ", gf_h_last, "%"),
         subtitle = "gebaseerd op het 7 daags voortschrijdend gemiddelde",
         caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
    

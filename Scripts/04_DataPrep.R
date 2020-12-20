@@ -30,21 +30,20 @@ cases_hosp <- merge(copy_cases,copy_hosp, by.x= "dateInTable")
 ##### datafile aantallen_gemeente_per_dag
 Merged_data <- merge(copy_dead,cases_hosp, by.x= "dateInTable")
 
-
-
 Merged_data_2 <- Merged_data
 Merged_data_2$MACases  <- rollmeanr(Merged_data_2$cases, 7, fill = 0)
 Merged_data_2$MAhosp <- rollmeanr(Merged_data_2$hosp, 7, fill = 0)
 Merged_data_2$MAdead <- rollmeanr(Merged_data_2$dead, 7, fill = 0)
 
-
 Merged_data_2$ma_c_lag  <- lag(Merged_data_2$MACases,7)
+Merged_data_2$ma_c_lead  <- lead(Merged_data_2$MACases,3)
 Merged_data_2$gf_c <- round((((Merged_data_2$MACases/Merged_data_2$ma_c_lag)-1)*100), digits = 1)
 Merged_data_2$ma_h_lag  <- lag(Merged_data_2$MAhosp,7)
+Merged_data_2$ma_h_lead  <- lead(Merged_data_2$MAhosp,3)
 Merged_data_2$gf_h <- round((((Merged_data_2$MAhosp/Merged_data_2$ma_h_lag)-1)*100), digits = 1)
 Merged_data_2$ma_d_lag  <- lag(Merged_data_2$MAdead,7)
+Merged_data_2$ma_d_lead  <- lead(Merged_data_2$MAdead,3)
 Merged_data_2$gf_d <- round((((Merged_data_2$MAdead/Merged_data_2$ma_d_lag)-1)*100), digits = 1)
-
 
 
 Date <- Sys.Date()

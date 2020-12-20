@@ -28,7 +28,7 @@ weeknumber<-strftime(Sys.Date(),format = "%V")
 
 
 #Gewenste weken subsetten
-casus.working <- casus.working[casus.working$week>24&casus.working$week<=49,]
+casus.working <- casus.working[casus.working$week>24&casus.working$week<=51,]
 
 
 #Heatmap
@@ -43,7 +43,7 @@ geom_tile(size=1.5,color="#F5F5F5")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 48 & 49 zullen nog sterk stijgen",fill=NULL,
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 50 & 51 zullen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -66,7 +66,7 @@ ggplot(casus.working,aes(week,Agegroup,fill=phd))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 48 and 49 will still rise.",fill=NULL,
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 49 and 50 will still rise.",fill=NULL,
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -80,7 +80,7 @@ ggsave("data/02_EN_leeftijd_heatmap.png",width=16, height = 9)
 
 
 #Gewenste weken subsetten
-casus.working <- casus.working[casus.working$week>41&casus.working$week<=49,]
+casus.working <- casus.working[casus.working$week>43&casus.working$week<=51,]
 
 
 #barchart
@@ -94,7 +94,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 48 & 49 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 50 & 51 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -123,7 +123,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=week))+
   ylab("")+
   
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 48 and 49 will still rise.",
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 50 and 51 will still rise.",
        fill="Week",
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   

@@ -436,7 +436,7 @@ No.
 
 tweet.vakantie.tweet <- sprintf(tweet.vakantie.tweet)
 Encoding(tweet.vakantie.tweet) <- "UTF-8"
-post_tweet(tweet.vakantie.tweet,  media = c("data/40_EN_niet-noord-phd.png"), in_reply_to_status_id = get_reply_id())  #
+##  post_tweet(tweet.vakantie.tweet,  media = c("data/40_EN_niet-noord-phd.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 #### Combi.tweet ####
@@ -447,25 +447,29 @@ tweet.combi.2.tweet <- "1) New cases in the 16 big cities
 4) Weekly totals"
 tweet.combi.2.tweet <- sprintf(tweet.16city.tweet)
 Encoding(tweet.combi.2.tweet) <- "UTF-8"
-post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_phd.png","data/60_routekaart.png", "data/65_Cases_by_week_test_ Darjeeling1" ), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_phd.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
 
 
 
 #### 16 cities tweet ####
 
-tweet.16city.tweet <- "New cases in the 16 big cities"
-tweet.16city.tweet <- sprintf(tweet.16city.tweet)
-Encoding(tweet.16city.tweet) <- "UTF-8"
-#post_tweet(tweet.16city.tweet,  media = c("data/18_EN_city_new.png"), in_reply_to_status_id = get_reply_id())  #
+#tweet.16city.tweet <- "New cases in the 16 big cities"
+#tweet.16city.tweet <- sprintf(tweet.16city.tweet)
+#Encoding(tweet.16city.tweet) <- "UTF-8"
+#post_tweet(tweet.16city.tweet,  media = c("data/18_EN_city_new.png"), in_reply_to_status_id = get_reply_id())
 
 #### provence tweet ####
 
-tweet.16city.tweet <- "New cases in the provinces"
-tweet.16city.tweet <- sprintf(tweet.16city.tweet)
-Encoding(tweet.16city.tweet) <- "UTF-8"
-#post_tweet(tweet.16city.tweet,  media = c("data/20_EN_prov_new.png"), in_reply_to_status_id = get_reply_id())  #
+#tweet.16city.tweet <- "New cases in the provinces"
+#tweet.16city.tweet <- sprintf(tweet.16city.tweet)
+#Encoding(tweet.16city.tweet) <- "UTF-8"
+#post_tweet(tweet.16city.tweet,  media = c("data/20_EN_prov_new.png"), in_reply_to_status_id = get_reply_id()
 
 
+#### week.tweet ####
 
-
+tweet.week.tweet <- "The Will-this-week-overtake-last-week-? graph"
+tweet.week.tweet <- sprintf(tweet.week.tweet)
+Encoding(tweet.week.tweet) <- "UTF-8"
+post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
