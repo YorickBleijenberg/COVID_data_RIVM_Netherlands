@@ -58,8 +58,8 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 #persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05")), 
  #                    event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas"))
 
-persco.df=data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05", "2020-12-15")), 
-                     event=c("kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
+persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05", "2020-12-15")), 
+                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
 
 
 
@@ -197,9 +197,10 @@ tweet.GoogleM.NL.tweet <- sprintf(tweet.GoogleM.NL.tweet,
 Encoding(tweet.GoogleM.NL.tweet) <- "UTF-8"
 
 
+## post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"))
+## post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"), in_reply_to_status_id = get_reply_id())
 
- post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"))
-  
+
  
 #### Goolge mobility provinces #####
  

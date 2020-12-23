@@ -11,28 +11,29 @@ library(tidyverse)
 ###   50      -  1248
 ###   35      -   874
 
-###   Merged_data_2$ma_c_lead  <- lead(Merged_data_2$MACases,3)
+
 
 Merged_data_7MA <- Merged_data_2
 
 
 #Gewenste dagen subsetten
 Merged_data_short <- Merged_data_7MA[Merged_data_7MA$dateInTable>"2020-07-01"&Merged_data_7MA$dateInTable<=Sys.Date(),]
-Merged_data_short$observation <- 1:nrow(Merged_data_short)
+Merged_data_short$observation <- 1:nrow(Merged_data_short) 
+
 
 Merged_data_short$fixedDate <- as.Date(Merged_data_short$dateInTable,format="%Y-%m-%d")
 
 
 
-#df.predict.lead.2  <-  last(Merged_data_short)
 
-df.predict.lead  <-  tail(Merged_data_short,4)
-df.predict.lead  <-  df.predict.lead[1,]
-df.predict.lead  <- df.predict.lead[ -c(1:4,6:8,11:17)]
+#df.predict.2  <-  last(Merged_data_short)
 
-today <- as.Date(df.predict.lead$fixedDate)
-pred.MAcases  <- df.predict.lead$ma_c_lead
-pred.gfc      <- as.integer(tail(Merged_data_short$gf_c, 1))
+df.predict  <-  tail(Merged_data_short,1)
+df.predict  <- df.predict[ -c(1:4,6:9,11:17)]
+
+today <- as.Date(df.predict$fixedDate)
+pred.MAcases  <- df.predict$MACases
+pred.gfc      <- as.integer(df.predict$gf_c)
 
 today  <- Sys.Date()
 kersmis.Dag <- as.Date("2020-12-25")
@@ -46,7 +47,7 @@ e <- Working_Set$MACases[3]
 ea <- Working_Set$MACases[2]
 f <- Working_Set$MACases[1]
 
-gf.c.d <- (df.predict.lead$gf_c[1]/7)
+gf.c.d <- (df.predict$gf_c[1]/7)
 
 
 doublingdayZ     <- (log(2)/(log(e/f)/7))         
@@ -56,25 +57,25 @@ doublingdayZ.1     <- (log(2)/(log(e/ea)))
 doublingdayZ.3   <-  exp(log(2)/doublingdayZ.1)*100
 
 
-df.predict.lead.kerst <- df.predict.lead
-df.predict.lead.kerst$NumDays <- c(1)
-df.predict.lead.kerst$MACases_2 <- c(ea)
-df.predict.lead.kerst$MACases <- c(f)
-df.predict.lead.kerst$Date <- c(today-7)   ####  10  ######
+df.predict.kerst <- df.predict
+df.predict.kerst$NumDays <- c(1)
+df.predict.kerst$MACases_2 <- c(ea)
+df.predict.kerst$MACases <- c(f)
+df.predict.kerst$Date <- c(today-7)
 
 
 i=2 
 while (i < 365) {
-ma.cases.pred <- df.predict.lead.kerst$MACases[i-1]  /100*doublingdayZ.2
-ma.cases.pred.2 <- df.predict.lead.kerst$MACases_2[i-1]/100*doublingdayZ.3
-df.predict.lead.kerst <- add_row(df.predict.lead.kerst, NumDays = i, MACases = ma.cases.pred, MACases_2 = ma.cases.pred.2)
+ma.cases.pred <- df.predict.kerst$MACases[i-1]  /100*doublingdayZ.2
+ma.cases.pred.2 <- df.predict.kerst$MACases_2[i-1]/100*doublingdayZ.3
+df.predict.kerst <- add_row(df.predict.kerst, NumDays = i, MACases = ma.cases.pred, MACases_2 = ma.cases.pred.2)
 i <- i+1
 }
 
-df.predict.lead.kerst$MACases <- as.integer(df.predict.lead.kerst$MACases)
-df.predict.lead.kerst$MACases_2 <- as.integer(df.predict.lead.kerst$MACases_2)
-df.predict.lead.kerst$Date <- today+df.predict.lead.kerst$NumDays-5
-df.predict.lead.kerst$fixedDate <- today+df.predict.lead.kerst$NumDays-11
+df.predict.kerst$MACases <- as.integer(df.predict.kerst$MACases)
+df.predict.kerst$MACases_2 <- as.integer(df.predict.kerst$MACases_2)
+df.predict.kerst$Date <- today+df.predict.kerst$NumDays-2
+df.predict.kerst$fixedDate <- today+df.predict.kerst$NumDays-8
 
 
 
@@ -130,14 +131,6 @@ if (doublingdayZ.1<0){
 
 ##  Merged_data_short$cases <- format(Merged_data_short$cases, big.mark="." ,decimal.mark=",")
 
-
- #df.predict.lead.kerst$MACases_lead  <- lead(df.predict.lead.kerst$MACases,3)
- #df.predict.lead.kerst$MACases_2_lead  <- lead(df.predict.lead.kerst$MACases,3)
-
-
-
-
-
 #### prediction plot ####
   
 ggplot(Merged_data_short)+
@@ -168,8 +161,8 @@ ggplot(Merged_data_short)+
   
   annotate("text", x = as.Date("2020-07-02"), y = 6360, label = "250/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
   annotate("text", x = as.Date("2020-07-02"), y = 3860, label = "150/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-07-02"), y = 1360, label = "50/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-26"), y = 450, label = "25/100K/ 2 weken", size=2,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-07-02"), y = 1320, label = "50/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-26"), y = 390, label = "25/100K/ 2 weken", size=2,color = "black",face = "bold", hjust ="left")+
   
   
    ## ECDC
@@ -179,23 +172,23 @@ ggplot(Merged_data_short)+
            colour = "black", size=2, alpha=0.8, arrow =arrow(type = "closed",length = unit(2,"mm")))+
   
    ## prediction lines
-#####  geom_line(data=df.daling.4, aes(x=Datum, y=r7), size = 1.25, color = "black")+
+  geom_line(data=df.daling.4, aes(x=Datum, y=r7), size = 1.25, color = "black")+
  #  geom_line(data=df.daling.4, aes(x=Datum, y=r8))+
  #  geom_line(data=df.daling.4, aes(x=Datum, y=r9))+
  ## geom_line(data=df.daling.4, aes(x=Datum, y=r10), size = 1.25, color = "darkgray")+
  ## geom_line(data=df.daling.4, aes(x=Datum, y=r12), size = 1.25, color = "darkgray")+
  ##geom_line(data=df.daling.4, aes(x=Datum, y=r14), size = 1.25, color = "darkgray")+
   # geom_line(data=df.daling.4, aes(x=Datum, y=r16))+
-#####  geom_line(data=df.daling.4, aes(x=Datum, y=r18))+     #waakzaam met kerst
+  geom_line(data=df.daling.4, aes(x=Datum, y=r18))+     #waakzaam met kerst
  # geom_line(data=df.daling.4, aes(x=Datum, y=r15))+
   #geom_line(data=df.daling.4, aes(x=Datum, y=r105))+    # ECDC groen met kerst
  # geom_line(data=df.daling.4, aes(x=Datum, y=r21), size = 1.25, color = "darkgray")+
-#####geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "black")+
+  geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "black")+
   
 
  
-  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 4)+
-  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 3)+
+  geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 4)+
+  geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 3)+
   
  # geom_vline(xintercept = as.Date("2020-12-25"), linetype = "dashed", size = 1.5, color = "darkgreen")+
  
@@ -223,12 +216,12 @@ ggplot(Merged_data_short)+
    #geom_text(data=thanks.df, mapping=aes(x=as.Date("2020-11-26"), y=3850, label=thanks), size=8, angle=90, vjust=-0.4, hjust=0)+
   
   
-  geom_line(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 1, color = "darkred")+
-  geom_point(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 2, color = "black")+
-  geom_point(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 1.5, color = "darkred")+
- # geom_line(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 0.6, color = "black")+ 
-  geom_point(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 1.5, color = "#F5F5F5", alpha  =0.75)+ 
-  geom_point(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a", alpha  =0.75)+ 
+  geom_line(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 1, color = "darkred")+
+  geom_point(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 2, color = "black")+
+  geom_point(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 1.5, color = "darkred")+
+ # geom_line(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 0.6, color = "black")+ 
+  geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1.5, color = "#F5F5F5", alpha  =0.75)+ 
+  geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a", alpha  =0.75)+ 
   
   #scale 11.500
   #annotate("text", x = as.Date("2020-11-13"), y = 8300,  label = "Verwachting kabinet:\nhalvering elke 4 weken", size=5,angle=-57, color = "black",face = "bold", hjust ="left")+
@@ -236,9 +229,9 @@ ggplot(Merged_data_short)+
   #annotate("text", x = as.Date("2020-11-16"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-55, color = "black",face = "bold", hjust ="left")+
   
   
- ######  annotate("text", x = as.Date("2020-11-11"), y = 8500,  label = "Doel kabinet:\nhalvering elke 4 weken", size=5,angle=-45, color = "black",face = "bold", hjust ="left")+
- ## annotate("text", x = as.Date("2020-11-05"), y = 7000,  label = "halvering elke 7 dagen", size=5,angle=-80, color = "black",face = "bold", hjust ="left")+
- ## annotate("text", x = as.Date("2020-11-17"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-45, color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-11-11"), y = 8500,  label = "Verwachting kabinet:\nhalvering elke 4 weken", size=5,angle=-45, color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-11-05"), y = 7000,  label = "halvering elke 7 dagen", size=5,angle=-80, color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-11-17"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-45, color = "black",face = "bold", hjust ="left")+
   
   
   
@@ -280,7 +273,7 @@ ggplot(Merged_data_short)+
       panel.grid.minor.x = element_blank(),
   #    panel.grid.major.x = element_line(colour= "lightgray", linetype = "dashed")
    #   panel.grid.major.y = element_line(colour= "lightgray")  #, linetype = "dashed"))
-      )
+      )+  
   
       
   ggsave("data/60_trendlines_cases.png",width=16, height = 9)
@@ -325,13 +318,13 @@ ggplot(Merged_data_short)+
 
   ## prediction lines
  # geom_line(data=df.daling.4, aes(x=Datum, y=r7), size = 1.25, color = "black")+
- ######## geom_line(data=df.daling.4, aes(x=Datum, y=r18))+     #waakzaam met kerst
-#########  geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "black")+
+  geom_line(data=df.daling.4, aes(x=Datum, y=r18))+     #waakzaam met kerst
+  geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "black")+
   
 
   ###  7day MA  
-  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 3)+
-  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 2)+
+  geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
+  geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
   
   # geom_vline(xintercept = as.Date("2020-12-25"), linetype = "dashed", size = 1.5, color = "darkgreen")+
   
@@ -351,17 +344,17 @@ ggplot(Merged_data_short)+
   #geom_text(data=thanks.df, mapping=aes(x=as.Date("2020-11-26"), y=3850, label=thanks), size=8, angle=90, vjust=-0.4, hjust=0)+
   
   
-#  geom_line(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 1, color = "darkred")+
-#  geom_point(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 2, color = "black")+
-#  geom_point(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 1.5, color = "darkred")+
+#  geom_line(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 1, color = "darkred")+
+#  geom_point(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 2, color = "black")+
+#  geom_point(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 1.5, color = "darkred")+
  
-#  geom_point(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 1.5, color = "#F5F5F5")+ 
- # geom_point(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a")+ 
+#  geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1.5, color = "#F5F5F5")+ 
+ # geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a")+ 
   
   
- ###### annotate("text", x = as.Date("2020-11-13"), y = 8300,  label = "Verwachting Kabinet:\nhalvering elke 4 weken", size=5,angle=-57, color = "#F5F5F5",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-11-13"), y = 8300,  label = "Verwachting Kabinet:\nhalvering elke 4 weken", size=5,angle=-57, color = "#F5F5F5",face = "bold", hjust ="left")+
 #  annotate("text", x = as.Date("2020-11-06"), y = 6000,  label = "halvering elke 7 dagen", size=5,angle=-80, color = "black",face = "bold", hjust ="left")+
- ###### annotate("text", x = as.Date("2020-11-16"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-55, color = "#F5F5F5",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-11-16"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-55, color = "#F5F5F5",face = "bold", hjust ="left")+
   
  
   theme_classic()+
@@ -369,7 +362,7 @@ ggplot(Merged_data_short)+
   ylab("")+
   
 
-  scale_y_continuous(limits = c(0, 15500),breaks = c(2500, 5000, 7500,10000, 12500, 15000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 13500),breaks = c(2500, 5000, 7500,10000,12500), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   coord_cartesian(expand = FALSE)+
   
@@ -431,7 +424,7 @@ annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-03-01"), ymin
   
   annotate("text", x = as.Date("2020-07-02"), y = 6360, label = "250/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
   annotate("text", x = as.Date("2020-07-02"), y = 3860, label = "150/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-07-02"), y = 1380, label = "50/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-07-02"), y = 1320, label = "50/100K/week", size=2,color = "black",face = "bold", hjust ="left")+
   # annotate("text", x = as.Date("2020-10-26"), y = 390, label = "25/100K/ 2 weken", size=2,color = "black",face = "bold", hjust ="left")+
   
   
@@ -441,13 +434,13 @@ annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-03-01"), ymin
   
   ## prediction lines
   # geom_line(data=df.daling.4, aes(x=Datum, y=r7), size = 1.25, color = "black")+
- ####### geom_line(data=df.daling.4, aes(x=Datum, y=r18))+     #waakzaam met kerst
- #######  geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "black")+
+  geom_line(data=df.daling.4, aes(x=Datum, y=r18))+     #waakzaam met kerst
+  geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "black")+
   
   
   ###  7day MA  
-  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 3)+
-  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 2)+
+  geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#F5F5F5",lwd = 3)+
+  geom_line(mapping = aes(x=fixedDate, y=MACases), color = "#44546a",lwd = 2)+
   
   # geom_vline(xintercept = as.Date("2020-12-25"), linetype = "dashed", size = 1.5, color = "darkgreen")+
   
@@ -470,16 +463,16 @@ annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-03-01"), ymin
   #geom_text(data=thanks.df, mapping=aes(x=as.Date("2020-11-26"), y=3850, label=thanks), size=8, angle=90, vjust=-0.4, hjust=0)+
   
   
-  #  geom_line(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 1, color = "darkred")+
-  #  geom_point(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 2, color = "black")+
-  #  geom_point(data=df.predict.lead.kerst, aes(x=fixedDate, y=MACases), size = 1.5, color = "darkred")+
+  #  geom_line(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 1, color = "darkred")+
+  #  geom_point(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 2, color = "black")+
+  #  geom_point(data=df.predict.kerst, aes(x=fixedDate, y=MACases), size = 1.5, color = "darkred")+
   
-#  geom_point(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 1.5, color = "#F5F5F5")+ 
-# geom_point(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a")+ 
+#  geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1.5, color = "#F5F5F5")+ 
+# geom_point(data=df.predict.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a")+ 
 
 
-#######  annotate("text", x = as.Date("2020-11-13"), y = 8300,  label = "Verwachting Kabinet:\nhalvering elke 4 weken", size=5,angle=-57, color = "#F5F5F5",face = "bold", hjust ="left")+
-#######  annotate("text", x = as.Date("2020-11-16"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-55, color = "#F5F5F5",face = "bold", hjust ="left")+
+annotate("text", x = as.Date("2020-11-13"), y = 8300,  label = "Verwachting Kabinet:\nhalvering elke 4 weken", size=5,angle=-57, color = "#F5F5F5",face = "bold", hjust ="left")+
+annotate("text", x = as.Date("2020-11-16"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-55, color = "#F5F5F5",face = "bold", hjust ="left")+
   
   
   theme_classic()+
@@ -487,7 +480,7 @@ annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-03-01"), ymin
   ylab("")+
   
   
-  scale_y_continuous(limits = c(0, 15500),breaks = c(2500, 5000, 7500,10000, 12500, 15000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 13500),breaks = c(2500, 5000, 7500,10000,12500), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   coord_cartesian(expand = FALSE)+
   
@@ -514,5 +507,4 @@ annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2021-03-01"), ymin
   
  
   ggsave("data/60_routekaart_carnaval.png",width=16, height = 9)
-
 

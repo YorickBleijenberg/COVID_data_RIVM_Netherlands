@@ -46,8 +46,8 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
   annotate("rect", xmin = 0, xmax =4, ymin = 50, ymax = 150, color = "black",fill = "orange", alpha = 0.9)+
   annotate("rect", xmin = 4, xmax =20, ymin = 50, ymax = 150, color = "black",fill = "red", alpha = 0.4)+
   
-  annotate("rect", xmin = 0, xmax =4, ymin = 150, ymax = 650, color = "black",fill = "red", alpha = 0.4)+
-  annotate("rect", xmin = 4, xmax =20, ymin =150, ymax = 650, color = "black",fill = "red", alpha = 0.6)+
+  annotate("rect", xmin = 0, xmax =4, ymin = 150, ymax = 700, color = "black",fill = "red", alpha = 0.4)+
+  annotate("rect", xmin = 4, xmax =20, ymin =150, ymax = 700, color = "black",fill = "red", alpha = 0.6)+
   
   geom_path(   size =1, arrow = arrow(angle = 20,type = "open"))+
   geom_point( color = "black", size =4)+
@@ -119,14 +119,14 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
   VR_2 <- merge(VR,pos.rate.vr) #,"vregio")
   
   VR_2$MAcase <- (rollmeanr(VR_2$cases, 2, fill = 0))*2
-  VR_2 <- VR_2[VR_2$week2>41 & VR_2$week2<= 46,]
+  VR_2 <- VR_2[VR_2$week2>40 & VR_2$week2<= 51,]
   
   VR_2$posphd <- as.double(VR_2$MAcase / VR_2$inwoners*100000)
   VR_2$p.pos <- as.double(VR_2$cases / VR_2$tested*100)
   #VR_2 <- VR_2[ -c(2,4,5,6,7,8)]
   
   VR_2$perc_pos <- as.numeric(VR_2$perc_pos)
-  VR_3 <- VR_2[VR_2$week2>42 & VR_2$week2<= 46,]
+  VR_3 <- VR_2[VR_2$week2>40 & VR_2$week2<= 51,]
   
   
   ggplot(VR_3, aes(x = p.pos, y=posphd))+ #  , colour = vregio))+
@@ -139,8 +139,8 @@ ggplot(pos.rate.nl, aes(p.rate, vdphd, colour=date))+
     annotate("rect", xmin = 0, xmax =4, ymin = 50, ymax = 150, fill = "orange", alpha = 0.9)+
     annotate("rect", xmin = 4, xmax =27, ymin = 50, ymax = 150, fill = "red", alpha = 0.4)+
     
-    annotate("rect", xmin = 0, xmax =4, ymin = 150, ymax = 1000, fill = "red", alpha = 0.4)+
-    annotate("rect", xmin = 4, xmax =27, ymin =150, ymax = 1000, fill = "red", alpha = 0.5)+
+    annotate("rect", xmin = 0, xmax =4, ymin = 150, ymax = 1300, fill = "red", alpha = 0.4)+
+    annotate("rect", xmin = 4, xmax =27, ymin =150, ymax = 1300, fill = "red", alpha = 0.5)+
     
     scale_color_viridis_d()+
     

@@ -424,22 +424,34 @@ LCPS_datafeed_predict <- LCPS_datafeed_predict %>%
 LCPS_datafeed_predict <- LCPS_datafeed_predict %>% 
   mutate(MA_clin = rollapply(Kliniek_Nieuwe_Opnames_COVID, 7, mean, fill = NA, align = "right"))
 
+LCPS_datafeed_predict$MA_clin_lead  <- lead(LCPS_datafeed_predict$MA_clin,3)
+LCPS_datafeed_predict$MA_IC_lead  <- lead(LCPS_datafeed_predict$MA_IC,3)
+
+
+
+
+hosp_new_hosp.2 <- paste0("Aantal nieuwe opnames kliniek:  ",hosp.new.b1)
+
 
 ggplot(LCPS_datafeed_predict)+
 
    geom_col(position = "dodge",  aes(x=Datum, y=Kliniek_Nieuwe_Opnames_COVID ), fill = "#F4B183")+  
-   geom_line(aes(x=Datum, y=MA_clin), size =3, color = "#DAE3F3")+
-   geom_line(aes(x=Datum, y=MA_clin), size =2)+
+   geom_line(aes(x=Datum, y=MA_clin_lead), size =3, color = "#DAE3F3")+
+   geom_line(aes(x=Datum, y=MA_clin_lead), size =2)+
 
     scale_x_date(date_breaks = "1 month", 
                date_labels= format("%d %b"),
                name="",
-               limits = as.Date(c("2020-10-20", NA)))+
+               limits = as.Date(c("2020-10-18", NA)))+
+  
     geom_hline(yintercept=12, size = 1.5)+
     geom_hline(yintercept=40, size = 1)+
 
+  annotate("text", x = as.Date("2020-10-18"), y = 45, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-18"), y = 18, label = "12 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  
    ylab("")+
-  labs(title="Aantal nieuwe opnames Kliniek", 
+  labs(title=hosp_new_hosp.2, 
        #subtitle=wave.subtitle,
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -466,8 +478,8 @@ hosp_new_IC.2 <- paste0("Aantal nieuwe opnames IC:  ",hosp.new.b2)
 ggplot(LCPS_datafeed_predict)+
   
   geom_col(position = "dodge", aes(x=Datum, y=IC_Nieuwe_Opnames_COVID ), fill = "#4472C4")+
-  geom_line(aes(x=Datum, y=MA_IC), size =3, color = "#DAE3F3")+
-  geom_line(aes(x=Datum, y=MA_IC), size =2)+
+  geom_line(aes(x=Datum, y=MA_IC_lead), size =3, color = "#DAE3F3")+
+  geom_line(aes(x=Datum, y=MA_IC_lead), size =2)+
   
   scale_x_date(date_breaks = "1 week", 
                date_labels= format("%d %b"),
@@ -491,8 +503,8 @@ ggplot(LCPS_datafeed_predict)+
   annotate("text", x = as.Date("2020-10-11"), y = 1.5,  label = "Waakzaam", size=7,color = "black",face = "bold", hjust ="left")+
   
   
-  annotate("text", x = as.Date("2020-10-10"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-10"), y = 4, label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-10"), y = 11.25, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-10"), y = 4.25, label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
   
   
   theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
@@ -598,6 +610,9 @@ hosp.total.b1 <- format( hosp.total.b1, big.mark="." ,decimal.mark=",")
 #hosp.total.b2 <- format( hosp.total.b2, big.mark="." ,decimal.mark=",")
 hosp.new.b    <- format( hosp.new.b,    big.mark="." ,decimal.mark=",")
 
+flag.D <- intToUtf8(0x1F1E9)
+flag.E <- intToUtf8(0x1F1EA)
+
 tweet.LCPS.EN.tweet <- "Day %s, The %s edition
 
 Patients currently in the hospital:
@@ -614,6 +629,9 @@ Newly hospitalized:
 %sClinic: %s (%s)
 %sICU:       %s (%s)
 
+In %s%s:
+%s
+
 #corona #stayhome"
 
 
@@ -627,8 +645,9 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                           
                             hosp.new.dot, hosp.new.b,       hosp.new.c,
                             hosp.cl.new.dot, hosp.new.b1,      hosp.new.c1,
-                            hosp.ic.new.dot, hosp.new.b2,      hosp.new.c2
-                            
+                            hosp.ic.new.dot, hosp.new.b2,      hosp.new.c2,
+                            flag.D, flag.E,
+                            number.in.DE
                             )
 Encoding(tweet.LCPS.EN.tweet) <- "UTF-8"
 
@@ -657,6 +676,8 @@ Nieuwe opnames:
 Kliniek:   %s (%s)
 IC:        %s (%s)
 
+In --: %s
+
 #corona #blijfthuis"
 
 
@@ -670,7 +691,9 @@ tweet.LCPS.tweet <- sprintf(tweet.LCPS.tweet,
                             
                             hosp.new.b,       hosp.new.c,
                             hosp.new.b1,      hosp.new.c1,
-                            hosp.new.b2,      hosp.new.c2
+                            hosp.new.b2,      hosp.new.c2,
+                            
+                            number.in.DE
                             
 )
 Encoding(tweet.LCPS.tweet) <- "UTF-8"

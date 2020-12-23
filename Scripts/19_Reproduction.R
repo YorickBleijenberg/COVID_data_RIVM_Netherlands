@@ -28,7 +28,7 @@ last.date.old.wide.2$Date <- as.Date(last.date.old.wide.2$Date)
 last.date.old.2 <- tail(last.date.old.wide.2$Date, 1)
 
 #################### old
-repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-12-01_COVID-19_reproductiegetal.csv"
+repro.name.old <- "C:\\Rdir\\rivm-data\\reproduction\\2020-12-15_COVID-19_reproductiegetal.csv"
 reproduction.raw.old <- read.csv(repro.name.old,sep=";")  
 
 last.date.old.wide <-reproduction.raw.old
@@ -73,7 +73,7 @@ persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-1
   
 
 
-last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < "2020-11-30",]
+last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < "2020-12-06",]
 
 ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
  
@@ -239,14 +239,14 @@ ggplot(last.date.old.wide, aes(x=Date, y=Rt_avg))+
   geom_line(data=last.date.old.wide.2, aes(y = Rt_low), lwd=0.6) +
   geom_line(data=last.date.old.wide.2, aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(data=last.date.old.wide.2, aes(ymin=Rt_low,ymax=Rt_up), fill="darkred",  alpha = 0.6) +
-  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "8 december"), lwd=2) +    #nieuwe file --> 17
+  geom_line(data=last.date.old.wide.2, aes(x=Date, y=Rt_avg, colour = "22 december"), lwd=2) +    #nieuwe file --> 17
   
   
   ## old prediction
   geom_line(aes(y = Rt_low), lwd=0.6) +
   geom_line(aes(y = Rt_up), lwd=0.6) +
   geom_ribbon(aes(ymin=Rt_low, ymax=Rt_up), color="lightblue", fill="lightblue", alpha = 0.4) +
-  geom_line(aes(y = Rt_avg, colour = "1 december"), lwd=1.2)+
+  geom_line(aes(y = Rt_avg, colour = "15 december"), lwd=1.2)+
   
   
   scale_color_manual(values = c("darkblue", "darkred"))+

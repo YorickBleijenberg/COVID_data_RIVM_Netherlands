@@ -68,7 +68,7 @@ df4 <- df3
 #dates_vline <- which((df4$Datum %in% dates_vline))
 
 dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", "2020-11-18", "2020-12-15")),
-                          event=c("uurtje","nulnegen","semilock","verzwaring", "einde verzwaring", "lockdown"))
+                          event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown","verzwaring", "einde verzwaring", "lockdown"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]
@@ -86,20 +86,38 @@ theme_classic()+
                limits = as.Date(c("2020-07-01", Sys.Date() ))
                )+
 
-    scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
-                      labels=c(   "Eerste ziektedag (nieuw/correctie)",
+    scale_fill_manual(values=c("#c55a11", 
+                               "#F8CBAD", 
+                               "#548235", 
+                               "#C5E0B4",  
+                               "#203864",   #blauw donker
+                               "#B4C7E7"),  #blauw
+                      labels=c(   "Melding aan GGD (nieuw/correctie)",
+                                  "Melding aan GGD",
+                                  "Eerste ziektedag (nieuw/correctie)",
                                   "Eerste ziektedag",
                                   "Positieve labuitslag (nieuw/correctie)",
-                                  "Positieve labuitslag",
-                                  "Melding aan GGD (nieuw/correctie)",
-                                  "Melding aan GGD"))+
+                                  "Positieve labuitslag"))+
+  
+  #scale_fill_manual(values=c("#548235", 
+  #                           "#C5E0B4", 
+  #                           "#203864", 
+  #                           "#B4C7E7",
+  #                           "#c55a11", 
+  #                           "#F8CBAD"), 
+  #                  labels=c(   "Eerste ziektedag (nieuw/correctie)",
+  #                              "Eerste ziektedag",
+  #                              "Positieve labuitslag (nieuw/correctie)",
+  #                              "Positieve labuitslag",
+  #                              "Melding aan GGD (nieuw/correctie)",
+  #                              "Melding aan GGD"))+
   
   # geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
    #      col = "darkgray", lwd = 1, linetype= "dashed")+
     # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
   
   geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
- # geom_text(data=dates_vline  , mapping=aes(x=date, y=6500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
+  geom_text(data=dates_vline  , mapping=aes(x=date, y=2500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
   
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
@@ -211,7 +229,8 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2020-11-23",
                   "2020-11-30",
                   "2020-12-07",
-                  "2020-12-14"
+                  "2020-12-14",
+                  "2020-12-21"
                  ))   
 
 dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))

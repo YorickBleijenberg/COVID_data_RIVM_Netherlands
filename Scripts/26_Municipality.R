@@ -6,6 +6,21 @@ inwo_gem <- "C:\\Rdir\\data-contstant\\CBS_inwoners_gemeente.csv"
 gemeente.inwoners <- read.csv(inwo_gem,sep=";")  
 colnames(gemeente.inwoners) = c("Municipality_code", "Gemeente_Naam", "inwoners", "gemeente_getal")
 
+
+
+FR_a <- intToUtf8(0x00E2)  #Encoding(FR_b) <- "UTF-8"
+FR_u <- intToUtf8(0x00FA)  #Encoding(FR_b) <- "UTF-8"
+SFR_name <- paste0("S", FR_u, "dwest Frysl", FR_a,"n")
+SFR_name2 <- paste0("Noardeast-Frysl", FR_a,"n")
+
+gemeente.inwoners$Gemeente_Naam <- str_replace(gemeente.inwoners$Gemeente_Naam, "Súdwest Fryslân", SFR_name)  ##fout / goed
+
+gemeente.inwoners$Gemeente_Naam <- str_replace(gemeente.inwoners$Gemeente_Naam, "Noardeast-Fryslân", SFR_name2)  ##fout / goed
+
+
+
+
+
 read.aantal.gemeente.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv",sep="")
 RIVM_aantallen_gemeente_per_dag <- read.csv(read.aantal.gemeente.path,sep=";")
 

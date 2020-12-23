@@ -58,8 +58,10 @@ dir.create(dirname)
  source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
-editionname <- "winter-is-coming-(tomorrow)"  ##"hope-for-the-best-prepare-for-the-worst"
-editienaam  <- "winter-is-coming-(tomorrow)"  ##"hope-for-the-best-prepare-for-the-worst"   #### 1.218 --> 10x signaalwaarde
+editionname <- "dark-days"  ##"hope-for-the-best-prepare-for-the-worst"
+editienaam  <- "donker"  ##"hope-for-the-best-prepare-for-the-worst"
+number.in.DE <- "5"
+
 
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 
@@ -100,6 +102,8 @@ source("C:\\Rdir\\Rscripts\\22_prediction.R")
 source("C:\\Rdir\\Rscripts\\29_coronamelder.R")
 
 source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
+
+source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
 
 #### check correct last tweet ####
 

@@ -385,20 +385,23 @@ PersCoSemiLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoSemiLockdown, uni
 PersCoSemitwoWeeks = as.Date("2020-11-03",'%Y-%m-%d')
 PersCoSemitwoWeeksDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeks, units = c("days")))
 PersCoSemitwoWeeksdone = as.Date("2020-11-17",'%Y-%m-%d')
-PersCoSemitwoWeeksdoneDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeksdone, units = c("days")))  
+PersCoSemitwoWeeksdoneDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeksdone, units = c("days")))
+PersColockdown = as.Date("2020-12-14",'%Y-%m-%d')
+PersColockdownDays <- as.numeric(difftime(Sys.Date(),PersColockdown, units = c("days")))  
 
+tweet.data.tweet <- "Days since press conference:
 
-tweet.data.tweet <- "Days since:
+[%s] - Bar closes an hour early
 
-%s press conference: 'Bar closes an hour early'
+[%s] - We want R=0,9
 
-%s press conference: 'We want R=0,9'
+[%s] - semi-lockdown
 
-%s press conference: 'semi-lockdown'
+[%s] - stricter semi-lockdown
 
-%s press conference: 'stricter semi-lockdown'
+[%s] - end of stricter semi-lockdown
 
-%s press conference: 'end of stricter semi-lockdown'
+[%s] - lockdown
 
 "
 #### 17 - press conference: End of 'stricter semi-lockdown'
@@ -406,7 +409,12 @@ tweet.data.tweet <- "Days since:
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
-                            PersCoKroegDays,PersCoPaniekDays,PersCoSemiLockdownDays,PersCoSemitwoWeeksDays,PersCoSemitwoWeeksdoneDays
+                            PersCoKroegDays,
+                            PersCoPaniekDays,
+                            PersCoSemiLockdownDays,
+                            PersCoSemitwoWeeksDays,
+                            PersCoSemitwoWeeksdoneDays,
+                            PersColockdown
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
@@ -445,7 +453,7 @@ tweet.combi.2.tweet <- "1) New cases in the 16 big cities
 2) New cases in the provinces
 3) Routekaart
 4) Weekly totals"
-tweet.combi.2.tweet <- sprintf(tweet.16city.tweet)
+tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
 Encoding(tweet.combi.2.tweet) <- "UTF-8"
 post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_phd.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
