@@ -1,5 +1,4 @@
 
-###   Make GR line smooth
 ###   Cumulatieve getallen
 
 ##  Connect to online:
@@ -9,12 +8,8 @@
 ## https://rdrr.io/cran/ggplot2/man/scale_gradient.html
 ## https://aosmith.rbind.io/2019/10/14/background-color_gradient/
 
-## De maatregelenpakketten van september en oktober zouden moeten leiden tot een verwachte ## R-waarde van 0.88 (met een bandbreedte van 0.75 - 0.99).
 
-## Met het nu aangekondigde maatregelenpakket streven we naar een R-waarde
-## tussen de 0,72 en 0,91 (terwijl de nagestreefde R-waarde voor het oktober-pakket
-## tussen de 0,75 en 0.99 ligt)
-####Check LSPC update 
+####Check LSPC update
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
@@ -58,9 +53,9 @@ dir.create(dirname)
  source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
-editionname <- "dark-days"  ##"hope-for-the-best-prepare-for-the-worst"
-editienaam  <- "donker"  ##"hope-for-the-best-prepare-for-the-worst"
-number.in.DE <- "5"
+editionname <- "numbers-will-get-weird" 
+editienaam  <- "De-cijfers-gaan-raar-worden-(want kerst)" 
+number.in.DE <- "7"
 
 
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")

@@ -77,6 +77,14 @@ ggplot(Google_mob_NL_short)+
   geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2)+
   geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2) +
 
+#  geom_line(aes(x=Datum, y = retail_recreatie,    color = "Retail & recreatie"), lwd=1) +
+#  geom_line(aes(x=Datum, y = supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=1) +
+#  geom_line(aes(x=Datum, y = werk,                color = "Werk"), lwd=1) +
+#  geom_line(aes(x=Datum, y = thuis,               color = "Thuis"), lwd=1)+
+#  geom_line(aes(x=Datum, y = openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=1) +
+  
+  
+  
   #geom_line(data = last.date.old.wide.mob, aes(x = Date, y = Rt_avg10, color = "Effectieve R"), color = "black",lwd=2) +
   
   
@@ -127,7 +135,7 @@ theme_classic()+
   geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
   geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
 #  geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") +
-  
+ 
   geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
   geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)
   

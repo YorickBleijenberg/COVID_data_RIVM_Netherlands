@@ -629,8 +629,7 @@ Newly hospitalized:
 %sClinic: %s (%s)
 %sICU:       %s (%s)
 
-In %s%s:
-%s
+In %s%s: %s
 
 #corona #stayhome"
 

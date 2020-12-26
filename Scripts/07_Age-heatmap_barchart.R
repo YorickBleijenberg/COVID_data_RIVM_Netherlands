@@ -140,7 +140,33 @@ ggplot(casus.working,aes(Agegroup,phd,fill=week))+
 
 ggsave("data/01_EN_leeftijd_barchart.png",width=16, height = 9)
 
+#barchart - abs
+ggplot(casus.working,aes(Agegroup,n,fill=week))+
+  geom_bar(stat="identity", position=position_dodge(0.85),width = 0.7)+
+  theme_classic()+
+  
+  theme(legend.position= c(0.5,0.9), legend.direction = "horizontal")+
+  
+  xlab("")+ 
+  ylab("")+
+  
+  labs(title = "Geconstateerde besmettingen COVID-19",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 51 & 52 zullen nog sterk stijgen.",
+       fill="Week",
+       caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme(plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+        panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+        plot.title = element_text(hjust = 0.5,size = 25, face = "bold"),
+        plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+        axis.text = element_text(size=14,color = "black", face = "bold"),
+        axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+        axis.ticks.length = unit(0.5, "cm"),
+        axis.line = element_line(colour = "#F5F5F5"),
+        panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
+  scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ))# +
 
+ggsave("data/01_leeftijd_barchart_abs.png",width=16, height = 9)
 
 #### Code onderlinge verhouding plot #####
 

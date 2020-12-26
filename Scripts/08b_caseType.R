@@ -74,12 +74,25 @@ dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13
 df4 <- df4[df4$Datum>"2020-07-01",]
 
 
+
+rect5 <- data.frame(xmin = c(as.Date("2020-12-30"), as.Date("2021-01-06")),
+                    xmax = c(as.Date("2021-01-02"), as.Date("2021-01-06")),
+                    ymin = c(0,0),
+                    ymax = c(Inf, Inf),
+                    label.bes = c("kerst", "oud/nieuw"))
+
+
+
+
 ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
  geom_col()+
 
 theme_classic()+
     xlab("")+ 
   ylab("")+
+
+  
+
   
   scale_x_date(date_breaks = "2 week", 
                date_labels= format("%d-%b"),
@@ -143,8 +156,11 @@ labs(title = "Besmette personen: verschil met gisteren",
     
     #axis.labels.x=date_format("%d-%b"),
     
-    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed")) #,
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
 #panel.grid.major.x = element_line(colour= "darkgray", linetype = "solid"))
+
+ # geom_rect(data = rect5 , aes(xmin = xmin,xmax = xmax, ymin = ymin,ymax = ymax, fill = label.bes), alpha = 0.5) +
+
 
 ggsave("data/07_cases_type1.png",width=16, height = 9)  
 

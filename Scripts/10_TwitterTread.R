@@ -147,7 +147,7 @@ post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_t
 ###   50      -  1248
 ###   35      -   874
 
-kerst.niveau.week <- df.predict.kerst$MACases_2[days.to.kerst+2]
+kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.kerst+2]
 kest.niveau.text.week <- paste("waakzaam")     
 if (kerst.niveau.week > 1250) {                      #875
   kest.niveau.text.week <- paste("zorgelijk")
@@ -159,7 +159,7 @@ if (kerst.niveau.week > 6250) {
   kest.niveau.text.week <- paste("zeer ernstig")
 }
 
-kerst.niveau.dag <- df.predict.kerst$MACases[days.to.kerst+8]
+kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.kerst+8]
 kest.niveau.text.dag <- paste("waakzaam")      
 if (kerst.niveau.dag > 1250) {                      #875
   kest.niveau.text.dag <- paste("zorgelijk")
@@ -178,7 +178,7 @@ label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen")
 
 
 
-df.to.subset <-df.predict.kerst
+df.to.subset <-df.predict.lead.kerst
 df.to.subset<- df.to.subset[df.to.subset$MACases<=1250,]     #875
 days.until.lvl2 <- df.to.subset$fixedDate[1]
 today  <- Sys.Date()
@@ -190,30 +190,60 @@ emoji_kerst <- intToUtf8(0x1F384)
 emoji_snowman <- intToUtf8(0x2603)
 emoji_snow <- intToUtf8(0x2744)
 
-tweet.kerst.tweet <- "Halen we de kerst?%s%s
+tweet.kerst.tweet <- "Halen we bevrijdingsdag?"
 
-Voorspelling met 7-daags gemiddelde:
+#Voorspelling met 7-daags gemiddelde:
 
-Week-op-week (rood): 
-- %s elke %s dagen,
-- Waakzaam over: %s dagen
-- Niveau tijdens kerst: [%s]
+#Week-op-week (rood): 
+#- %s elke %s dagen,
+#- Waakzaam over: %s dagen
+#- Niveau tijdens kerst: [%s]
 
 
-Dag-op-dag (donkerblauw):
-- %s elke %s dagen,
-- niveau tijdens kerst: [%s]
-"
-tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,emoji_kerst,emoji_snowman,
-                             doublingdayZ.text,   doublingdayZ.int,
-                             days.until.lvl2,
-                             kest.niveau.text.dag,
+#Dag-op-dag (donkerblauw):
+#- %s elke %s dagen,
+##- niveau tijdens kerst: [%s]
+#"
+tweet.kerst.tweet <- sprintf(tweet.kerst.tweet)
                              
-                             doublingdayZ.1.text, doublingdayZ.1.int,
-                             kest.niveau.text.week
-)
+#                             emoji_kerst,emoji_snowman,
+#                             doublingdayZ.text,   doublingdayZ.int,
+#                             days.until.lvl2,
+#                             kest.niveau.text.dag,
+#                             
+#                             doublingdayZ.1.text, doublingdayZ.1.int,
+#                             kest.niveau.text.week
+#)
 Encoding(tweet.kerst.tweet) <- "UTF-8"
 post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+
+
+
+
+
+
+#### tweet.carehomes.tweet ####
+
+
+tweet.carehomes.tweet <- "Verpleeghuizen
+"
+tweet.carehomes.tweet <- sprintf(tweet.carehomes.tweet)
+Encoding(tweet.carehomes.tweet) <- "UTF-8"
+post_tweet(tweet.carehomes.tweet,  media = c("data/52_Verpleeg_loc.png", "data/51_Verpleeg_dead.png", "data/50_Verpleeg_cases.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -476,17 +506,7 @@ tweet.growth.tweet <- sprintf(tweet.growth.tweet,
                               doubling.dead.day_dot, growth.cases.day,deP,
                               doubling.dead.day_act_dot, growth.cases.day_act, deP)
 Encoding(tweet.growth.tweet) <- "UTF-8"
-post_tweet(tweet.growth.tweet,  media = c("data/07_new_cases_DoD.png", "data/05_growth_cases.png", "data/05_growth_hosp.png","data/05_growth_dead.png"), in_reply_to_status_id = get_reply_id()) 
-
-
-#### tweet.carehomes.tweet ####
-
-
-tweet.carehomes.tweet <- "Verpleeghuizen
-"
-tweet.carehomes.tweet <- sprintf(tweet.carehomes.tweet)
-Encoding(tweet.carehomes.tweet) <- "UTF-8"
-post_tweet(tweet.carehomes.tweet,  media = c("data/52_Verpleeg_loc.png", "data/51_Verpleeg_dead.png", "data/50_Verpleeg_cases.png"), in_reply_to_status_id = get_reply_id())  #
+# post_tweet(tweet.growth.tweet,  media = c("data/07_new_cases_DoD.png", "data/05_growth_cases.png", "data/05_growth_hosp.png","data/05_growth_dead.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -644,6 +664,16 @@ tweet.week_num.tweet <- "Nieuwe gevallen per week"
 tweet.week_num.tweet <- sprintf(tweet.week_num.tweet)
 Encoding(tweet.week_num.tweet) <- "UTF-8"
 #post_tweet(tweet.week_num.tweet,  media = c("data/65_Cases_by_week_test_ Darjeeling1"), in_reply_to_status_id = get_reply_id())  #
+
+#### Week Christmas deaths tweet ####
+
+tweet.christ.death.tweet <- "Kerstdoden
+
+https://twitter.com/YorickB/status/1341799378458202117"
+tweet.christ.death.tweet <- sprintf(tweet.christ.death.tweet)
+Encoding(tweet.christ.death.tweet) <- "UTF-8"
+post_tweet(tweet.christ.death.tweet,  media = c("data/88_christ_death.png"), in_reply_to_status_id = get_reply_id())  #
+
 
 
 

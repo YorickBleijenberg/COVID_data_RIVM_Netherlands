@@ -32,16 +32,16 @@ weeknumber.df.sh.2 <- weeknumber.df.sh[weeknumber.df.sh$week > 26,]
 
 
 
+
 ggplot(weeknumber.df.sh.2, aes(x=week, y=Total_reported, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
   # geom_hline(yintercept=87500, linetype = "dashed", color = "gray")+
   
   geom_bar(stat='identity')+
   
-  scale_x_continuous(breaks=seq(27,current.week+2,1), limits = c(27,current.week+2))+
+  
+  scale_x_continuous(breaks=seq(27,current.week,1), limits = c(27,current.week+1))+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
-  
-  
   
   #scale_fill_brewer(palette = "RdYlBu")+
   #scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+
@@ -67,7 +67,7 @@ ggplot(weeknumber.df.sh.2, aes(x=week, y=Total_reported, fill = factor(week_day,
        #subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.95, 0.5),
+  theme(legend.position = c(0.05, 0.5),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
