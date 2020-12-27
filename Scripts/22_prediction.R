@@ -39,8 +39,16 @@ kersmis.Dag <- as.Date("2020-12-25")
 sint.Dag <- as.Date("2020-12-05")
 carnaval.Dag <- as.Date("2021-02-14")
 
+verkiezings.Dag <- as.Date("2021-03-17")
+bevrijdings.Dag <- as.Date("2021-05-05")
+
 days.to.sint <- as.vector(difftime(sint.Dag, today, units='days'))
 days.to.kerst <- as.vector(difftime(kersmis.Dag, today, units='days'))
+
+days.to.elections <- as.vector(difftime(verkiezings.Dag, today, units='days'))
+days.to.freedom <- as.vector(difftime(bevrijdings.Dag, today, units='days'))
+
+
 
 e <- Working_Set$MACases[3]
 ea <- Working_Set$MACases[2]

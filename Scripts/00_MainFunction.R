@@ -53,8 +53,8 @@ dir.create(dirname)
  source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
-editionname <- "numbers-will-get-weird" 
-editienaam  <- "De-cijfers-gaan-raar-worden-(want kerst)" 
+editionname <- "10%-bevestigd-besmet-in-Bunschoten" 
+editienaam  <- "10%-bevestigd-besmet-in-Bunschoten" 
 number.in.DE <- "7"
 
 

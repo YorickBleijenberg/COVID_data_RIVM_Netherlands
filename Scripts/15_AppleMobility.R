@@ -33,7 +33,7 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2023HotfixDev18/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2023HotfixDev20/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -99,10 +99,20 @@ persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2
                      event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
 
 
-
-
+ov.min <-  min(Apple_mob_nl_short$MAOV, na.rm=T)
+auto.min <-  min(Apple_mob_nl_short$MAauto , na.rm=T)
+lopen.min <-  min(Apple_mob_nl_short$MAlopen, na.rm=T)
 
 ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=Type))+ 
+  
+  #geom_hline(yintercept = ov.min,    linetype = "dashed", color = "#619cff")+
+  #geom_hline(yintercept = auto.min,  linetype = "dashed", color = "#f8766d")+
+  #geom_hline(yintercept = lopen.min, linetype = "dashed", color = "#10be45")+
+  
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -80.5, xend = as.Date(Yesterday), yend = -80.5),linetype = "dashed", color = "#619cff")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -54.2, xend = as.Date(Yesterday), yend = -54.2),linetype = "dashed", color = "#f8766d")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -56.1, xend = as.Date(Yesterday), yend = -56.1),linetype = "dashed", color = "#10be45")+
+  
   
   geom_hline(yintercept=0) +
   
@@ -119,7 +129,11 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
   ylab("")+
   
   scale_y_continuous(expand = c(0,5), limits = c(-100, NA)) +
-  
+
+  scale_x_date(date_breaks = "1 month", 
+                 date_labels= format("%b"),
+                 limits = as.Date(c("2020-02-20", Yesterday)))+  
+    
   labs(title = "Apple Mobility Trends",
        subtitle = paste("7-daags zwevend gemiddele\n","Actueel tot:", Yesterday),
        caption = paste("Source: Apple | Plot: @YorickB | ",Sys.Date()))+
@@ -146,20 +160,13 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
-         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))
-  
-
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
   
  # geom_vline(xintercept = as.Date("2020-09-19"), linetype = "dotted") + 
  # geom_vline(xintercept = as.Date("2020-09-29"), linetype = "dotted") + 
  # geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") + 
  # geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") 
 
-
-
-
-
-  
   
   ggsave("data/30_Apple_data.png",width=16, height = 9)
 

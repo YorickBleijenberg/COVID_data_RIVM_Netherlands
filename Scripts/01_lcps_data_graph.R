@@ -623,9 +623,7 @@ Patients currently in the hospital:
 %sClinic:  %s (%s)
 %sICU:       %s (%s)
 
-Newly hospitalized: 
-%s%s (%s)
-
+New: 
 %sClinic: %s (%s)
 %sICU:       %s (%s)
 
@@ -642,7 +640,6 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             clinic.total.dot, hosp.total.b1,  hosp.total.c1,
                             ic.total.dot,     hosp.IC.b2,  hosp.IC.c2,
                           
-                            hosp.new.dot, hosp.new.b,       hosp.new.c,
                             hosp.cl.new.dot, hosp.new.b1,      hosp.new.c1,
                             hosp.ic.new.dot, hosp.new.b2,      hosp.new.c2,
                             flag.D, flag.E,
@@ -670,8 +667,6 @@ Kliniek:  %s (%s)
 IC:          %s (%s)
 
 Nieuwe opnames:
-%s (%s)
-
 Kliniek:   %s (%s)
 IC:        %s (%s)
 
@@ -688,7 +683,6 @@ tweet.LCPS.tweet <- sprintf(tweet.LCPS.tweet,
                             hosp.total.b1,    hosp.total.c1,
                             hosp.IC.b2,       hosp.IC.c2,
                             
-                            hosp.new.b,       hosp.new.c,
                             hosp.new.b1,      hosp.new.c1,
                             hosp.new.b2,      hosp.new.c2,
                             

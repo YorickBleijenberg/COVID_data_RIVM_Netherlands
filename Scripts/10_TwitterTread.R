@@ -102,6 +102,13 @@ a  <- format( a, big.mark="." ,decimal.mark=",")
 diff.cases.day  <- format( diff.cases.day, big.mark="." ,decimal.mark=",")
 diff.cases.week  <- format( diff.cases.week, big.mark="." ,decimal.mark=",")
 
+
+
+
+
+
+
+
 #### tweet.cases.tweet ####
 
 tweet.cases.tweet <- "Nieuw gemelde besmettingen:
@@ -129,12 +136,22 @@ post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growt
 
 
 
+
+
+
+
 #### week.tweet ####
 
 tweet.week.tweet <- "De gaat-deze-week-boven-vorige-week-uitkomen? grafiek."
 tweet.week.tweet <- sprintf(tweet.week.tweet)
 Encoding(tweet.week.tweet) <- "UTF-8"
 post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
+
+
+
+
+
+
 
 
 
@@ -147,7 +164,7 @@ post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_t
 ###   50      -  1248
 ###   35      -   874
 
-kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.kerst+2]
+kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.freedom+5]   ##dag days.to.freedom
 kest.niveau.text.week <- paste("waakzaam")     
 if (kerst.niveau.week > 1250) {                      #875
   kest.niveau.text.week <- paste("zorgelijk")
@@ -159,7 +176,7 @@ if (kerst.niveau.week > 6250) {
   kest.niveau.text.week <- paste("zeer ernstig")
 }
 
-kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.kerst+8]
+kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.freedom+11]
 kest.niveau.text.dag <- paste("waakzaam")      
 if (kerst.niveau.dag > 1250) {                      #875
   kest.niveau.text.dag <- paste("zorgelijk")
@@ -190,30 +207,29 @@ emoji_kerst <- intToUtf8(0x1F384)
 emoji_snowman <- intToUtf8(0x2603)
 emoji_snow <- intToUtf8(0x2744)
 
-tweet.kerst.tweet <- "Halen we bevrijdingsdag?"
+tweet.kerst.tweet <- "Halen we Bevrijdingsdag?
 
-#Voorspelling met 7-daags gemiddelde:
+Voorspelling met 7-daags gem.:
 
-#Week-op-week (rood): 
-#- %s elke %s dagen,
-#- Waakzaam over: %s dagen
-#- Niveau tijdens kerst: [%s]
+Week-op-week (rood): 
+- %s elke %s dagen,
+- Waakzaam over: %s dagen
+- Niveau tijdens 5 mei: [%s]
 
 
-#Dag-op-dag (donkerblauw):
-#- %s elke %s dagen,
-##- niveau tijdens kerst: [%s]
-#"
-tweet.kerst.tweet <- sprintf(tweet.kerst.tweet)
+Dag-op-dag (donkerblauw):
+- %s elke %s dagen,
+- niveau tijdens 5 mei: [%s]
+"
+tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,
                              
-#                             emoji_kerst,emoji_snowman,
-#                             doublingdayZ.text,   doublingdayZ.int,
-#                             days.until.lvl2,
-#                             kest.niveau.text.dag,
-#                             
-#                             doublingdayZ.1.text, doublingdayZ.1.int,
-#                             kest.niveau.text.week
-#)
+                             doublingdayZ.text,   doublingdayZ.int,
+                             days.until.lvl2,
+                             kest.niveau.text.dag,
+                             
+                             doublingdayZ.1.text, doublingdayZ.1.int,
+                             kest.niveau.text.week
+)
 Encoding(tweet.kerst.tweet) <- "UTF-8"
 post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
 

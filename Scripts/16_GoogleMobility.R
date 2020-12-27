@@ -16,7 +16,7 @@ get_reply_id <- function(rel_increase) {
 
 source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 
-
+Yesterday <- Sys.Date()-1
 
 #### read the latest Google mobility report from the web ####
 
@@ -68,9 +68,19 @@ persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2
 #last.date.old.wide.mob$Rt_avg10 <- (last.date.old.wide.mob$Rt_avg *100)-100
 
 
+
+
 ####   Plot the Google Mobility data 7d MA ####
 
 ggplot(Google_mob_NL_short)+  
+  
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -49.3, xend = as.Date(Yesterday), yend = -49.3),linetype = "dashed", color = "#54b251")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -22.1, xend = as.Date(Yesterday), yend = -22.1),linetype = "dashed", color = "#fe8003")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -12, xend = as.Date(Yesterday), yend = -12),linetype = "dashed", color = "#10be45")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date(Yesterday), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date(Yesterday), yend = -48.6),linetype = "dashed", color = "#e5292b")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = 0.4, xend = as.Date(Yesterday), yend = 0.4),linetype = "dashed", color = "#9951a4")+
+  
   geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2) +
   geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2) +
   geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), lwd=2) +
