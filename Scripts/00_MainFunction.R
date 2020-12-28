@@ -46,15 +46,15 @@ rm(list=ls())
 dirname <- paste("data/",Sys.Date(),sep = "")
 dir.create(dirname)
 
-#source("C:\\Rdir\\Rscripts\\geom_stream.R")
+source("C:\\Rdir\\Rscripts\\geom_stream.R")
 
 #### Start  ####
 
  source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
-editionname <- "10%-bevestigd-besmet-in-Bunschoten" 
-editienaam  <- "10%-bevestigd-besmet-in-Bunschoten" 
+editionname <- "number-of-Dutch-vaccinated=0" 
+editienaam  <- "10%-bevestigd-besmet-in-Bunschoten" ### minder-testen-vanwege-de-storm
 number.in.DE <- "7"
 
 

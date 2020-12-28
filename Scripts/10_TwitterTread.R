@@ -657,7 +657,7 @@ tweet.combi.2.tweet <- "1) 16 grote steden
 4) Weektotalen"
 tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
 Encoding(tweet.combi.2.tweet) <- "UTF-8"
-post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_new-no-color.png","data/60_routekaart_carnaval.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_new-no-color.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
 #### 16 cities tweet ####
 

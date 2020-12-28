@@ -89,7 +89,7 @@ df.predict.lead.kerst$fixedDate <- today+df.predict.lead.kerst$NumDays-11
 ### import daling and set emojis  #####
 
 df.daling.4 <- read.csv("C:\\Rdir\\data-contstant\\daling-2.csv" ,sep=";")
-colnames(df.daling.4) = c("Datum", "r7", "r8","r9", "r10", "r12", "r14", "r16", "r21", "r28","r18", "r15","r105")
+colnames(df.daling.4) = c("Datum", "r7", "r8","r9", "r10", "r12", "r14", "r16", "r21", "r28","r18", "r15","r105","r_12_4")
 df.daling.4$Datum <- as.Date(df.daling.4$Datum)
 
 emoji_kerst <- intToUtf8(0x1F384)
@@ -220,7 +220,10 @@ ggplot(Merged_data_short)+
  # geom_line(data=df.daling.4, aes(x=Datum, y=r15))+
   # geom_line(data=df.daling.4, aes(x=Datum, y=r105))+    # ECDC groen met kerst
 #####  geom_line(data=df.daling.4, aes(x=Datum, y=r21), size = 1.25, color = "black")+
-geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "gray", linetype = "dashed" )+
+########geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "gray", linetype = "dashed" )+
+geom_line(data=df.daling.4, aes(x=Datum, y=r_12_4), size = 1.25, color = "gray", linetype = "dashed" )+
+  
+ 
   
 
  
@@ -261,7 +264,8 @@ geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "gray", li
   geom_point(data=df.predict.lead.kerst, aes(x=Date, y=MACases_2), size = 1, color = "#44546a", alpha  =0.75)+ 
   
   #scale 11.500
-  annotate("text", x = as.Date("2020-12-30"), y = 8000,  label = "halvering elke 4 weken", size=5,angle=-60, color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-12-22"), y = 8000,  label = " R = 0.8", size=5,angle=-75, color = "black",face = "bold", hjust ="left")+
+  ##annotate("text", x = as.Date("2020-12-30"), y = 8000,  label = "halvering elke 4 weken", size=5,angle=-60, color = "black",face = "bold", hjust ="left")+
   #annotate("text", x = as.Date("2020-11-06"), y = 6000,  label = "halvering elke 7 dagen", size=5,angle=-80, color = "black",face = "bold", hjust ="left")+
   #annotate("text", x = as.Date("2020-11-16"), y = 5000,  label = "Waakzaam tijdens kerst", size=5,angle=-55, color = "black",face = "bold", hjust ="left")+
   
@@ -322,7 +326,7 @@ geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "gray", li
       panel.grid.minor.x = element_blank(),
   #    panel.grid.major.x = element_line(colour= "lightgray", linetype = "dashed")
    #   panel.grid.major.y = element_line(colour= "lightgray")  #, linetype = "dashed"))
-      )
+      )+
   ggsave("data/60_trendlines_cases.png",width=16, height = 9)
 
   

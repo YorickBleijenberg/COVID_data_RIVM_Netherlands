@@ -76,7 +76,7 @@ ggplot(Google_mob_NL_short)+
   
   geom_segment(aes(x = as.Date("2020-12-15"), y = -49.3, xend = as.Date(Yesterday), yend = -49.3),linetype = "dashed", color = "#54b251")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -22.1, xend = as.Date(Yesterday), yend = -22.1),linetype = "dashed", color = "#fe8003")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -12, xend = as.Date(Yesterday), yend = -12),linetype = "dashed", color = "#10be45")+
+ # geom_segment(aes(x = as.Date("2020-12-15"), y = -12, xend = as.Date(Yesterday), yend = -12),linetype = "dashed", color = "#10be45")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date(Yesterday), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date(Yesterday), yend = -48.6),linetype = "dashed", color = "#e5292b")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = 0.4, xend = as.Date(Yesterday), yend = 0.4),linetype = "dashed", color = "#9951a4")+
@@ -215,7 +215,7 @@ tweet.GoogleM.NL.tweet <- sprintf(tweet.GoogleM.NL.tweet,
 Encoding(tweet.GoogleM.NL.tweet) <- "UTF-8"
 
 
-## post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"))
+ post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"))
 ## post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"), in_reply_to_status_id = get_reply_id())
 
 

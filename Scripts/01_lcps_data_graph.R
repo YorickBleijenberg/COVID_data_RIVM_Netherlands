@@ -288,40 +288,40 @@ ggplot(data = lcps.both.df, mapping = aes(x = date, y = number, color = type, fi
 ##### geom_stream  ######
 
 
-#ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, fill = type)) + 
- # geom_stream(bw=0.08)+
+ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, fill = type)) + 
+  geom_stream(bw=0.08)+
   
- # scale_x_date(name="")+
-  
-  #scale_y_continuous(name=" ", breaks=c(-800,-400,0,400,800),
-    #                 labels=c("800", "400", "0", "400","800"))+
-  
-  # scale_fill_manual(values=c("#4472C4","#C5E0B4"), name=" test ",labels=c("IC - covid", "IC - non-covid"))+
-#  scale_fill_manual(values=c("#C5E0B4","#4472C4"), name=" test ",labels=c("IC - non-covid", "IC - covid"))+
-  
-  
-#labs(title="(non-) COVID-19 patienten op de IC",
-       # subtitle=" ",
-#       caption = paste("Source: LCPS & NICE | Plot: @YorickB | ",Sys.Date()))+
-  
-#  theme_classic()+
- # theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
-  
- # theme(legend.position = c(0.5, 0.9),
- #       legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid"), #,colour ="black"),
- #       legend.title = element_blank(),
- #       legend.text = element_text(colour="black", size=20, face="bold"))+
-  
- # theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
- #         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
- #         panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
- #         axis.text = element_text(size=14,color = "black",face = "bold"),
-  #        axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
- #         axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
-  #        axis.ticks.length = unit(0.5, "cm"),
-  #        axis.line = element_line(colour = "#DAE3F3"))
+  scale_x_date(name="")+
 
-##   ggsave("data/17_IC_only-2.png",width=16, height = 9)
+  scale_y_continuous(name=" ", breaks=c(-800,-400,0,400,800),
+                     labels=c("800", "400", "0", "400","800"))+
+  
+   scale_fill_manual(values=c("#4472C4","#C5E0B4"), name=" test ",labels=c("IC - covid", "IC - non-covid"))+
+  scale_fill_manual(values=c("#C5E0B4","#4472C4"), name=" test ",labels=c("IC - non-covid", "IC - covid"))+
+  
+  
+labs(title="(non-) COVID-19 patienten op de IC",
+       # subtitle=" ",
+       caption = paste("Source: LCPS & NICE | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme_classic()+
+  theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
+  
+  theme(legend.position = c(0.5, 0.9),
+        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid"), #,colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=20, face="bold"))+
+  
+  theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
+          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+          panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
+          axis.text = element_text(size=14,color = "black",face = "bold"),
+          axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+          axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
+          axis.ticks.length = unit(0.5, "cm"),
+          axis.line = element_line(colour = "#DAE3F3"))
+
+   ggsave("data/17_IC_only-2.png",width=16, height = 9)
 
 
 
