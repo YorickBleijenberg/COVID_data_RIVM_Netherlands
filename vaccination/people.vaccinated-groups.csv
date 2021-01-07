@@ -1,0 +1,12 @@
+vac.group,number.in.group,number.vac.in.group,vaccin.type
+acute.zorg,30000,6000,pfizer
+huisartsen,13000,0,moderna
+zorgpersoneel.instelling,613000,0,pfizer
+bewoners.verpleeghuis,147000,0,moderna
+verstandelijk.beperkt,85000,0,moderna
+60plus.medisch,2000000,0,unk
+60.plus.niet.medisch,2400000,0,unk
+60min.medisch,832000,0,unk
+zorgpersoneel.overig,644000,0,unk
+de.rest,6500000,0,unk
+jonger.dan.18,3500000,0,unk
