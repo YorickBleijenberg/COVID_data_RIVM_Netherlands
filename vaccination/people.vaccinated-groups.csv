@@ -1,12 +1,12 @@
-vac.group,number.in.group,number.vac.in.group,vaccin.type
-acute.zorg,30000,6000,pfizer
-huisartsen,13000,0,moderna
-zorgpersoneel.instelling,613000,0,pfizer
-bewoners.verpleeghuis,147000,0,moderna
-verstandelijk.beperkt,85000,0,moderna
-60plus.medisch,2000000,0,unk
-60.plus.niet.medisch,2400000,0,unk
-60min.medisch,832000,0,unk
-zorgpersoneel.overig,644000,0,unk
-de.rest,6500000,0,unk
-jonger.dan.18,3500000,0,unk
+vac.group,number.in.group,number.vac.in.group,vaccin.type,vaccin.type.2,Start
+acute.zorg,30000,15000,pfizer,,2021-01-06
+medewerkers.verpleeghuizen,613000,0,pfizer,astrazeneca.janssen,2021-01-06
+Thuiswonenden van 60-75,3000000,0,pfizer,moderna,2021-03-01
+bewoners.verpleeghuis,155000,0,pfizer,moderna,2021-02-01
+bewoners.ggz,60000,0,moderna,astrazeneca.janssen,2021-02-15
+bewoners.verpleeghuis,77000,0,moderna,,2021-02-01
+Thuiswonenden.van.75_60.niet.mobiel,1300000,0,moderna,,2021-03-01
+60.min.medisch,1800000,0,astrazeneca.janssen,,2020-02-01
+de.rest,7100000,0,astrazeneca.janssen,,2021-05-01
+medewerkers.ggz,25000,0,moderna,astrazeneca.janssen,2021-03-01
+zorgpersoneel.overig,,0,moderna,astrazeneca.janssen,2021-04-01
