@@ -3,15 +3,26 @@ library(scales)
 today <- Sys.Date()
 
 
+people.vaccinated.gh <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated.csv",sep=",")
+people.vaccinated.gh$date <- as.Date(people.vaccinated.gh$date)
+vaccinated.people <- last(people.vaccinated.gh$total_vaccinations)
+
+
+
+
+
+
 
 total.vaccinated <- read.csv("C:\\Rdir\\data-contstant\\vaccination.planning.csv" ,sep=";")
 
 colnames(total.vaccinated) = c("Datum", "infected", "seroprevlence",
                                "Pfizer/BioNTech", "Pfizer_deliver",
+                               "Pfizer/BioNTech-optie", "Pfizer.optie",
                                "Moderna", "Moderna_deliver",
                                "AstraZeneca", "AstraZenica_deliver",
                                "CureVac","CureVac_deliver", 
                                "Janssen_2dose","Janssen",
+                               "Sanofi/GSK", "Sanofi/GSK_deliver",
                                "total.avail","total.pop",
                                "60p", "70p", "80p","90p"
                                )
@@ -21,20 +32,20 @@ total.vaccinated$Datum <- as.Date(total.vaccinated$Datum)
 test.phizer <- filter(total.vaccinated[(total.vaccinated$Datum == today),])
 test.total <- test.phizer$Pfizer_deliver
 
-num.vaccinated = 0
+num.vaccinated = vaccinated.people
 num.vaccinated.full = 0
 
-num.vaccinated.perc <-  0      ##as.numeric(num.vaccinated/17461543*100)
+num.vaccinated.perc <-  vac.perc
 num.vaccinated.full.perc <-  0      ##as.numeric(num.vaccinated/17461543*100)
 
 test.total     <- format( test.total, big.mark="." ,decimal.mark=",")
 num.vaccinated <- format( num.vaccinated, big.mark="." ,decimal.mark=",")
-num.vaccinated.full <- format( num.vaccinated, big.mark="." ,decimal.mark=",")
+num.vaccinated.full <- format( num.vaccinated.full, big.mark="." ,decimal.mark=",")
 num.vaccinated.perc <- format( num.vaccinated.perc, big.mark="." ,decimal.mark=",")
 
 num.vaccinated.label      <- paste0("aantal mensen gevaccineerd: ", num.vaccinated, " = ", num.vaccinated.perc,"%")
-num.vaccinated.full.label <- paste("aantal mensen volledig gevaccineerd: ", num.vaccinated.full, " = ", num.vaccinated.full.perc,"%")
-num.vaccine.avail.label <- paste("aantalen dosis geleverd:",test.total)
+num.vaccinated.full.label <- paste0("aantal mensen volledig gevaccineerd: ", num.vaccinated.full, " = ", num.vaccinated.full.perc,"%")
+num.vaccine.avail.label <- paste("aantalen doses geleverd:",test.total)
 
 
 
@@ -42,13 +53,13 @@ num.vaccine.avail.label <- paste("aantalen dosis geleverd:",test.total)
 total.vaccinated[is.na(total.vaccinated)] <- 0
 total.vaccinated$Janssen <- as.integer(total.vaccinated$Janssen)
 
-total.vaccinated.short <-  total.vaccinated[ -c(2,3,5,7,9,11,12,14:19)]
+total.vaccinated.short <-  total.vaccinated[ -c(2,3,5,7,9,11,13,14,17:23)]
 total.vaccinated.short$Janssen <- as.integer(total.vaccinated.short$Janssen)
 
 
 keycol <- "Datum"
 valuecol <- "type"
-gathercols <- c("Pfizer/BioNTech","AstraZeneca", "Moderna","CureVac","Janssen")
+gathercols <- c("Pfizer/BioNTech", "Pfizer/BioNTech-optie","AstraZeneca", "Moderna","CureVac","Janssen","Sanofi/GSK")
 
 total.vaccinated.gather <- gather(total.vaccinated.short, keycol, valuecol, gathercols)
 total.vaccinated.gather$Datum <- as.Date(total.vaccinated.gather$Datum)
@@ -79,26 +90,26 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
   xlab("")+ 
   ylab("")+
   
-  scale_y_continuous(limits = c(0, 30000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 33000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   geom_vline(xintercept = as.Date(today), linetype = "dotted") + 
   #geom_text(mapping=aes(x=as.Date(today), y=num.vaccinated, label=num.vaccine.avail.label), size=3, angle=-90, vjust=-0.4, hjust=1.1)+
   #geom_text(mapping=aes(x=as.Date(today), y=num.vaccinated, label=num.vaccinated.label), size=3, angle=-90, vjust=1, hjust=1.1)+
   
-  annotate("text", x = as.Date(today+1), y = 27500000, label = today,                     size=4, angle=0, vjust=-0.4, hjust = 0, color = "black")+
-  annotate("text", x = as.Date(today+1), y = 26500000, label = num.vaccinated.label,      size=3, angle=0, vjust=-0.4,hjust = 0, color = "black")+
-  annotate("text", x = as.Date(today+1), y = 26450000, label = num.vaccinated.full.label, size=3, angle=0, vjust=1, hjust = 0,color = "black")+
-  annotate("text", x = as.Date(today+1), y = 25525000, label = num.vaccine.avail.label,   size=3, angle=0, vjust=1, hjust = 0,color = "black")+
+  annotate("text", x = as.Date(today+1), y = 28000000, label = today,                     size=4, angle=0, vjust=-0.4, hjust = 0, color = "black")+
+  annotate("text", x = as.Date(today+1), y = 27000000, label = num.vaccinated.label,      size=3, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+  annotate("text", x = as.Date(today+1), y = 26950000, label = num.vaccinated.full.label, size=3, angle=0, vjust=1, hjust = 0,color = "black")+
+  annotate("text", x = as.Date(today+1), y = 26025000, label = num.vaccine.avail.label,   size=3, angle=0, vjust=1, hjust = 0,color = "black")+
   
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-12-15", "2022-01-15")))+
+               limits = as.Date(c("2020-12-15", "2021-12-31")))+
   
   coord_cartesian(expand = FALSE)+
   
   labs(title = "Verwachtte aantallen mensen die we volledig* kunnen vaccineren",
-       subtitle = "op basis van de Kamerbrief vaccinatiestrategie, 21-12-2020 \n *voor Janssen 1 dosis nodig; voor de andere vaccins 2 dosis",
+       subtitle = "op basis van de Kamerbrief vaccinatiestrategie, 4-1-2021 \n *voor Janssen waarschijnlijk 1 dosis nodig; voor de andere vaccins 2 doses",
        caption = paste("Source: min VWS | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position =  "top",
@@ -109,7 +120,7 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
   
   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
          panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
-         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.title = element_text(hjust = 0.5,size = 40,face = "bold"),
          plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
          
          axis.text = element_text(size=14,color = "black",face = "bold"),
