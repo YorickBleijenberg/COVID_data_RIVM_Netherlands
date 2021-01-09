@@ -1,12 +1,12 @@
-vac.group,number.in.group,number.vac.in.group,vaccin.type,vaccin.type.2,Start
-acute.zorg,40000,26000,pfizer,,2021-01-06
-medewerkers.verpleeghuizen,613000,1000,pfizer,astrazeneca.janssen,2021-01-06
-Thuiswonenden van 60-75,3000000,0,pfizer,moderna,2021-03-01
-bewoners.verpleeghuis,155000,0,pfizer,moderna,2021-02-01
-bewoners.ggz,60000,0,moderna,astrazeneca.janssen,2021-02-15
-bewoners.verpleeghuis,77000,0,moderna,,2021-02-01
-Thuiswonenden.van.75_60.niet.mobiel,1300000,0,moderna,,2021-03-01
-60.min.medisch,1800000,0,astrazeneca.janssen,,2020-02-01
-de.rest,7100000,0,astrazeneca.janssen,,2021-05-01
-medewerkers.ggz,25000,0,moderna,astrazeneca.janssen,2021-03-01
-zorgpersoneel.overig,,0,moderna,astrazeneca.janssen,2021-04-01
+vac.group,number.in.group,number.vac.in.group,vaccin.type,vaccin.type.2,Start,,
+acute.zorg,33150,30000,pfizer,,2021-01-06,,https://www.lnaz.nl/cms/files/plan_van_aanpak_lnaz_1_0.pdf
+medewerkers.verpleeghuizen,613000,1000,pfizer,astrazeneca.janssen,2021-01-06,,https://twitter.com/hugodejonge
+Thuiswonenden van 60-75,3000000,0,pfizer,moderna,2021-03-01,,
+bewoners.verpleeghuis,155000,0,pfizer,moderna,2021-02-01,,
+bewoners.ggz,60000,0,moderna,astrazeneca.janssen,2021-02-15,,
+bewoners.verpleeghuis,77000,0,moderna,,2021-02-01,,
+Thuiswonenden.van.75_60.niet.mobiel,1300000,0,moderna,,2021-03-01,,
+60.min.medisch,1800000,0,astrazeneca.janssen,,2020-02-01,,
+de.rest,7100000,0,astrazeneca.janssen,,2021-05-01,,
+medewerkers.ggz,25000,0,moderna,astrazeneca.janssen,2021-03-01,,
+zorgpersoneel.overig,,0,moderna,astrazeneca.janssen,2021-04-01,,
