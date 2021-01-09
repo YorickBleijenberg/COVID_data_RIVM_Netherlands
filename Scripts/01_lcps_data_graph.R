@@ -296,7 +296,7 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, fill = ty
   scale_y_continuous(name=" ", breaks=c(-800,-400,0,400,800),
                      labels=c("800", "400", "0", "400","800"))+
   
-   scale_fill_manual(values=c("#4472C4","#C5E0B4"), name=" test ",labels=c("IC - covid", "IC - non-covid"))+
+#   scale_fill_manual(values=c("#4472C4","#C5E0B4"), name=" test ",labels=c("IC - covid", "IC - non-covid"))+
   scale_fill_manual(values=c("#C5E0B4","#4472C4"), name=" test ",labels=c("IC - non-covid", "IC - covid"))+
   
   
@@ -470,6 +470,15 @@ ggplot(LCPS_datafeed_predict)+
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
   
+#  geom_text( aes( x=as.Date("2020-12-18"), y=390, label="besmet rond kerst"),
+#             color="black", 
+#             size=7 , angle=0, fontface="bold")+
+  
+#  annotate("curve", x = as.Date("2020-12-25"), xend =as.Date("2021-01-04"), 
+#           y = 390, yend = 310, curvature = -0.2,
+#           colour = "black", size=2, alpha=0.7, arrow =arrow(type = "open",length = unit(2,"mm")))
+  
+  
 ggsave("data/16x_hosp_pred.png",width=16, height = 9)
 
 #hosp_IC <- paste0("IC:            ",hosp.IC.b2, "   (", hosp.IC.c2 , ")")
@@ -578,19 +587,24 @@ if (hosp.new.b < hosp.new.a) {
   hosp.new.dot <- intToUtf8(0x1F7E1)     ### geel
 
 
-if (hosp.new.b1 < hosp.new.a1) {
-  hosp.cl.new.dot <- intToUtf8(0x1F7E2)     ### groen
-} else if (hosp.new.b1 > hosp.new.a1) {
-  hosp.cl.new.dot <- intToUtf8(0x1F534)     ### rood
-} else
-  hosp.cl.new.dot <- intToUtf8(0x1F7E1)     ### geel
+hosp.new.b1 <-as.integer(hosp.new.b1)
+hosp.new.b2 <-as.integer(hosp.new.b2)
 
-if (hosp.new.b2 < hosp.new.a2) {
-  hosp.ic.new.dot <- intToUtf8(0x1F7E2)     ### groen
-} else if (hosp.new.b2 > hosp.new.a2) {
+hosp.cl.new.dot <- intToUtf8(0x1F7E1)     ### geel
+if (hosp.new.b1 > 40) {
+  hosp.cl.new.dot <- intToUtf8(0x1F534)     ### rood
+}else if (hosp.new.b1 < 12) {
+  hosp.cl.new.dot <- intToUtf8(0x1F7E2)     ### groen
+} 
+
+
+hosp.ic.new.dot <- intToUtf8(0x1F7E1)     ### geel
+if (hosp.new.b2 > 10) {
   hosp.ic.new.dot <- intToUtf8(0x1F534)     ### rood
-} else
-  hosp.ic.new.dot <- intToUtf8(0x1F7E1)     ### geel
+} else if (hosp.new.b2 < 3) {
+  hosp.ic.new.dot <- intToUtf8(0x1F7E2)     ### groen
+} 
+
 
 
 #### tweet.LCPS.tweet ####
@@ -624,8 +638,8 @@ Patients currently in the hospital:
 %sICU:       %s (%s)
 
 New: 
-%sClinic: %s (%s)
-%sICU:       %s (%s)
+%sClinic: %s 
+%sICU:       %s 
 
 In %s%s: %s
 
@@ -640,8 +654,8 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             clinic.total.dot, hosp.total.b1,  hosp.total.c1,
                             ic.total.dot,     hosp.IC.b2,  hosp.IC.c2,
                           
-                            hosp.cl.new.dot, hosp.new.b1,      hosp.new.c1,
-                            hosp.ic.new.dot, hosp.new.b2,      hosp.new.c2,
+                            hosp.cl.new.dot, hosp.new.b1,     # hosp.new.c1,
+                            hosp.ic.new.dot, hosp.new.b2,     # hosp.new.c2,
                             flag.D, flag.E,
                             number.in.DE
                             )
@@ -667,7 +681,7 @@ Kliniek:  %s (%s)
 IC:          %s (%s)
 
 Nieuwe opnames:
-Kliniek:   %s (%s)
+Kliniek:    %s (%s)
 IC:        %s (%s)
 
 In --: %s

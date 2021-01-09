@@ -15,22 +15,17 @@ LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
 last(LCPS_datafeed,2)
 
-
 ## Nieuwe maatregelen toevoegen - bieb dicht - 4 november
 
-
 #### ECDC - ANIMATION
-
 #### R ANIMATION
-
 ###  auto upload to git
-
 ###  set-up remote
-
 ##### vakantie effect per veiligheidsregio  #####
 
 
 #### check selected dates ####
+rm(list=ls())
 
 library(jsonlite)
 #library(ggrepel)
@@ -40,28 +35,27 @@ library(zoo)
 library(RcppRoll)
 require(data.table)
 library(scales)
+library(lubridate)
+source("C:\\Rdir\\Rscripts\\geom_stream.R")
+source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
-rm(list=ls())
+#### some constants for the update ####
+
+editionname <- "science-with-out-literature-list"
+editienaam  <- "R-ligt-in-Ierland-tussen-2.4-en-3"
+number.in.DE <- "8"
+
+#### Start  ####
 
 dirname <- paste("data/",Sys.Date(),sep = "")
 dir.create(dirname)
 
-source("C:\\Rdir\\Rscripts\\geom_stream.R")
-
-#### Start  ####
-
- source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
-## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
-
-editionname <- "number-of-Dutch-vaccinated=0" 
-editienaam  <- "10%-bevestigd-besmet-in-Bunschoten" ### minder-testen-vanwege-de-storm
-number.in.DE <- "7"
-
-
+#### update at 14:00h ####
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 
 
 
+#### update at 15:15 ####
 source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 
 source("C:\\Rdir\\Rscripts\\04_DataPrep.R")
@@ -88,7 +82,7 @@ source("C:\\Rdir\\Rscripts\\12_cities.R")
 
 source("C:\\Rdir\\Rscripts\\14_provincies.R")
 
-source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
+#source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
 
 source("C:\\Rdir\\Rscripts\\20_carehomes.R")
 
@@ -100,11 +94,13 @@ source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
 source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
 
+source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
+
 #### check correct last tweet ####
 
-## source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
-## source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+ source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
