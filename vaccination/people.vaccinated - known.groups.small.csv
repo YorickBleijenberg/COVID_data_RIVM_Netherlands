@@ -1,5 +1,5 @@
-date,vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type,vaccin.type.2,start.date.group,number.in.group.p,first.dose.p,second.dose.p
-2021-01-27,Medewerkers Acute zorg,40216,40216,26500,26500,pfizer,,2021-01-06,100,100.00,65.89
+date,vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type,vaccin.type.2,start.date.group,number.in.group.p,Eerste prik,Tweede prik
+2021-01-27,Medewerkers Acute zorg - 40.000,40216,40216,26500,26500,pfizer,,2021-01-06,100,100.00,65.89
 2021-01-27,Medewerkers Verpleeghuizen & ouderen,273000,183339,4000,,pfizer,astrazeneca.janssen,2021-01-06,100,67.16,1.47
 2021-01-27,Bewoners langdurigezorg (schatting),232000,95826,0,,pfizer,moderna,2021-02-01,100,41.30,0.00
-2021-01-27,Huisartsen,15000,8000,0,,moderna,,2021-01-23,100,53.33,0.00
+2021-01-27,Huisartsen - 15.000,15000,8000,0,,moderna,,2021-01-23,100,53.33,0.00
