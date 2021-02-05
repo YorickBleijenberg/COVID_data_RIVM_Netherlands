@@ -205,7 +205,7 @@ Indicators (exponential) growth / decay:
                             doubling.dead.week_dot, growth.dead.week, deP,
                             doubling.dead.week_dot, doubling.dead.week_text, doubling.dead.week)
 Encoding(tweet.dead.EN.tweet) <- "UTF-8"
-post_tweet(tweet.dead.EN.tweet,  media = c("data/02_EN_leeftijd_heatmap-dead.png","data/13_EN_new_deceased.png", "data/15_EN_dead_diff.png"), in_reply_to_status_id = get_reply_id()) 
+ post_tweet(tweet.dead.EN.tweet,  media = c("data/02_EN_leeftijd_heatmap-dead.png","data/13_EN_new_deceased.png", "data/15_EN_dead_diff.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 #"data/07_new_cases_DoD.png",
@@ -455,7 +455,7 @@ tweet.combi.2.tweet <- "1) New cases in the 16 big cities
 4) Weekly totals"
 tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
 Encoding(tweet.combi.2.tweet) <- "UTF-8"
-post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_phd.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_new-no-color.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -481,3 +481,4 @@ tweet.week.tweet <- "The Will-this-week-overtake-last-week-? graph"
 tweet.week.tweet <- sprintf(tweet.week.tweet)
 Encoding(tweet.week.tweet) <- "UTF-8"
 post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
+

@@ -8,7 +8,10 @@ copy.aantal.landelijk.gem.dag <- read.csv(read.aantal.landelijk.path,sep=";")
 christ.death <- copy.aantal.landelijk.gem.dag[,-c(1,4:6,10,11)]
 christ.death$Date_statistics <- as.Date(christ.death$Date_statistics)
 
-christ.death <- christ.death[christ.death$Date_statistics>"2020-12-30"&christ.death$Date_statistics<="2021-01-02",]  #date of even plus 5-7 days
+christ.death <- christ.death[christ.death$Date_statistics_type == 'DOO',]
+
+
+christ.death <- christ.death[christ.death$Date_statistics>"2020-12-29"&christ.death$Date_statistics<="2021-01-02",]  #date of even plus 5-7 days
 christ.death.hosp <- christ.death[christ.death$Hospital_admission == 'Yes',]
 christ.death.dead <- christ.death[christ.death$Deceased == 'Yes',]
 

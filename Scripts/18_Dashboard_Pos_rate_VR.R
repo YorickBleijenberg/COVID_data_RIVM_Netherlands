@@ -37,17 +37,44 @@ i=1
 ## https://coronadashboard.rijksoverheid.nl/_next/data/3ZIVZhkAR6rBxrEeP76NV/veiligheidsregio/VR02/positief-geteste-mensen.json
 ##  https://coronadashboard.rijksoverheid.nl/_next/data/t2wAB-7DRJX-70LsMhdEt/veiligheidsregio/VR02/positief-geteste-mensen.json
 ## https://coronadashboard.rijksoverheid.nl/_next/data/iKI_IcDRH6I_yqHSgbQyy/veiligheidsregio/VR02/positief-geteste-mensen.json
+##https://coronadashboard.rijksoverheid.nl/_next/data/CfUU7hO_KiA63WLZGZLpu/veiligheidsregio/VR01/positief-geteste-mensen.json
+#https://coronadashboard.rijksoverheid.nl/_next/data/bkuW8RqTBovPKqgI3XX39/veiligheidsregio/VR02/positief-geteste-mensen.json
+## https://coronadashboard.rijksoverheid.nl/_next/data/w6-OHcQdWWXMQljvujpzJ/veiligheidsregio/VR02/positief-geteste-mensen.json
 
+##  https://coronadashboard.rijksoverheid.nl/_next/data/w6-OHcQdWWXMQljvujpzJ/veiligheidsregio/VR02/positief-geteste-mensen.json
 
 for (i in 1:25) {
   if(i<10){
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/iKI_IcDRH6I_yqHSgbQyy/veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/w6-OHcQdWWXMQljvujpzJ/veiligheidsregio/VR0",i,"/positief-geteste-mensen.json"))
   }else{
-    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/iKI_IcDRH6I_yqHSgbQyy/veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
+    db<-fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/_next/data/w6-OHcQdWWXMQljvujpzJ/veiligheidsregio/VR",i,"/positief-geteste-mensen.json"))
   }
   db<-db[["pageProps"]][["data"]][["ggd"]][["values"]]
   tot<-rbind(tot,db)
 }
+
+
+ #df.vr.dailytests <- data.frame()
+
+# df.vr.dailytests <- 1
+ i <- 1
+# 
+ for (i in 1:25) {
+   if(i<10){
+     db <- fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/json/VR0",i,".json"))
+   }else{
+     db <- fromJSON(txt=paste0("https://coronadashboard.rijksoverheid.nl/json/VR",i,".json"))
+   }
+   db <- as.data.frame(db$tested_ggd_daily[1])
+   df.vr.dailytests <- rbind(df.vr.dailytests,db)
+ }
+ df.vr.dailytests$date <- as.Date(as.POSIXct(df.vr.dailytests$values.date_unix, origin="1970-01-01"))
+
+
+ tot <- df.vr.dailytests
+
+
+
 
 #### Merge df's and clean up ####
 
@@ -61,18 +88,24 @@ write.csv2(VR_poss_rate_values, File_date_VR, row.names=FALSE)
 
 today <- Sys.Date()
 
+VR_poss_rate_values.short<- VR_poss_rate_values[VR_poss_rate_values$date>"2021-01-01",]
+
+
 #### plot positivity regions ####
 
-ggplot(VR_poss_rate_values, aes(x=date, y=infected_percentage, fill = Regio_Naam))+
+ggplot(VR_poss_rate_values.short, aes(x=date, y=values.infected_percentage, fill = Regio_Naam))+
  
   
-  annotate("rect", xmin = as.Date("2020-06-01"), xmax = today, ymin = 0, ymax =4, color = "black", fill = "lightgreen", alpha = 0.3)+
-  annotate("rect", xmin = as.Date("2020-06-01"), xmax = today, ymin = 4, ymax =5, color = "black", fill = "orange", alpha = 0.3)+
+  annotate("rect", xmin = as.Date("2021-01-01"), xmax = today, ymin = 0, ymax =4, color = "black", fill = "lightgreen", alpha = 0.3)+
+  annotate("rect", xmin = as.Date("2021-01-01"), xmax = today, ymin = 4, ymax =5, color = "black", fill = "orange", alpha = 0.3)+
   
   #geom_line(mapping = aes(x=date, y=5), color = "darkgreen",lwd = 1, linetype = "twodash")+
   #geom_line(mapping = aes(x=date, y=3), color = "black",lwd = 1,linetype = "dotted")+
   
-   geom_line(colour = "darkred", size =1.5)+
+  scale_x_date(as.Date("2021-01-01"),breaks = "1 day",  labels = date_format("%d"))+
+  
+  
+  geom_line(colour = "darkred", size =1.5)+
   facet_wrap(~Regio_Naam,)+
   
   theme_bw() + 

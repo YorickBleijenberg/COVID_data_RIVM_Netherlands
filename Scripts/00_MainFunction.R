@@ -22,18 +22,17 @@ last(LCPS_datafeed,2)
 ###  auto upload to git
 ###  set-up remote
 ##### vakantie effect per veiligheidsregio  #####
-
+#library(ggrepel)
 
 #### check selected dates ####
 rm(list=ls())
 
 library(jsonlite)
-#library(ggrepel)
 library(rtweet)
 library(tidyverse)
 library(zoo)
 library(RcppRoll)
-require(data.table)
+library(data.table)
 library(scales)
 library(lubridate)
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
@@ -41,9 +40,9 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 
 #### some constants for the update ####
 
-editionname <- "science-with-out-literature-list"
-editienaam  <- "R-ligt-in-Ierland-tussen-2.4-en-3"
-number.in.DE <- "8"
+editionname <- "ice-skating-during-a-pandemic"
+editienaam  <- "schaatsen-in-coronatijd"
+#number.in.DE <- "0"
 
 #### Start  ####
 
@@ -80,6 +79,8 @@ source("C:\\Rdir\\Rscripts\\09A_growth.R")
 
 source("C:\\Rdir\\Rscripts\\12_cities.R")
 
+source("C:\\Rdir\\Rscripts\\12_cities_Lansingerland.R")  # Lansingerland
+
 source("C:\\Rdir\\Rscripts\\14_provincies.R")
 
 #source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
@@ -96,11 +97,25 @@ source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
 
 source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
 
+###
+
+
 #### check correct last tweet ####
 
-source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
-source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
- source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+ source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+
+ source("C:\\Rdir\\Rscripts\\26_Municipality.R")
+
+##upload todays pictures"
+
+source("C:\\Rdir\\Rscripts\\18_Dashboard_daily_pos_rate.R")
+
+## source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+
+source("C:\\Rdir\\Rscripts\\25_Veiligheidsregios_insight.R")
+
+
+
 

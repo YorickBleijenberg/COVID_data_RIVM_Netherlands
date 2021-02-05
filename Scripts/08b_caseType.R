@@ -67,8 +67,8 @@ df4 <- df3
 #dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
 #dates_vline <- which((df4$Datum %in% dates_vline))
 
-dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", "2020-11-18", "2020-12-15")),
-                          event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown","verzwaring", "einde verzwaring", "lockdown"))
+dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", "2020-11-18", "2020-12-15", "2021-01-23")),
+                          event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown","verzwaring", "einde verzwaring", "lockdown", "                    avondklok"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]
@@ -246,7 +246,13 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2020-11-30",
                   "2020-12-07",
                   "2020-12-14",
-                  "2020-12-21"
+                  "2020-12-21",
+                  "2020-12-28",
+                  "2021-01-04",
+                  "2021-01-11",
+                  "2021-01-18",
+                  "2021-01-25",
+                  "2021-02-01"
                  ))   
 
 dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))
@@ -274,7 +280,7 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
                                 "Melding aan GGD"))+
   
     geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),
-             col = "darkgray", lwd = 1, linetype= "dashed")+
+             col = "darkgray", lwd = 0.5, linetype= "dashed")+
     # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
     labs(title = "Besmette personen: verschil met gisteren",
        subtitle = "Maandagen", #  OMT: 'Een lagere R is beter'",

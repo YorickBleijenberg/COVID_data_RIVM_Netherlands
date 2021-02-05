@@ -21,6 +21,15 @@ RIVM_aantallen_gemeente_cumulatief<-read.csv(File_date_35,sep=";")
 number_muni_cum <- RIVM_aantallen_gemeente_cumulatief   #File_date_3
 
 
+
+
+
+FR_a <- intToUtf8(0x00E2)  #Encoding(FR_b) <- "UTF-8"
+FR_b <- paste0("Frysl", FR_a,"n")
+number_muni_cum$Province <- str_replace(number_muni_cum$Province, "Fryslân", FR_b)  ##fout / goed
+number_muni_cum$Province <- str_replace(number_muni_cum$Province, "Friesland", FR_b)  ##fout / goed
+
+
 ####   select only the Province, Date of Report and sum of total reported ####
 
 number_muni_cum_prov <- number_muni_cum[,c("Date_of_report","Province","Total_reported")]
@@ -275,6 +284,10 @@ today <- Sys.Date()
 inwo_prov <- "C:\\Rdir\\data-contstant\\provincies.csv"
 prov.inwoners <- read.csv(inwo_prov,sep=";")  
 colnames(prov.inwoners) = c("Province", "Prov_getal", "Prov_inwoners")
+
+
+prov.inwoners$Province <- str_replace(prov.inwoners$Province, "Friesland", FR_b)  ##fout / goed
+
 
 
 prov.combi <- merge(number_new_prov_short, prov.inwoners)

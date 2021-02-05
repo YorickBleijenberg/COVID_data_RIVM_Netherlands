@@ -166,10 +166,10 @@ post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_t
 
 kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.freedom+5]   ##dag days.to.freedom
 kest.niveau.text.week <- paste("waakzaam")     
-if (kerst.niveau.week > 1250) {                      #875
+if (kerst.niveau.week > 875) {                      #875
   kest.niveau.text.week <- paste("zorgelijk")
 }
-if (kerst.niveau.week > 3750) {
+if (kerst.niveau.week > 2500) {
   kest.niveau.text.week <- paste("ernstig")
 }
 if (kerst.niveau.week > 6250) {
@@ -178,10 +178,10 @@ if (kerst.niveau.week > 6250) {
 
 kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.freedom+11]
 kest.niveau.text.dag <- paste("waakzaam")      
-if (kerst.niveau.dag > 1250) {                      #875
+if (kerst.niveau.dag > 875) {                      #875
   kest.niveau.text.dag <- paste("zorgelijk")
 }
-if (kerst.niveau.dag > 3750) {
+if (kerst.niveau.dag > 2500) {
   kest.niveau.text.dag <- paste("ernstig")
 }
 if (kerst.niveau.dag > 6250) {
@@ -196,7 +196,7 @@ label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen")
 
 
 df.to.subset <-df.predict.lead.kerst
-df.to.subset<- df.to.subset[df.to.subset$MACases<=1250,]     #875
+df.to.subset<- df.to.subset[df.to.subset$MACases<=875,]     #875
 days.until.lvl2 <- df.to.subset$fixedDate[1]
 today  <- Sys.Date()
 days.until.lvl2<- as.vector(difftime(days.until.lvl2, today, units='days'))
@@ -340,10 +340,10 @@ Indicatoren (exponenti%sle) groei / krimp:
 %s Dat is %s %s
   
 %s --> groeifactor: %s%s week op week.
-%s --> %s: elke %s dagen.
+%s --> %s: elke %s dagen."
 
-Aantal overleden voor week 40:
-%s"
+#Aantal overleden voor week 47:
+#%s
 
 
 tweet.dead.tweet <- sprintf(tweet.dead.tweet,
@@ -352,8 +352,8 @@ tweet.dead.tweet <- sprintf(tweet.dead.tweet,
                             more.less.day.dead.dot,  diff.dead.day,   more.less.day.dead,
                             more.less.week.dead.dot, diff.dead.week,  more.less.week.dead,
                             doubling.dead.week_dot, growth.dead.week, deP,
-                            doubling.dead.week_dot, doubling.dead.week_text, doubling.dead.week,
-                            diff.dead.old)
+                            doubling.dead.week_dot, doubling.dead.week_text, doubling.dead.week)  #,
+                            #diff.dead.old)
 Encoding(tweet.dead.tweet) <- "UTF-8"
 
 post_tweet(tweet.dead.tweet,  media = c("data/15_dead_diff.png",
@@ -541,23 +541,27 @@ PersCoSemitwoWeeksdoneDays <- as.numeric(difftime(Sys.Date(),PersCoSemitwoWeeksd
 PersCoDoNothing = as.Date("2020-12-08",'%Y-%m-%d')
 PersCoDoNothingDays <- as.numeric(difftime(Sys.Date(),PersCoDoNothing, units = c("days")))  
 PersColockdown = as.Date("2020-12-14",'%Y-%m-%d')
-PersColockdownDays <- as.numeric(difftime(Sys.Date(),PersColockdown, units = c("days")))  
+PersColockdownDays <- as.numeric(difftime(Sys.Date(),PersColockdown, units = c("days")))
+PersCoCurfew = as.Date("2021-01-20",'%Y-%m-%d')
+PersCoCurfewDays <- as.numeric(difftime(Sys.Date(),PersCoCurfew, units = c("days")))  
 
 tweet.data.tweet <- "Dagen sinds persco:
 
-[%s] Kroeg uurtje eerder dicht - regionale maatregelen
+%s -Kroeg uurtje eerder dicht - regionale maatregelen
 
-[%s] We gaan voor R=0,9 - landelijke maatregelen
+%s -We gaan voor R=0,9 - landelijke maatregelen
 
-[%s] Semi-lockdown
+%s -Semi-lockdown
 
-[%s] Verzwaring semi-lockdown
+%s -Verzwaring semi-lockdown
 
-[%s] Einde verzwaring semi-lockdown
+%s -Einde verzwaring semi-lockdown
 
-[%s] Zorgelijk, maar we doen niets.
+%s -Zorgelijk, maar we doen niets.
 
-[%s] lockdown"
+%s -Lockdown
+
+%s -Avondklok"
 
 
 tweet.data.tweet <- sprintf(tweet.data.tweet,
@@ -567,7 +571,8 @@ tweet.data.tweet <- sprintf(tweet.data.tweet,
                             PersCoSemitwoWeeksDays,
                             PersCoSemitwoWeeksdoneDays,
                             PersCoDoNothingDays,
-                            PersColockdownDays
+                            PersColockdownDays,
+                            PersCoCurfewDays
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
 post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
@@ -681,6 +686,19 @@ tweet.week_num.tweet <- sprintf(tweet.week_num.tweet)
 Encoding(tweet.week_num.tweet) <- "UTF-8"
 #post_tweet(tweet.week_num.tweet,  media = c("data/65_Cases_by_week_test_ Darjeeling1"), in_reply_to_status_id = get_reply_id())  #
 
+
+
+
+#### vaccine tweet ####
+
+tweet.vaccince.tweet <- "De weg naar groepsimmuniteit
+
+Noot: Op dit moment hebben we alleen BioNTech/Pfizer vaccins"
+tweet.vaccince.tweet <- sprintf(tweet.vaccince.tweet)
+Encoding(tweet.vaccince.tweet) <- "UTF-8"
+#post_tweet(tweet.vaccince.tweet,  media = c("data/90_vaccine_deliverd.png"), in_reply_to_status_id = get_reply_id())
+
+
 #### Week Christmas deaths tweet ####
 
 tweet.christ.death.tweet <- "Kerstdoden
@@ -688,9 +706,16 @@ tweet.christ.death.tweet <- "Kerstdoden
 https://twitter.com/YorickB/status/1341799378458202117"
 tweet.christ.death.tweet <- sprintf(tweet.christ.death.tweet)
 Encoding(tweet.christ.death.tweet) <- "UTF-8"
-post_tweet(tweet.christ.death.tweet,  media = c("data/88_christ_death.png"), in_reply_to_status_id = get_reply_id())  #
+#post_tweet(tweet.christ.death.tweet,  media = c("data/88_christ_death.png"), in_reply_to_status_id = get_reply_id())
 
 
+
+#### Lansingerland tweet ####
+
+tweet.Lansingerland.tweet <- "Lansingerland"
+tweet.Lansingerland.tweet <- sprintf(tweet.Lansingerland.tweet)
+Encoding(tweet.Lansingerland.tweet) <- "UTF-8"
+post_tweet(tweet.Lansingerland.tweet,  media = c("data/18_city_new_Lansingerland.png"), in_reply_to_status_id = get_reply_id())
 
 
 

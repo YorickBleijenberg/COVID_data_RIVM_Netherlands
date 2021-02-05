@@ -30,10 +30,13 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ##https://covid19-static.cdn-apple.com/covid19-mobility-data/2022HotfixDev13/v3/en-us/applemobilitytrends-2020-12-03.csv
 ## https://covid19-static.cdn-apple.com/covid19-mobility-data/2022HotfixDev27/v3/en-us/applemobilitytrends-2020-12-15.csv
 ## https://covid19-static.cdn-apple.com/covid19-mobility-data/2023HotfixDev10/v3/en-us/applemobilitytrends-2020-12-17.csv
+#  https://covid19-static.cdn-apple.com/covid19-mobility-data/2024HotfixDev9/v3/en-us/applemobilitytrends-2021-01-08.csv
+
+
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2023HotfixDev20/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2025HotfixDev22/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -93,10 +96,10 @@ Apple_mob_nl_short <- Apple_mob_nl_short[-1:-6,]
 ####   Plot the Apple Mobility data ####
 
 
+persco.df.2 <- 1
 
-
-persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-05", "2020-12-15")), 
-                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
+persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-15", "2021-01-25")), 
+                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "lockdown","avondklok"))
 
 
 ov.min <-  min(Apple_mob_nl_short$MAOV, na.rm=T)
@@ -222,6 +225,6 @@ Encoding(tweet.appleM.tweet) <- "UTF-8"
 
 
 ##  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png"))
-##  post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png") , in_reply_to_status_id = get_reply_id()) 
+ post_tweet(tweet.appleM.tweet,  media = c("data/30_Apple_data.png") , in_reply_to_status_id = get_reply_id()) 
 
   

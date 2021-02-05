@@ -25,7 +25,7 @@ read.aantal.gemeente.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(
 RIVM_aantallen_gemeente_per_dag <- read.csv(read.aantal.gemeente.path,sep=";")
 
 RIVM_aantallen_gemeente_per_dag$date <- as.Date(RIVM_aantallen_gemeente_per_dag$date)
-RIVM_aantallen_gemeente_per_dag.1  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,4:9)]
+RIVM_aantallen_gemeente_per_dag.1  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,4:9,11,12,14)]
 
 RIVM_aantallen_gemeente_per_dag.combi <- merge(RIVM_aantallen_gemeente_per_dag.1,gemeente.inwoners)
 
@@ -60,7 +60,7 @@ combi.2 <- combi.1 %>%
 kleur.table  = data.frame()
 
 i=1
-while (i < 356)
+while (i < 353)
 {
   
   combi.iteration <- combi.2    #copy the merged municipality data
@@ -111,9 +111,9 @@ ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.3)+
  # geom_point(size = 2)+
   
 facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
-#  scale_x_date(date_breaks = "1 day", 
- #             date_labels= format("%d %b"),
-  #           limits = as.Date(c("2020-11-12", today)))+
+  scale_x_date(date_breaks = "2 month", 
+              date_labels= format("%d %b"),
+           limits = as.Date(c("2020-11-12", today)))+
   theme_bw() + 
   xlab("")+ 
   ylab("")+

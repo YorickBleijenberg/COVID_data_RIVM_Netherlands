@@ -132,3 +132,22 @@ ggplot(verpleeg.sm)+
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
   ggsave("data/52_Verpleeg_loc.png",width=14, height = 18)
 
+
+
+
+
+
+# verpleeg deaths cumulative
+
+copy.verpleeg
+
+copy.verpleeg$Date_of_statistic_reported <-as.Date(copy.verpleeg$Date_of_statistic_reported)
+care.d.cumulative.1 <- copy.verpleeg[copy.verpleeg$Date_of_statistic_reported < "2020-07-01",]
+care.d.cumulative.2 <- copy.verpleeg[copy.verpleeg$Date_of_statistic_reported > "2020-07-01",]
+
+care.d.cumulative.1a <- sum(care.d.cumulative.1$Total_deceased_reported)
+care.d.cumulative.2b <- sum(care.d.cumulative.2$Total_deceased_reported)
+
+care.d.perc <- round((care.d.cumulative.2b/care.d.cumulative.1a*100), digits = 1)
+
+

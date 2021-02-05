@@ -62,8 +62,8 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 #                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
 
 
-persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-15", "2021-01-01")), 
-                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "lockdown", ""))
+persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-15", "2021-01-01", "2021-01-25")), 
+                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "lockdown","" ,"avondklok"))
 
 
 
@@ -122,7 +122,7 @@ theme_classic()+
       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.5,0.15),
+  theme(legend.position = c(0.4,0.15),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.margin = margin(3, 3, 3, 3),
@@ -198,7 +198,7 @@ tweet.GoogleM.NL.tweet <- "Google mobility data:
 Laatste datapunt: 
 %s
 
-Verandering in mobiliteit t.o.v. 2019 (%s):
+Verandering mobiliteit tov 3/1-6/2, 2020.(%s):
 (verandering t.o.v. een week geleden)
 
 %s     %s%s  (%s%s) - Thuis
@@ -339,7 +339,7 @@ ggplot(Google_mob_prov_short) +
   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
          panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
          #legend.position = "none",   # no legend
-         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.title = element_text(hjust = 0.4,size = 30,face = "bold"),
          plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
          
          axis.text = element_text(size=14,color = "black",face = "bold"),
@@ -430,7 +430,7 @@ theme_classic()+
   labs(title = "Google Mobility - Nederland",
        subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
        caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
-  theme(legend.position = c(0.5,0.15),
+  theme(legend.position = c(0.45,0.15),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.margin = margin(3, 3, 3, 3),
@@ -462,6 +462,6 @@ raw data dots"
 
 tweet.GoogleM.raw.tweet <- sprintf(tweet.GoogleM.raw.tweet)
 Encoding(tweet.GoogleM.raw.tweet) <- "UTF-8"
-post_tweet(tweet.GoogleM.raw.tweet,  media = c("data/36_Google_data_NL_dots.png.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.GoogleM.raw.tweet,  media = c("data/36_Google_data_NL_dots.png"), in_reply_to_status_id = get_reply_id())  #
 
 

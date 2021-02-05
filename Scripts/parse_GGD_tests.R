@@ -11,7 +11,10 @@ require(scales)
 weeknumber <- isoweek(Sys.Date())-1
 
 
-report <- "https://www.rivm.nl/sites/default/files/2020-12/COVID-19_WebSite_rapport_wekelijks_20201222_1259.pdf"
+## https://www.rivm.nl/sites/default/files/2020-12/COVID-19_WebSite_rapport_wekelijks_20201229_1259.pdf
+## https://www.rivm.nl/sites/default/files/2020-12/COVID-19_WebSite_rapport_wekelijks_20201229_1229.pdf
+
+report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210202_1259_final.pdf"
 
 
 
@@ -19,11 +22,11 @@ report <- "https://www.rivm.nl/sites/default/files/2020-12/COVID-19_WebSite_rapp
 
 
 area.table.ggd.total <- locate_areas(report,
-                                          pages=c(30))
+                                          pages=c(33))
 
 ggd_tests <- extract_tables(report,
                            output = "data.frame",
-                           pages = c(30),
+                           pages = c(33),
                            area = area.table.ggd.total,
                            guess=FALSE)
 
@@ -32,7 +35,7 @@ ggd_tests <- do.call(rbind,ggd_tests)
 colnames(ggd_tests) <- c("Week","Totaal.aantal.testen","Aantal.positief","percentage.positief")
 
 ggdTestFile <- paste0("data-dashboards/ggd_tests_", weeknumber, ".csv")
-write.csv(ggd_tests,file = ggdTestFile, row.names = F)
+write.csv(ggd_tests_small,file = ggdTestFile, row.names = F)
 
 
 ggd_tests_small <- ggd_tests
@@ -107,12 +110,12 @@ theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size 
        axis.text.y.right = element_text(color = "#4472C4")
        )+
   
-  geom_text( aes( x=41.5, y=550000, label=text_sub),
+  geom_text( aes( x=42.5, y=550000, label=text_sub),
             color="#ED7D31", 
             size=7 , angle=0, fontface="bold")+
   
   
-  annotate("curve", x = 48.5, xend =51, 
+  annotate("curve", x = 49.5, xend =52, 
            y = 550000, yend = 500000, curvature = -0.2,
            colour = "black", size=2, alpha=0.7, arrow =arrow(type = "open",length = unit(2,"mm")))
   
@@ -126,11 +129,11 @@ ggsave("data/22_tests_ggden.png",width=16, height = 9)
 
 
 area.table.labs.total <- locate_areas(report,
-                                     pages=c(43))
+                                     pages=c(46))
 
 labs_tests <- extract_tables(report,
                             output = "data.frame",
-                            pages = c(43),
+                            pages = c(46),
                             area = area.table.labs.total,
                             guess=FALSE)
 
@@ -142,7 +145,7 @@ colnames(labs_tests) <- c("Week","Aantal_labs","Tests","Aantal_positief","Perc_p
 labs_tests$Week <- c(12:weeknumber)
 
 
-LabTestFile <- paste0("data-dashboards/Lab_tests_", weeknumber, ".csv")
+LabTestFile <- paste0("data-dashboards/Lab_tests_", weeknumber, "-no-week.csv")
 write.csv(labs_tests,file = LabTestFile, row.names = F)
 
 
@@ -208,11 +211,11 @@ ggplot(data = labs_tests)+
          axis.text.y.left = element_text(color = "#ED7D31"),
          axis.text.y.right = element_text(color = "#4472C4"))+
   
-  geom_text( aes( x=39.5, y=275000, label=text_sub),
+  geom_text( aes( x=40.5, y=275000, label=text_sub),
              color="#ED7D31", 
              size=7 , angle=0, fontface="bold")+
   
-  annotate("curve", x = 49.5, xend =51, 
+  annotate("curve", x = 50.5, xend =52, 
            y = 275000, yend = 250000, curvature = -0.2,
            colour = "black", size=2, alpha=0.7, arrow =arrow(type = "open",length = unit(2,"mm")))
 

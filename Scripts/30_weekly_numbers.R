@@ -9,15 +9,24 @@
 #library(scales)
 
 
+
+
 #library(viridis)  
 library(wesanderson)
 
 # week cijfers
 
-current.week <- as.integer(format(Sys.Date(), "%V"))
+today = Sys.Date()
+
+current.week <- as.integer(format(Sys.Date(), "%Y%V"))
+
+#test.week <- yearweek(Sys.Date())
 
 read.aantal.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv", sep = "")
 weeknumber.df <- read.csv(read.aantal.path,sep=";")
+
+weeknumber.df$date <- as.Date(weeknumber.df$date)
+weeknumber.df$week <- as.integer(format(weeknumber.df$date, "%Y%V"))
 
 
 weeknumber.df.sh <- weeknumber.df[ -c(1:9,11:12)]
@@ -28,20 +37,23 @@ weeknumber.df.sh$week_day <- weekdays(weeknumber.df.sh$date)
 
 weeknumber.df.sh$week_day <- as.factor(weeknumber.df.sh$week_day)
 
-weeknumber.df.sh.2 <- weeknumber.df.sh[weeknumber.df.sh$week > 26,]
+weeknumber.df.sh.2 <- weeknumber.df.sh[weeknumber.df.sh$date > "2020-06-28",]
+
+weeknumber.df.sh.2$weekbegin <- floor_date(weeknumber.df.sh.2$date, " week", week_start = 1)
+
+this.week <-floor_date(as.Date(today), " week", week_start = 1)
 
 
-
-
-ggplot(weeknumber.df.sh.2, aes(x=week, y=Total_reported, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
   # geom_hline(yintercept=87500, linetype = "dashed", color = "gray")+
   
   geom_bar(stat='identity')+
   
-  
-  scale_x_continuous(breaks=seq(27,current.week,1), limits = c(27,current.week+1))+
+  scale_x_date( limits = c(as.Date("2020-07-02"), NA), breaks = "week",  labels = date_format("%V"))+
+  coord_cartesian(expand = FALSE)+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
   
   #scale_fill_brewer(palette = "RdYlBu")+
   #scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+
@@ -72,8 +84,8 @@ ggplot(weeknumber.df.sh.2, aes(x=week, y=Total_reported, fill = factor(week_day,
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
   
-  geom_text(mapping=aes(x=28, y=10500, label="Waakzaam "), size=7)+
-  geom_text(mapping=aes(x=28, y=7600, label="8750 nieuwe gevallen per week"), size=4)+
+  geom_text(mapping=aes(x=as.Date("2020-07-15"), y=10500, label="Waakzaam "), size=7)+
+  geom_text(mapping=aes(x=as.Date("2020-07-18"), y=7600, label="8750 nieuwe gevallen per week"), size=4)+
   #geom_text(mapping=aes(x=30, y=67000, label="Weekrecord: week 44 - 68.488 gevallen"), size=4)+
   
   
@@ -83,7 +95,7 @@ ggsave("data/65_Cases_by_week.png",width=16, height = 9)
 
 
 weeknumber.df.sh.3 <- weeknumber.df.sh.2
-weeknumber.df.sh.3$week_day <- as.character(weeknumber.df.sh.3$week_day)
+#weeknumber.df.sh.3$week_day <- as.character(weeknumber.df.sh.3$week_day)
 
 #weeknumber.df.sh.3$week_day <-  as.factor(weeknumber.df.sh.3$week_day, levels=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday") )
 
@@ -94,39 +106,40 @@ weeknumber.df.sh.3$week_day <- factor(weeknumber.df.sh.3$week_day, levels = c("M
  #   c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday")
 
 
-rect2 <- data.frame(xmin = c(as.Date("2020-10-10"), as.Date("2020-10-17")),
-                    xmax = c(as.Date("2020-10-18"), as.Date("2020-10-25")),
-                    ymin = c(0, 0),
-                    ymax = c(Inf, Inf),
-                    regio_vac = c("Noord", "Niet-Noord")
-)
+#rect2 <- data.frame(xmin = c(as.Date("2020-10-10"), as.Date("2020-10-17")),
+ #                   xmax = c(as.Date("2020-10-18"), as.Date("2020-10-25")),
+  #                  ymin = c(0, 0),
+   #                 ymax = c(Inf, Inf),
+    #                regio_vac = c("Noord", "Niet-Noord")
+#          )
 
 
 
 
+this.week <-floor_date(as.Date(today), " week", week_start = 1)
+ 
 
 
-
-
-ggplot(weeknumber.df.sh.3, aes(x=week, y=Total_reported,fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+   #levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+ggplot(weeknumber.df.sh.3, aes(x=weekbegin, y=Total_reported,fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+   #levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
-  geom_rect( aes(xmin = current.week-0.5,
-                 xmax = current.week+0.5,
+  geom_rect( aes(xmin = as.Date(this.week)-4,
+                 xmax = as.Date(this.week)+4,
                  ymin = 0,
-                 ymax = Inf,
+                ymax = Inf,
                  ), fill = "gray", alpha = 0.025)+
   
   
   geom_bar(stat='identity')+
   
-  scale_x_continuous(limits = c(35,current.week+1))+
+  scale_x_date( limits = c(as.Date("2020-08-24"), NA), breaks = "5 week",  labels = date_format("%V"))+
+ # scale_x_continuous(limits = c(as.Date("2020-08-24"), NA))+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   #scale_fill_brewer(palette = "RdYlBu")+
   #scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+
   scale_fill_manual(values = wes_palette("Darjeeling1", 7, type = "continuous"))+ 
   
-    facet_grid(~week_day)+  #, levels=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))+
+    facet_grid(~week_day)+ #, levels=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))+
   
   theme_bw() +
   xlab("")+ 
@@ -152,15 +165,11 @@ ggplot(weeknumber.df.sh.3, aes(x=week, y=Total_reported,fill = factor(week_day, 
    panel.grid.minor.x = element_blank(),
    panel.grid.major.y = element_blank(),
    panel.grid.minor.y = element_blank(),
-   
-   
    )+
-  
-
   
   labs(title = "Nieuw gemelde besmettingen per week",
        #subtitle = "met 7 daags voortschrijdend gemiddelde",
-       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))
   
 ggsave("data/65_Cases_by_week_facet-grid.png",width=16, height = 9)
 

@@ -2,21 +2,27 @@
 library(tidyverse)
 
 
-read.aantal.landelijk.path <- paste("C:\\Rdir\\rivm-data\\COVID-19_casus_landelijk_",Sys.Date()-2,".csv",sep="")
+read.aantal.landelijk.path <- paste("C:\\Rdir\\rivm-data\\COVID-19_casus_landelijk_",Sys.Date()-1,".csv",sep="")
 df_yesterday <- read.csv(read.aantal.landelijk.path,sep=";")
 
+### select only deceased
 df_yesterday <- df_yesterday[df_yesterday$Deceased == 'Yes',]
 
+### -1 to the week. Why?
 df_yesterday$weekOfDead.3 <-paste0(df_yesterday$Week_of_death, "-1")
+### set week set correct weeks for week 53 (is not week 1)
 df_yesterday$weekOfDead.4 <- as.Date(df_yesterday$weekOfDead.3, "%Y%W-%u")-7
 
 df_yesterday_ny <- df_yesterday
+### set correct weeks for 2021 (new Year NY)
 df_yesterday_ny$weekOfDead.4 <- as.Date(df_yesterday_ny$weekOfDead.3, "%Y%W-%u")
 
+### filter the NA's
 df_yesterday <- df_yesterday[!is.na(df_yesterday$weekOfDead.4), ]
-df_yesterday <- df_yesterday[df_yesterday$weekOfDead.4 != "2020-12-28",]
-df_yesterday <- df_yesterday[df_yesterday$weekOfDead.4 != "2021-01-04",]
+### filter - throw away the new year
+df_yesterday <- df_yesterday[df_yesterday$weekOfDead.4 < "2020-12-27",]
 
+### reset date
 df_yesterday_ny$weekOfDead.4[is.na(df_yesterday_ny$weekOfDead.4)] <- as.Date(0)
 df_yesterday_ny$weekOfDead.4[df_yesterday_ny$weekOfDead.4 == "1970-01-01"] <- "2021-01-05"
 
@@ -50,7 +56,7 @@ df_yesterday_3 <-as.data.frame(df_yesterday_2)
 
 #----------------------------------------------------------
 
-read.aantal.landelijk.path <- paste("C:\\Rdir\\rivm-data\\COVID-19_casus_landelijk_",Sys.Date()-1,".csv",sep="")
+read.aantal.landelijk.path <- paste("C:\\Rdir\\rivm-data\\COVID-19_casus_landelijk_",Sys.Date(),".csv",sep="")
 df_today <- read.csv(read.aantal.landelijk.path,sep=";")
 df_today <- df_today[df_today$Deceased == 'Yes',]
 
@@ -61,8 +67,7 @@ df_today_ny <- df_today
 df_today_ny$weekOfDead.4 <- as.Date(df_today_ny$weekOfDead.3, "%Y%W-%u")
 
 df_today <- df_today[!is.na(df_today$weekOfDead.4), ]
-df_today <- df_today[df_today$weekOfDead.4 != "2020-12-28",]
-df_today <- df_today[df_today$weekOfDead.4 != "2021-01-04",]
+df_today <- df_today[df_today$weekOfDead.4 < "2020-12-27",]
 
 df_today_ny$weekOfDead.4[is.na(df_today_ny$weekOfDead.4)] <- as.Date(0)
 df_today_ny$weekOfDead.4[df_today_ny$weekOfDead.4 == "1970-01-01"] <- "2021-01-05"

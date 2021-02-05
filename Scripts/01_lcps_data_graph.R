@@ -6,6 +6,7 @@ library(rtweet)
 #library(paletteer)
 #library(scales)
 
+
 today <- Sys.Date()
 
 
@@ -321,7 +322,7 @@ labs(title="(non-) COVID-19 patienten op de IC",
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"))
 
-   ggsave("data/17_IC_only-2.png",width=16, height = 9)
+ #  ggsave("data/17_IC_only-2.png",width=16, height = 9)
 
 
 
@@ -409,7 +410,7 @@ ggplot(wave.compare.gather, aes(wave, value, fill= type))+
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
 
-ggsave("data/16z_wave_ic-hosp.png",width=19, height = 9)
+ggsave("data/16z_wave_ic-hosp.png",width=16, height = 9)
 
 
 
@@ -444,15 +445,18 @@ ggplot(LCPS_datafeed_predict)+
                name="",
                limits = as.Date(c("2020-10-18", NA)))+
   
-    geom_hline(yintercept=12, size = 1.5)+
+    geom_hline(yintercept=80, size = 1)+
     geom_hline(yintercept=40, size = 1)+
-
-  annotate("text", x = as.Date("2020-10-18"), y = 45, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+    geom_hline(yintercept=12, size = 1)+
+  
+  annotate("text", x = as.Date("2020-10-18"), y = 86, label = "80 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-18"), y = 46, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="left")+
   annotate("text", x = as.Date("2020-10-18"), y = 18, label = "12 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  
   
    ylab("")+
   labs(title=hosp_new_hosp.2, 
-       #subtitle=wave.subtitle,
+       subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   
@@ -490,30 +494,37 @@ ggplot(LCPS_datafeed_predict)+
   geom_line(aes(x=Datum, y=MA_IC_lead), size =3, color = "#DAE3F3")+
   geom_line(aes(x=Datum, y=MA_IC_lead), size =2)+
   
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "1 month", 
                date_labels= format("%d %b"),
                limits = as.Date(c("2020-10-10", NA)))+
-  geom_hline(yintercept=3,  size = 1.5)+
-    geom_hline(yintercept=10, size = 1)+
+  
+  
+  geom_hline(yintercept=20,  size = 1)+
+  geom_hline(yintercept=10,  size = 1)+
+  geom_hline(yintercept=3,   size = 1)+
+  
+  annotate("text", x = as.Date("2020-10-15"), y = 21, label = "20 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-15"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  annotate("text", x = as.Date("2020-10-15"), y = 4,  label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
 
   xlab("")+
   ylab("")+
   
   labs(title=hosp_new_IC.2, 
-      # subtitle=hosp_new_IC.2,
+       subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
   
   
-  annotate("text", x = as.Date("2020-10-11"), y = 15, label = "Ernstig", size=8,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-11"), y = 7, label = "Zorgelijk", size=8,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-11"), y = 1.5,  label = "Waakzaam", size=7,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-11"), y = 15, label = "Ernstig", size=8,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-11"), y = 7, label = "Zorgelijk", size=8,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-11"), y = 1.5,  label = "Waakzaam", size=7,color = "black",face = "bold", hjust ="left")+
   
   
-  annotate("text", x = as.Date("2020-10-10"), y = 11.25, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-10"), y = 4.25, label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-10"), y = 11.25, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-10"), y = 4.25, label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
   
   
   theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
@@ -641,7 +652,6 @@ New:
 %sClinic: %s 
 %sICU:       %s 
 
-In %s%s: %s
 
 #corona #stayhome"
 
@@ -655,9 +665,9 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             ic.total.dot,     hosp.IC.b2,  hosp.IC.c2,
                           
                             hosp.cl.new.dot, hosp.new.b1,     # hosp.new.c1,
-                            hosp.ic.new.dot, hosp.new.b2,     # hosp.new.c2,
-                            flag.D, flag.E,
-                            number.in.DE
+                            hosp.ic.new.dot, hosp.new.b2     # hosp.new.c2,
+#                            flag.D, flag.E,
+#                            number.in.DE
                             )
 Encoding(tweet.LCPS.EN.tweet) <- "UTF-8"
 
@@ -681,10 +691,8 @@ Kliniek:  %s (%s)
 IC:          %s (%s)
 
 Nieuwe opnames:
-Kliniek:    %s (%s)
-IC:        %s (%s)
-
-In --: %s
+Kliniek:    %s
+IC:        %s
 
 #corona #blijfthuis"
 
@@ -697,11 +705,8 @@ tweet.LCPS.tweet <- sprintf(tweet.LCPS.tweet,
                             hosp.total.b1,    hosp.total.c1,
                             hosp.IC.b2,       hosp.IC.c2,
                             
-                            hosp.new.b1,      hosp.new.c1,
-                            hosp.new.b2,      hosp.new.c2,
-                            
-                            number.in.DE
-                            
+                            hosp.new.b1,
+                            hosp.new.b2
 )
 Encoding(tweet.LCPS.tweet) <- "UTF-8"
 

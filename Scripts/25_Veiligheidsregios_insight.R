@@ -143,15 +143,15 @@ RIVM_aantallen_vr_per_dag.3 <- subset(RIVM_aantallen_vr_per_dag.3, Security_regi
 RIVM_aantallen_vr_per_dag.3 <- RIVM_aantallen_vr_per_dag.3[RIVM_aantallen_vr_per_dag.3$date>"2020-09-01",]
 
 
-ggplot(data= RIVM_aantallen_vr_per_dag.3, aes(x=date , y = Total_reported))+
+#ggplot(data= RIVM_aantallen_vr_per_dag.3, aes(x=date , y = Total_reported))+
   #geom_bar(stat='identity',  fill = "#96afde")+
-  geom_line()+
-  geom_point(size = 2)+
+ # geom_line()+
+ # geom_point(size = 2)+
   
 #facet_wrap(~Security_region_name,  scales = "free_y")+
 #  scale_x_date(date_breaks = "1 day", 
  #             date_labels= format("%d %b"),
   #           limits = as.Date(c("2020-11-12", today)))+
-    theme_classic()
+ #   theme_classic()
 
-ggsave("data/71_Security_region-perdag.png",width=16, height = 16)
+#ggsave("data/71_Security_region-perdag.png",width=16, height = 16)

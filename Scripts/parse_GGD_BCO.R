@@ -12,20 +12,22 @@ library(ggforce)
 
 weeknumber <- isoweek(Sys.Date())-1
 
+report<-"C:\\Rdir\\rivm-week\\2021-03-COVID-19_WebSite_rapport_wekelijks_20210126_1259_final.pdf"
 
-report <- "https://www.rivm.nl/sites/default/files/2020-12/COVID-19_WebSite_rapport_wekelijks_20201222_1259.pdf"
+
+report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210202_1259_final.pdf"
 
 
 
 #### BCO.1 GGD ####
 
-
+#### zonder colnames ####
 area.table.ggd.total <- locate_areas(report,
-                                          pages=c(22))
+                                          pages=c(25))
 
 ggd_bco1 <- extract_tables(report,
                            output = "data.frame",
-                           pages = c(22),
+                           pages = c(25),
                            area = area.table.ggd.total,
                            guess=FALSE)
 
@@ -39,13 +41,13 @@ write.csv(ggd_bco1,file = ggdBCOFile, row.names = F)
 
 #### BCO.2 GGD ####
 
-
+### include headder ###
 area.table.ggd.total <- locate_areas(report,
-                                     pages=c(23))
+                                     pages=c(26))
 
 ggd_bco2 <- extract_tables(report,
                            output = "data.frame",
-                           pages = c(23),
+                           pages = c(26),
                            area = area.table.ggd.total,
                            guess=FALSE)
 
@@ -64,7 +66,7 @@ bco_no.setting <- (ggd_bco1$aantal.this.week[2]+ggd_bco1$aantal.this.week[3]+ggd
 bco.setting.perc <- 1-(bco_no.setting/bco_tot)
 
 
-ggd_bco3 <- ggd_bco2[-c(2, 4, 15), ]
+ggd_bco3 <- ggd_bco2[-c(2, 4, 14), ]
 sum.bco3 <- (sum(ggd_bco3$perc.this.week)/100)
 
 ggd_bco3$percentage.relative <-   (ggd_bco3$aantal.this.week/bco_yes.setting/sum.bco3)
@@ -86,7 +88,7 @@ ggd_bco5$percentage.overall <-  as.double(ggd_bco5$percentage.overall)
 
 ggd_bco5$perc.round <- round(ggd_bco5$percentage.overall,digits=2)
 
-ggd_bco5$setting <- str_replace(ggd_bco5$setting, "Ja, setting vermeld",                          "setting onbeked: community spread")  
+ggd_bco5$setting <- str_replace(ggd_bco5$setting, "Ja, setting vermeld",                          "setting onbekend: community spread")  
 ggd_bco5$setting <- str_replace(ggd_bco5$setting, "Vrijetijdsbesteding, zoals sportclub",          "Vrijetijdsbesteding")  
 ggd_bco5$setting <- str_replace(ggd_bco5$setting, "Verpleeghuis of woonzorgcentrum voor ouderen4", "Verpleeghuis/woonzorgcentrum")  
 ggd_bco5$setting <- str_replace(ggd_bco5$setting, "Thuissituatie \\(huisgenoten en partner, niet",    "Thuissituatie")  
@@ -111,13 +113,13 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
                 hjust = hjust, vjust = vjust)) +
   coord_fixed() +
   
-  scale_x_continuous(limits = c(-2, 2),  # Adjust so labels are not cut off
+  scale_x_continuous(limits = c(-2.5, 2.5),  # Adjust so labels are not cut off
                      name = "", breaks = NULL, labels = NULL) +
-  scale_y_continuous(limits = c(-1, 1.1),      # Adjust so labels are not cut off
+  scale_y_continuous(limits = c(-1.2, 1.2),      # Adjust so labels are not cut off
                      name = "", breaks = NULL, labels = NULL)+
   
   #scale_fill_brewer(palette="Set1")+
-  scale_fill_manual(values = c("#4daf4a","#ff7f00","#ffff33","#e41a1c","#377eb8","#a65628","#984ea3", "#a65628"))+
+  scale_fill_manual(values = c("#4daf4a","#ff7f00","#e41a1c","#ffff33","#377eb8","#a65628","#984ea3", "#a65628"))+
   
   #e41a1c - red --
   #ff7f00 - orange---
@@ -130,7 +132,7 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
   
   
   labs(title = "Setting van mogelijk besmetting",
-         subtitle = "BCO, gevallen afgelopen week",
+         subtitle = "BCO, gevallen afgelopen week (tabel 8 & 9)",
        #                  "semi-lockdown op 14 oktober\n",
        #                  "Herfstvakantie midden/zuid: 17-25 oktober"),
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+

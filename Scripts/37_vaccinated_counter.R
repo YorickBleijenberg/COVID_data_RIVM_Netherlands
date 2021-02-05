@@ -1,24 +1,36 @@
 
-
+people.vaccinated.gh = 1
 people.vaccinated.gh <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated-new.csv",sep=",")
 people.vaccinated.gh$date <- as.Date(people.vaccinated.gh$date)
 
 vaccinated.people <- last(people.vaccinated.gh$total_vaccinations)
 
+people.vaccinated.gh$MANew  <- rollmeanr(people.vaccinated.gh$new_vaccinations, 7, fill = 0)
+people.vaccinated.gh$ma_new_lead  <- lead(people.vaccinated.gh$MANew,3)
+
+MA.New <- as.integer( last(people.vaccinated.gh$MANew))
+MA.New.phd <- round((MA.New/17474677*100), digits =4)
+MA.New <- format(MA.New, big.mark="." ,decimal.mark=",")
+MA.subtitle <- paste("7-daags gemiddelde:", MA.New,"- dat is:",MA.New.phd,"per 100 mensen","\nWe moeten naar 100.000+ per dag (1 miljoen per week)")
+
 
 ggplot(people.vaccinated.gh)+
-  geom_col(aes(x=date, y=new_vaccinations), fill = "darkgreen")+
+  geom_col(aes(x=date, y=new_vaccinations))+ #, fill = "darkgreen")+
+  
+  geom_line(aes(x=date, y=ma_new_lead), size =3, color = "#DAE3F3")+
+  geom_line(aes(x=date, y=ma_new_lead), size =2)+
+  
   scale_x_date(date_breaks = "1 weeks", 
                date_labels= format("%d/%m"),
-               limits = as.Date(c("2021-01-01", "2021-02-15")))+
-scale_y_continuous(limits = c(0, 15000), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
+               limits = as.Date(c("2021-01-01", "2021-01-30")))+
+scale_y_continuous(limits = c(0, 150000), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
   coord_cartesian(expand = FALSE)+
   theme_classic()+
   xlab("")+
   ylab("")+
   
   labs(title = "Vaccinaties per dag",
-       subtitle = "We moeten naar 100.000+ per dag",
+       subtitle = MA.subtitle,
        caption = paste("Bron: github.com/YorickBleijenberg | Plot: @YorickB  | ",Sys.Date()))+
   theme(
     plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
@@ -40,7 +52,7 @@ ggsave("data/93_vaccinated_new.png",width=16, height = 9)
 
 
 #vaccinated.people = 4
-vac.perc <-  round((vaccinated.people/17474677*100), digits =5)
+vac.perc <-  round((vaccinated.people/17474677*100), digits =4)
 vac.perc <- format(vac.perc, scientific=F)
 
 vaccinated.people  <- format( vaccinated.people, big.mark="." ,decimal.mark=",")
