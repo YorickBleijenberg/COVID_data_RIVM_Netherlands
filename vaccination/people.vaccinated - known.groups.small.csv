@@ -1,5 +1,5 @@
 date,vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type,vaccin.type.2,start.date.group,number.in.group.p,Eerste prik,Tweede prik,source
 2021-02-06,Medewerkers Acute zorg - groep: 40.000,40000,40000,40000,40000,pfizer,,2021-01-06,100,100.00,100.00,https://www.lnaz.nl/
-2021-02-06,Door GGD'en: Medewerkers Verpleeghuizen & ouderen,490000,358742,37000,37000,pfizer,astrazeneca.janssen,2021-01-06,100,73.21,7.55,https://ggdghor.nl/actueel-bericht/update-vaccinatie-coronavirus-door-ggden/
-2021-02-06,Bewoners langdurigezorg (schatting aantal prikken),232000,170726,0,,pfizer,moderna,2021-02-01,100,73.59,0.00,https://coronadashboard.rijksoverheid.nl/landelijk/vaccinaties
+2021-02-06,Door GGD'en: Medewerkers Verpleeghuizen & ouderen,490000,382542,42352,37000,pfizer,astrazeneca.janssen,2021-01-06,100,78.07,8.64,https://ggdghor.nl/actueel-bericht/update-vaccinatie-coronavirus-door-ggden/
+2021-02-06,Bewoners langdurigezorg (schatting aantal prikken),232000,176178,0,,pfizer,moderna,2021-02-01,100,75.94,0.00,https://coronadashboard.rijksoverheid.nl/landelijk/vaccinaties
 2021-02-06,Huisartsen - groep: 15.000,15000,13816,0,,moderna,,2021-01-23,100,92.11,0.00,https://www.lnaz.nl/
