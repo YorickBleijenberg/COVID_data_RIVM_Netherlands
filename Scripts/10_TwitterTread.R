@@ -622,7 +622,7 @@ Rood:  Alarm!
 "
 tweet.all.muni.tweet <- sprintf(tweet.all.muni.tweet)
 Encoding(tweet.all.muni.tweet) <- "UTF-8"
-post_tweet(tweet.all.muni.tweet,  media = c("data/75_Municipality-day-phd.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.all.muni.tweet,  media = c("data/plots/75_Municipality-day-phd.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 #"
@@ -712,7 +712,9 @@ Encoding(tweet.christ.death.tweet) <- "UTF-8"
 
 #### Lansingerland tweet ####
 
-tweet.Lansingerland.tweet <- "Lansingerland"
+tweet.Lansingerland.tweet <- "- Lansingerland 1x.
+- Bunschoten: Wekelijks tussen 8 februari en 19 maart. (6 weken)
+- Dronten: vanaf 10 februari, 6 weken. Zoveel mogelijk testen."
 tweet.Lansingerland.tweet <- sprintf(tweet.Lansingerland.tweet)
 Encoding(tweet.Lansingerland.tweet) <- "UTF-8"
 post_tweet(tweet.Lansingerland.tweet,  media = c("data/18_city_new_Lansingerland.png"), in_reply_to_status_id = get_reply_id())

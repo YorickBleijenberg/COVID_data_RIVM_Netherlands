@@ -50,8 +50,8 @@ animation.thing <- ggplot(tested_daily.toedit, aes(perc_pos, vdphd, colour=date)
   
   #geom_line()+
   #geom_path(   size =0.5, arrow = arrow(angle = 20,type = "open"))+
-  geom_point( color = "black", size =4)+
-  geom_point(   size =3)+
+ # geom_point( color = "black", size =4)+
+ geom_point(   size =3)+
 
   scale_x_continuous(labels = scales::percent_format(scale = 1,accuracy = 1))+
   scale_color_gradient(low="gray", high="blue")+
@@ -84,7 +84,7 @@ animation.thing <- ggplot(tested_daily.toedit, aes(perc_pos, vdphd, colour=date)
   transition_time(date) +
   labs(title = "Datum: {frame_time}") +
   view_follow(fixed_y = TRUE)+
- shadow_wake(wake_length = 0.2, alpha = FALSE)
+ shadow_wake(wake_length = 0.0, alpha = FALSE)
 
   animate(animation.thing, fps=4)
 
@@ -93,6 +93,7 @@ anim_save("data/60_ECDC-5.gif",width=16, height = 9)
 
   #####
   
+last.point <- last(tested_daily.toedit)
 
 
 ggplot(tested_daily.toedit, aes(perc_pos, vdphd, colour=date))+
@@ -112,6 +113,8 @@ ggplot(tested_daily.toedit, aes(perc_pos, vdphd, colour=date))+
   geom_path(   size =0.5, arrow = arrow(angle = 20,type = "open"), color = "black")+
   geom_point( color = "black", size =4)+
   geom_point(   size =3)+
+  
+ geom_point(data=last.point, color="green")+
   
   scale_x_continuous(labels = scales::percent_format(scale = 1,accuracy = 1))+
   scale_color_gradient(low="gray", high="darkblue")+

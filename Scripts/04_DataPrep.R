@@ -12,6 +12,8 @@ read.aantal.landelijk.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date
 
 
 ######copy.aantal.gem.dag   <-   aantallen_gemeente_per_dag
+#read.aantal.path <-paste("C:\\Rdir\\data\\000-by date\\2021-01-18\\2021-01-18_COVID-19_aantallen_gemeente_per_dag.csv")
+
 read.aantal.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv", sep = "")
 copy.aantal.gem.dag <- read.csv(read.aantal.path,sep=";")
 
@@ -46,9 +48,9 @@ Merged_data_2$ma_d_lead  <- lead(Merged_data_2$MAdead,3)
 Merged_data_2$gf_d <- round((((Merged_data_2$MAdead/Merged_data_2$ma_d_lag)-1)*100), digits = 1)
 
 
-Date <- Sys.Date()
-Dateyesterday <- Sys.Date()-1
-DateAweekAgo <- Sys.Date()-7
+Date <-  Sys.Date()
+Dateyesterday <-  Sys.Date()-1
+DateAweekAgo <-  Sys.Date()-7
 
 Working_Set <- subset(Merged_data_2, dateInTable==Date | dateInTable==DateAweekAgo | dateInTable==Dateyesterday )
 

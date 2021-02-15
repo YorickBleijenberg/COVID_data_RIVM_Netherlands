@@ -33,11 +33,11 @@ values.subtitle <- paste0("Datum laatste datapunt: ",date.last.value, "    ---  
 
 ggplot(data = tested_daily,)+  
   geom_bar(stat='identity', mapping = aes(x = date, y = values.tested_total), fill = "#ED7D31")+
-  geom_line(mapping = aes(x = date, y = fact), colour = "#FFFFFF", size = 1 )+
-  geom_line(mapping = aes(x = date, y = fact), colour = "#4472C4", size = 2 )+
+  geom_line(mapping = aes(x = date, y = fact), colour = "#FFFFFF", size = 0.5 )+
+  geom_line(mapping = aes(x = date, y = fact), colour = "#4472C4", size = 1 )+
   
-  geom_point(mapping = aes(x = date, y = fact), colour = "#FFFFFF",size = 2) +
-  geom_point(mapping = aes(x = date, y = fact), colour = "#4472C4",size = 3,alpha = 0.8) +
+  geom_point(mapping = aes(x = date, y = fact), colour = "#FFFFFF",size = 1) +
+  geom_point(mapping = aes(x = date, y = fact), colour = "#4472C4",size = 2,alpha = 0.8) +
   
   scale_y_continuous(limits = c(0, 89000), labels = label_number(big.mark = ".", decimal.mark = ","),
                      sec.axis = sec_axis(~ . / 4000))+
@@ -48,7 +48,7 @@ ggplot(data = tested_daily,)+
   
  geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
 
-                       col = "black", lwd = 0.3, linetype= "dashed")+
+                       col = "gray", lwd = 0.2, linetype= "dashed")+
   
   coord_cartesian(expand = FALSE)+
   

@@ -62,8 +62,8 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 #                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
 
 
-persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-15", "2021-01-01", "2021-01-25")), 
-                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "lockdown","" ,"avondklok"))
+persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08")), 
+                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "lockdown","" ,"avondklok", "basisscholen open"))
 
 
 
@@ -71,8 +71,11 @@ persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2
 
 #last.date.old.wide.mob$Rt_avg10 <- (last.date.old.wide.mob$Rt_avg *100)-100
 
-
-
+#### met de R ####
+#last.date.old.wide.3 <- last.date.old.wide.2
+#last.date.old.wide.3$Rt_avg  <- (last.date.old.wide.3$Rt_avg*50)-50
+#last.date.old.wide.3$Rt_low  <- (last.date.old.wide.3$Rt_low*50)-50
+#last.date.old.wide.3$Rt_up   <- (last.date.old.wide.3$Rt_up*50)-50
 
 ####   Plot the Google Mobility data 7d MA ####
 
@@ -98,6 +101,11 @@ ggplot(Google_mob_NL_short)+
 #  geom_line(aes(x=Datum, y = openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=1) +
   
   
+  #### add R  ###
+  #geom_line(data=last.date.old.wide.3, aes(x=Date,y = Rt_low), lwd=0.6) +
+ # geom_line(data=last.date.old.wide.3, aes(x=Date,y = Rt_up), lwd=0.6) +
+  #geom_ribbon(data=last.date.old.wide.3, aes(x=Date,ymin=Rt_low,ymax=Rt_up), fill="darkred", alpha = 0.2) +
+ # geom_line(data=last.date.old.wide.3, aes(x=Date,y = Rt_avg, color = "Effectieve R"), color = "black",lwd=2) +
   
   #geom_line(data = last.date.old.wide.mob, aes(x = Date, y = Rt_avg10, color = "Effectieve R"), color = "black",lwd=2) +
   
@@ -201,11 +209,11 @@ Laatste datapunt:
 Verandering mobiliteit tov 3/1-6/2, 2020.(%s):
 (verandering t.o.v. een week geleden)
 
-%s     %s%s  (%s%s) - Thuis
-%s    %s%s  (%s%s) - Supermarkt
-%s    %s%s  (%s%s) - Retail & recreatie
-%s    %s%s  (%s%s) - Werk
-%s    %s%s  (%s%s) - OV"
+%s    %s%s  (%s%s) - Thuis
+%s   %s%s  (%s%s) - Supermarkt
+%s   %s%s  (%s%s) - Retail & recreatie
+%s   %s%s  (%s%s) - Werk
+%s   %s%s  (%s%s) - OV"
 
 tweet.GoogleM.NL.tweet <- sprintf(tweet.GoogleM.NL.tweet, 
                                   Last_date_in_Google_file, deP,

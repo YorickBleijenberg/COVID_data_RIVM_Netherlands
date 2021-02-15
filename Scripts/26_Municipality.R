@@ -144,7 +144,7 @@ facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
          panel.grid.minor.y = element_blank(),
   )
 
-ggsave("data/75_Municipality-day-phd.png",width=13, height = 13)
+ggsave("data/plots/75_Municipality-day-phd.png",width=13, height = 13)
 
 
 

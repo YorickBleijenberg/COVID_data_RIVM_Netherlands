@@ -15,7 +15,7 @@ weeknumber <- isoweek(Sys.Date())-1
 report<-"C:\\Rdir\\rivm-week\\2021-03-COVID-19_WebSite_rapport_wekelijks_20210126_1259_final.pdf"
 
 
-report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210202_1259_final.pdf"
+report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
 
 
 
@@ -66,7 +66,7 @@ bco_no.setting <- (ggd_bco1$aantal.this.week[2]+ggd_bco1$aantal.this.week[3]+ggd
 bco.setting.perc <- 1-(bco_no.setting/bco_tot)
 
 
-ggd_bco3 <- ggd_bco2[-c(2, 4, 14), ]
+ggd_bco3 <- ggd_bco2[-c(2, 4, 13), ]
 sum.bco3 <- (sum(ggd_bco3$perc.this.week)/100)
 
 ggd_bco3$percentage.relative <-   (ggd_bco3$aantal.this.week/bco_yes.setting/sum.bco3)

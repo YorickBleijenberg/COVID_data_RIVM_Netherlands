@@ -125,7 +125,7 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = t
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
 
-ggsave("data/16b_IC_only.png",width=16, height = 9)
+ggsave("data/plots/16b_IC_only.png",width=16, height = 9)
 
 
 
@@ -200,7 +200,7 @@ ggplot(data = lcps_working_tot_c_1_long, mapping = aes(x = date, y = number, col
           axis.line = element_line(colour = "#DAE3F3"),
         panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
 
-  ggsave("data/16a_IC_hosp.png",width=16, height = 9)
+  ggsave("data/plots/16a_IC_hosp.png",width=16, height = 9)
 
 
 
@@ -410,7 +410,7 @@ ggplot(wave.compare.gather, aes(wave, value, fill= type))+
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
 
-ggsave("data/16z_wave_ic-hosp.png",width=16, height = 9)
+ggsave("data/plots/16z_wave_ic-hosp.png",width=16, height = 9)
 
 
 
@@ -445,14 +445,15 @@ ggplot(LCPS_datafeed_predict)+
                name="",
                limits = as.Date(c("2020-10-18", NA)))+
   
+  scale_y_continuous(limits = c(0, 500), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
+  
     geom_hline(yintercept=80, size = 1)+
     geom_hline(yintercept=40, size = 1)+
     geom_hline(yintercept=12, size = 1)+
   
-  annotate("text", x = as.Date("2020-10-18"), y = 86, label = "80 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-18"), y = 46, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-18"), y = 18, label = "12 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  
+  #annotate("text", x = as.Date("2020-10-18"), y = 86, label = "80 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-18"), y = 46, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-18"), y = 18, label = "12 per dag", size=4,color = "black",face = "bold", hjust ="left")+
   
    ylab("")+
   labs(title=hosp_new_hosp.2, 
@@ -483,7 +484,7 @@ ggplot(LCPS_datafeed_predict)+
 #           colour = "black", size=2, alpha=0.7, arrow =arrow(type = "open",length = unit(2,"mm")))
   
   
-ggsave("data/16x_hosp_pred.png",width=16, height = 9)
+ggsave("data/plots/16x_hosp_pred.png",width=16, height = 9)
 
 #hosp_IC <- paste0("IC:            ",hosp.IC.b2, "   (", hosp.IC.c2 , ")")
 hosp_new_IC.2 <- paste0("Aantal nieuwe opnames IC:  ",hosp.new.b2)
@@ -498,14 +499,15 @@ ggplot(LCPS_datafeed_predict)+
                date_labels= format("%d %b"),
                limits = as.Date(c("2020-10-10", NA)))+
   
+  scale_y_continuous(limits = c(0, 80), breaks = c(0,3,10,20,40,60))+
   
   geom_hline(yintercept=20,  size = 1)+
   geom_hline(yintercept=10,  size = 1)+
   geom_hline(yintercept=3,   size = 1)+
   
-  annotate("text", x = as.Date("2020-10-15"), y = 21, label = "20 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-15"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2020-10-15"), y = 4,  label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-15"), y = 21, label = "20 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-15"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="left")+
+  #annotate("text", x = as.Date("2020-10-15"), y = 4,  label = "3 per dag", size=4,color = "black",face = "bold", hjust ="left")+
 
   xlab("")+
   ylab("")+
@@ -541,7 +543,7 @@ ggplot(LCPS_datafeed_predict)+
 #  coord_cartesian(expand = FALSE)+
   
   
-ggsave("data/16x_IC_pred.png",width=16, height = 9)
+ggsave("data/plots/16x_IC_pred.png",width=16, height = 9)
 
 
 
@@ -638,6 +640,8 @@ hosp.new.b    <- format( hosp.new.b,    big.mark="." ,decimal.mark=",")
 flag.D <- intToUtf8(0x1F1E9)
 flag.E <- intToUtf8(0x1F1EA)
 
+heart.emoji <- intToUtf8(0x2764)
+
 tweet.LCPS.EN.tweet <- "Day %s, The %s edition
 
 Patients currently in the hospital:
@@ -671,10 +675,10 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             )
 Encoding(tweet.LCPS.EN.tweet) <- "UTF-8"
 
-post_tweet(tweet.LCPS.EN.tweet,  media = c("data/16a_IC_hosp.png",
-                                           "data/16b_IC_only.png",
-                                           "data/16x_hosp_pred.png",
-                                           "data/16x_IC_pred.png"
+post_tweet(tweet.LCPS.EN.tweet,  media = c("data/plots/16a_IC_hosp.png",
+                                           "data/plots/16b_IC_only.png",
+                                           "data/plots/16x_hosp_pred.png",
+                                           "data/plots/16x_IC_pred.png"
                                            ))
 
 

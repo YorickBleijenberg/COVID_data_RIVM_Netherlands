@@ -7,8 +7,8 @@ require(scales)
 ####  parse code by mzelst  ###
 ####
 
-report<-"C:\\Rdir\\rivm-week\\2021-03-COVID-19_WebSite_rapport_wekelijks_20210126_1259_final.pdf"
-weeknumber <-03
+report<-"C:\\Rdir\\rivm-week\\2021-05-COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
+weeknumber <-05
 
 
 report<-"https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210202_1259_final.pdf"
@@ -17,11 +17,11 @@ weeknumber <- isoweek(Sys.Date())-1
 #### tests per agegroup GGD ####
 
 area.table.ggd.age.tests <- locate_areas(report,
-                                          pages=c(36))
+                                          pages=c(39))
 
 ggd_age_tests <- extract_tables(report,
                            output = "data.frame",
-                           pages = c(36),
+                           pages = c(39),
                            area = area.table.ggd.age.tests,
                            guess=FALSE)
 
@@ -42,11 +42,11 @@ write.csv(ggd_age_tests,file = ggdTestFile, row.names = F)
 #### tests per target group GGD ####
 
 area.table.target.tests <- locate_areas(report,
-                                         pages=c(37))
+                                         pages=c(41))
 
 ggd_target_tests <- extract_tables(report,
                                 output = "data.frame",
-                                pages = c(37),
+                                pages = c(41),
                                 area = area.table.target.tests,
                                 guess=FALSE)
 

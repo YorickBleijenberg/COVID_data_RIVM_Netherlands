@@ -36,7 +36,7 @@ today <- as.Date(df.predict.lead$fixedDate)
 pred.MAcases  <- df.predict.lead$ma_c_lead
 pred.gfc      <- as.integer(tail(Merged_data_short$gf_c, 1))
 
-today  <- Sys.Date()
+today  <-   Sys.Date() # as.Date("2021-01-18")  
 kersmis.Dag <- as.Date("2020-12-25")
 sint.Dag <- as.Date("2020-12-05")
 carnaval.Dag <- as.Date("2021-02-14")
@@ -229,7 +229,6 @@ ggplot(Merged_data_short)+
 geom_line(data=df.daling.4, aes(x=Datum, y=r_12_4), size = 1.25, color = "black", linetype = "dashed" )+
 geom_line(data=df.daling.4, aes(x=Datum, y=r_26_3), size = 1.25, color = "black", linetype = "dashed" )+  
  
-  
 
  
   geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 4)+
@@ -294,6 +293,7 @@ geom_line(data=df.daling.4, aes(x=Datum, y=r_26_3), size = 1.25, color = "black"
   geom_text(data=Bevrijdingsdag.df  , mapping=aes(x=date, y=12000, label=event), size=8, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   
+
   
   # annotate("text", x = as.Date("2020-11-16"), y = 5500,  label = paste( doublingdayZ.1.text, "elke",doublingdayZ.1.int, "dagen"), size=5,angle=-40, color = "black",face = "bold", hjust ="left")+
   # annotate("text", x = as.Date("2020-11-16"), y = 4000,  label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen"), size=5,angle=-50, color = "black",face = "bold", hjust ="left")+
@@ -333,6 +333,12 @@ geom_line(data=df.daling.4, aes(x=Datum, y=r_26_3), size = 1.25, color = "black"
   #    panel.grid.major.x = element_line(colour= "lightgray", linetype = "dashed")
    #   panel.grid.major.y = element_line(colour= "lightgray")  #, linetype = "dashed"))
       )+
+  
+ # geom_hline( aes(yintercept=2123))+
+#  geom_vline( aes(xintercept=as.Date("2021-02-11")))+
+  
+#  geom_hline( aes(yintercept=3629))+
+  
   ggsave("data/60_trendlines_cases.png",width=16, height = 9)
 
   

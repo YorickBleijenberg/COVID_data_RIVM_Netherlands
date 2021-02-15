@@ -26,7 +26,7 @@ persco.df.2=data.frame(date=as.Date(c("2020-12-25", "2021-01-01", "2021-01-12","
 
 
 
-
+new.cases.title <-  paste("Nieuw gemelde besmettingen  -  ",  (last(Merged_data_7MA$cases)))
 
 
 ggplot(Merged_data_short)+
@@ -58,7 +58,7 @@ ggplot(Merged_data_short)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
-    labs(title = "Nieuw gemelde besmettingen",
+    labs(title = new.cases.title,
          subtitle = "met 7 daags voortschrijdend gemiddelde",
          caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
     theme(

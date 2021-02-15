@@ -60,6 +60,7 @@ number_new_city <- number_new_city[number_new_city$Date>"2020-07-01"&number_new_
 #### City plot new  ####
 
 ggplot(data = number_new_city, ) + 
+  geom_vline(aes(xintercept= as.Date("2021-02-09")), color="black", linetype = "dotted") +
   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
   facet_wrap(~ City, )+ # scales = "free_y")+

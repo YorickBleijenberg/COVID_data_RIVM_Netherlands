@@ -25,6 +25,9 @@ last(LCPS_datafeed,2)
 #library(ggrepel)
 
 #### check selected dates ####
+
+#library(rsconnect)
+
 rm(list=ls())
 
 library(jsonlite)
@@ -35,13 +38,14 @@ library(RcppRoll)
 library(data.table)
 library(scales)
 library(lubridate)
+
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
 source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
 #### some constants for the update ####
 
-editionname <- "ice-skating-during-a-pandemic"
-editienaam  <- "schaatsen-in-coronatijd"
+editionname <- "<3"
+editienaam  <- "<3"
 #number.in.DE <- "0"
 
 #### Start  ####
@@ -99,12 +103,9 @@ source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
 
 ###
 
-
 #### check correct last tweet ####
 
-
-
- source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+ ## source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
  source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
@@ -112,7 +113,7 @@ source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
 
 source("C:\\Rdir\\Rscripts\\18_Dashboard_daily_pos_rate.R")
 
-## source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+##  source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 source("C:\\Rdir\\Rscripts\\25_Veiligheidsregios_insight.R")
 
