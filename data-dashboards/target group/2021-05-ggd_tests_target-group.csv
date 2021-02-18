@@ -1,20 +1,20 @@
-"Groep","Aantal","Aantal.1","Percentage.Aantal","Aantal.2","Percentage"
-"Zorgmedewerkers ziekenhuizen","28073","2784","9.9 1536","117","7.6"
-"Zorgmedewerkers verpleeg- of","72572","10323","14.2 4019","454","11.3"
-"Zorgmedewerkers elders","158607","15599","9.8 9107","737","8.1"
-"Kinderopvang medewerkers","22321","2096","9.4 1593","100","6.3"
-"Basisschool- en BSO personeel","73816","6648","9.0 4024","192","4.8"
-"Middelbaar onderwijspersoneel","36995","3342","9.0 1582","82","5.2"
-"Hoger onderwijspersoneel","33664","3065","9.1 1528","67","4.4"
-"Horeca","26748","2676","10.0 1258","111","8.8"
-"OV medewerkers","6584","828","12.6 355","22","6.2"
-"Handhaving2","25300","2514","9.9 1696","161","9.5"
-"Kappers, manicures, pedicures","7012","908","12.9 0","0","0.0"
-"Overige contactberoepen","326920","36505","11.2 17471","1603","9.2"
-"Mantelzorgers","7336","605","8.2 429","26","6.1"
-"Overige niet-contact beroepen","645367","65469","10.1 32918","2686","8.2"
-"Getest ihkv BCO (0-3 jaar)3,4","1856","370","19.9 378","81","21.4"
-"Getest ihkv BCO (4-12 jaar)3,4","24071","5888","24.5 3120","768","24.6"
-"Getest ihkv BCO (13-17 jaar)3,4","31452","7003","22.3 2472","560","22.7"
-"Getest ihkv BCO (18+)3,4","336271","61235","18.2 29419","5348","18.2"
-"Onbekend","1423762","177398","12.5 82181","7747","9.4"
+"group","Totaal.aantal.testen","Aantal.positief","percentage.positief","aantal.testen.week","Aantal.positief.week","percentage.positief.week"
+"Zorgmedewerkers ziekenhuizen",28073,2784,9.9,1536,117,7.6
+"Zorgmedewerkers verpleeg- of",72572,10323,14.2,4019,454,11.3
+"Zorgmedewerkers elders",158607,15599,9.8,9107,737,8.1
+"Kinderopvang medewerkers",22321,2096,9.4,1593,100,6.3
+"Basisschool- en BSO personeel",73816,6648,9,4024,192,4.8
+"Middelbaar onderwijspersoneel",36995,3342,9,1582,82,5.2
+"Hoger onderwijspersoneel",33664,3065,9.1,1528,67,4.4
+"Horeca",26748,2676,10,1258,111,8.8
+"OV medewerkers",6584,828,12.6,355,22,6.2
+"Handhaving2",25300,2514,9.9,1696,161,9.5
+"Kappers, manicures, pedicures",7012,908,12.9,0,0,0
+"Overige contactberoepen",326920,36505,11.2,17471,1603,9.2
+"Mantelzorgers",7336,605,8.2,429,26,6.1
+"Overige niet-contact beroepen",645367,65469,10.1,32918,2686,8.2
+"Getest ihkv BCO (0-3 jaar)3,4",1856,370,19.9,378,81,21.4
+"Getest ihkv BCO (4-12 jaar)3,4",24071,5888,24.5,3120,768,24.6
+"Getest ihkv BCO (13-17 jaar)3,4",31452,7003,22.3,2472,560,22.7
+"Getest ihkv BCO (18+)3,4",336271,61235,18.2,29419,5348,18.2
+"Onbekend",1423762,177398,12.5,82181,7747,9.4
