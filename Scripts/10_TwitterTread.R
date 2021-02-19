@@ -467,7 +467,7 @@ tweet.hosp.tweet <- sprintf(tweet.hosp.tweet,
                             doubling.hosp.week_dot, growth.hosp.week,deP,
                             doubling.hosp.week_dot, doubling.hosp.week_text, doubling.hosp.week )
 Encoding(tweet.hosp.tweet) <- "UTF-8"
-post_tweet(tweet.hosp.tweet,  media = c("data/02_leeftijd_heatmap-hosp.png","data/09_new_hosp.png", "data/05_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
+post_tweet(tweet.hosp.tweet,  media = c("data/02_leeftijd_heatmap-hosp.png","data/09_new_hosp.png", "data/03_leeftijd_relatief_hosp.png", "data/05_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -713,8 +713,8 @@ Encoding(tweet.christ.death.tweet) <- "UTF-8"
 #### Lansingerland tweet ####
 
 tweet.Lansingerland.tweet <- "- Lansingerland 1x.
-- Bunschoten: Wekelijks tussen 8 februari en 19 maart. (6 weken)
-- Dronten: vanaf 10 februari, 6 weken. Zoveel mogelijk testen."
+- Bunschoten: Zo vaak als mensen willen; tussen 8 februari en 19 maart. (6 weken)
+- Dronten: vanaf 10 februari, 6 weken. elke anderhalve week/twee weken (3x p.p.)"
 tweet.Lansingerland.tweet <- sprintf(tweet.Lansingerland.tweet)
 Encoding(tweet.Lansingerland.tweet) <- "UTF-8"
 post_tweet(tweet.Lansingerland.tweet,  media = c("data/18_city_new_Lansingerland.png"), in_reply_to_status_id = get_reply_id())

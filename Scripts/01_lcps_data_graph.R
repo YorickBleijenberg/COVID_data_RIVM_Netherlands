@@ -44,8 +44,8 @@ colnames(lcps_working_1) <- c("date", "IC_covid_nl", "IC_neg" ,"clinic_nl","IC_o
 ##### prepare for combination #####
 
 today<-strftime(Sys.Date(),format = "%Y-%m-%d")
-lcps_working_1 <- lcps_working_1[lcps_working_1$date>"2020-11-01"&lcps_working_1$date<=today,]
-lcps_working_old <- lcps_working_old[lcps_working_old$date>"2020-02-26"&lcps_working_old$date<="2020-11-01",]
+lcps_working_1 <- lcps_working_1[lcps_working_1$date>"2020-10-17"&lcps_working_1$date<=today,]
+lcps_working_old <- lcps_working_old[lcps_working_old$date>"2020-02-26"&lcps_working_old$date<="2020-10-17",]
 
 
 
@@ -180,7 +180,7 @@ ggplot(data = lcps_working_tot_c_1_long, mapping = aes(x = date, y = number, col
   scale_color_manual(values=c("#843C0C","#3B3838"), labels=c(hosp_clin, hosp_IC))+
   
   labs(title = hosp_title, # subtitle=" ",
-       caption = paste("Source: LCPS & NICE | Plot: @YorickB | ",Sys.Date()))+
+       caption = paste("Source: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+

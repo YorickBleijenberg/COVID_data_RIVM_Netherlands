@@ -84,12 +84,11 @@ ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
   
-  geom_text(mapping=aes(x=as.Date("2020-07-15"), y=10500, label="Waakzaam "), size=7)+
-  geom_text(mapping=aes(x=as.Date("2020-07-18"), y=7600, label="8750 nieuwe gevallen per week"), size=4)+
+  geom_text(mapping=aes(x=as.Date("2020-07-27"), y=7875, label="Waakzaam "), size=7)+
+  geom_text(mapping=aes(x=as.Date("2020-07-30"), y=4975, label="6.125 nieuwe gevallen per week"), size=4)+
   #geom_text(mapping=aes(x=30, y=67000, label="Weekrecord: week 44 - 68.488 gevallen"), size=4)+
-  
-  
-  geom_hline(yintercept=8750, linetype = "dashed")
+
+  geom_hline(yintercept=6125, linetype = "dashed")
 
 ggsave("data/65_Cases_by_week.png",width=16, height = 9)
 

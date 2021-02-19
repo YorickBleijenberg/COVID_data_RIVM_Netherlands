@@ -2,11 +2,17 @@ library(scales)
 
 today <- Sys.Date()
 
+locale_json <- "https://raw.githubusercontent.com/minvws/nl-covid19-data-dashboard/master/packages/app/src/locale/nl.json"
+locale_dat <- fromJSON(txt = locale_json)
+vaccinaties_data_locale <- locale_dat$vaccinaties$data
 
-people.vaccinated.gh <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated.csv",sep=",")
-people.vaccinated.gh$date <- as.Date(people.vaccinated.gh$date)
-vaccinated.people <- last(people.vaccinated.gh$total_vaccinations)
-vac.perc <-  round((vaccinated.people/17474677*100), digits =5)
+vaccinated.people <- as.integer(last(vaccinaties_data_locale$kpi_total$tab_total_estimated$value, 1))
+
+
+#people.vaccinated.gh <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated.csv",sep=",")
+#people.vaccinated.gh$date <- as.Date(people.vaccinated.gh$date)
+#vaccinated.people <- last(people.vaccinated.gh$total_vaccinations)
+vac.perc <-  round((vaccinated.people/17474677*100), digits =2)
 vac.perc <- format(vac.perc, scientific=F)
 
 total.vaccinated <- read.csv("C:\\Rdir\\data-contstant\\vaccination.planning.csv" ,sep=";")
@@ -91,7 +97,7 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
   xlab("")+ 
   ylab("")+
   
-  scale_y_continuous(limits = c(0, 37000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000,35000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 40000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000,35000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   geom_vline(xintercept = as.Date(today), linetype = "dotted") + 
   #geom_text(mapping=aes(x=as.Date(today), y=num.vaccinated, label=num.vaccine.avail.label), size=3, angle=-90, vjust=-0.4, hjust=1.1)+
@@ -243,7 +249,7 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
   xlab("")+ 
   ylab("")+
   
-  scale_y_continuous(limits = c(0, 37000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000,35000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 40000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000,35000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   geom_vline(xintercept = as.Date(today), linetype = "dotted") + 
   #geom_text(mapping=aes(x=as.Date(today), y=num.vaccinated, label=num.vaccine.avail.label), size=3, angle=-90, vjust=-0.4, hjust=1.1)+

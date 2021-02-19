@@ -49,7 +49,7 @@ geom_tile(size=1.5,color="#F5F5F5")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 4 & 5 zullen nog sterk stijgen",fill=NULL,
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 5 & 6 zullen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -75,7 +75,7 @@ ggplot(casus.working,aes(weekbegin,Agegroup,fill=phd))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 4 and 5 will still rise.",fill=NULL,
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 5 and 6 will still rise.",fill=NULL,
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -90,7 +90,7 @@ ggsave("data/02_EN_leeftijd_heatmap.png",width=16, height = 9)
 
 
 #Gewenste weken subsetten
-casus.working <- casus.working[casus.working$weekbegin>"2020-12-14"&casus.working$weekbegin<=today,]
+casus.working <- casus.working[casus.working$weekbegin>"2020-12-21"&casus.working$weekbegin<=today,]
 casus.working$weekbegin <- as.factor(casus.working$weekbegin)
 
 #barchart
@@ -106,7 +106,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=weekbegin))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 4 & 5 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 5 & 6 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -142,7 +142,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=weekbegin))+
   ylab("")+
   
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 4 and 5 will still rise.",
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 5 and 6 will still rise.",
        fill="Week",
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -177,7 +177,7 @@ ggplot(casus.working,aes(Agegroup,n,fill=weekbegin))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 4 & 5 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 5 & 6 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -203,6 +203,8 @@ ggsave("data/01_leeftijd_barchart_abs.png",width=16, height = 9)
 
 #### Code onderlinge verhouding plot #####
 
+
+
 casus.working = filter(RIVM_casus_landelijk, Agegroup != "<50" & Agegroup !="Unknown")
 
 casus.working <- casus.working %>% mutate(age_grouping = case_when(str_detect(Agegroup, "0-9") ~ '0-9', 
@@ -213,8 +215,8 @@ casus.working <- casus.working %>% mutate(age_grouping = case_when(str_detect(Ag
                                                            str_detect(Agegroup, "50-59") ~ '40-59',
                                                            str_detect(Agegroup, "60-69") ~ '60-79',
                                                            str_detect(Agegroup, "70-79") ~ '60-79',
-                                                           str_detect(Agegroup, "80-89") ~ '80+',
-                                                           str_detect(Agegroup, "90+") ~ '80+',))
+                                                           str_detect(Agegroup, "80-89") ~ '80-89',
+                                                           str_detect(Agegroup, "90+") ~ '90+',))
  
 casus.working <-count(casus.working,date,age_grouping)
 
@@ -264,7 +266,7 @@ ggplot(casus.working, aes(date,cases_avg,fill=age_grouping))+
  # scale_y_continuous( label = percent_format(), sec.axis = sec_axis(~ . * 1, label = percent_format()))+
   
   
-  scale_fill_manual(values=c("darkgray", '#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5'))+ # Use custom colors
+  scale_fill_manual(values=c("darkgray", '#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5', "black"))+ # Use custom colors
   
   guides(fill = guide_legend(reverse = TRUE))+
   
@@ -312,8 +314,10 @@ ggplot(casus.working, aes(date,cases_avg,fill=age_grouping))+
         axis.text.y = element_blank(),
         axis.ticks.length = unit(0.1, "cm"),
         axis.line = element_line(colour = "#F5F5F5"))+ 
-   scale_fill_manual(values=c("darkgrey", '#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5')) # Use custom colors
-
+  
+  scale_fill_manual(values=c("darkgray", '#f8cbad','#c55a11', '#2f5597', '#8faadc', '#5b9bd5', "black"))+ # Use custom colors
+  
+  
 ggsave("data/03_EN_leeftijd_relatief.png",width=16, height = 9)
 
 

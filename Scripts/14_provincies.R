@@ -417,7 +417,7 @@ ggsave("data/20_prov_new.png",width=16, height = 9)
 
 
 
-
+require(pals)
 
 
 
@@ -425,10 +425,14 @@ ggsave("data/20_prov_new.png",width=16, height = 9)
 
 
 ggplot(data = prov.combi.all) + 
-  geom_line(mapping = aes(x = Date, y = MAnewCases, color = Province), size =1.5)+   #, colour = "darkred"
+  geom_line(mapping = aes(x = Date, y = MAnewCases, color = Province), size =1.5, alpha = 0.8)+   #, colour = "darkred"
 
  #  scale_color_manual(values=c("green", "darkred", "red", "orange"))+
  #  facet_wrap(~ Province,)+  # scales = "free_y")+
+  
+  scale_color_manual(values=pals::cols25())+
+  
+  #scale_color_manual(values=pals::brewer.paired(12))+
   
   theme_bw() + 
   xlab("")+ 
@@ -455,6 +459,8 @@ ggplot(data = prov.combi.all) +
          panel.grid.major.x = element_blank(),
          panel.grid.minor.x = element_blank(),
          panel.grid.minor.y = element_blank(),
+         legend.title = element_blank(),
+         legend.background = element_rect(fill="#F5F5F5")
   )
 
 ggsave("data/20_prov_new-test.png",width=16, height = 9)
