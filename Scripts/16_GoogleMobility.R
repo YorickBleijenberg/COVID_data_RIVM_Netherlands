@@ -38,7 +38,7 @@ Last_date_in_Google_file <- lastGoogleRaw$date
 #### filter to whole country only ####
 
 Google_mob_NL <- google_mob_raw[which(google_mob_raw$sub_region_1 == ""),]
-Google_mob_NL_short <- Google_mob_NL[ -c(1,2,3,4,5,6,7)]
+Google_mob_NL_short <- Google_mob_NL[ -c(1,2,3,4,5,6,7,8)]
 colnames(Google_mob_NL_short) <- c("Datum","retail_recreatie","supermarkt_apotheek","parken","openbaar_vervoer", "werk", "thuis")
 
 
@@ -52,6 +52,14 @@ Google_mob_NL_short$MA_openbaar_vervoer     <- round(rollmeanr(Google_mob_NL_sho
 Google_mob_NL_short$MA_werk                 <- round(rollmeanr(Google_mob_NL_short$werk,    7, fill = NA),digits = 1)
 Google_mob_NL_short$MA_thuis                <- round(rollmeanr(Google_mob_NL_short$thuis, 7, fill = NA),digits = 1)
 
+
+Google_mob_NL_short$MA_retail_recreatie     <- lead(Google_mob_NL_short$MA_retail_recreatie,3)
+Google_mob_NL_short$MA_supermarkt_apotheek  <- lead(Google_mob_NL_short$MA_supermarkt_apotheek,3)
+Google_mob_NL_short$MA_parken               <- lead(Google_mob_NL_short$MA_parken,3)
+Google_mob_NL_short$MA_openbaar_vervoer     <- lead(Google_mob_NL_short$MA_openbaar_vervoer,3)
+Google_mob_NL_short$MA_werk                 <- lead(Google_mob_NL_short$MA_werk,3)
+Google_mob_NL_short$MA_thuis                <- lead(Google_mob_NL_short$MA_thuis,3)
+
 Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 
 
@@ -62,8 +70,8 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 #                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
 
 
-persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-11-27", "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08")), 
-                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "lockdown","" ,"avondklok", "basisscholen open"))
+persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08")), 
+                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "lockdown","" ,"avondklok", "basisscholen open"))
 
 
 
@@ -235,72 +243,72 @@ Encoding(tweet.GoogleM.NL.tweet) <- "UTF-8"
 #### Goolge mobility provinces #####
  
  
-Google_mob_prov <- google_mob_raw[which(google_mob_raw$sub_region_1 != "" & google_mob_raw$sub_region_2 ==""),]
+#Google_mob_prov <- google_mob_raw[which(google_mob_raw$sub_region_1 != "" & google_mob_raw$sub_region_2 ==""),]
 
-Google_mob_prov_short <- Google_mob_prov[ -c(1,2,4,5,6,7)]
+#Google_mob_prov_short <- Google_mob_prov[ -c(1,2,4,5,6,7)]
 
-colnames(Google_mob_prov_short) <- c("Provincie", "Datum","retail_recreatie","supermarkt_apotheek","parken","openbaar_vervoer", "werk", "thuis")
+#colnames(Google_mob_prov_short) <- c("Provincie", "Datum","retail_recreatie","supermarkt_apotheek","parken","openbaar_vervoer", "werk", "thuis")
 
-Google_mob_prov_short$Datum <- as.Date(Google_mob_prov_short$Datum)
+#Google_mob_prov_short$Datum <- as.Date(Google_mob_prov_short$Datum)
 
-Google_mob_prov_short$Provincie <- str_replace_all(Google_mob_prov_short$Provincie, c("North Brabant" = "Noord-Brabant",
-                                                                                      "North Holland"= "Noord-Holland",
-                                                                                      "South Holland" = "Zuid-Holland"))
+#Google_mob_prov_short$Provincie <- str_replace_all(Google_mob_prov_short$Provincie, c("North Brabant" = "Noord-Brabant",
+#                                                                                      "North Holland"= "Noord-Holland",
+#                                                                                      "South Holland" = "Zuid-Holland"))
 
-Google_mob_prov_short$Provincie <- factor(Google_mob_prov_short$Provincie,  levels = c("Drenthe",
-                                                                                       "Flevoland",
-                                                                                       "Friesland",
-                                                                                       "Gelderland",
-                                                                                       "Groningen",
-                                                                                       "Limburg",
-                                                                                       "Noord-Brabant",
-                                                                                       "Noord-Holland",
-                                                                                       "Overijssel",
-                                                                                       "Utrecht",
-                                                                                       "Zeeland",
-                                                                                       "Zuid-Holland"
-                                                                                       ))
+#Google_mob_prov_short$Provincie <- factor(Google_mob_prov_short$Provincie,  levels = c("Drenthe",
+#                                                                                       "Flevoland",
+#                                                                                       "Friesland",
+#                                                                                       "Gelderland",
+#                                                                                       "Groningen",
+#                                                                                       "Limburg",
+#                                                                                       "Noord-Brabant",
+#                                                                                       "Noord-Holland",
+#                                                                                       "Overijssel",
+#                                                                                       "Utrecht",
+#                                                                                       "Zeeland",
+#                                                                                       "Zuid-Holland"
+#                                                                                       ))
 
 ##### 7day MA #####
 
 
-Google_mob_prov_short$MA_retail_recreatie     <- round(rollmeanr(Google_mob_prov_short$retail_recreatie,  7, fill = NA),digits = 1)
-Google_mob_prov_short$MA_supermarkt_apotheek  <- round(rollmeanr(Google_mob_prov_short$supermarkt_apotheek,    7, fill = NA),digits = 1)
-Google_mob_prov_short$MA_parken               <- round(rollmeanr(Google_mob_prov_short$parken, 7, fill = NA),digits = 1)
-Google_mob_prov_short$MA_openbaar_vervoer     <- round(rollmeanr(Google_mob_prov_short$openbaar_vervoer,  7, fill = NA),digits = 1)
-Google_mob_prov_short$MA_werk                 <- round(rollmeanr(Google_mob_prov_short$werk,    7, fill = NA),digits = 1)
-Google_mob_prov_short$MA_thuis                <- round(rollmeanr(Google_mob_prov_short$thuis, 7, fill = NA),digits = 1)
+#Google_mob_prov_short$MA_retail_recreatie     <- round(rollmeanr(Google_mob_prov_short$retail_recreatie,  7, fill = NA),digits = 1)
+#Google_mob_prov_short$MA_supermarkt_apotheek  <- round(rollmeanr(Google_mob_prov_short$supermarkt_apotheek,    7, fill = NA),digits = 1)
+#Google_mob_prov_short$MA_parken               <- round(rollmeanr(Google_mob_prov_short$parken, 7, fill = NA),digits = 1)
+#Google_mob_prov_short$MA_openbaar_vervoer     <- round(rollmeanr(Google_mob_prov_short$openbaar_vervoer,  7, fill = NA),digits = 1)
+#Google_mob_prov_short$MA_werk                 <- round(rollmeanr(Google_mob_prov_short$werk,    7, fill = NA),digits = 1)
+#Google_mob_prov_short$MA_thuis                <- round(rollmeanr(Google_mob_prov_short$thuis, 7, fill = NA),digits = 1)
 
 
 
 ##### Datum substten #####
 
 
-Google_mob_prov_short <- (Google_mob_prov_short %>% filter(Datum > "2020-09-29"))
+#Google_mob_prov_short <- (Google_mob_prov_short %>% filter(Datum > "2020-09-29"))
 
 
 
 ##### plot pvovinces Google mobility ####
-library(wesanderson)
+#library(wesanderson)
 
 
 
 
-ggplot(Google_mob_prov_short) + 
+#ggplot(Google_mob_prov_short) + 
  
-  geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dotted", color = "darkgreen",size = 1.5) +
-  geom_vline(xintercept = as.Date("2020-10-18"), linetype = "dotted", color = "darkgreen",size = 1.5) +
-  geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dotted", size = 1.5) +
-  geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dotted", size = 1.5)+
-  
-  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "violet", size = 1.5)+
-  
-  
-   geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2) +
-    geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2) +
+#  geom_vline(xintercept = as.Date("2020-10-10"), linetype = "dotted", color = "darkgreen",size = 1.5) +
+#  geom_vline(xintercept = as.Date("2020-10-18"), linetype = "dotted", color = "darkgreen",size = 1.5) +
+#  geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dotted", size = 1.5) +
+#  geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dotted", size = 1.5)+
+##  
+#  geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dashed", color = "violet", size = 1.5)+
+#  
+#  
+#   geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2) +
+#    geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2) +
  # geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2) +
-  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), color = "#F5F5F5", lwd=3) +
-  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), lwd=2) +
+#  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), color = "#F5F5F5", lwd=3) +
+#  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), lwd=2) +
  # geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2)+
 
   
@@ -311,58 +319,58 @@ ggplot(Google_mob_prov_short) +
  #  geom_vline(xintercept = as.Date("2020-10-17"), linetype = "dashed") +
  #  geom_vline(xintercept = as.Date("2020-10-25"), linetype = "dashed") +
   
-  facet_wrap(~Provincie)+
+#  facet_wrap(~Provincie)+
 
   #scale_colour_brewer(palette = "Set1")+
-   scale_color_manual(values=c("#204ad4", "#008f91", "#cc2929"))+  #"#008f91", "#204ad4", "#cc2929"
+#   scale_color_manual(values=c("#204ad4", "#008f91", "#cc2929"))+  #"#008f91", "#204ad4", "#cc2929"
  # scale_color_manual(values=wes_palette(n=3, name="Rushmore1"))+
   
   
-  theme_bw() + 
-  xlab("")+ 
-  ylab("")+
+#  theme_bw() + 
+#  xlab("")+ 
+#  ylab("")+
   
-  labs(title = "Google Mobility - Nederland",
-       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", 
-                        Last_date_in_Google_file,
-                        "\n\n - Herfstvakantie Noord: 10-18 oktober \n",
-                        "- semi-lockdown op 14 oktober\n",
-                        "- Herfstvakantie midden/zuid: 17-25 oktober"
-                        ),
-       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",
-                       Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
+#  labs(title = "Google Mobility - Nederland",
+#       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", 
+#                        Last_date_in_Google_file,
+#                        "\n\n - Herfstvakantie Noord: 10-18 oktober \n",
+#                        "- semi-lockdown op 14 oktober\n",
+#                        "- Herfstvakantie midden/zuid: 17-25 oktober"
+#                        ),
+#       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",
+#                       Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   
   
-  theme(
-        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
-        legend.title = element_blank(),
-        legend.pos = "bottom",
-        legend.direction = "horizontal",
+#  theme(
+#        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
+#        legend.title = element_blank(),
+#        legend.pos = "bottom",
+#        legend.direction = "horizontal",
         #legend.margin = margin(3, 3, 3, 3),
-        legend.text = element_text(colour="black", size=12, face="bold"),
-        legend.key = element_rect(fill = "#F5F5F5", color = NA),
+#        legend.text = element_text(colour="black", size=12, face="bold"),
+#        legend.key = element_rect(fill = "#F5F5F5", color = NA),
         #legend.position = c(0.7,0.15),
-        )+
+#        )+
   
-  theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
-         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+ # theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+#         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
          #legend.position = "none",   # no legend
-         plot.title = element_text(hjust = 0.4,size = 30,face = "bold"),
-         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+#         plot.title = element_text(hjust = 0.4,size = 30,face = "bold"),
+#         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
          
-         axis.text = element_text(size=14,color = "black",face = "bold"),
-         axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
-         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
-         axis.ticks.length = unit(0.5, "cm"),
+#         axis.text = element_text(size=14,color = "black",face = "bold"),
+#         axis.text.y = element_text(face="bold", color="black", size=12),  #, angle=45),
+#         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+#         axis.ticks.length = unit(0.5, "cm"),
          #axis.line = element_line(colour = "#F5F5F5"),
          
-         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+#         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
          ### facet label custom
-         strip.text.x = element_text(size = 13, color = "black"),
-         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
-         panel.grid.major.x = element_blank(),
-         panel.grid.minor.x = element_blank(),
-         panel.grid.minor.y = element_blank())
+#         strip.text.x = element_text(size = 13, color = "black"),
+#         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"),
+#         panel.grid.major.x = element_blank(),
+#         panel.grid.minor.x = element_blank(),
+#         panel.grid.minor.y = element_blank())
   
   #geom_hline(yintercept=0) +
   #geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
@@ -370,24 +378,24 @@ ggplot(Google_mob_prov_short) +
  
 
 
-ggsave("data/37_Google_data_prov.png",width=16, height = 12)
+#ggsave("data/37_Google_data_prov.png",width=16, height = 12)
 
 
 
 ##### Google province tweet ####
 
 
-tweet.GoogleM.prov.tweet <- "Google mobility data.
+#tweet.GoogleM.prov.tweet <- "Google mobility data.
 
-Verandering in mobiliteit t.o.v. 2019 (%s)
+#Verandering in mobiliteit t.o.v. 2019 (%s)
 
-De provincies:"
+#De provincies:"
 
-tweet.GoogleM.prov.tweet <- sprintf(tweet.GoogleM.prov.tweet,
-                                    deP
-                                    )
+#tweet.GoogleM.prov.tweet <- sprintf(tweet.GoogleM.prov.tweet,
+#                                    deP
+#                                    )
 
-Encoding(tweet.GoogleM.prov.tweet) <- "UTF-8"
+#Encoding(tweet.GoogleM.prov.tweet) <- "UTF-8"
 
 
 
@@ -473,3 +481,4 @@ Encoding(tweet.GoogleM.raw.tweet) <- "UTF-8"
 post_tweet(tweet.GoogleM.raw.tweet,  media = c("data/36_Google_data_NL_dots.png"), in_reply_to_status_id = get_reply_id())  #
 
 
+ 

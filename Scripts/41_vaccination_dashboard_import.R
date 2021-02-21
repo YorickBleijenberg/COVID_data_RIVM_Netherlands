@@ -2,8 +2,8 @@
 
 
 
-vaccine.edition.name <- "kan-iedereen-stoppen-met-zeuren-over-de-sneheid-in-de-mentions-aub?-alvast-bedankt!"
-second.dose <- 40000+30000+152253
+vaccine.edition.name <- "de-miljoenste-prik-komt-morgen-pas-in-de-data"  # "in-de-US-zetten-ze-elke-dag-2-miljoen-prikken"  # stop-met-zeuren-over-de-vaccinatiesneheid-in-de-mentions.-ik-kan-er-ook-niets-aan-doen.-Alvast-bedankt!
+second.dose <- 40000+31000+162253       # second.dose <- 40000+31000+162253  - sunday
 vaccinated.second <- second.dose
 freezer = 1378700
 
@@ -109,21 +109,30 @@ to_play_witch_df.long$key <- as.factor(to_play_witch_df.long$key)
 
 
 
+#######   plot new per day ######
+
 
 ggplot(to_play_witch_df.long)+
-  geom_col(aes(x=date, y=value, fill = key ))+
+  geom_col(aes(x=date, y=value, fill = key ), color= "black")+
+  
   geom_line( aes(x=date, y=MAnew_lead), color = "#f5f5f5", size = 4)+
   geom_line( aes(x=date, y=MAnew_lead), color = "black", size = 2)+  
+  
   scale_x_date(date_breaks = "1 weeks", 
                date_labels= format("%d/%m"),
                limits = as.Date(c("2021-01-6", NA)))+
   scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
-  coord_cartesian(expand = FALSE)+
+  
+  #coord_cartesian(expand = FALSE)+
   theme_classic()+
+  
   xlab("")+
   ylab("")+
   
-  scale_fill_manual( values=c("#5c146e", "#fca50a", "green", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+  #scale_fill_manual( values=c("#5c146e", "#fca50a", "darkgreen", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+  
+  scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+  
   
   labs(title = "Vaccinaties per dag",
       # subtitle = subtitle_text_new,
@@ -163,22 +172,26 @@ to_play_week_df.long <- gather(to_play_witch_df, key, value, all_of(gathercols))
 
 
 
-
+###########  plot new per week, per provider  ####
 
 
   ggplot(to_play_week_df.long, aes(x=week, y=value, fill = key ))+
-    geom_bar(stat='identity')+
+    geom_bar(stat='identity', color = "black")+
+  geom_bar(stat='identity')+
   
   #scale_x_date(date_breaks = "1 weeks", 
   #             date_labels= format("%d/%m"),
   #             limits = as.Date(c("2021-01-6", "2021-02-08")))+
   scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
-  coord_cartesian(expand = FALSE)+
+  #coord_cartesian(expand = FALSE)+
   theme_classic()+
   xlab("")+
   ylab("")+
   
-    scale_fill_manual( values=c("#5c146e", "#fca50a", "green", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+    #scale_fill_manual( values=c("#5c146e", "#fca50a", "darkgreen", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+    
+    scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+    
     
   labs(title = "Vaccinaties per week",
        # subtitle = subtitle_text_new,
@@ -235,7 +248,7 @@ library(viridis)
   
 ggplot(to_play_witch_df, aes(x=weekbegin, y=new , fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
-    geom_bar(stat='identity')+
+    geom_bar(stat='identity', color="black")+
     
     #scale_x_date(date_breaks = "1 weeks", 
     #             date_labels= format("%d/%m"),
@@ -245,7 +258,7 @@ ggplot(to_play_witch_df, aes(x=weekbegin, y=new , fill = factor(week_day, levels
     
   scale_fill_viridis_d() +
   
-  coord_cartesian(expand = FALSE)+
+  #coord_cartesian(expand = FALSE)+
     theme_classic()+
     xlab("")+
     ylab("")+
@@ -347,6 +360,9 @@ vaccins.reported.total <- format(vaccins.reported.total ,big.mark = ".", decimal
 estimated.new.today <- format(estimated.new.today,big.mark = ".", decimal.mark = ",")
 reported.new.today <- format(reported.new.today ,big.mark = ".", decimal.mark = ",")
 
+people.vaccinated <- format(people.vaccinated,big.mark = ".", decimal.mark = ",")
+second.dose <- format(second.dose ,big.mark = ".", decimal.mark = ",")
+
 vaccins.estimated.total
 vaccins.reported.total
 estimated.new.today
@@ -381,7 +397,9 @@ Totaal geregistreerd:  %s (+%s)
 
 7-daags gemiddelde: %s per dag.
 
-
+Schattingen:
+1e prik: %s
+2e prik: %s
 
 coronabeeld.nl
 "
@@ -391,8 +409,11 @@ tweet.vaccination.start.tweet <- sprintf(tweet.vaccination.start.tweet,
                                          emoji_syringe, days.vaccination.in.nl, vaccine.edition.name,emoji_syringe,
                                          vaccins.estimated.total,estimated.new.today,
                                          vaccins.reported.total,reported.new.today,
-                                         s_dayMA_tot
+                                         s_dayMA_tot,
+                                         people.vaccinated,
+                                         second.dose
                                    )
+
 Encoding(tweet.vaccination.start.tweet) <- "UTF-8"
 
 baner.path<- paste0("data/",Sys.Date(),"-banner.png")
@@ -401,17 +422,28 @@ post_tweet(tweet.vaccination.start.tweet,  media = c(baner.path))
 
 
 
-#### tweet.vaccination.two.tweet ####
 
-tweet.vaccination.two.tweet <- "vaccinaties per:
-- Dag van de week
-- Organistatie, per week
+
+
+
+#### tweet.vaccination.speed.tweet ####
+
+tweet.vaccination.speed.tweet <- "vaccinaties per:
 - Organistatie, per dag"
-tweet.vaccination.two.tweet <- sprintf(tweet.vaccination.two.tweet)
-Encoding(tweet.vaccination.two.tweet) <- "UTF-8"
-post_tweet(tweet.vaccination.two.tweet,  media = c("data/plots/95_vaccinated_week_new.png", 
-                                                     "data/plots/95_vaccinated_week_day.png", 
-                                                     "data/plots/94_vaccinated_new.png"), in_reply_to_status_id = get_reply_id())
+tweet.vaccination.speed.tweet <- sprintf(tweet.vaccination.speed.tweet)
+Encoding(tweet.vaccination.speed.tweet) <- "UTF-8"
+post_tweet(tweet.vaccination.speed.tweet,  media = c("data/plots/94_vaccinated_new.png"), in_reply_to_status_id = get_reply_id())
+
+
+#### tweet.vaccination.week.tweet ####
+
+tweet.vaccination.week.tweet <- "vaccinaties per:
+- Dag van de week
+- Organistatie, per week"
+tweet.vaccination.week.tweet <- sprintf(tweet.vaccination.week.tweet)
+Encoding(tweet.vaccination.week.tweet) <- "UTF-8"
+post_tweet(tweet.vaccination.week.tweet,  media = c("data/plots/95_vaccinated_week_new.png", 
+                                                     "data/plots/95_vaccinated_week_day.png"), in_reply_to_status_id = get_reply_id())
 
 
 #### run vaccintation script

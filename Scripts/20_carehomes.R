@@ -1,28 +1,20 @@
 
 
-
-######copy.aantal.gem.dag   <-   aantallen_gemeente_per_dag
 read.verpleeg.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_verpleeghuizen.csv", sep = "")
 copy.verpleeg <- read.csv(read.verpleeg.path,sep=";")
 
 copy.verpleeg$date<-as.Date(copy.verpleeg$Date_of_statistic_reported)   #Adding a date to the case
 
-  verpleeg.sm <- copy.verpleeg[ -c(1,2)]
+verpleeg.sm <- copy.verpleeg[ -c(1,2,3,4)]
 
-colnames(verpleeg.sm) <- c("regio_code", "regio","Total_cases","Total_deceased","new_infected_locations","total_infected_locations", "date")
-
-
+colnames(verpleeg.sm) <- c("Total_cases","Total_deceased","new_infected_locations","total_infected_locations", "date")
 
 verpleeg.sm <- (verpleeg.sm %>% filter(date > "2020-02-29"))
 
 
-
-
-
-
 ggplot(verpleeg.sm)+
   geom_bar(stat = "identity", aes( x=date, y=Total_cases),fill = "#96afde" )+
-
+  
 theme_classic()+
   xlab("")+ 
   ylab("")+
@@ -139,15 +131,14 @@ ggplot(verpleeg.sm)+
 
 # verpleeg deaths cumulative
 
-copy.verpleeg
+#copy.verpleeg
+#copy.verpleeg$Date_of_statistic_reported <-as.Date(copy.verpleeg$Date_of_statistic_reported)
+#care.d.cumulative.1 <- copy.verpleeg[copy.verpleeg$Date_of_statistic_reported < "2020-07-01",]
+#care.d.cumulative.2 <- copy.verpleeg[copy.verpleeg$Date_of_statistic_reported > "2020-07-01",]
 
-copy.verpleeg$Date_of_statistic_reported <-as.Date(copy.verpleeg$Date_of_statistic_reported)
-care.d.cumulative.1 <- copy.verpleeg[copy.verpleeg$Date_of_statistic_reported < "2020-07-01",]
-care.d.cumulative.2 <- copy.verpleeg[copy.verpleeg$Date_of_statistic_reported > "2020-07-01",]
+#care.d.cumulative.1a <- sum(care.d.cumulative.1$Total_deceased_reported)
+#care.d.cumulative.2b <- sum(care.d.cumulative.2$Total_deceased_reported)
 
-care.d.cumulative.1a <- sum(care.d.cumulative.1$Total_deceased_reported)
-care.d.cumulative.2b <- sum(care.d.cumulative.2$Total_deceased_reported)
-
-care.d.perc <- round((care.d.cumulative.2b/care.d.cumulative.1a*100), digits = 1)
+#care.d.perc <- round((care.d.cumulative.2b/care.d.cumulative.1a*100), digits = 1)
 
 

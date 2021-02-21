@@ -40,8 +40,8 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 
 #### some constants for the update ####
 
-editionname <- "Curfew-on-trial"   #23 - lockdown Wuhan
-editienaam  <- "avondklok-in-de-rechtbank"
+editionname <- "Fieldlabs-are-behavioural-experiments"   #23 - lockdown Wuhan
+editienaam  <- "Fieldlabs-zijn-gedrags-experimenten"
 #number.in.DE <- "0"
 
 #### Start  ####

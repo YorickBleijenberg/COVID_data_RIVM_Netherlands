@@ -522,7 +522,7 @@ tweet.growth.tweet <- sprintf(tweet.growth.tweet,
                               doubling.dead.day_dot, growth.cases.day,deP,
                               doubling.dead.day_act_dot, growth.cases.day_act, deP)
 Encoding(tweet.growth.tweet) <- "UTF-8"
-# post_tweet(tweet.growth.tweet,  media = c("data/07_new_cases_DoD.png", "data/05_growth_cases.png", "data/05_growth_hosp.png","data/05_growth_dead.png"), in_reply_to_status_id = get_reply_id()) 
+ post_tweet(tweet.growth.tweet,  media = c("data/07_new_cases_DoD.png", "data/05_growth_cases.png", "data/05_growth_hosp.png","data/05_growth_dead.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 

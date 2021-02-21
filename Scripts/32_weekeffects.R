@@ -57,16 +57,15 @@ ggplot(diff.calc.mean.wide)+
   geom_hline(yintercept=0)+
   
   
-  
   facet_wrap(~key, ncol = 1, scales = "free_y")+
   
   theme_bw() + 
   
   scale_y_continuous(labels = label_percent(scale = 1))+
-
   
   xlab("")+ 
   ylab("")+
+  
   labs(title = "Besmettingen en doden, afwijking van het 7-daags gemiddelde per dag",
        subtitle = "vanaf 1 september 2020",
        caption = paste("bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
