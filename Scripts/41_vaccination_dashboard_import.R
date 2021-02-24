@@ -1,12 +1,8 @@
 
-
-
-
-vaccine.edition.name <- "de-miljoenste-prik-komt-morgen-pas-in-de-data"  # "in-de-US-zetten-ze-elke-dag-2-miljoen-prikken"  # stop-met-zeuren-over-de-vaccinatiesneheid-in-de-mentions.-ik-kan-er-ook-niets-aan-doen.-Alvast-bedankt!
-second.dose <- 40000+31000+162253       # second.dose <- 40000+31000+162253  - sunday
+vaccine.edition.name <- "Nog-meer-leveringsproblemen"
+second.dose <- 40000+32000+162253       # second.dose <- 40000+31000+162253  - sunday
 vaccinated.second <- second.dose
-freezer = 1378700
-
+freezer = 1732860
 
 #### import historic vaccination data from GH #####
 
@@ -19,8 +15,6 @@ vacc_date_hist$date_of_update <- as.Date(vacc_date_hist$date_of_update)
 vacc_date_hist$date <- as.Date(vacc_date_hist$date)
 last(vacc_date_hist$total_estimated)
 
-
-
 ## Locale pulled in from the dashboard repository, with most recent version in branch `master`
 locale_json <- "https://coronadashboard.rijksoverheid.nl/json/NL.json"
 locale_dat <- fromJSON(txt = locale_json)
@@ -29,12 +23,12 @@ as.Date(as.POSIXct(locale_dat$vaccine_administered_total$last_value$date_unix , 
 locale_dat$vaccine_administered_total$last_value$estimated
 locale_dat$vaccine_administered_total$last_value$reported
 
-
 #test.df <- locale_dat$vaccine_administered_ggd$values
 #test.df$date_unix <- as.Date(as.POSIXct(test.df$date_unix , origin="1970-01-01"))
 #daily.vaccination.data.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vaccine-data-lnaz.csv")
 #write.csv(test.df, file = daily.vaccination.data.filename, row.names = F)
 
+ggd <- locale_dat$vaccine_administered_ggd$values
 
 ## Vaccines given
 
@@ -48,7 +42,6 @@ vaccins.estimated.ha    <- as.integer(locale_dat$vaccine_administered_doctors$la
 #second.dose <- last(vacc_date_hist$people_fully_vaccinated)
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)
-
 
 estimated.new.today <- (vaccins.estimated.total - last(vacc_date_hist$total_estimated))
 reported.new.today <- (vaccins.reported.total - last(vacc_date_hist$total_registerd))
@@ -70,6 +63,7 @@ new.row.df <- data.frame(today, yesterday,week,vaccins.reported.total,vaccins.es
 
 new.vacc.df <- rbind(vacc_date_hist, new.row.df)
 
+new.vacc.df[is.na(new.vacc.df)] <- 0
 
 daily.vaccination.data.filename <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_vaccine-data.csv")
 write.csv(new.vacc.df, file = daily.vaccination.data.filename, row.names = F)
@@ -80,16 +74,15 @@ write.csv(new.vacc.df, file = daily.vaccination.data.filename, row.names = F)
 
 ####### get data t plot ####
 
-to_play_witch_df <- new.vacc.df
+new.vacc.df.work <- new.vacc.df
 
-to_play_witch_df$for_MA <- to_play_witch_df$care_new+to_play_witch_df$hosp_new+to_play_witch_df$ggd_new
+new.vacc.df.work[is.na(new.vacc.df.work)] <- 0
 
-to_play_witch_df$MAnew  <- rollmeanr(to_play_witch_df$for_MA, 7, fill = 0)
-to_play_witch_df$MAnew_lead  <- lead(  to_play_witch_df$MAnew,3)
-
-s_dayMA_tot <- last(to_play_witch_df$MAnew)
+new.vacc.df.work$for_MA <- new.vacc.df.work$care_new + new.vacc.df.work$hosp_new + new.vacc.df.work$ggd_new + new.vacc.df.work$ha_new
+new.vacc.df.work$MAnew  <- rollmeanr(new.vacc.df.work$for_MA, 7, fill = 0)
+new.vacc.df.work$MAnew_lead  <- lead(  new.vacc.df.work$MAnew,3)
+s_dayMA_tot <- last(new.vacc.df.work$MAnew)
 s_dayMA_tot <- format(as.integer(s_dayMA_tot) ,big.mark = ".", decimal.mark = ",")
-
 
 #yesterday_new_ggd <- last(people.vaccinated.ggd.gh$new)
 #yesterday_new_ggd <- format(yesterday_new_ggd, big.mark="." ,decimal.mark=",")
@@ -101,18 +94,14 @@ key <- "date"
 value <- "vacc_total"
 #gathercols <- c("Besmettingen","Opnames","Overleden")
 gathercols <- c("hosp_new","care_new","ggd_new", "ha_new")
-to_play_witch_df.long <- gather(to_play_witch_df, key, value, all_of(gathercols))
+new.vacc.df.work.long <- gather(new.vacc.df.work, key, value, gathercols)
 
-
-
-to_play_witch_df.long$key <- as.factor(to_play_witch_df.long$key)
-
-
+#new.vacc.df.work.long$key <- as.factor(new.vacc.df.work.long$key)
 
 #######   plot new per day ######
 
 
-ggplot(to_play_witch_df.long)+
+ggplot(new.vacc.df.work.long)+
   geom_col(aes(x=date, y=value, fill = key ), color= "black")+
   
   geom_line( aes(x=date, y=MAnew_lead), color = "#f5f5f5", size = 4)+
@@ -160,93 +149,36 @@ ggplot(to_play_witch_df.long)+
   
   ggsave("data/plots/94_vaccinated_new.png",width=16, height = 9)  
 
-
-
-
-
-key <- "week"
-value <- "vacc_total"
+#key <- "week"
+#value <- "vacc_total"
 #gathercols <- c("Besmettingen","Opnames","Overleden")
-gathercols <- c("hosp_new","care_new","ggd_new", "ha_new")
-to_play_week_df.long <- gather(to_play_witch_df, key, value, all_of(gathercols))
+#gathercols <- c("hosp_new","care_new","ggd_new", "ha_new")
+#to_play_week_df.long <- gather(to_play_witch_df, key, value, all_of(gathercols))
 
 
+new.vacc.df.work$week_day <- weekdays(new.vacc.df.work$date)
+  
+new.vacc.df.work$week_day <- as.factor(new.vacc.df.work$week_day)
+  
+#new.vacc.df.work <- new.vacc.df.work[new.vacc.df.work$date > "2020-06-28",]
+  
+new.vacc.df.work$weekbegin <- floor_date(new.vacc.df.work$date, " week", week_start = 1)
+  
+this.week <-floor_date(as.Date(today), " week", week_start = 1) 
 
-###########  plot new per week, per provider  ####
-
-
-  ggplot(to_play_week_df.long, aes(x=week, y=value, fill = key ))+
-    geom_bar(stat='identity', color = "black")+
-  geom_bar(stat='identity')+
-  
-  #scale_x_date(date_breaks = "1 weeks", 
-  #             date_labels= format("%d/%m"),
-  #             limits = as.Date(c("2021-01-6", "2021-02-08")))+
-  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
-  #coord_cartesian(expand = FALSE)+
-  theme_classic()+
-  xlab("")+
-  ylab("")+
-  
-    #scale_fill_manual( values=c("#5c146e", "#fca50a", "darkgreen", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
-    
-    scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
-    
-    
-  labs(title = "Vaccinaties per week",
-       # subtitle = subtitle_text_new,
-       caption = paste("Bron: github.com/YorickBleijenberg | Plot: @YorickB  | ",Sys.Date()))+
-    
-    theme(#legend.position = "none",   # no legend
-      legend.title = element_blank(),  ## legend title
-      legend.position="top",
-      legend.background = element_rect(fill="#f5f5f5", size=0.5, linetype="solid")
-    )+
-    
-  theme(
-    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
-    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
-    plot.title = element_text(hjust = 0.5,size = 40,face = "bold"),
-    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
-    axis.text = element_text(size=14,color = "black",face = "bold"),
-    axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
-    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
-    axis.ticks.length = unit(0.5, "cm"),
-    axis.line = element_line(colour = "#F5F5F5"),
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
-  
-  ggsave("data/plots/95_vaccinated_week_new.png",width=16, height = 9)  
-
-  
-  
-  
-  
-  to_play_witch_df$week_day <- weekdays(to_play_witch_df$date)
-  
-  to_play_witch_df$week_day <- as.factor(to_play_witch_df$week_day)
-  
-  to_play_witch_df <- to_play_witch_df[to_play_witch_df$date > "2020-06-28",]
-  
-  to_play_witch_df$weekbegin <- floor_date(to_play_witch_df$date, " week", week_start = 1)
-  
-  this.week <-floor_date(as.Date(today), " week", week_start = 1) 
-  
-  to_play_witch_df$new <- to_play_witch_df$ggd_new+to_play_witch_df$hosp_new+ to_play_witch_df$care_new
+new.vacc.df.work$new <- new.vacc.df.work$ggd_new+new.vacc.df.work$hosp_new+ new.vacc.df.work$care_new + new.vacc.df.work$ha_new
   
   
   key <- "week"
   value <- "vacc_total"
-  #gathercols <- c("Besmettingen","Opnames","Overleden")
   gathercols <- c("hosp_new","care_new","ggd_new", "ha_new")
-  to_play_week_df.long <- gather(to_play_witch_df, key, value, all_of(gathercols))
+  new.vacc.df.work.long <- gather(new.vacc.df.work, key, value, gathercols)
   
   
 library(viridis)
   
   
-ggplot(to_play_witch_df, aes(x=weekbegin, y=new , fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
     geom_bar(stat='identity', color="black")+
     
@@ -266,7 +198,13 @@ ggplot(to_play_witch_df, aes(x=weekbegin, y=new , fill = factor(week_day, levels
     labs(title = "Vaccinaties per week",
          # subtitle = subtitle_text_new,
          caption = paste("Bron: github.com/YorickBleijenberg | Plot: @YorickB  | ",Sys.Date()))+
-    theme(
+    
+  theme(legend.position = c(0.05, 0.5),
+        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10, face="bold"))+
+  
+  theme(
       plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
       panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
       #legend.position = "none",   # no legend
@@ -285,6 +223,63 @@ ggplot(to_play_witch_df, aes(x=weekbegin, y=new , fill = factor(week_day, levels
 ggsave("data/plots/95_vaccinated_week_day.png",width=16, height = 9)  
   
   
+
+#####   type graph
+
+ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  key))+
+  
+  geom_bar(stat='identity', color="black")+
+  geom_bar(stat='identity')+
+  
+  #scale_x_date(date_breaks = "1 weeks", 
+  #             date_labels= format("%d/%m"),
+  #             limits = as.Date(c("2021-01-6", "2021-02-08")))+
+  
+  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
+  
+  scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+  
+  #coord_cartesian(expand = FALSE)+
+  theme_classic()+
+  xlab("")+
+  ylab("")+
+  
+  labs(title = "Vaccinaties per week",
+       # subtitle = subtitle_text_new,
+       caption = paste("Bron: github.com/YorickBleijenberg | Plot: @YorickB  | ",Sys.Date()))+
+  
+  theme(#legend.position = "none",   # no legend
+    legend.title = element_blank(),  ## legend title
+    legend.position="top",
+    legend.background = element_rect(fill="#f5f5f5", size=0.5, linetype="solid")
+  )+
+  
+  theme(
+    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+    #legend.position = "none",   # no legend
+    legend.title = element_blank(),
+    plot.title = element_text(hjust = 0.5,size = 40,face = "bold"),
+    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+    axis.text = element_text(size=14,color = "black",face = "bold"),
+    axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#F5F5F5"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
+  
+  ggsave("data/plots/95_vaccinated_week_new.png",width=16, height = 9)  
+
+
+
+
+
+
+
+
+
   
 
 
@@ -293,8 +288,8 @@ agecbs.df <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_
 
 
 
-ggplot(new.vacc.df)+
-  geom_col(aes(x= date, y=total_registerd))+
+ggplot(new.vacc.df.work)+
+  geom_col(aes(x= date, y=total_estimated))+
   
   geom_hline(data=agecbs.df, mapping=aes(yintercept=aantal), color="black")+
   geom_text(data=agecbs.df, mapping=aes(x=as.Date("2021-01-01"), y=aantal, label=Leeftijd), size=4, vjust=-0.4, hjust=0)+
@@ -304,8 +299,8 @@ ggplot(new.vacc.df)+
   ggsave("data/92_vaccine_age_full.png",width=5, height = 25)
 
 
-ggplot(new.vacc.df)+
-  geom_col(aes(x= date, y=total_registerd))+
+ggplot(new.vacc.df.work)+
+#  geom_col(aes(x= date, y=total_registerd))+
   geom_col(aes(x= date, y=total_estimated))+
   
   geom_hline(data=agecbs.df, mapping=aes(yintercept=aantal), color="black")+
@@ -335,7 +330,7 @@ vac.perc.second <- format(vac.perc.second, scientific=F)
 vac.perc.18.second <-  round((vaccinated.second/14070340*100), digits =2)
 vac.perc.18.second <- format(vac.perc.18.second, scientific=F)
 
-spillage <- as.integer(vaccinated.people.total/95)*5
+spillage <- 0 #as.integer(vaccinated.people.total/95)*5
 in.freezer <- freezer-vaccinated.people.total-spillage
 
 
@@ -343,7 +338,7 @@ days.vaccination.in.nl
 vaccins.estimated.total
 vaccins.reported.total
 in.freezer
-spillage
+#spillage
 vaccinated.people.total
 #vac.perc.18
 vac.perc
@@ -448,7 +443,7 @@ post_tweet(tweet.vaccination.week.tweet,  media = c("data/plots/95_vaccinated_we
 
 #### run vaccintation script
 
-source("C:\\Rdir\\Rscripts\\43_NICE_vaccine_effect.R")
+#source("C:\\Rdir\\Rscripts\\43_NICE_vaccine_effect.R")
 
 #### tweet.vaccination.three.tweet ####
 
@@ -460,8 +455,8 @@ tweet.vaccination.three.tweet <- "De Zien-we-al-een-vaccinatie-effect? grafieken
 
 tweet.vaccination.three.tweet <- sprintf(tweet.vaccination.three.tweet)
 Encoding(tweet.vaccination.three.tweet) <- "UTF-8"
-post_tweet(tweet.vaccination.three.tweet,  media = c("data/03_NICE-IC-leeftijd_relatief.png", 
-                                                   "data/03_NICE-kliniek-leeftijd_relatief.png"), in_reply_to_status_id = get_reply_id())
+#post_tweet(tweet.vaccination.three.tweet,  media = c("data/03_NICE-IC-leeftijd_relatief.png", 
+#                                                   "data/03_NICE-kliniek-leeftijd_relatief.png"), in_reply_to_status_id = get_reply_id())
 
 
 
