@@ -1,6 +1,10 @@
-date,vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type,vaccin.type.2,start.date.group,number.in.group.p,Eerste prik,Tweede prik,source
-2021-02-06,Medewerkers Acute zorg - groep: 40.000,40000,40000,40000,40000,pfizer,,2021-01-06,100,100.00,100.00,https://www.lnaz.nl/
-2021-02-06,Door GGD'en: Medewerkers Verpleeghuizen & ouderen,490000,606160,162253,152253,pfizer,astrazeneca.janssen,2021-01-06,100,123.71,33.11,https://ggdghor.nl/actueel-bericht/update-vaccinatie-coronavirus-door-ggden/
-2021-02-06,Bewoners langdurigezorg (schatting aantal prikken),232000,191290,32000,,pfizer,moderna,2021-02-01,100,82.45,13.79,https://coronadashboard.rijksoverheid.nl/landelijk/vaccinaties
-2021-02-06,Huisartsen - groep: 15.000,15000,14469,,,moderna,,2021-01-23,100,96.46,0.00,https://www.lnaz.nl/
-2021-02-07,Ouderen - niet mobiel  (schatting),15000,26282,,,AstraZeneca,,,100,175.21,0.00,
+vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type
+Medewerkers Acute zorg - groep: 40.000,40000,40000,40000,40000,COM
+Huisartsen - groep: 15.000,15000,14300,,,MOD
+Door GGD'en: Medewerkers Verpleeghuizen & ouderen < 80,490000,252615,161520,161520,COM/AZ
+Thuiswonend 90+,,53280,106,106,COM
+Thuiswonend 85-89,,134687,104,104,COM
+Thuiswonend 80-84,,109727,154,154,COM
+Thuiswonend 60-64 & Hoog medisch risico,,13386,,,AZ
+Bewoners langdurigezorg - instellingsarts,,152061,16829,,COM
+Bewoners langdurigezorg - huisarts,,25270,,,COM/MOD
