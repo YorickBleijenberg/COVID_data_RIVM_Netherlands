@@ -59,22 +59,23 @@ last.date.old <- tail(last.date.old.wide$Date, 1)
 
 #### Reproduction latest ####
 
-persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18","2020-12-14", "2021-01-25")), 
-                        event=c("|Kroeg uurtje eerder dicht", "|We gaan voor\nR=0,9","|Semi-lockdown\n(0.75-0.99)", "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring","| lockdown, R=0.8","Avondklok"),
-                     yas=c(1.01, 0.85, 0.75, 0.72,0.75,0.75,0.75)
+persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18","2020-12-14", "2021-01-23", "2021-02-08")), 
+                        event=c("|Kroeg uurtje eerder dicht", "|We gaan voor\nR=0,9","|Semi-lockdown\n(0.75-0.99)", "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring",
+                                "| lockdown, R=0.8","| Avondklok & \nbezoekbeperking", "| Basisscholen open"),
+                     yas=c(1.01, 0.85, 0.75, 0.72,0.75,0.75,0.75, 0.9)
                      )
 
-persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18", "2020-12-14", "2021-01-25")),
-                                     event=c("19 sep", "29 sep", "14 okt", "5 nov","18 nov", "14 Dec", "25 Jan"))
+persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04","2020-11-18", "2020-12-14", "2021-01-25", "2021-02-08")),
+                                     event=c("19 sep", "29 sep", "14 okt", "5 nov","18 nov", "14 Dec", "23 Jan", "8 Feb"))
 
 #r.estimate.df = data.frame(date_start=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04")), 
 #                           date_end=as.Date(c("2020-11-17", "2020-10-14", "2020-11-17", "2020-11-17"))
   #                         ) 
   
 
+confidence.interval <- today-10
 
-#last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < "2020-12-20",]
-
+last.date.old.wide.2 <- last.date.old.wide.2[last.date.old.wide.2$Date < confidence.interval,]
 
 last.date.old.wide.2$Rt_low <- as.numeric(last.date.old.wide.2$Rt_low)
 last.date.old.wide.2$Rt_avg <- as.numeric(last.date.old.wide.2$Rt_avg)
@@ -102,7 +103,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, RIVM model 9 februari",
+  labs(title = "Reproductiegetal, RIVM model 9 maart",
        subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
  
@@ -124,7 +125,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
   annotate("rect", xmin = as.Date("2020-10-14"), xmax = as.Date("2020-11-04"), ymin = 0.75, ymax = 0.99, fill = "blue", alpha = 0.2)+
   annotate("rect", xmin = as.Date("2020-11-04"), xmax = as.Date("2020-11-18"), ymin = 0.72, ymax = 0.91, fill = "green", alpha = 0.3)+
   annotate("rect", xmin = as.Date("2020-11-18"), xmax = as.Date("2020-12-14"), ymin = 0.75, ymax = 0.99, fill = "blue", alpha = 0.2)+
-  annotate("rect", xmin = as.Date("2020-12-14"), xmax = as.Date("2021-02-15"), ymin = 0.75, ymax = 0.85, fill = "red", alpha = 0.3)+
+  annotate("rect", xmin = as.Date("2020-12-14"), xmax = as.Date("2021-02-23"), ymin = 0.75, ymax = 0.85, fill = "red", alpha = 0.3)+
   
   geom_text(data=persco.df, mapping=aes(x=date, y=yas, label=event), size=6, angle=0, vjust=-0.4, hjust=0.012, face="bold")+
 

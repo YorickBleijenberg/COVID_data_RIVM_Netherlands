@@ -657,7 +657,7 @@ New:
 %sICU:       %s 
 
 
-#corona #stayhome"
+#COVID19 #stayhome"
 
 
 tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
@@ -698,7 +698,7 @@ Nieuwe opnames:
 Kliniek:    %s
 IC:        %s
 
-#corona #blijfthuis"
+#COVID19 #blijfthuis"
 
 
 tweet.LCPS.tweet <- sprintf(tweet.LCPS.tweet,

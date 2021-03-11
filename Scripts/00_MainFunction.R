@@ -40,8 +40,10 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 
 #### some constants for the update ####
 
-editionname <- "Fieldlabs-are-behavioural-experiments"   #23 - lockdown Wuhan
-editienaam  <- "Fieldlabs-zijn-gedrags-experimenten"
+editionname <- "vaccination-selfies-are-forbidden-now"
+editienaam  <- "vaccinaties-selfies-verboden"                       
+vaccine.edition.name <- "169k-Extra-dosis-BioNTech/Pfizer-deze-maand"
+
 #number.in.DE <- "0"
 
 #### Start  ####
@@ -55,6 +57,11 @@ source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 
 
 #### update at 15:15 ####
+
+source("C:\\Rdir\\Rscripts\\18_daily_pos_rate.R")
+
+source("C:\\Rdir\\Rscripts\\21_ECDC.R")
+
 source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 
 source("C:\\Rdir\\Rscripts\\04_DataPrep.R")
@@ -108,21 +115,31 @@ source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
 ###
 ###
 
-##   source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+
+##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+
+##
+##
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
-##   source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
-
-source("C:\\Rdir\\Rscripts\\18_Dashboard_daily_pos_rate.R")
-
-source("C:\\Rdir\\Rscripts\\25_Veiligheidsregios_insight.R")
-
-source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
+  ##  source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 
-## source("C:\\Rdir\\Rscripts\\43_NICE_vaccine_effect.R")
 
+##  source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
+##  source("C:\\Rdir\\Rscripts\\43_NICE_vaccine_effect.R")
 
+source("C:\\Rdir\\Rscripts\\44_vaccine_effect_care_compare.R")
+
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_ICU_compare.R")
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_clin_compare.R")
+
+source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot.R")       
+
+source("C:\\Rdir\\Rscripts\\47_vaccine_effect_disabled.R")     
+
+source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     
+       
 
 

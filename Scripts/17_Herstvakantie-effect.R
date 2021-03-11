@@ -178,7 +178,7 @@ cases_per_day$date  <- as.Date(cases_per_day$date)
 
 FR_a <- intToUtf8(0x00E2)  #Encoding(FR_b) <- "UTF-8"
 FR_b <- paste0("Frysl", FR_a,"n")
-cases_per_day$Municipal_health_service <- str_replace(cases_per_day$Municipal_health_service, "Fryslân", FR_b)  ##fout / goed
+cases_per_day$Municipal_health_service <- str_replace(cases_per_day$Municipal_health_service, "GGD Fryslân", FR_b)  ##fout / goed
 
 cases_per_day.2 <- cases_per_day[ -c(1,2,4:9,12)]
 

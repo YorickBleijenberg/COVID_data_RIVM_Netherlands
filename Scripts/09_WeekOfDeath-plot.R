@@ -220,3 +220,65 @@ ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
 
 ggsave("data/15_EN_dead_diff.png",width=16, height = 9)  
 
+
+
+
+# df_today_2 <- table(df_today_bind$weekOfDead.4)
+# df_today_3 <-as.data.frame(df_today_2)
+
+df_today_bind.count <- count(df_today_bind,Agegroup, weekOfDead.4)
+
+
+
+last.week <-Sys.Date() -7
+
+ggplot(df_today_bind.count, aes(x=weekOfDead.4, y=n, color=Agegroup))+
+ # geom_line(stat="identity", position="stack")+
+  
+  geom_line(size = 2)+
+  
+  theme_classic()+
+  
+  #geom_text(aes(label=valuecolvalue), vjust=-0.3, size=3.5)+
+  # geom_text(
+  #  aes(x = week, y = valuecol, label = valuecol, group = keycol),
+  #  position = position_dodge(width = 1),
+  #  vjust = -0.5, size = 10) + 
+  
+  xlab("")+ 
+  ylab("")+
+  
+  #scale_x_date(date_breaks = "1 day", date_labels= format("%d-%b"),limits = as.Date(c(Sys.Date()-14, Sys.Date())))+
+  
+ # scale_fill_manual( values=c("#ff0000", "#faacac"), labels=c("vandaag gemeld", "eerder gemeld"))+
+  scale_y_continuous(limits = c(0,333))+
+  scale_x_date(limits = c(as.Date("2020-10-01"), last.week), breaks = "1 week",  labels = date_format("%V"))+
+  coord_cartesian(expand = FALSE)+
+  
+  labs(title = "Overleden personen",
+       subtitle = "naar week van overlijden",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme(legend.position = "right",  #c(0.5, 0.925),
+        legend.background = element_rect(fill="#FDE3E3",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=27, face="bold"))+
+  
+  theme(
+    plot.background = element_rect(fill = "#FDE3E3"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),
+    plot.title = element_text(hjust = 0.5,size = 40,face = "bold"),
+    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+    axis.text.x = element_text(face="bold", color="black", size=12), #, angle=45),
+    axis.text.y = element_text(face="bold", color="black", size=14),
+    axis.ticks = element_line(colour = "#FDE3E3", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#FDE3E3"),
+    axis.title.x=element_blank(),
+    
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
+
+ggsave("data/74_dead_agegroup.png",width=16, height = 9)  
+
+
+

@@ -7,7 +7,7 @@ library(tidyverse)
 ##  read.aantal.landelijk.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_casus_landelijk.csv",sep="")
 ##  RIVM_casus_landelijk <- read.csv(read.aantal.landelijk.path,sep=";")
 
-today = Sys.Date()
+today = Sys.Date()-1
 
 #casus.working <-cases_per_day
 casus.working <-RIVM_casus_landelijk
@@ -24,7 +24,6 @@ casus.working   <- merge(casus.working,CBS_age_10yrs_GH)
 
 casus.working$phd <- round(casus.working$n*100000/casus.working$population,0)
 
-
 #weeknumber <- isoweek(Sys.Date())
 weeknumber<-strftime(Sys.Date(),format = "%V")
 
@@ -32,6 +31,7 @@ weeknumber<-strftime(Sys.Date(),format = "%V")
 #Gewenste weken subsetten
 casus.working <- casus.working[casus.working$weekbegin>"2020-07-01"&casus.working$weekbegin<=today,]
 
+age.compare.case <- casus.working
 
 #Heatmap
 ggplot(casus.working,aes(weekbegin,Agegroup,fill=phd))+
@@ -49,7 +49,7 @@ geom_tile(size=1.5,color="#F5F5F5")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 5 & 6 zullen nog sterk stijgen",fill=NULL,
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 9 & 10 zullen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -75,7 +75,7 @@ ggplot(casus.working,aes(weekbegin,Agegroup,fill=phd))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 5 and 6 will still rise.",fill=NULL,
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 9 and 10 will still rise.",fill=NULL,
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#F5F5F5"),
         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
@@ -90,7 +90,7 @@ ggsave("data/02_EN_leeftijd_heatmap.png",width=16, height = 9)
 
 
 #Gewenste weken subsetten
-casus.working <- casus.working[casus.working$weekbegin>"2020-12-21"&casus.working$weekbegin<=today,]
+casus.working <- casus.working[casus.working$weekbegin>"2021-01-11"&casus.working$weekbegin<=today,]
 casus.working$weekbegin <- as.factor(casus.working$weekbegin)
 
 #barchart
@@ -106,7 +106,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=weekbegin))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 5 & 6 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 9 & 10 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -119,14 +119,14 @@ ggplot(casus.working,aes(Agegroup,phd,fill=weekbegin))+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
- scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ), labels=c( "51",
-                                                                                                                               "52",
-                                                                                                                               "53",
-                                                                                                                               "1",
-                                                                                                                               "2",
-                                                                                                                               "3",
+ scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ), labels=c( "3",                                                                                                                               "3",
                                                                                                                                "4",
-                                                                                                                               "5"))# +
+                                                                                                                               "5",
+                                                                                                                               "6",
+                                                                                                                               "7",
+                                                                                                                               "8",
+                                                                                                                               "9",
+                                                                                                                               "10"))# +
   
 ggsave("data/01_leeftijd_barchart.png",width=16, height = 9)
 
@@ -142,7 +142,7 @@ ggplot(casus.working,aes(Agegroup,phd,fill=weekbegin))+
   ylab("")+
   
   labs(title = "Cases COVID-19",
-       subtitle = "Number of cases per 100.000, within each agegroup. Week 5 and 6 will still rise.",
+       subtitle = "Number of cases per 100.000, within each agegroup. Week 9 and 10 will still rise.",
        fill="Week",
        caption = paste("Source: RIVM / CBS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -155,14 +155,14 @@ ggplot(casus.working,aes(Agegroup,phd,fill=weekbegin))+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
-  scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ), labels=c( "51",
-                                                                                                                                "52",
-                                                                                                                                "53",
-                                                                                                                                "1",
-                                                                                                                                "2",
-                                                                                                                                "3",
+  scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ), labels=c( "3",
                                                                                                                                 "4",
-                                                                                                                                "5"))
+                                                                                                                                "5",
+                                                                                                                                "6",
+                                                                                                                                "7",
+                                                                                                                                "8",
+                                                                                                                                "9",
+                                                                                                                                "10"))
 
 ggsave("data/01_EN_leeftijd_barchart.png",width=16, height = 9)
 
@@ -177,7 +177,7 @@ ggplot(casus.working,aes(Agegroup,n,fill=weekbegin))+
   ylab("")+
   
   labs(title = "Geconstateerde besmettingen COVID-19",
-       subtitle = "Aantal positief geteste mensen per 100.000 binnen de leeftijdsgroep. Week 5 & 6 zullen nog sterk stijgen.",
+       subtitle = "Aantal positief geteste mensen binnen de leeftijdsgroep. Week 9 & 10 zullen nog sterk stijgen.",
        fill="Week",
        caption = paste("Bron data: RIVM / CBS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -190,14 +190,14 @@ ggplot(casus.working,aes(Agegroup,n,fill=weekbegin))+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
-  scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ), labels=c( "51",
-                                                                                                                                "52",
-                                                                                                                                "53",
-                                                                                                                                "1",
-                                                                                                                                "2",
-                                                                                                                                "3",
+  scale_fill_manual(values=c('#c6cee6','#adb9dd', '#8fa2d4', '#6383c9', '#416ebd', '#3b64ad', '#f1a069', '#f8cbad' ), labels=c( "3",
                                                                                                                                 "4",
-                                                                                                                                "5"))
+                                                                                                                                "5",
+                                                                                                                                "6",
+                                                                                                                                "7",
+                                                                                                                                "8",
+                                                                                                                                "9",
+                                                                                                                                "10"))
 
 ggsave("data/01_leeftijd_barchart_abs.png",width=16, height = 9)
 

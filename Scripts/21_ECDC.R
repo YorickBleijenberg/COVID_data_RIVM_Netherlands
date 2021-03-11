@@ -8,15 +8,32 @@ library(lubridate)
 library(zoo)
 require(data.table)
 
-pos.rate.x <- paste0("C:\\Rdir\\rivm-dashboard\\VR\\VR_", format((Sys.Date()), "%Y-%m-%d"), ".csv")
-pos.rate <- read.csv(pos.rate.x,sep=";")  
-pos.rate$week_unix <- isoweek(as.Date(as.POSIXct(pos.rate$week_unix, origin="1970-01-01"), format = "%V"))
+#pos.rate.x <- paste0("C:\\Rdir\\rivm-dashboard\\VR\\VR_", format((Sys.Date()), "%Y-%m-%d"), ".csv")
+#pos.rate <- read.csv(pos.rate.x,sep=";")  
+#pos.rate$week_unix <- isoweek(as.Date(as.POSIXct(pos.rate$week_unix, origin="1970-01-01"), format = "%V"))
+
+
+
+dat <- fromJSON(txt = "https://coronadashboard.rijksoverheid.nl/json/NL.json")
+tested_daily <- as.data.frame(dat$tested_ggd_daily[1])
+tested_daily$date <- as.Date(as.POSIXct(tested_daily$values.date_unix, origin="1970-01-01"))
+#tested_daily$fact <- (4000 * tested_daily$values.infected_percentage)
+#tested_daily$MA_perc  <- round(frollmean(tested_daily$values.infected_percentage,7),1)
+#tested_daily$MA_perc_lead  <- lead(tested_daily$MA_perc,3)
+#tested_daily$MA_perc_fact <- (4000 * tested_daily$MA_perc_lead)
+
+
+
+
 
 tested_daily.toedit <-tested_daily
-tested_daily.toedit <- tested_daily.toedit[ -c(1,2,5,7)]
+tested_daily.toedit <- tested_daily.toedit[ -c(1,2,5,7:10)]
 
 colnames(tested_daily.toedit) = c("cases", "perc_pos", "date")
 
+tested_daily.toedit <- tested_daily.toedit %>%
+  mutate(date = as.Date(date, "%d-%m-%Y")) %>%
+  arrange(date)
 
 tested_daily.toedit$forteend <- (rollsum(tested_daily.toedit$cases, 14, fill = 0, align = "right"))
 tested_daily.toedit$vdphd <- tested_daily.toedit$forteend/17474677*100000
@@ -114,7 +131,7 @@ ggplot(tested_daily.toedit, aes(perc_pos, vdphd, colour=date))+
   geom_point( color = "black", size =4)+
   geom_point(   size =3)+
   
- geom_point(data=last.point, color="green")+
+ geom_point(data=last.point, color="green", size = 3)+
   
   scale_x_continuous(labels = scales::percent_format(scale = 1,accuracy = 1))+
   scale_color_gradient(low="gray", high="darkblue")+

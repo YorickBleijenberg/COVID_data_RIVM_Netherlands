@@ -12,7 +12,7 @@ library(ggforce)
 
 weeknumber <- isoweek(Sys.Date())-1
 
-report<-"C:\\Rdir\\rivm-week\\2021-03-COVID-19_WebSite_rapport_wekelijks_20210126_1259_final.pdf"
+report<-"C:\\Rdir\\rivm-week\\2021-09-COVID-19_WebSite_rapport_wekelijks_20210309_1259.pdf"
 
 
 report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
@@ -66,7 +66,7 @@ bco_no.setting <- (ggd_bco1$aantal.this.week[2]+ggd_bco1$aantal.this.week[3]+ggd
 bco.setting.perc <- 1-(bco_no.setting/bco_tot)
 
 
-ggd_bco3 <- ggd_bco2[-c(2, 4, 13), ]
+ggd_bco3 <- ggd_bco2[-c(2, 4, 19), ]
 sum.bco3 <- (sum(ggd_bco3$perc.this.week)/100)
 
 ggd_bco3$percentage.relative <-   (ggd_bco3$aantal.this.week/bco_yes.setting/sum.bco3)
@@ -119,7 +119,7 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
                      name = "", breaks = NULL, labels = NULL)+
   
   #scale_fill_brewer(palette="Set1")+
-  scale_fill_manual(values = c("#4daf4a","#ff7f00","#e41a1c","#ffff33","#377eb8","#a65628","#984ea3", "#a65628"))+
+  scale_fill_manual(values = c("#4daf4a","#ff7f00","#ffff33","#e41a1c","#377eb8","#a65628","#984ea3", "#a65628"))+
   
   #e41a1c - red --
   #ff7f00 - orange---

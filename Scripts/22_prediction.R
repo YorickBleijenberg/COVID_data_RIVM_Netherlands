@@ -124,7 +124,7 @@ verkiezingen <- paste("verkiezingen  ",emoji_ballotbox)
 Encoding(verkiezingen) <- "UTF-8"
 
  #sint.df =data.frame(date=as.Date(c("2020-12-05")),event=c(sinter))
- sint.persco.df =data.frame(date=as.Date(c("2021-02-23")),event=c(sint.persco))
+ sint.persco.df =data.frame(date=as.Date(c("2021-03-23")),event=c(sint.persco))
  kerst.df=data.frame(date=as.Date(c("2020-12-25")),event=c(kerst))
  
  carnaval.df=data.frame(date=as.Date(c("2021-02-14", "2021-02-16")),event=c(" ", carnaval))
@@ -240,9 +240,10 @@ geom_line(data=df.daling.4, aes(x=Datum, y=r_26_3), size = 1.25, color = "black"
  # geom_vline(data=sint.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "black")+
  # geom_text(data=sint.df  , mapping=aes(x=date, y=10000, label=event), size=5, angle=-90, vjust=0.4, hjust=0)+
   
-  #######
-  geom_vline(data=sint.persco.df,  mapping=aes(xintercept=date), linetype = "dotted", size = 1, color = "black")+
- geom_text(data=sint.persco.df  , mapping=aes(x=date, y=10000, label=event), size=4, angle=-90, vjust = -0.5, hjust=0, color= "black")+
+#######   PersCo  ####
+  
+   geom_vline(data=sint.persco.df,  mapping=aes(xintercept=date), linetype = "dotted", size = 1, color = "black")+
+   geom_text(data=sint.persco.df  , mapping=aes(x=date, y=7500, label=event), size=4, angle=-90, vjust = -0.5, hjust=0, color= "black")+
   
  # geom_vline(data=kerst.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "darkgreen")+
  # geom_text(data=kerst.df  , mapping=aes(x=date, y=6500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
@@ -383,8 +384,10 @@ ggplot(Merged_data_short)+
  # geom_vline(data=sint.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "black")+
  # geom_text(data=sint.df  , mapping=aes(x=date, y=10000, label=event), size=4, angle=-90, vjust=-0.4, hjust=0, color= "#F5F5F5")+
   
-  geom_vline(data=sint.persco.df,  mapping=aes(xintercept=date), linetype = "dotted", size = 1, color = "#F5F5F5")+
-  geom_text(data=sint.persco.df  , mapping=aes(x=date, y=10000, label=event), size=4, angle=-90, vjust=-0.4, hjust=0, color= "#F5F5F5")+
+### PersCo ######
+  
+   geom_vline(data=sint.persco.df,  mapping=aes(xintercept=date), linetype = "dotted", size = 1, color = "#F5F5F5")+
+   geom_text(data=sint.persco.df  , mapping=aes(x=date, y=7500, label=event), size=4, angle=-90, vjust=-0.4, hjust=0, color= "#F5F5F5")+
   
   ##geom_vline(data=kerst.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "darkgreen")+
  ## geom_text(data=kerst.df  , mapping=aes(x=date, y=10000, label=event), size=8, angle=-90, vjust=-0.4, hjust=0, color= "#F5F5F5")+

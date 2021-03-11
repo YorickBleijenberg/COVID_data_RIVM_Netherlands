@@ -9,13 +9,24 @@ vaccinaties_data_locale <- locale_dat$vaccinaties$data
 vaccinated.people <- as.integer(last(vaccinaties_data_locale$kpi_total$tab_total_estimated$value, 1))
 
 
+
+vacc_date_hist$date_of_update <- as.Date(vacc_date_hist$date_of_update)
+vacc_date_hist$date <- as.Date(vacc_date_hist$date)
+
+
+
+
 #people.vaccinated.gh <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated.csv",sep=",")
 #people.vaccinated.gh$date <- as.Date(people.vaccinated.gh$date)
 #vaccinated.people <- last(people.vaccinated.gh$total_vaccinations)
 vac.perc <-  round((vaccinated.people/17474677*100), digits =2)
 vac.perc <- format(vac.perc, scientific=F)
 
-total.vaccinated <- read.csv("C:\\Rdir\\data-contstant\\vaccination.planning.csv" ,sep=";")
+
+vacc_planning.file <- paste0("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/vaccination.planning.csv")
+total.vaccinated <-read.csv(vacc_planning.file,sep=";")
+
+#total.vaccinated <- read.csv("C:\\Rdir\\data-contstant\\vaccination.planning.csv" ,sep=";")
 
 colnames(total.vaccinated) = c("Datum", "infected", "seroprevlence",
                                "Pfizer/BioNTech", "Pfizer_deliver",
@@ -23,14 +34,19 @@ colnames(total.vaccinated) = c("Datum", "infected", "seroprevlence",
                                "AstraZeneca", "AstraZenica_deliver",
                                "CureVac","CureVac_deliver", 
                                "Janssen_2dose","Janssen",
-                               "Sanofi/GSK", "Sanofi/GSK_deliver",
                                "Moderna top-up", "Moderna top-up_deliver",
                                "Novavax", "Novavax_deliver",
                                "Valneva", "Valneva_deliver",
+                               "Sanofi/GSK", "Sanofi/GSK_deliver",
                                "total.avail","total.pop",
                                "60p", "70p", "80p","90p"
                                )
 total.vaccinated$Datum <- as.Date(total.vaccinated$Datum)
+
+
+
+total.vaccinated$total.sum <- total.vaccinated$`Pfizer/BioNTech`   +   total.vaccinated$Moderna   +   total.vaccinated$AstraZeneca   +   
+                                total.vaccinated$Janssen   +  total.vaccinated$CureVac    +  total.vaccinated$`Sanofi/GSK`
 
 
 test.phizer <- filter(total.vaccinated[(total.vaccinated$Datum == today),])
@@ -78,6 +94,20 @@ total.vaccinated.gather$valuecol <- as.integer(total.vaccinated.gather$valuecol)
 
 ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
 
+  
+  geom_vline(xintercept = as.Date("2021-04-01"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2021-07-01"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2021-10-01"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2022-01-01"), linetype = "dotted") + 
+  
+  annotate("text", x = as.Date("2021-04-01"), y = 42000000, label = " Q2",      size=5, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+  annotate("text", x = as.Date("2021-07-01"), y = 42000000, label = " Q3",      size=5, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+  annotate("text", x = as.Date("2021-10-01"), y = 42000000, label = " Q4",      size=5, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+  annotate("text", x = as.Date("2022-01-01"), y = 42000000, label = " 2022",    size=5, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+  
+  
+  
+  
   geom_hline(yintercept=17474677, color = "green", size = 2)+
   geom_hline(yintercept=15727209, color = "yellow", size = 2)+
   geom_hline(yintercept=13979741, color = "orange", size = 2)+
@@ -97,29 +127,30 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
   xlab("")+ 
   ylab("")+
   
-  scale_y_continuous(limits = c(0, 40000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000,35000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 50000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,30000000,40000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
-  geom_vline(xintercept = as.Date(today), linetype = "dotted") + 
+  #####geom_vline(xintercept = as.Date(today), linetype = "dotted") + 
   #geom_text(mapping=aes(x=as.Date(today), y=num.vaccinated, label=num.vaccine.avail.label), size=3, angle=-90, vjust=-0.4, hjust=1.1)+
   #geom_text(mapping=aes(x=as.Date(today), y=num.vaccinated, label=num.vaccinated.label), size=3, angle=-90, vjust=1, hjust=1.1)+
   
-  annotate("text", x = as.Date(today+1), y = 28000000, label = today,                     size=4, angle=0, vjust=-0.4, hjust = 0, color = "black")+
-  annotate("text", x = as.Date(today+1), y = 27000000, label = num.vaccinated.label,      size=3, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+ #### annotate("text", x = as.Date(today+1), y = 28000000, label = today,                     size=4, angle=0, vjust=-0.4, hjust = 0, color = "black")+
+ #### annotate("text", x = as.Date(today+1), y = 27000000, label = num.vaccinated.label,      size=3, angle=0, vjust=-0.4,hjust = 0, color = "black")+
  # annotate("text", x = as.Date(today+1), y = 26950000, label = num.vaccinated.full.label, size=3, angle=0, vjust=1, hjust = 0,color = "black")+
-  annotate("text", x = as.Date(today+1), y = 26025000, label = num.vaccine.avail.label,   size=3, angle=0, vjust=1, hjust = 0,color = "black")+
+ #### annotate("text", x = as.Date(today+1), y = 26025000, label = num.vaccine.avail.label,   size=3, angle=0, vjust=1, hjust = 0,color = "black")+
   
-  geom_vline(xintercept = as.Date("2021-07-22"), linetype = "dotted") + 
-  annotate("text", x = as.Date("2021-07-23"), y = 28000000, label = "2021-07-21",                     size=4, angle=0, vjust=-0.4, hjust = 0, color = "black")+
-  annotate("text", x = as.Date("2021-07-23"), y = 27000000, label = "100%  (in theorie)",      size=3, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+  geom_vline(xintercept = as.Date("2021-07-30"), linetype = "dashed") + 
+  annotate("text", x = as.Date("2021-08-01"), y = 30000000, label = "2021-07-30",                     size=4, angle=0, vjust=-0.4, hjust = 0, color = "black")+
+  annotate("text", x = as.Date("2021-08-01"), y = 27000000, label = "100% geleverd \n (áls alles goed gaat)",      size=3, angle=0, vjust=-0.4,hjust = 0, color = "black")+
+  
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-12-15", "2021-12-31")))+
+               limits = as.Date(c("2020-12-15", "2022-03-31")))+
   
   coord_cartesian(expand = FALSE)+
   
   labs(title = "Verwachte aantallen mensen die we volledig* kunnen vaccineren",
-       subtitle = "op basis van de Kamerbrief, 3-2-2021 \n *voor Janssen 1 dosis nodig; voor de andere vaccins 2 doses",
+       subtitle = "op basis van de Kamerbrief, 24-2-2021 \n *voor Janssen 1 dosis nodig; voor de andere vaccins 2 doses",
        caption = paste("Source: min VWS | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position =  "top",
@@ -144,7 +175,7 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
 
   
 
-
+#########
 
 
 
@@ -184,7 +215,7 @@ ggplot(total.vaccinated.gather.pot,aes( x=Datum, y=valuecol, fill = keycol))+
   xlab("")+ 
   ylab("")+
   
-  scale_y_continuous(limits = c(0, 50000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,25000000,30000000,35000000,40000000,45000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 45000000),breaks = c(2500000, 5000000, 7500000,10000000, 12500000,15000000, 17461543, 20000000,30000000,40000000,45000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   geom_vline(xintercept = as.Date(today), linetype = "dotted") + 
   #geom_text(mapping=aes(x=as.Date(today), y=num.vaccinated, label=num.vaccine.avail.label), size=3, angle=-90, vjust=-0.4, hjust=1.1)+
@@ -227,7 +258,7 @@ ggplot(total.vaccinated.gather.pot,aes( x=Datum, y=valuecol, fill = keycol))+
          axis.line = element_line(colour = "#F5F5F5"),
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/90_vaccine_deliverd_expect.png",width=16, height = 9)
+##  ggsave("data/90_vaccine_deliverd_expect.png",width=16, height = 9)
 
 
 agecbs.df <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/data-cbs/people.vaccinated%20-%20age-reverse.csv",sep=",")
@@ -292,5 +323,5 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
          axis.line = element_line(colour = "#F5F5F5"),
          panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/90_vaccine_deliverd_age.png",width=16, height = 9)
+##  ggsave("data/90_vaccine_deliverd_age.png",width=16, height = 9)
 
