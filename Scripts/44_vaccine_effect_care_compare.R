@@ -275,5 +275,5 @@ ggplot(relative.table, aes(x=dateInTable))+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-ggsave("data/98_leeftijd_relatief_care.png",width=16, height = 9)
+ggsave("data/plots/98_leeftijd_relatief_care.png",width=16, height = 9)
 
