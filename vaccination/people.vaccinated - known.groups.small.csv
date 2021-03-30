@@ -1,7 +1,7 @@
 vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type
 Medewerkers Acute zorg - groep: 40.000,40000,40000,40000,40000,COM
 Huisartsen - groep: 15.000,15000,14300,14050,14050,MOD
-Door GGD'en: Medewerkers Verpleeghuizen & ouderen < 75,490000,400946,201123,198194,COM/AZ
+Door GGD'en: zorgmedewerkers & ouderen < 75,490000,400946,201123,198194,COM/AZ
 Thuiswonend 90+,,62986,50953,44874,COM
 Thuiswonend 85-89,,175827,127491,99124,COM
 Thuiswonend 80-84,,338640,97129,51984,COM
