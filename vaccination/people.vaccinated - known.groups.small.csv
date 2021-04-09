@@ -1,11 +1,9 @@
 vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type
-Medewerkers Acute zorg - groep: 40.000,40000,40000,40000,40000,COM
-Huisartsen - groep: 15.000,15000,14300,14050,14050,MOD
-Door GGD'en: zorgmedewerkers & ouderen < 75,490000,400946,201123,198194,COM/AZ
-Thuiswonend 90+,,62986,50953,44874,COM
-Thuiswonend 85-89,,175827,127491,99124,COM
-Thuiswonend 80-84,,338640,97129,51984,COM
-Thuiswonend 75-79,,144754,4400,2349,COM
-Thuiswonend 60-64 & Hoog medisch risico,,198945,0,0,AZ
-Bewoners langdurigezorg - instellingsarts,,199827,149497,149497,COM/AZ/MOD
-Bewoners langdurigezorg - huisarts,,112265,5419,5419,COM/MOD
+Thuiswonend 90+,,63731,54566,54566,COM
+Thuiswonend 85-89,,177945,145706,145706,COM
+Thuiswonend 80-84,,346431,157544,157544,COM
+Thuiswonend 75-79,,242759,7303,7303,COM
+Thuiswonend 70-74,,54790,1670,1670,COM
+Overige personen gevaccineerd door de GGD,,423573,202057,202057,COM/AZ
+Gevaccineerd door huisartsen (geschat),,331774,0,0,AZ
+Gevaccineerd door overige uitvoerders (geschat),,416559,237578,237578,COM/MOD/AZ
