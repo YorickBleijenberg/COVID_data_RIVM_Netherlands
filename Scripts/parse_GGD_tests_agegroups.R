@@ -7,12 +7,12 @@ require(scales)
 ####  parse code by mzelst  ###
 ####
 
-report<-"C:\\Rdir\\rivm-week\\2021-09-COVID-19_WebSite_rapport_wekelijks_20210309_1259.pdf"
-weeknumber <-09
+report<-"C:\\Rdir\\rivm-week\\2021-15-COVID-19_WebSite_rapport_wekelijks_20210420_1126_publicatie.pdf"
+weeknumber <-15
 
 
-report<-"https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210202_1259_final.pdf"
-weeknumber <- isoweek(Sys.Date())-1
+#report<-"https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210202_1259_final.pdf"
+#weeknumber <- isoweek(Sys.Date())-1
 
 #### tests per agegroup GGD ####
 

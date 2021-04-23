@@ -32,7 +32,8 @@ tested_daily.count$MA_perc_lead  <- lead(tested_daily.count$MA_perc,3)
 tested_daily.count$MA_perc_fact <- (4000 * tested_daily.count$MA_perc_lead)
 
 
-
+tested_daily.count$Ma_tot_tests <-  round(frollmean(tested_daily.count$values.tested_total ,7),0)
+tested_daily.count$Ma_tot_tests_lead  <- lead(tested_daily.count$Ma_tot_tests,3)
 
 write.csv(tested_daily.count, file = "data-dashboards/percentage-positive/percentage-positive-daily-national.csv")
 
@@ -42,7 +43,8 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24", "2020-0
                                  "2020-10-19","2020-10-26","2020-11-02", "2020-11-09","2020-11-16",
                                  "2020-11-23","2020-11-30","2020-12-07", "2020-12-14","2020-12-21",
                                  "2020-12-28","2021-01-04","2021-01-11", "2021-01-18","2021-01-25",
-                                 "2021-02-01","2021-02-08","2021-02-15", "2021-03-01","2021-03-08"))
+                                 "2021-02-01","2021-02-08","2021-02-15", "2021-03-01","2021-03-08",
+                                 "2021-03-15","2021-03-22","2021-03-29", "2021-04-05","2021-04-12"))
 
 dates_vline_mondays <- which((tested_daily.count$date %in% dates_vline_mondays))
 
@@ -60,28 +62,44 @@ values.subtitle <- paste0("Datum laatste datapunt: ",date.last.value, "    ---  
 
 
 
+tested_daily.count$values.tested.min.pos  <- tested_daily.count$values.tested_total-tested_daily.count$positive_tests
+
+
+
+
 ggplot(data = tested_daily.count,)+  
+  
   geom_bar(stat='identity', mapping = aes(x = date, y = values.tested_total), fill = "#ED7D31")+
-  geom_line(mapping = aes(x = date, y = fact), colour = "#FFFFFF", size = 0.5 )+
+  geom_bar(stat='identity', mapping = aes(x = date, y = positive_tests), fill = "red")+
+  
+  
+  geom_line(mapping = aes(x = date, y = Ma_tot_tests_lead), colour = "#F5F5F5", size = 2 )+
+  geom_line(mapping = aes(x = date, y = Ma_tot_tests_lead), colour = "#9e480e", size = 1 )+
+  
+ # geom_line(mapping = aes(x = date, y = fact), colour = "#FFFFFF", size = 0.5 )+
   geom_line(mapping = aes(x = date, y = fact), colour = "#4472C4", size = 1 )+
   
   geom_point(mapping = aes(x = date, y = fact), colour = "#FFFFFF",size = 1) +
   geom_point(mapping = aes(x = date, y = fact), colour = "#4472C4",size = 2,alpha = 0.8) +
   
+    geom_line(mapping = aes(x = date, y = MA_perc_fact), colour = "black", size = 2 )+
   
-  geom_line(mapping = aes(x = date, y = MA_perc_fact), colour = "black", size = 2 )+
   
   
-  scale_y_continuous(limits = c(0, 89000), labels = label_number(big.mark = ".", decimal.mark = ","),
-                     sec.axis = sec_axis(~ . / 4000))+
+  
+  
+  scale_y_continuous(limits = c(0, NA), breaks = c(0, 10000, 20000,40000,60000,80000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
+                     sec.axis = sec_axis(~ . / 400000, labels = percent))+
+  
+  
+  
   
   scale_x_date(date_breaks = "2 week", 
                date_labels= format("%d/%m"),
                limits = as.Date(c("2020-06-03", NA)))+
   
- geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
-
-                       col = "gray", lwd = 0.2, linetype= "dashed")+
+ # geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
+#                       col = "gray", lwd = 0.2, linetype= "dashed")+
   
   coord_cartesian(expand = FALSE)+
   
@@ -109,4 +127,5 @@ ggplot(data = tested_daily.count,)+
          axis.text.y.right = element_text(color = "#4472C4")
   )+
   
-ggsave("data/22_tests_ggd_daily.png",width=16, height = 9)
+ggsave("data/plots/22_tests_ggd_daily.png",width=16, height = 9)
+

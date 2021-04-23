@@ -10,15 +10,22 @@ geprikt <- new.vacc.df
 aantal.doses.gezet <- last(geprikt$estimated_new)
 
 opdeplank <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated%20-%20doses.received.csv",sep=",")
-opdeplank$date <- as.Date(opdeplank$date)
+
+opdeplank[is.na(opdeplank)] <- 0
 
 geprikt <- geprikt[ -c(1,3,4,6:18)]
-opdeplank <- opdeplank[ -c(2:8,10:14)]
+opdeplank <- opdeplank[ -c(2:10,12:33)]
 
 colnames(geprikt) <- c("date", "dose_given")
-colnames(opdeplank) <- c("date", "dose_recieved")
+colnames(opdeplank) <- c("date","dose_recieved")
   
-opdeplank <- merge(opdeplank, geprikt, by ="date", all.x = TRUE )
+opdeplank$date <- as.Date(opdeplank$date)
+
+opdeplank <- merge(opdeplank, geprikt, by ="date", all =  TRUE )
+
+#
+#
+
 opdeplank <- filter(opdeplank, date > "2020-12-24")
 opdeplank <- filter(opdeplank, date < today)
 
@@ -51,7 +58,7 @@ while (n < (nrow(opdeplank)+1)){
 
 #### subtitle
 
-days.in.storage <- last(opdeplank$Dagen)
+days.in.storage <- last(opdeplank$time.a)
 aantal.doses.gezet <- format(aantal.doses.gezet ,big.mark = ".", decimal.mark = ",")
 storage.subtitle <- paste0("De ", aantal.doses.gezet, 
                            " doses die gisteren zijn weggeprikt, zijn ", days.in.storage, " dagen geleden binnengekomen.")
@@ -78,8 +85,11 @@ ggplot(opdeplank, aes(x=date, y=Dagen))+
   #ylab("")+
   
   scale_y_continuous(limits = c(0, 30))+
-  scale_x_date(date_breaks  = "1 week",date_labels= format("%v"),
-               limits  = as.Date(c("2021-01-06", as.character(yesterday) )))+
+  
+  scale_x_date(date_breaks  = "1 week",
+               date_labels = "%d %b",
+               limits  = as.Date(c("2021-01-06", as.character(yesterday) ))
+               )+
   
   labs(title     = "Aantal dagen dat de geprikte dosis in de vriezer lag",
        subtitle = storage.subtitle,

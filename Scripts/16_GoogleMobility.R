@@ -20,10 +20,16 @@ Yesterday <- Sys.Date()-1
 
 #### read the latest Google mobility report from the web ####
 
+#download.file("C:\\Rdir\\Rscripts\\Global_Mobility_Report.csv",temp)
+
 
 temp <- tempfile()
 download.file("https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip",temp)
-google_mob_raw <- read.csv(unz(temp, "2020_NL_Region_Mobility_Report.csv"),sep=",")
+google_mob_raw2020 <- read.csv(unz(temp, "2020_NL_Region_Mobility_Report.csv"),sep=",")
+google_mob_raw2021 <- read.csv(unz(temp, "2021_NL_Region_Mobility_Report.csv"),sep=",")
+
+
+google_mob_raw <- rbind(google_mob_raw2020, google_mob_raw2021)
 
 #### convert date column to date ####
 
@@ -70,8 +76,17 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 #                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "Black Friday", "Sinterklaas", "lockdown"))
 
 
-persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18", "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17", "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03")), 
-                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht", "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9","Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", "lockdown","" ,"avondklok", "basisscholen open", "kappers open"))
+persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18",
+                                    "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17",
+                                    "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
+                                    "2021-04-04")), 
+                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
+                             "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9",
+                             "Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", 
+                             "lockdown","" ,"avondklok", "basisscholen open", "kappers open", "Eerste Paasdag"))
+
+#persco.df=data.frame(date=as.Date(c("2021-02-25")), 
+#                     event=c("Meer risico PersCo"))
 
 
 
@@ -89,12 +104,12 @@ last.date.old.wide.3$Rt_up   <- (last.date.old.wide.3$Rt_up*50)-50
 
 ggplot(Google_mob_NL_short)+  
   
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -49.3, xend = as.Date(Yesterday), yend = -49.3),linetype = "dashed", color = "#54b251")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -22.1, xend = as.Date(Yesterday), yend = -22.1),linetype = "dashed", color = "#fe8003")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -49.3, xend = as.Date("2021-01-15"), yend = -49.3),linetype = "dashed", color = "#54b251")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -22.1, xend = as.Date("2021-01-15"), yend = -22.1),linetype = "dashed", color = "#fe8003")+
  # geom_segment(aes(x = as.Date("2020-12-15"), y = -12, xend = as.Date(Yesterday), yend = -12),linetype = "dashed", color = "#10be45")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date(Yesterday), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date(Yesterday), yend = -48.6),linetype = "dashed", color = "#e5292b")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = 17.4, xend = as.Date(Yesterday), yend = 17.4),linetype = "dashed", color = "#9951a4")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date("2021-01-15"), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date("2021-01-15"), yend = -48.6),linetype = "dashed", color = "#e5292b")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = 17.4, xend = as.Date("2021-01-15"), yend = 17.4),linetype = "dashed", color = "#9951a4")+
   
   geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2) +
   geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2) +
@@ -138,7 +153,7 @@ theme_classic()+
       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.4,0.15),
+  theme(legend.position = c(0.3,0.15),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.margin = margin(3, 3, 3, 3),
@@ -177,6 +192,67 @@ theme_classic()+
 ggsave("data/36_Google_data_NL.png",width=16, height = 9)
 
 
+
+
+
+
+ggplot(Google_mob_NL_short)+  
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -49.3, xend = as.Date("2021-01-15"), yend = -49.3),linetype = "dashed", color = "#54b251")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -22.1, xend = as.Date("2021-01-15"), yend = -22.1),linetype = "dashed", color = "#fe8003")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date("2021-01-15"), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date("2021-01-15"), yend = -48.6),linetype = "dashed", color = "#e5292b")+
+  geom_segment(aes(x = as.Date("2020-12-15"), y = 17.4, xend = as.Date("2021-01-15"), yend = 17.4),linetype = "dashed", color = "#9951a4")+
+  
+  geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2, alpha=0.25) +
+  geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2, alpha=0.25) +
+  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), lwd=2, alpha=0.75) +
+  geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2, alpha=0.75)+
+  geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2, alpha=0.75) +
+  
+  geom_point(aes(x=Datum, y = retail_recreatie,    color = "Retail & recreatie"), lwd=1.5, alpha=0.25) +
+  geom_point(aes(x=Datum, y = supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=1.5, alpha=0.25) +
+  geom_point(aes(x=Datum, y = werk,                color = "Werk"), lwd=1.5) +
+  geom_point(aes(x=Datum, y = thuis,               color = "Thuis"), lwd=1.5)+
+  geom_point(aes(x=Datum, y = openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=1.5) +
+  
+  #  geom_line(aes(x=Datum, y = retail_recreatie,    color = "Retail & recreatie"), lwd=1, alpha=0.25) +
+  #  geom_line(aes(x=Datum, y = supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=1, alpha=0.25) +
+  #  geom_line(aes(x=Datum, y = werk,                color = "Werk"), lwd=1, alpha=0.25) +
+  #  geom_line(aes(x=Datum, y = thuis,               color = "Thuis"), lwd=1, alpha=0.25)+
+  #  geom_line(aes(x=Datum, y = openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=1, alpha=0.25) +
+  
+  
+  theme_classic()+
+  xlab("")+ 
+  ylab("")+
+  scale_color_manual(values = c("#3c81b9", "#54b251", "#fe8003", "#9951a4", "#e5292b"))+
+  labs(title = "Google Mobility - Nederland",
+       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
+       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
+  theme(legend.position = c(0.30,0.15),
+        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.margin = margin(3, 3, 3, 3),
+        legend.text = element_text(colour="black", size=20, face="bold"))+
+  
+  theme( plot.background = element_rect(fill = "#F5F5F5"),
+         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+         axis.text = element_text(size=14,color = "black",face = "bold"),
+         axis.text.y = element_text(face="bold", color="black", size=12),
+         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+         axis.ticks.length = unit(0.5, "cm"),
+         axis.line = element_line(colour = "#F5F5F5"),
+         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+         strip.text.x = element_text(size = 13, color = "black"),
+         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
+  geom_hline(yintercept=0) +
+  geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
+  geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
+  geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
+  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
+  ggsave("data/36_Google_data_NL_dots.png",width=16, height = 9)
 
 
 #### Google NL tweet ####
@@ -412,64 +488,6 @@ Encoding(tweet.GoogleM.NL.tweet) <- "UTF-8"
 
 
 
-
-ggplot(Google_mob_NL_short)+  
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -49.3, xend = as.Date(Yesterday), yend = -49.3),linetype = "dashed", color = "#54b251")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -22.1, xend = as.Date(Yesterday), yend = -22.1),linetype = "dashed", color = "#fe8003")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date(Yesterday), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date(Yesterday), yend = -48.6),linetype = "dashed", color = "#e5292b")+
-  geom_segment(aes(x = as.Date("2020-12-15"), y = 17.4, xend = as.Date(Yesterday), yend = 17.4),linetype = "dashed", color = "#9951a4")+
-  
-  geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2, alpha=0.25) +
-  geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2, alpha=0.25) +
-  geom_line(aes(x=Datum, y = MA_werk,                color = "Werk"), lwd=2, alpha=0.75) +
-  geom_line(aes(x=Datum, y = MA_thuis,               color = "Thuis"), lwd=2, alpha=0.75)+
-  geom_line(aes(x=Datum, y = MA_openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=2, alpha=0.75) +
-  
-    geom_point(aes(x=Datum, y = retail_recreatie,    color = "Retail & recreatie"), lwd=1.5, alpha=0.25) +
-    geom_point(aes(x=Datum, y = supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=1.5, alpha=0.25) +
-    geom_point(aes(x=Datum, y = werk,                color = "Werk"), lwd=1.5) +
-    geom_point(aes(x=Datum, y = thuis,               color = "Thuis"), lwd=1.5)+
-    geom_point(aes(x=Datum, y = openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=1.5) +
-  
-#  geom_line(aes(x=Datum, y = retail_recreatie,    color = "Retail & recreatie"), lwd=1, alpha=0.25) +
-#  geom_line(aes(x=Datum, y = supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=1, alpha=0.25) +
-#  geom_line(aes(x=Datum, y = werk,                color = "Werk"), lwd=1, alpha=0.25) +
-#  geom_line(aes(x=Datum, y = thuis,               color = "Thuis"), lwd=1, alpha=0.25)+
-#  geom_line(aes(x=Datum, y = openbaar_vervoer,    color = "Openbaar Vervoer"), lwd=1, alpha=0.25) +
-  
-  
-theme_classic()+
-  xlab("")+ 
-  ylab("")+
-  scale_color_manual(values = c("#3c81b9", "#54b251", "#fe8003", "#9951a4", "#e5292b"))+
-  labs(title = "Google Mobility - Nederland",
-       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
-       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
-  theme(legend.position = c(0.45,0.15),
-        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
-        legend.title = element_blank(),
-        legend.margin = margin(3, 3, 3, 3),
-        legend.text = element_text(colour="black", size=20, face="bold"))+
-  
-  theme( plot.background = element_rect(fill = "#F5F5F5"),
-         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
-         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
-         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
-         axis.text = element_text(size=14,color = "black",face = "bold"),
-         axis.text.y = element_text(face="bold", color="black", size=12),
-         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
-         axis.ticks.length = unit(0.5, "cm"),
-         axis.line = element_line(colour = "#F5F5F5"),
-         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
-         strip.text.x = element_text(size = 13, color = "black"),
-         strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
-  geom_hline(yintercept=0) +
-  geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
-  geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
-  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
-ggsave("data/36_Google_data_NL_dots.png",width=16, height = 9)
 
 ##### Google raw tweet ####
 tweet.GoogleM.raw.tweet <- "Google mobility data.

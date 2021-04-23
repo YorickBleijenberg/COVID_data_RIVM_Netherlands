@@ -67,8 +67,11 @@ df4 <- df3
 #dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
 #dates_vline <- which((df4$Datum %in% dates_vline))
 
-dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", "2020-11-18", "2020-12-15", "2021-01-23")),
-                          event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown","verzwaring", "einde verzwaring", "lockdown", "                    avondklok"))
+dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", 
+                                         "2020-11-18", "2020-12-15", "2021-01-23", "2021-02-08",  "2021-03-31")),
+                          event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown",
+                                  "verzwaring", "einde verzwaring", "lockdown", "                    avondklok",
+                                 "basisscholen open", "avondklok 22:00uur"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]
@@ -257,7 +260,13 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   "2021-02-15",
                   "2021-02-22",
                   "2021-03-01",
-                  "2021-03-08"
+                  "2021-03-08",
+                  "2021-03-15",
+                  "2021-03-22",
+                  "2021-03-29",
+                  "2021-04-05",
+                  "2021-04-12",
+                  "2021-04-19"
                   
                  ))   
 
@@ -309,7 +318,7 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
         #axis.labels.x=date_format("%d-%b"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+ #,
   #panel.grid.major.x = element_line(colour= "darkgray", linetype = "solid"))
-    ggsave("data/07_cases_type1-monday.png",width=16, height = 9)
+    ggsave("data/plots/07_cases_type1-monday.png",width=16, height = 9)
 
 
 

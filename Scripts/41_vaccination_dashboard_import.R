@@ -1,7 +1,12 @@
 
 
-#vaccine.edition.name <- "rustig-weekje-door-trage-leveringen"
-freezer = 2578060
+
+# vaccine.edition.name <- "weggooien-is-zonde"
+
+freezer = 5899000
+
+Jaartal = 1955
+
 
 #### import historic vaccination data from GH #####
 
@@ -14,7 +19,8 @@ vacc_date_hist$date_of_update <- as.Date(vacc_date_hist$date_of_update)
 vacc_date_hist$date <- as.Date(vacc_date_hist$date)
 last(vacc_date_hist$total_estimated)
 
-## Locale pulled in from the dashboard repository, with most recent version in branch `master`
+
+
 locale_json <- "https://coronadashboard.rijksoverheid.nl/json/NL.json"
 locale_dat <- fromJSON(txt = locale_json)
 
@@ -23,43 +29,112 @@ locale_dat$vaccine_administered_total$last_value$estimated
 locale_dat$vaccine_administered_total$last_value$reported
 
 
-
-
+long.est <- locale_dat$vaccine_administered_total$last_value$estimated
+long.rep <-locale_dat$vaccine_administered_total$last_value$reported
 #test.df <- locale_dat$vaccine_administered_ggd$values
 #test.df$date_unix <- as.Date(as.POSIXct(test.df$date_unix , origin="1970-01-01"))
-#daily.vaccination.data.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vaccine-data-lnaz.csv")
-#write.csv(test.df, file = daily.vaccination.data.filename, row.names = F)
 
-ggd <- locale_dat$vaccine_administered_ggd$values
+
+estimated.given.doc <- locale_dat$vaccine_administered_doctors$values
+colnames(estimated.given.doc) <- c("date","doctors" ,"date2")
+
+estimated.given.ggd <- locale_dat$vaccine_administered_ggd_ghor$values
+colnames(estimated.given.ggd) <- c("date","ggd" ,"date2")
+estimated.given.ggd2 <- locale_dat$vaccine_administered_ggd$values
+colnames(estimated.given.ggd2) <- c("date","ggd2" ,"date2")
+
+estimated.given.care_hosp <- locale_dat$vaccine_administered_hospitals_and_care_institutions$values
+colnames(estimated.given.care_hosp) <- c("date","hospital_care" ,"date2")
+
+
+#  store
+#  estimated.given.care_hosp <- locale_dat$vaccine_administered_ggd$values
+#  colnames(estimated.given.care_hosp) <- c("date","hospital_care" ,"date2")
+
+#  vac.given.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vac.all.given.jsn.csv")
+#  write.csv2(estimated.given.care_hosp, file = "data/vac.total_ggd.csv", row.names = F)
+
+
+#estimated.given.care <- locale_dat$vaccine_administered_care_institutions$values
+#colnames(estimated.given.care) <- c("date","care" ,"date2")
+
+estimated.given.all <- merge(estimated.given.ggd,estimated.given.care_hosp, all = TRUE)
+estimated.given.all <- merge(estimated.given.all,estimated.given.doc, all = TRUE)
+estimated.given.all <- merge(estimated.given.all,estimated.given.ggd2,all = TRUE)
+
+#estimated.given.all <- merge(estimated.given.all,estimated.given.care_hosp,all = TRUE)
+#estimated.given.all <- merge(estimated.given.all,estimated.given.hosp2,all = TRUE)
+
+estimated.given.all$date <- as.Date(as.POSIXct(estimated.given.all$date , origin="1970-01-01"))
+estimated.given.all$date2 <- as.Date(as.POSIXct(estimated.given.all$date2 , origin="1970-01-01"))
+
+vac.given.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vac.all.given.jsn.csv")
+write.csv2(estimated.given.all, file = vac.given.filename, row.names = F)
+
+
+
+vaccine_stock <- locale_dat$vaccine_stock$values
+vaccine_stock$date_unix <- as.Date(as.POSIXct(vaccine_stock$date_unix , origin="1970-01-01"))
+vaccine_stock$date_of_insertion_unix <- as.Date(as.POSIXct(vaccine_stock$date_of_insertion_unix , origin="1970-01-01"))
+vaccine_stock[is.na(vaccine_stock)] <- 0
+
+vaccine_stock.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vaccine_stock.csv")
+write.csv2(vaccine_stock, file = vaccine_stock.filename, row.names = F)
+
+
+vaccine_delivery_per_supplier <- locale_dat$vaccine_delivery_per_supplier$values
+
+vaccine_delivery_per_supplier$date_of_insertion_unix <- as.Date(as.POSIXct(vaccine_delivery_per_supplier$date_of_insertion_unix , origin="1970-01-01"))
+vaccine_delivery_per_supplier$date_of_report_unix <- as.Date(as.POSIXct(vaccine_delivery_per_supplier$date_of_report_unix , origin="1970-01-01"))
+vaccine_delivery_per_supplier$date_start_unix <- as.Date(as.POSIXct(vaccine_delivery_per_supplier$date_start_unix , origin="1970-01-01"))
+vaccine_delivery_per_supplier$date_end_unix  <- as.Date(as.POSIXct(vaccine_delivery_per_supplier$date_end_unix , origin="1970-01-01"))
+vaccine_stock.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vaccine_delivery_per_supplier.csv")
+write.csv2(vaccine_delivery_per_supplier, file = vaccine_stock.filename, row.names = F)
+
+
+vaccine_delivery<- locale_dat$vaccine_delivery$values
+
+
+
+
 
 ## Vaccines given
-
 vaccins.estimated.total <- as.integer(locale_dat$vaccine_administered_total$last_value$estimated)
 vaccins.reported.total  <- as.integer(locale_dat$vaccine_administered_total$last_value$reported)
 vaccins.registred.ggd   <- as.integer(locale_dat$vaccine_administered_ggd_ghor$last_value$reported)
-vaccins.registerd.hops  <- as.integer(locale_dat$vaccine_administered_lnaz$last_value$reported)
-vaccins.estimated.care  <- as.integer(locale_dat$vaccine_administered_care_institutions$last_value$estimated)
+#vaccins.registerd.hops  <- as.integer(locale_dat$vaccine_administered_lnaz$last_value$reported)
+#vaccins.estimated.care  <- as.integer(locale_dat$vaccine_administered_care_institutions$last_value$estimated)
 vaccins.estimated.ha    <- as.integer(locale_dat$vaccine_administered_doctors$last_value$estimated)
+vaccins.registerd.hops  <- as.integer(0)
+vaccins.estimated.care  <- as.integer(locale_dat$vaccine_administered_hospitals_and_care_institutions$last_value$estimated)
+
+
+
 
 #second.dose <- last(vacc_date_hist$people_fully_vaccinated)
 
-second.dose <- as.integer((vaccins.estimated.total/100*25))       # second.dose <- 40000+31000+162253  - sunday
+second.dose <- as.integer((vaccins.estimated.total/100*20.6)) # 15%  6%  # second.dose <- 40000+31000+162253  - sunday
 vaccinated.second <- second.dose
-
 
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)
 
 estimated.new.today <- (vaccins.estimated.total - last(vacc_date_hist$total_estimated))
 reported.new.today <- (vaccins.reported.total - last(vacc_date_hist$total_registerd))
-full.new.today <-(second.dose - last(vacc_date_hist$people_fully_vaccinated )) ### hier gaat iets mis
+full.new.today <-(second.dose - last(vacc_date_hist$people_fully_vaccinated )) 
 ggd.new.today <- (vaccins.registred.ggd - last(vacc_date_hist$ggd_total))
-hosp.new.today <- (vaccins.registerd.hops - last(vacc_date_hist$hosp_total ))
+hosp.new.today <-  0  # (vaccins.registerd.hops - last(vacc_date_hist$hosp_total ))
 care.new.today <- (vaccins.estimated.care - last(vacc_date_hist$care_total))
 ha.new.today <- (vaccins.estimated.ha - last(vacc_date_hist$ha_total))
 
+
 week <- isoweek(Sys.Date()-1)
 
+### vaccins.estimated.care
+### hosp.new.today
+### care.new.today
+
+new.row.df <-0
 new.row.df <- data.frame(today, yesterday,week,vaccins.reported.total,vaccins.estimated.total,people.vaccinated,
                  second.dose,vaccins.registred.ggd,vaccins.registerd.hops, vaccins.estimated.care,vaccins.estimated.ha,
                  reported.new.today,estimated.new.today,full.new.today,ggd.new.today,hosp.new.today,care.new.today,ha.new.today)
@@ -72,14 +147,38 @@ new.vacc.df <- rbind(vacc_date_hist, new.row.df)
 
 new.vacc.df[is.na(new.vacc.df)] <- 0
 
-daily.vaccination.data.filename <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_vaccine-data.csv")
-write.csv(new.vacc.df, file = daily.vaccination.data.filename, row.names = F)
+# daily.vaccination.data.filename <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_vaccine-data.csv")
+# write.csv(new.vacc.df, file = daily.vaccination.data.filename, row.names = F)
 daily.vaccination.data.filename.x <- paste0("data/plots/",format(Sys.Date(), "%Y-%m-%d"), "_vaccine-data.csv")
 write.csv(new.vacc.df, file = daily.vaccination.data.filename.x, row.names = F)
 
 
 
+est.new.site <- estimated.new.today - reported.new.today
 
+
+
+##### check if max ######
+
+emoji_syringe <- intToUtf8(0x1F489)
+emoji_partyface <- intToUtf8(0x1F973)
+
+
+new.vacc.df.short <- new.vacc.df %>% filter(date > "2021-03-01")
+estimated.new.today.np <- last(new.vacc.df.short$estimated_new)
+
+
+maxValueVac <- max(new.vacc.df.short$estimated_new, na.rm = TRUE)
+dagRecordVaccination <- ""
+
+if(estimated.new.today.np == maxValueVac){
+  dagRecordVaccination <- paste("(", intToUtf8(0x1F973),"dagrecord",intToUtf8(0x1F973),"),", sep = "")
+}else {
+  dagRecordVaccination <- ""}
+
+
+source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     
+source("C:\\Rdir\\Rscripts\\50_vaccine_in_storage_seperate.R")
 
 
 
@@ -89,7 +188,7 @@ new.vacc.df.work <- new.vacc.df
 
 new.vacc.df.work[is.na(new.vacc.df.work)] <- 0
 
-new.vacc.df.work$for_MA <- new.vacc.df.work$care_new + new.vacc.df.work$hosp_new + new.vacc.df.work$ggd_new + new.vacc.df.work$ha_new
+new.vacc.df.work$for_MA <- new.vacc.df.work$estimated_new         # $care_new  + new.vacc.df.work$ggd_new + new.vacc.df.work$ha_new
 new.vacc.df.work$MAnew  <- rollmeanr(new.vacc.df.work$for_MA, 7, fill = 0)
 new.vacc.df.work$MAnew_lead  <- lead(  new.vacc.df.work$MAnew,3)
 s_dayMA_tot <- last(new.vacc.df.work$MAnew)
@@ -107,13 +206,16 @@ value <- "vacc_total"
 gathercols <- c("hosp_new","care_new","ggd_new", "ha_new")
 new.vacc.df.work.long <- gather(new.vacc.df.work, key, value, gathercols)
 
-#new.vacc.df.work.long$key <- as.factor(new.vacc.df.work.long$key)
+#new.vacc.df.work.long$key <- as.factor(new.vacc.df.work.long$key, c("ggd_new","hosp_new","care_new", "ha_new"))
+
+
+
 
 #######   plot new per day ######
 
 
 ggplot(new.vacc.df.work.long)+
-  geom_col(aes(x=date, y=value, fill = key ), color= "black")+
+  geom_col(aes(x=date, y=value, fill =  factor(key, levels=c("care_new", "ha_new","ggd_new","hosp_new")) ), color= "black")+
   
   geom_line( aes(x=date, y=MAnew_lead), color = "#f5f5f5", size = 4)+
   geom_line( aes(x=date, y=MAnew_lead), color = "black", size = 2)+  
@@ -129,9 +231,9 @@ ggplot(new.vacc.df.work.long)+
   xlab("")+
   ylab("")+
   
-  #scale_fill_manual( values=c("#5c146e", "#fca50a", "darkgreen", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+  scale_fill_manual( values=c("#d7191c", "#2c7bb6",  "#fdae61","#8a9296"), labels=c ("ziekenhuizen/zorginstellingen","huisartsen", "GGD'en","Hugo correctie"))+
   
-  scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+  # scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","huisartsen", "ziekenhuizen" ))+
   
   labs(title = "Vaccinaties per dag",
       # subtitle = subtitle_text_new,
@@ -186,16 +288,13 @@ new.vacc.df.work$new <- new.vacc.df.work$ggd_new+new.vacc.df.work$hosp_new+ new.
   
   
 library(viridis)
+
   
   
 ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
     geom_bar(stat='identity', color="black")+
-    
-    #scale_x_date(date_breaks = "1 weeks", 
-    #             date_labels= format("%d/%m"),
-    #             limits = as.Date(c("2021-01-6", "2021-02-08")))+
-  
+
     scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
     
   scale_fill_viridis_d() +
@@ -232,11 +331,79 @@ ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels
     
 ggsave("data/plots/95_vaccinated_week_day.png",width=16, height = 9)  
   
+
+
+ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+  
+  annotate("rect", xmin = as.Date("2021-03-27"), xmax =as.Date("2021-04-02"), ymin =433394, ymax = 513016, color = "black",fill = "darkred", alpha = 0.2)+
+  annotate("rect", xmin = as.Date("2021-03-27"), xmax =as.Date("2021-04-02"), ymin =0, ymax = 433394, color = "black",fill = "darkgray", alpha = 0.4)+
+  
+  
+  annotate("rect", xmin = as.Date("2021-04-03"), xmax =as.Date("2021-04-09"), ymin =499362, ymax = 624361, color = "black",fill = "darkred", alpha = 0.2)+
+  annotate("rect", xmin = as.Date("2021-04-03"), xmax =as.Date("2021-04-09"), ymin =0, ymax = 499362, color = "black",fill = "gray", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2021-04-03"), xmax =as.Date("2021-04-09"), ymin =624361, ymax = 652559, color = "black",fill = "green", alpha = 0.6)+
+  
+  annotate("rect", xmin = as.Date("2021-04-10"), xmax =as.Date("2021-04-16"), ymin =697408, ymax = 710263, color = "black",fill = "darkred", alpha = 0.2)+
+  annotate("rect", xmin = as.Date("2021-04-10"), xmax =as.Date("2021-04-16"), ymin =0, ymax = 697408, color = "black",fill = "gray", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2021-04-10"), xmax =as.Date("2021-04-16"), ymin =710263, ymax = 757719, color = "black",fill = "green", alpha = 0.6)+
+  
+  annotate("rect", xmin = as.Date("2021-04-17"), xmax =as.Date("2021-04-23"), ymin =665567, ymax = 691274, color = "black",fill = "darkred", alpha = 0.2)+
+  annotate("rect", xmin = as.Date("2021-04-17"), xmax =as.Date("2021-04-23"), ymin =0, ymax = 665567, color = "black",fill = "gray", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2021-04-17"), xmax =as.Date("2021-04-23"), ymin =691274, ymax = 757719, color = "black",fill = "green", alpha = 0.6)+
+  
+  annotate("rect", xmin = as.Date("2021-04-24"), xmax =as.Date("2021-04-30"), ymin =0, ymax = 668988, color = "black",fill = "gray", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2021-04-24"), xmax =as.Date("2021-04-30"), ymin =668988, ymax = 719219, color = "black",fill = "gray", alpha = 0.6)+
+  annotate("rect", xmin = as.Date("2021-04-24"), xmax =as.Date("2021-04-30"), ymin =713708, ymax = 719219, color = "black",fill = "red", alpha = 0.6)+
+ 
+  annotate("rect", xmin = as.Date("2021-05-01"), xmax =as.Date("2021-05-07"), ymin =0, ymax = 826926, color = "black",fill = "gray", alpha = 0.6)+
+
+  
+  geom_bar(stat='identity', color="black")+
+  
+    scale_y_continuous(limits = c(0, NA), breaks = c(200000, 400000, 600000),
+                       labels = label_comma(big.mark = ".", decimal.mark = ","))+  #
+  
+  scale_fill_viridis_d() +
+  
+  #coord_cartesian(expand = FALSE)+
+  theme_classic()+
+  xlab("")+
+  ylab("")+
+  
+  labs(title = "Vaccinaties per week",
+        subtitle = "rood = bijstelling verwachting op dashboard",
+       caption = paste("Bron: github.com/YorickBleijenberg | Plot: @YorickB  | ",Sys.Date()))+
+  
+  theme(legend.position = c(0.05, 0.5),
+        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10, face="bold"))+
+  
+  theme(
+    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+    #legend.position = "none",   # no legend
+    legend.title = element_blank(),
+    plot.title = element_text(hjust = 0.5,size = 40,face = "bold"),
+    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+    axis.text = element_text(size=14,color = "black",face = "bold"),
+    axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#F5F5F5"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
+  
+  ggsave("data/plots/95_vaccinated_week_day_estimation.png",width=16, height = 9)  
+
+
+
   
 
 #####   type graph
 
-ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  key))+
+ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  factor(key, levels=c("care_new", "ha_new","ggd_new","hosp_new")) ))+
   
   geom_bar(stat='identity', color="black")+
   geom_bar(stat='identity')+
@@ -247,7 +414,10 @@ ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  key))+
 
   scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+
 
-  scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
+  scale_fill_manual( values=c("#d7191c", "#2c7bb6",  "#fdae61","#8a9296"), labels=c ("ziekenhuizen/zorginstellingen","huisartsen", "GGD'en","Hugo correctie"))+
+  
+#  scale_fill_manual( values=c("#2c7bb6","#d7191c", "#abd9e9",  "#fdae61"), labels=c ("ziekenhuizen","zorginstellingen","huisartsen", "GGD'en" ))+
+  #scale_fill_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","huisartsen", "ziekenhuizen" ))+
 
   #coord_cartesian(expand = FALSE)+
   theme_classic()+
@@ -294,32 +464,32 @@ ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  key))+
   
 
 
-agecbs.df <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/data-cbs/people.vaccinated%20-%20age-reverse.csv",sep=",")
+#  agecbs.df <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/data-cbs/people.vaccinated%20-%20age-reverse.csv",sep=",")
 
 
 
 
-ggplot(new.vacc.df.work)+
-  geom_col(aes(x= date, y=total_estimated))+
+#ggplot(new.vacc.df.work)+
+#  geom_col(aes(x= date, y=total_estimated))+
   
-  geom_hline(data=agecbs.df, mapping=aes(yintercept=aantal), color="black")+
-  geom_text(data=agecbs.df, mapping=aes(x=as.Date("2021-01-01"), y=aantal, label=Leeftijd), size=4, vjust=-0.4, hjust=0)+
+#  geom_hline(data=agecbs.df, mapping=aes(yintercept=aantal), color="black")+
+#  geom_text(data=agecbs.df, mapping=aes(x=as.Date("2021-01-01"), y=aantal, label=Leeftijd), size=4, vjust=-0.4, hjust=0)+
   
-  scale_y_continuous(limits = c(0, 18000000),breaks = c(5000000,10000000,15000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+ # scale_y_continuous(limits = c(0, 18000000),breaks = c(5000000,10000000,15000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
-  ggsave("data/92_vaccine_age_full.png",width=5, height = 25)
+#  ggsave("data/92_vaccine_age_full.png",width=5, height = 25)
 
 
-ggplot(new.vacc.df.work)+
+# ggplot(new.vacc.df.work)+
 #  geom_col(aes(x= date, y=total_registerd))+
-  geom_col(aes(x= date, y=total_estimated))+
+#  geom_col(aes(x= date, y=total_estimated))+
   
-  geom_hline(data=agecbs.df, mapping=aes(yintercept=aantal), color="black")+
-  geom_text(data=agecbs.df, mapping=aes(x=as.Date("2021-01-01"), y=aantal, label=Leeftijd), size=4, vjust=-0.4, hjust=0)+
+#  geom_hline(data=agecbs.df, mapping=aes(yintercept=aantal), color="black")+
+ # geom_text(data=agecbs.df, mapping=aes(x=as.Date("2021-01-01"), y=aantal, label=Leeftijd), size=4, vjust=-0.4, hjust=0)+
   
-  scale_y_continuous(limits = c(0, 2000000),breaks = c(5000000,10000000,15000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+#  scale_y_continuous(limits = c(0, 2500000),breaks = c(5000000,10000000,15000000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
-  ggsave("data/92_vaccine_age_small.png",width=16, height = 9)
+ # ggsave("data/92_vaccine_age_small.png",width=16, height = 9)
   
   
 
@@ -341,8 +511,10 @@ vac.perc.second <- format(vac.perc.second, scientific=F)
 vac.perc.18.second <-  round((vaccinated.second/14070340*100), digits =2)
 vac.perc.18.second <- format(vac.perc.18.second, scientific=F)
 
+
 spillage <- 0 #as.integer(vaccinated.people.total/95)*5
-in.freezer <- freezer-vaccinated.people.total-spillage
+bescas  <- 174330+70700
+in.freezer <- freezer-vaccinated.people.total-spillage-bescas
 
 
 
@@ -361,16 +533,16 @@ second.dose <- format(second.dose ,big.mark = ".", decimal.mark = ",")
 #vaccins.reported.total
 #estimated.new.today
 
-require(magick);
-require(stringr);
+#  require(magick);
+#  require(stringr);
 
-banner.text <- paste(" ",vaccins.estimated.total,"\n\n", vaccins.reported.total)
+#  banner.text <- paste(" ",vaccins.estimated.total,"\n\n", vaccins.reported.total)
 
-banner <- image_read('https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/background/background.png') %>%
+# banner <- image_read('https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/background/background.png') %>%
   
-image_annotate(banner.text , font = 'Cabin', weight = '600', size = 60,  location = "+0+25", gravity = "center", color = "white")#%>%
-#image_annotate( vaccins.reported.total, font = 'Cabin', weight = '600', size = 40,  location = "+0+80", gravity = "center", color = "white") %>%
-image_write(banner, str_c("data/",Sys.Date(),"-banner.png") )
+#  image_annotate(banner.text , font = 'Cabin', weight = '600', size = 60,  location = "+0+25", gravity = "center", color = "white")#%>%
+#  image_annotate( vaccins.reported.total, font = 'Cabin', weight = '600', size = 40,  location = "+0+80", gravity = "center", color = "white") %>%
+# image_write(banner, str_c("data/",Sys.Date(),"-banner.png") )
 
 
 
@@ -379,18 +551,23 @@ image_write(banner, str_c("data/",Sys.Date(),"-banner.png") )
 
 
 
-emoji_syringe <- intToUtf8(0x1F489)
 
 
 #### tweet.vaccination.start.tweet ####
 
-tweet.vaccination.start.tweet <- "%sVaccinatiedag %s, De %s editie.%s
+tweet.vaccination.start.tweet <- "%sVaccinatiedag %s, De %s editie.
 
-Totaal geschat:        %s (+%s)  
-Totaal geregistreerd:  %s (+%s)
+Aantal gisteren gezet:
++%s %s
 
-7-daags gemiddelde: %s per dag.
 
+Totaal (geschat):
+%s 
+
+
+7-daags gemiddelde: +%s per dag.
+
+Leeftijd aan de beurt: 1955 (66 jaar en ouder)
 coronabeeld.nl"
 
 # Schattingen:
@@ -400,9 +577,10 @@ coronabeeld.nl"
 
 
 tweet.vaccination.start.tweet <- sprintf(tweet.vaccination.start.tweet,
-                                         emoji_syringe, days.vaccination.in.nl, vaccine.edition.name,emoji_syringe,
-                                         vaccins.estimated.total,estimated.new.today,
-                                         vaccins.reported.total,reported.new.today,
+                                         emoji_syringe, days.vaccination.in.nl, vaccine.edition.name,#emoji_syringe,
+                                         estimated.new.today,dagRecordVaccination,
+                                         vaccins.estimated.total,
+                                         #vaccins.reported.total,reported.new.today,
                                          s_dayMA_tot,
                                          people.vaccinated,
                                          second.dose
@@ -412,7 +590,10 @@ Encoding(tweet.vaccination.start.tweet) <- "UTF-8"
 
 baner.path<- paste0("data/",Sys.Date(),"-banner.png")
 
-post_tweet(tweet.vaccination.start.tweet,  media = c(baner.path))
+post_tweet(tweet.vaccination.start.tweet,   media = c("data/plots/94_vaccinated_new.png",
+                                                      "data/plots/98_leeftijd_relatief_care.png",
+                                                      "data/plots/95_vaccinated_week_day.png",
+                                                      "data/plots/80_vaccine_on_shelf.png")) # media = c(baner.path))
 
 
 
@@ -428,16 +609,17 @@ ha.new.today   <-  format(ha.new.today ,big.mark = ".", decimal.mark = ",")
 
 tweet.vaccination.speed.tweet <- "Aantal prikken gisteren:
 - GGD'en: +%s
-- Ziekenhuizen: +%s
-- Zorginstellingen: +%s  (schatting)
-- Huisartsten: +%s    (schatting)
+- Huisartsen: +%s    (schatting)
+- Ziekenhuizen & Zorginstellingen: +%s  (schatting)
+
 
 "
 tweet.vaccination.speed.tweet <- sprintf(tweet.vaccination.speed.tweet,
                                          ggd.new.today,
-                                         hosp.new.today,
-                                         care.new.today,
-                                         ha.new.today
+                                         #hosp.new.today,
+                                         ha.new.today,
+                                         care.new.today
+                                         
 )
 Encoding(tweet.vaccination.speed.tweet) <- "UTF-8"
 post_tweet(tweet.vaccination.speed.tweet,  media = c("data/plots/94_vaccinated_new.png"), in_reply_to_status_id = get_reply_id())
@@ -450,8 +632,8 @@ tweet.vaccination.week.tweet <- "vaccinaties per:
 - Organistatie, per week"
 tweet.vaccination.week.tweet <- sprintf(tweet.vaccination.week.tweet)
 Encoding(tweet.vaccination.week.tweet) <- "UTF-8"
-post_tweet(tweet.vaccination.week.tweet,  media = c("data/plots/95_vaccinated_week_new.png", 
-                                                     "data/plots/95_vaccinated_week_day.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.vaccination.week.tweet,  media = c( "data/plots/95_vaccinated_week_new.png", 
+                                                     "data/plots/95_vaccinated_week_day_estimation.png"), in_reply_to_status_id = get_reply_id())
 
 
 #### run vaccination script
@@ -486,7 +668,7 @@ Verschil nieuwe gevallen in verzorgingshuizen vs. de rest.
 
 tweet.vaccination.care.tweet <- sprintf(tweet.vaccination.care.tweet)
 Encoding(tweet.vaccination.care.tweet) <- "UTF-8"
-post_tweet(tweet.vaccination.care.tweet,  media = c("data/98_leeftijd_relatief_care.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.vaccination.care.tweet,  media = c("data/plots/98_leeftijd_relatief_care.png"), in_reply_to_status_id = get_reply_id())
 
 
 
@@ -504,16 +686,40 @@ Verschil nieuwe gevallen tussen verschillende leeftijdsgroepen."
 tweet.vaccination.age.cases.tweet <- sprintf(tweet.vaccination.age.cases.tweet)
 Encoding(tweet.vaccination.age.cases.tweet) <- "UTF-8"
 
-post_tweet(tweet.vaccination.age.cases.tweet,  media = c("data/99_leeftijd_relatief_case.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.vaccination.age.cases.tweet,  media = c("data/plots/99_leeftijd_relatief_case.png"), in_reply_to_status_id = get_reply_id())
+
+
+#### tweet.hospital.effect.tweet ####
+
+tweet.hospital.effect.tweet <- "Verschillen opnames tussen verschillende leeftijdsgroepen."
+
+tweet.hospital.effect.tweet <- sprintf(tweet.hospital.effect.tweet)
+Encoding(tweet.hospital.effect.tweet) <- "UTF-8"
+
+post_tweet(tweet.hospital.effect.tweet,  media = c("data/plots/70_vaccinated_compare_age_clinic_abs.png",
+                                                   "data/plots/70_vaccinated_compare_age_clinic.png",
+                                                   "data/plots/71_vaccinated_compare_age_ICU_abs.png",
+                                                   "data/plots/71_vaccinated_compare_age_IC.png"
+                                                   ), in_reply_to_status_id = get_reply_id())
+
+
+
+#### tweet.vaccination.storage.tweet ####
+
+tweet.vaccination.storage.tweet <- "Hoe lang lagen de geprikte doses in de vriezer?
+- aanname: alle types vaccin worden op 1 hoop gegooid."
+
+tweet.vaccination.storage.tweet <- sprintf(tweet.vaccination.storage.tweet)
+Encoding(tweet.vaccination.storage.tweet) <- "UTF-8"
+
+post_tweet(tweet.vaccination.storage.tweet,  media = c("data/plots/80_vaccine_on_shelf.png"), in_reply_to_status_id = get_reply_id())
+
 
 
 
 #### data to use
 
-#ggd.new.today 
-#hosp.new.today
-#care.new.today 
-#ha.new.today
+
 
 #spillage
 #vac.perc.18
@@ -521,18 +727,30 @@ post_tweet(tweet.vaccination.age.cases.tweet,  media = c("data/99_leeftijd_relat
 
 #days.vaccination.in.nl
 vaccins.estimated.total
-vaccins.reported.total
+estimated.new.today
+#vaccins.reported.total
 people.vaccinated
 second.dose
-estimated.new.today
-reported.new.today
+#long.est-long.rep
+##
+
+
+###
+ggd.new.today
+ha.new.today
+care.new.today
+#hosp.new.today
+##
+#est.new.site
+#reported.new.today
 
 vac.perc
 
 vac.perc.second
 in.freezer
 
-
+long.est
+long.rep 
 
 
 

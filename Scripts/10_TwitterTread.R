@@ -21,9 +21,6 @@ f <- Working_Set$MACases[1]
 h <- Working_Set$hosp[3]
 i <- Working_Set$hosp[2]
 
-
-
-
 j <- Working_Set$hosp[1]
 
 k <- Working_Set$MAhosp[3]
@@ -104,6 +101,13 @@ diff.cases.week  <- format( diff.cases.week, big.mark="." ,decimal.mark=",")
 
 
 
+#### tweet.tehoog.tweet ####
+
+# tweet.tehoog.tweet <-  "De #VeelTeHoog grafiek" # "De gaan-we-week-4-inhalen? grafiek."
+# tweet.tehoog.tweet <- sprintf(tweet.tehoog.tweet)
+# Encoding(tweet.tehoog.tweet) <- "UTF-8"
+# post_tweet(tweet.tehoog.tweet,  media = c("data/plots/60_routekaart.png"), in_reply_to_status_id = get_reply_id())  
+
 
 
 
@@ -113,7 +117,7 @@ diff.cases.week  <- format( diff.cases.week, big.mark="." ,decimal.mark=",")
 
 tweet.cases.tweet <- "Nieuw gemelde besmettingen:
 
-+%s vandaag%s
++%s vandaag%s (dat is #TeHoog)
 
 Indicatoren (exponenti%sle) groei / krimp:
 %s Dat is %s %s
@@ -132,7 +136,14 @@ tweet.cases.tweet <- sprintf(tweet.cases.tweet,
 Encoding(tweet.cases.tweet) <- "UTF-8"
 
 ## post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"))    # "data/06_new_cases_log.png",
-post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growth_cases.png", "data/07_cases_type1.png", "data/08_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.tweet,  media = c("data/plots/05_new_cases.png",
+                                         "data/05_growth_cases.png",
+                                         "data/07_cases_type1.png",
+                                         "data/08_new_cases_WoW.png"), in_reply_to_status_id = get_reply_id())  #
+
+
+
+
 
 
 
@@ -142,10 +153,10 @@ post_tweet(tweet.cases.tweet,  media = c("data/05_new_cases.png", "data/05_growt
 
 #### week.tweet ####
 
-tweet.week.tweet <- "De gaat-deze-week-boven-vorige-week-uitkomen? grafiek."
+tweet.week.tweet <-  "De gaat-deze-week-boven-vorige-week-uitkomen? grafiek." # "De gaan-we-week-4-inhalen? grafiek."
 tweet.week.tweet <- sprintf(tweet.week.tweet)
 Encoding(tweet.week.tweet) <- "UTF-8"
-post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
+post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
 
 
 
@@ -164,7 +175,7 @@ post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_t
 ###   50      -  1248
 ###   35      -   874
 
-kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.freedom+5]   ##dag days.to.freedom
+kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.independence+5]   ##dag days.to.freedom
 kest.niveau.text.week <- paste("waakzaam")     
 if (kerst.niveau.week > 875) {                      #875
   kest.niveau.text.week <- paste("zorgelijk")
@@ -188,6 +199,8 @@ if (kerst.niveau.dag > 6250) {
   kest.niveau.text.dag <- paste("zeer ernstig")
 }
 
+kerst.niveau.week <- "#TeHoog"
+kerst.niveau.dag  <- "#TeHoog"
 
 label = paste( doublingdayZ.1.text, "elke",doublingdayZ.1.int, "dagen")
 label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen")
@@ -207,19 +220,19 @@ emoji_kerst <- intToUtf8(0x1F384)
 emoji_snowman <- intToUtf8(0x2603)
 emoji_snow <- intToUtf8(0x2744)
 
-tweet.kerst.tweet <- "Halen we Bevrijdingsdag?
+tweet.kerst.tweet <- "Is de volgende stap in zicht?
 
-Voorspelling met 7-daags gem.:
+Voorspelling met 7-d gem.:
 
 Week-op-week (rood): 
 - %s elke %s dagen,
 - Waakzaam over: %s dagen
-- Niveau tijdens 5 mei: [%s]
+- Niveau tijdens 4 juli: [%s]
 
 
 Dag-op-dag (donkerblauw):
 - %s elke %s dagen,
-- niveau tijdens 5 mei: [%s]
+- niveau tijdens 4 juli: [%s]
 "
 tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,
                              
@@ -231,7 +244,7 @@ tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,
                              kest.niveau.text.week
 )
 Encoding(tweet.kerst.tweet) <- "UTF-8"
-post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.kerst.tweet,  media = c("data/plots/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -244,30 +257,21 @@ post_tweet(tweet.kerst.tweet,  media = c("data/60_trendlines_cases.png"), in_rep
 
 
 tweet.carehomes.tweet <- "Verpleeghuizen
-"
+
+- Locaties met een besmetting
+- nieuwe gevallen (laatste 2 dagen worden nog aangevuld)
+- Aantal doden (laatste 2 weken worden nog aangevuld)"
 tweet.carehomes.tweet <- sprintf(tweet.carehomes.tweet)
 Encoding(tweet.carehomes.tweet) <- "UTF-8"
-post_tweet(tweet.carehomes.tweet,  media = c("data/52_Verpleeg_loc.png", "data/51_Verpleeg_dead.png", "data/50_Verpleeg_cases.png"), in_reply_to_status_id = get_reply_id())  #
-
-
-
-
-
-
-
-
-
-
-
-
+post_tweet(tweet.carehomes.tweet,  media = c("data/52_Verpleeg_loc.png",
+                                             "data/51_Verpleeg_dead.png",
+                                             "data/50_Verpleeg_cases.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
 
 
 #### dead tweet ####
-
-
 
 diff.dead.day <- abs(n-o)
 diff.dead.week <- abs(n-p)
@@ -356,7 +360,7 @@ tweet.dead.tweet <- sprintf(tweet.dead.tweet,
                             #diff.dead.old)
 Encoding(tweet.dead.tweet) <- "UTF-8"
 
-post_tweet(tweet.dead.tweet,  media = c("data/15_dead_diff.png",
+post_tweet(tweet.dead.tweet,  media = c("data/plots/15_dead_diff.png",
                                         "data/02_leeftijd_heatmap-dead.png",
                                         "data/13_new_deceased.png", 
                                         "data/05_growth_dead.png"
@@ -373,10 +377,16 @@ post_tweet(tweet.dead.tweet,  media = c("data/15_dead_diff.png",
 #### tweet.age.tweet ####
 
 
-tweet.age.tweet <- paste("Leeftijden en leeftijdsverdeling gemelde gevallen")
+tweet.age.tweet <- paste("Leeftijden en leeftijdsverdeling gemelde gevallen
+
+- Leeftijd relatief & absoluut
+- Heatmap, leeftijd relatief")
 
 post_tweet(status = tweet.age.tweet, 
-           media = c("data/01_leeftijd_barchart.png","data/02_leeftijd_heatmap.png", "data/03_leeftijd_relatief.png"), 
+           media = c("data/01_leeftijd_barchart.png", 
+                     "data/01_leeftijd_barchart_abs.png",
+                     "data/02_leeftijd_heatmap.png",
+                     "data/03_leeftijd_relatief.png"), 
            in_reply_to_status_id = get_reply_id()
 )
 
@@ -467,7 +477,10 @@ tweet.hosp.tweet <- sprintf(tweet.hosp.tweet,
                             doubling.hosp.week_dot, growth.hosp.week,deP,
                             doubling.hosp.week_dot, doubling.hosp.week_text, doubling.hosp.week )
 Encoding(tweet.hosp.tweet) <- "UTF-8"
-post_tweet(tweet.hosp.tweet,  media = c("data/02_leeftijd_heatmap-hosp.png","data/09_new_hosp.png", "data/03_leeftijd_relatief_hosp.png", "data/05_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
+# post_tweet(tweet.hosp.tweet,  media = c("data/02_leeftijd_heatmap-hosp.png",
+#                                        "data/09_new_hosp.png",
+#                                        "data/03_leeftijd_relatief_hosp.png",
+#                                        "data/05_growth_hosp.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -522,7 +535,10 @@ tweet.growth.tweet <- sprintf(tweet.growth.tweet,
                               doubling.dead.day_dot, growth.cases.day,deP,
                               doubling.dead.day_act_dot, growth.cases.day_act, deP)
 Encoding(tweet.growth.tweet) <- "UTF-8"
- post_tweet(tweet.growth.tweet,  media = c("data/07_new_cases_DoD.png", "data/05_growth_cases.png", "data/05_growth_hosp.png","data/05_growth_dead.png"), in_reply_to_status_id = get_reply_id()) 
+ post_tweet(tweet.growth.tweet,  media = c("data/07_new_cases_DoD.png",
+                                           "data/05_growth_cases.png",
+                                           "data/05_growth_hosp.png",
+                                           "data/05_growth_dead.png"), in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -544,27 +560,31 @@ PersColockdown = as.Date("2020-12-14",'%Y-%m-%d')
 PersColockdownDays <- as.numeric(difftime(Sys.Date(),PersColockdown, units = c("days")))
 PersCoCurfew = as.Date("2021-01-20",'%Y-%m-%d')
 PersCoCurfewDays <- as.numeric(difftime(Sys.Date(),PersCoCurfew, units = c("days")))  
+PersCoRelax = as.Date("2021-02-23",'%Y-%m-%d')
+PersCoRelaxDays <- as.numeric(difftime(Sys.Date(),PersCoRelax, units = c("days")))
+PersCoSwim = as.Date("2021-03-8",'%Y-%m-%d')
+PersCoSwimDays <- as.numeric(difftime(Sys.Date(),PersCoSwim, units = c("days")))
+PersCoDoNothingV2 = as.Date("2021-03-22",'%Y-%m-%d')
+PersCoDoNothingV2Days <- as.numeric(difftime(Sys.Date(),PersCoDoNothingV2, units = c("days")))  
+PersCoStepToOpen = as.Date("2021-04-13",'%Y-%m-%d')
+PersCoStepToOpenDays <- as.numeric(difftime(Sys.Date(),PersCoStepToOpen, units = c("days")))  
+PersCoSYOLO = as.Date("2021-04-20",'%Y-%m-%d')
+PersCoSYOLODays <- as.numeric(difftime(Sys.Date(),PersCoSYOLO, units = c("days")))  
 
-tweet.data.tweet <- "Dagen sinds persco:
+### tweet.data1.tweet ####
+tweet.data1.tweet <- "Dagen sinds PersCo
 
-%s -Kroeg uurtje eerder dicht - regionale maatregelen
-
-%s -We gaan voor R=0,9 - landelijke maatregelen
-
-%s -Semi-lockdown
-
-%s -Verzwaring semi-lockdown
-
-%s -Einde verzwaring semi-lockdown
-
-%s -Zorgelijk, maar we doen niets.
-
-%s -Lockdown
-
-%s -Avondklok"
+%s - Kroeg uurtje eerder dicht (regionaal)
+%s - We gaan voor R=0,9  (landelijk)
+%s - Semi-lockdown
+%s - Verzwaring semi-lockdown
+%s - Einde verzwaring
+%s - Zorgelijk, maar we doen niets
+%s - Lockdown
+%s - Avondklok"
 
 
-tweet.data.tweet <- sprintf(tweet.data.tweet,
+tweet.data1.tweet <- sprintf(tweet.data1.tweet,
                             PersCoKroegDays,
                             PersCoPaniekDays,
                             PersCoSemiLockdownDays,
@@ -573,9 +593,37 @@ tweet.data.tweet <- sprintf(tweet.data.tweet,
                             PersCoDoNothingDays,
                             PersColockdownDays,
                             PersCoCurfewDays
+                            
 )
-Encoding(tweet.data.tweet) <- "UTF-8"
-post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
+Encoding(tweet.data1.tweet) <- "UTF-8"
+post_tweet(tweet.data1.tweet, in_reply_to_status_id = get_reply_id()) 
+
+
+### tweet.data2.tweet ####
+tweet.data2.tweet <- "Dagen sinds PersCo
+
+
+%s - VeRsOePeLiNgEn
+%s - Weer zwemmen
+%s - Zeer Ernstig, maar we versoepelen toch
+%s - We gaan stappen zetten
+%s - Domme dingen in het zicht van de haven"
+
+
+tweet.data2.tweet <- sprintf(tweet.data2.tweet,
+                             PersCoRelaxDays,
+                             PersCoSwimDays,
+                             PersCoDoNothingV2Days,
+                             PersCoStepToOpenDays,
+                             PersCoSYOLODays
+)
+Encoding(tweet.data2.tweet) <- "UTF-8"
+post_tweet(tweet.data2.tweet, in_reply_to_status_id = get_reply_id()) 
+
+
+
+
+
 
 
 #### tweet.cases.diff.tweet ####
@@ -587,7 +635,10 @@ tweet.cases.diff.tweet <- "1) provincies
 "
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png", "data/07_cases_diff.png", "data/07_cases_type1-monday.png", "data/81_coronamelder.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png",
+                                              "data/07_cases_diff.png",
+                                              "data/plots/07_cases_type1-monday.png",
+                                              "data/81_coronamelder.png"), in_reply_to_status_id = get_reply_id())  #
 
 ###    media = c("data/17_IC_only.png", "data/16_IC_hosp.png")
 
@@ -601,8 +652,6 @@ Kun je hier conclusies uit trekken?
 Nee. 
 
 (Maar het is wel leuk om te zien)"
-
-
 
 tweet.vakantie.tweet <- sprintf(tweet.vakantie.tweet)
 Encoding(tweet.vakantie.tweet) <- "UTF-8"
@@ -662,7 +711,10 @@ tweet.combi.2.tweet <- "1) 16 grote steden
 4) Weektotalen"
 tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
 Encoding(tweet.combi.2.tweet) <- "UTF-8"
-post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_new-no-color.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png",
+                                           "data/20_prov_new-no-color.png",
+                                           "data/plots/60_routekaart.png",
+                                           "data/plots/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
 #### 16 cities tweet ####
 
@@ -689,16 +741,6 @@ Encoding(tweet.week_num.tweet) <- "UTF-8"
 
 
 
-#### vaccine tweet ####
-
-tweet.vaccince.tweet <- "De weg naar groepsimmuniteit
-
-Noot: Op dit moment hebben we alleen BioNTech/Pfizer vaccins"
-tweet.vaccince.tweet <- sprintf(tweet.vaccince.tweet)
-Encoding(tweet.vaccince.tweet) <- "UTF-8"
-#post_tweet(tweet.vaccince.tweet,  media = c("data/90_vaccine_deliverd.png"), in_reply_to_status_id = get_reply_id())
-
-
 #### Week Christmas deaths tweet ####
 
 tweet.christ.death.tweet <- "Kerstdoden
@@ -717,9 +759,17 @@ tweet.Lansingerland.tweet <- "- Lansingerland 1x.
 - Dronten: vanaf 10 februari, 6 weken. elke anderhalve week/twee weken (3x p.p.)"
 tweet.Lansingerland.tweet <- sprintf(tweet.Lansingerland.tweet)
 Encoding(tweet.Lansingerland.tweet) <- "UTF-8"
-post_tweet(tweet.Lansingerland.tweet,  media = c("data/18_city_new_Lansingerland.png"), in_reply_to_status_id = get_reply_id())
+#post_tweet(tweet.Lansingerland.tweet,  media = c("data/18_city_new_Lansingerland.png"), in_reply_to_status_id = get_reply_id())
 
 
 
 
+#### tweet.positive.rate.tweet ####
+
+tweet.positive.rate.tweet <- "Percentage positief en aantal testen.
+
+https://twitter.com/YorickB/status/1370792131934191619"
+tweet.positive.rate.tweet <- sprintf(tweet.positive.rate.tweet)
+Encoding(tweet.positive.rate.tweet) <- "UTF-8"
+post_tweet(tweet.positive.rate.tweet,  media = c("data/plots/22_tests_ggd_daily.png"), in_reply_to_status_id = get_reply_id())
 

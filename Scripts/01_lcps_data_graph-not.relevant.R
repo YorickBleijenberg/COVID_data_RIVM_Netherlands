@@ -18,7 +18,9 @@ get_reply_id <- function(rel_increase) {
 
 #import from LCPS website
 
-LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")  
+#LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")  
+
+LCPS_datafeed<-read.csv("C:\\Rdir\\data\\plots\\covid-19.csv",sep=",")  
 
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 #LCPS_datafeed$week<-strftime(LCPS_datafeed$Datum,format = "%V")
@@ -109,16 +111,13 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = t
   scale_fill_manual  (values=c("#C5E0B4","#4472C4"), labels=c(hosp_clin.a, hosp_IC.a))+
   scale_color_manual(values=c("#767171","#3B3838"), labels=c(hosp_clin.a, hosp_IC.a))+
     
-    labs(title=hosp_title.a, # subtitle=" ",
+    labs(#title=hosp_title.a, # subtitle=" ",
          caption = paste("Source: LCPS & NICE | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
   
-  theme(legend.position = c(0.5, 0.9),
-        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid"), #,colour ="black"),
-        legend.title = element_blank(),
-        legend.text = element_text(colour="black", size=20, face="bold"))+
+  theme(legend.position = "none")+
   
   theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
           plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
@@ -184,7 +183,7 @@ ggplot(data = lcps_working_tot_c_1_long, mapping = aes(x = date, y = number, col
   scale_fill_manual (values=c("#F4B183","#4472C4"), labels=c(hosp_clin, hosp_IC))+
   scale_color_manual(values=c("#843C0C","#3B3838"), labels=c(hosp_clin, hosp_IC))+
   
-  labs(title = hosp_title, # subtitle=" ",
+  labs(#title = hosp_title, # subtitle=" ",
        caption = paste("Source: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
@@ -194,6 +193,8 @@ ggplot(data = lcps_working_tot_c_1_long, mapping = aes(x = date, y = number, col
         legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid"), #,colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=20, face="bold"))+
+  
+  theme(legend.position = "none")+
   
   theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
           plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
@@ -430,27 +431,9 @@ LCPS_datafeed_predict <- LCPS_datafeed_predict %>%
 LCPS_datafeed_predict <- LCPS_datafeed_predict %>% 
   mutate(MA_clin = rollapply(Kliniek_Nieuwe_Opnames_COVID, 7, mean, fill = NA, align = "right"))
 
-
-LCPS_datafeed_7days_ago  <- last(LCPS_datafeed_predict, 8)
-LCPS_datafeed_7days_ago <- first(LCPS_datafeed_7days_ago,1)
-
-IC.last.week <- LCPS_datafeed_7days_ago$MA_IC
-clin.last.week <- LCPS_datafeed_7days_ago$MA_clin
-
-
-LCPS_datafeed_predict$MAIC_rel_7da <- LCPS_datafeed_predict$MA_IC/IC.last.week
-LCPS_datafeed_predict$MAClin_rel_7da <- LCPS_datafeed_predict$MA_clin/clin.last.week
-
-
-IC.perc.now <- round(last(LCPS_datafeed_predict$MAIC_rel_7da),2)*100
-clin.perc.now <- round(last(LCPS_datafeed_predict$MAClin_rel_7da),2)*100
-
-IC.perc.now <- as.integer(IC.perc.now)
-clin.perc.now <- as.integer(clin.perc.now)
-
-
 LCPS_datafeed_predict$MA_clin_lead  <- lead(LCPS_datafeed_predict$MA_clin,3)
 LCPS_datafeed_predict$MA_IC_lead  <- lead(LCPS_datafeed_predict$MA_IC,3)
+
 
 
 hosp_new_hosp.2 <- paste0("Aantal nieuwe opnames kliniek:  ",hosp.new.b1)
@@ -509,8 +492,8 @@ ggplot(LCPS_datafeed_predict)+
   coord_cartesian(expand = FALSE)+
   
   ylab("")+
-  labs(title=hosp_new_hosp.2, 
-       subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
+  labs(#title=hosp_new_hosp.2, 
+       #subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   
@@ -589,8 +572,8 @@ ggplot(LCPS_datafeed_predict)+
   xlab("")+
   ylab("")+
   
-  labs(title=hosp_new_IC.2, 
-      subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
+  labs(#title=hosp_new_IC.2, 
+  #    subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
@@ -622,68 +605,6 @@ ggsave("data/plots/16x_IC_pred.png",width=16, height = 9)
 
 
 
-
-
-key <- "Datum"
-value <- "percentage"
-gathercols <- c("MAIC_rel_7da","MAClin_rel_7da")
-LCPS_datafeed_predict.long <- gather(LCPS_datafeed_predict, key, value, gathercols) #(2:11))
-
-
-
-ggplot(LCPS_datafeed_predict.long, aes(x=Datum, y=value, color = key))+
-
-  geom_hline(yintercept=1)+
-  geom_hline(yintercept=0.9, color = "darkgreen")+
-  
-  geom_smooth(size=2.5, se=FALSE, span = 0.1)+
-  
-  scale_color_manual( values=c("#4472C4", "#ED7D31"), labels=c("opnames kliniek", "opnames IC"))+
-  
-  geom_point(data = LCPS_datafeed_7days_ago, aes(x=Datum, y= 1), size=5, color="black")+
-    
-  scale_x_date(date_breaks = "1 week", 
-               date_labels= format("%d %b"),
-               limits = as.Date(c("2021-02-15", NA)))+
-  
-  scale_y_continuous(limits = c(0.5, 1.2), breaks = c(1.1,1,0.9,0.75),labels = percent)+
-  
-  
-  
-  coord_cartesian(expand = FALSE)+
-  
-  xlab("")+
-  ylab("")+
-  
-  labs(title="OMT check", 
-       subtitle="Om een stap terug te doen, moet het percentage\n onder de 90% duiken.",
-       caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
-  
-  theme_classic()+
-  theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
-  
-  
-  theme(legend.position =  "top",
-        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid",colour ="black"),
-        legend.title = element_blank(),
-        legend.margin = margin(3, 3, 3, 3),
-        legend.text = element_text(colour="black", size=20, face="bold"),
-        legend.direction='vertical')+
-  
-  theme(  plot.background = element_rect(fill = "#DAE3F3"),
-          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
-          plot.subtitle = element_text(hjust = 0.5,size = 15,face = "italic"),
-          panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
-          axis.text = element_text(size=14,color = "black",face = "bold"),
-          axis.text.y = element_text(face="bold", color="black", size=14),
-          axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
-          axis.ticks.length = unit(0.5, "cm"),
-          axis.line = element_line(colour = "#DAE3F3"),
-          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
-  
-ggsave("data/plots/16x_omt_check.png",width=16, height = 9)
-
-## 
 
 
 
@@ -800,7 +721,7 @@ flag.D <- intToUtf8(0x1F1E9)
 flag.E <- intToUtf8(0x1F1EA)
 
 heart.emoji <- intToUtf8(0x2764)
-deP <- intToUtf8(0x0025)
+
 
 clin.tehoog <- round(hosp.new.b1 / 12 , 0)
 ic.tehoog   <- round(hosp.new.b2 / 3  , 0)
@@ -845,53 +766,7 @@ post_tweet(tweet.LCPS.EN.tweet,  media = c("data/plots/16a_IC_hosp.png",
                                            "data/plots/16x_IC_pred.png"
                                            ))
 
-check.emoji <- intToUtf8(0x2705)
 
-
-
-
-
-ic.perc.dot <- intToUtf8(0x1F7E1)     ### geel
-if (IC.perc.now > 100) {
-  ic.perc.dot <- intToUtf8(0x1F534)     ### rood
-} else if (IC.perc.now < 90) {
-  ic.perc.dot <- intToUtf8(0x1F7E2)     ### groen
-} 
-
-clin.perc.dot <- intToUtf8(0x1F7E1)     ### geel
-if (clin.perc.now > 90) {
-  clin.perc.dot <- intToUtf8(0x1F534)     ### rood
-} else if (clin.perc.now < 90) {
-  clin.perc.dot <- intToUtf8(0x1F7E2)     ### groen
-} 
-
-
-
-
-
-tweet.LCPS.OMT.check.tweet <- "%s de OMT Check %s
-
-7-daags gemiddelde hoger of lager dan een week geleden? 
-Zitten we in een 'zekere daling'?
---> Groen bij 90%s of lager.
-
-%s kliniek: %s%s 
-%s IC:    %s%s 
-
-"
-
-tweet.LCPS.OMT.check.tweet <- sprintf(  tweet.LCPS.OMT.check.tweet,
-                                        check.emoji,   check.emoji,
-                                        deP,
-                                        ic.perc.dot,   IC.perc.now,   deP,
-                                        clin.perc.dot, clin.perc.now, deP  )
-
-
-Encoding(tweet.LCPS.OMT.check.tweet) <- "UTF-8"
-
-post_tweet(tweet.LCPS.OMT.check.tweet,  media = c("data/plots/16x_omt_check.png"), in_reply_to_status_id = get_reply_id())
-                                        
-                                           
 
 
 tweet.LCPS.tweet <- "Dag %s, de %s editie

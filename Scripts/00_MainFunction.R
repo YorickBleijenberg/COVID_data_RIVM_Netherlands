@@ -8,11 +8,13 @@
 ## https://aosmith.rbind.io/2019/10/14/background-color_gradient/
 
 
+
 ####Check LSPC update
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
 last(LCPS_datafeed,2)
+last(LCPS_datafeed$Datum) == Sys.Date()
 
 
 #### ECDC - ANIMATION
@@ -20,6 +22,7 @@ last(LCPS_datafeed,2)
 ###  auto upload to git
 ###  set-up remote
 #library(ggrepel)
+
 
 
 #library(rsconnect)
@@ -40,9 +43,13 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 
 #### some constants for the update ####
 
-editionname <- "vaccination-selfies-are-forbidden-now"
-editienaam  <- "vaccinaties-selfies-verboden"                       
-vaccine.edition.name <- "169k-Extra-dosis-BioNTech/Pfizer-deze-maand"
+
+
+editionname <-  "We-gaan-het-zien"
+editienaam  <-  "We-gaan-het-zien"  
+#  vaccine.edition.name <- "wel-of-geen-Janssen"  #als-over-een-paar-weken-de-cijfers-onverhoopt-weer-door-het-dak-gaan"
+
+
 
 #number.in.DE <- "0"
 
@@ -50,6 +57,8 @@ vaccine.edition.name <- "169k-Extra-dosis-BioNTech/Pfizer-deze-maand"
 
 dirname <- paste("data/",Sys.Date(),sep = "")
 dir.create(dirname)
+#####
+
 
 #### update at 14:00h ####
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
@@ -59,8 +68,6 @@ source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 #### update at 15:15 ####
 
 source("C:\\Rdir\\Rscripts\\18_daily_pos_rate.R")
-
-source("C:\\Rdir\\Rscripts\\21_ECDC.R")
 
 source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 
@@ -92,8 +99,6 @@ source("C:\\Rdir\\Rscripts\\12_cities_Lansingerland.R")  # Lansingerland
 
 source("C:\\Rdir\\Rscripts\\14_provincies.R")
 
-#source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
-
 source("C:\\Rdir\\Rscripts\\20_carehomes.R")
 
 source("C:\\Rdir\\Rscripts\\22_prediction.R")
@@ -102,7 +107,7 @@ source("C:\\Rdir\\Rscripts\\29_coronamelder.R")
 
 source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
-source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
+
 
 
 ###
@@ -116,30 +121,38 @@ source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
 ###
 
 
-##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
+ ##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
 ##
 ##
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
-  ##  source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+  # source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 
 
 ##  source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
 ##  source("C:\\Rdir\\Rscripts\\43_NICE_vaccine_effect.R")
+#   source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
+#   source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
+
 
 source("C:\\Rdir\\Rscripts\\44_vaccine_effect_care_compare.R")
 
-source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_ICU_compare.R")
-source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_clin_compare.R")
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
 
 source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot.R")       
+source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot_phd.R")
 
 source("C:\\Rdir\\Rscripts\\47_vaccine_effect_disabled.R")     
 
-source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     
-       
+source("C:\\Rdir\\Rscripts\\21_ECDC.R")
+
+
+#source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     
+#source("C:\\Rdir\\Rscripts\\50_vaccine_in_storage_seperate.R")
+
 
 

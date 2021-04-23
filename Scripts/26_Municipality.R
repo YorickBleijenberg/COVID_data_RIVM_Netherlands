@@ -24,6 +24,8 @@ gemeente.inwoners$Gemeente_Naam <- str_replace(gemeente.inwoners$Gemeente_Naam, 
 read.aantal.gemeente.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv",sep="")
 RIVM_aantallen_gemeente_per_dag <- read.csv(read.aantal.gemeente.path,sep=";")
 
+
+
 RIVM_aantallen_gemeente_per_dag$date <- as.Date(RIVM_aantallen_gemeente_per_dag$date)
 RIVM_aantallen_gemeente_per_dag.1  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,4:9,11,12,14)]
 
@@ -75,7 +77,7 @@ while (i < 353)
   kleur <- paste("yellow")                              ### default value = yellow
   if (((v_today > v_14d+2) | (v_today > v_7d+3))&(v_today < v_7d+13)) {       ### red if the current value is high than 14d ago+2 OR higher than 7 days ago +3
     kleur <- paste("red")
-  } else if (v_today > v_7d+13) {                              ### darkred if the the different is more than +13
+  } else if (v_today > v_7d+13) {                              ### darkred if the the difference is more than +13
     kleur <- paste("help")
   } else if (((v_today < v_14d-2) & (v_today < v_7d-2))| (v_today<1)) {
     kleur <- paste("green")  ### green if value is lower than 7 days AND 14 days ago (with at least a margin of 2 per 100K) OR lower than 1 per 100K

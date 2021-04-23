@@ -189,7 +189,7 @@ ggplot(relative.table.dead.long, aes(x=dateInTable, y=value, color = key))+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/98_vaccinated_compare_death-test.png",width=16, height = 9)  
+  ggsave("data/plots/98_vaccinated_compare_death.png",width=16, height = 9)  
 
 
 

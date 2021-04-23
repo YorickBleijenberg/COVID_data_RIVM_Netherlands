@@ -150,7 +150,7 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
   coord_cartesian(expand = FALSE)+
   
   labs(title = "Verwachte aantallen mensen die we volledig* kunnen vaccineren",
-       subtitle = "op basis van de Kamerbrief, 24-2-2021 \n *voor Janssen 1 dosis nodig; voor de andere vaccins 2 doses",
+       subtitle = "op basis van de Kamerbrief, 23-3-2021 \n *voor Janssen 1 dosis nodig; voor de andere vaccins 2 doses",
        caption = paste("Source: min VWS | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position =  "top",

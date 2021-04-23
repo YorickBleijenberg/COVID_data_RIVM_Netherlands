@@ -12,10 +12,10 @@ library(ggforce)
 
 weeknumber <- isoweek(Sys.Date())-1
 
-report<-"C:\\Rdir\\rivm-week\\2021-09-COVID-19_WebSite_rapport_wekelijks_20210309_1259.pdf"
+report<-"C:\\Rdir\\rivm-week\\2021-15-COVID-19_WebSite_rapport_wekelijks_20210420_1126_publicatie.pdf"
 
 
-report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
+# report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
 
 
 
@@ -35,7 +35,7 @@ ggd_bco1 <- do.call(rbind,ggd_bco1)
 
 colnames(ggd_bco1) <- c("setting","aantal.31-9","perc.31-9","aantal.this.week", "perc.this.week")
 
-ggdBCOFile <- paste0("data-dashboards/ggd_bco1_", weeknumber, ".csv")
+ggdBCOFile <- paste0("data-dashboards/bco/ggd_bco1_", weeknumber, ".csv")
 write.csv(ggd_bco1,file = ggdBCOFile, row.names = F)
 
 
@@ -55,7 +55,7 @@ ggd_bco2 <- do.call(rbind,ggd_bco2)
 
 colnames(ggd_bco2) <- c("setting","aantal.31-9","perc.31-9","aantal.this.week", "perc.this.week")
 
-ggdBCO2File <- paste0("data-dashboards/ggd_bco2_", weeknumber, ".csv")
+ggdBCO2File <- paste0("data-dashboards/bco/ggd_bco2_", weeknumber, ".csv")
 write.csv(ggd_bco2,file = ggdBCO2File, row.names = F)
 
 
@@ -66,7 +66,7 @@ bco_no.setting <- (ggd_bco1$aantal.this.week[2]+ggd_bco1$aantal.this.week[3]+ggd
 bco.setting.perc <- 1-(bco_no.setting/bco_tot)
 
 
-ggd_bco3 <- ggd_bco2[-c(2, 4, 19), ]
+ggd_bco3 <- ggd_bco2[-c(2, 4, 21), ]
 sum.bco3 <- (sum(ggd_bco3$perc.this.week)/100)
 
 ggd_bco3$percentage.relative <-   (ggd_bco3$aantal.this.week/bco_yes.setting/sum.bco3)
