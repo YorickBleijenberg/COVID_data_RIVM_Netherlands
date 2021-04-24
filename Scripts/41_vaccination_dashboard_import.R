@@ -1,12 +1,13 @@
 
 
 
-# vaccine.edition.name <- "weggooien-is-zonde"
+# vaccine.edition.name <- "lagere-leveringen-minder-prikken"
 
 freezer = 5899000
 
-Jaartal = 1955
-
+jaartal = 1955
+leeftijd = 2021-jaartal
+leeftijd2= leeftijd-1
 
 #### import historic vaccination data from GH #####
 
@@ -567,7 +568,7 @@ Totaal (geschat):
 
 7-daags gemiddelde: +%s per dag.
 
-Leeftijd aan de beurt: 1955 (66 jaar en ouder)
+Leeftijd aan de beurt: %s (%s/%s en ouder)
 coronabeeld.nl"
 
 # Schattingen:
@@ -582,8 +583,8 @@ tweet.vaccination.start.tweet <- sprintf(tweet.vaccination.start.tweet,
                                          vaccins.estimated.total,
                                          #vaccins.reported.total,reported.new.today,
                                          s_dayMA_tot,
-                                         people.vaccinated,
-                                         second.dose
+                                                                                  jaartal, leeftijd,leeftijd2
+                                         
                                    )
 
 Encoding(tweet.vaccination.start.tweet) <- "UTF-8"
@@ -629,11 +630,16 @@ post_tweet(tweet.vaccination.speed.tweet,  media = c("data/plots/94_vaccinated_n
 
 tweet.vaccination.week.tweet <- "vaccinaties per:
 - Dag van de week
-- Organistatie, per week"
-tweet.vaccination.week.tweet <- sprintf(tweet.vaccination.week.tweet)
+- Organistatie, per week
+
+Doden
+- naar week van overlijden (max 2de golf op 100s%)"
+tweet.vaccination.week.tweet <- sprintf(tweet.vaccination.week.tweet,
+                                        deP)
 Encoding(tweet.vaccination.week.tweet) <- "UTF-8"
 post_tweet(tweet.vaccination.week.tweet,  media = c( "data/plots/95_vaccinated_week_new.png", 
-                                                     "data/plots/95_vaccinated_week_day_estimation.png"), in_reply_to_status_id = get_reply_id())
+                                                     "data/plots/95_vaccinated_week_day_estimation.png",
+                                                     "data/plots/74_dead_agegroup_rel.png"), in_reply_to_status_id = get_reply_id())
 
 
 #### run vaccination script
