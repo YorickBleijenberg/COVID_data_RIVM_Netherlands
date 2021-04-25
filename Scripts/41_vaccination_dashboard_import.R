@@ -628,12 +628,12 @@ post_tweet(tweet.vaccination.speed.tweet,  media = c("data/plots/94_vaccinated_n
 
 #### tweet.vaccination.week.tweet ####
 
-tweet.vaccination.week.tweet <- "vaccinaties per:
+tweet.vaccination.week.tweet <- "Vaccinaties per:
 - Dag van de week
-- Organistatie, per week
+- Organisatie, per week
 
 Doden
-- naar week van overlijden (max 2de golf op 100s%)"
+- naar week van overlijden (max 2de golf op 100%)"
 tweet.vaccination.week.tweet <- sprintf(tweet.vaccination.week.tweet,
                                         deP)
 Encoding(tweet.vaccination.week.tweet) <- "UTF-8"
