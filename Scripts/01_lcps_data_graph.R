@@ -16,12 +16,17 @@ get_reply_id <- function(rel_increase) {
   return(reply_id)
 }
 
+### import local
+
+###  LCPS_datafeed<-read.csv("C:\\Rdir\\data\\plots\\covid-19.csv",sep=",")  
+
 #import from LCPS website
 
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")  
 
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 #LCPS_datafeed$week<-strftime(LCPS_datafeed$Datum,format = "%V")
+
 
 
 File_date_5ax <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_LCSP.csv")
@@ -806,19 +811,19 @@ clin.tehoog <- round(hosp.new.b1 / 12 , 0)
 ic.tehoog   <- round(hosp.new.b2 / 3  , 0)
 
 
-tweet.LCPS.EN.tweet <- "Day %s, The %s edition
+tweet.LCPS.EN.tweet <- "Dag %s, de %s editie
 
-Patients currently in the hospital:
-(difference with yesterday)
+Pati%snten nu in het ziekenhuis:
+(het verschil met gisteren)
 
 %s%s (%s)
 
-%sClinic:  %s (%s)
-%sICU:       %s (%s)
+%sKliniek:  %s (%s)
+%sIC:       %s (%s)
 
 New: 
-%sClinic:  %s (%sx #TooHigh)
-%sICU:     %s (%sx #TooHigh)
+%sKliniek:  %s (%sx #TeHoog)
+%sIC:     %s (%sx #TeHoog)
 
 
 #COVID19" # https://www.youtube.com/watch?v=KpYhePFx1qo"
@@ -826,7 +831,7 @@ New:
 
 tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             days.covid.in.nl, editionname,
-                            
+                            deP,
                             hosp.total.dot,   hosp.total.b,     hosp.total.c,
                            
                             clinic.total.dot, hosp.total.b1,  hosp.total.c1,
@@ -875,8 +880,8 @@ tweet.LCPS.OMT.check.tweet <- "%s de OMT Check %s
 Zitten we in een 'zekere daling'?
 --> Groen bij 90%s of lager.
 
-%s kliniek: %s%s 
-%s IC:    %s%s 
+%s IC: %s%s 
+%s kliniek:    %s%s 
 
 "
 
