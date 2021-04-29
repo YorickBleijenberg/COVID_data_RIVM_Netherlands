@@ -1,9 +1,10 @@
 vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type
-Thuiswonend 90+,,65375,58398,58398,COM
-Thuiswonend 85-89,,181847,162833,162833,COM
-Thuiswonend 80-84,,359686,289983,289983,COM
-Thuiswonend 75-79,,473560,37701,37701,COM
-Thuiswonend 70-74,,355408,2649,2649,COM
-Overige personen gevaccineerd door de GGD,,458228,208560,208560,COM/AZ
-Gevaccineerd door huisartsen (geschat),,990186,0,0,AZ
-Gevaccineerd door overige uitvoerders (geschat),,750945,183073,183073,COM/MOD/AZ
+Thuiswonend 90+,,66116,59420,59420,COM
+Thuiswonend 85-89,,183571,167105,167105,COM
+Thuiswonend 80-84,,364462,319766,319766,COM
+Thuiswonend 75-79,,532614,86637,86637,COM
+Thuiswonend 70-74,,587801,3597,3597,COM
+Thuiswonend 66-69,,122563,6199,6199,COM
+Overige personen gevaccineerd door de GGD,,435434,204838,204838,COM/AZ
+Gevaccineerd door huisartsen (geschat),,963629,0,0,AZ
+Gevaccineerd door overige uitvoerders (geschat),,624222,263829,263829,COM/MOD/AZ
