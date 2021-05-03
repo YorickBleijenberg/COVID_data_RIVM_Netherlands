@@ -1,13 +1,4 @@
-
-
-##  Connect to online:
-## https://happygitwithr.com/
-
-## https://www.r-graph-gallery.com/233-add-annotations-on-ggplot2-chart.html
-## https://rdrr.io/cran/ggplot2/man/scale_gradient.html
-## https://aosmith.rbind.io/2019/10/14/background-color_gradient/
-
-
+##
 
 ####Check LSPC update
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")
@@ -15,15 +6,6 @@ LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
 last(LCPS_datafeed,2)
 last(LCPS_datafeed$Datum) == Sys.Date()
-
-
-#### ECDC - ANIMATION
-#### R ANIMATION
-###  auto upload to git
-###  set-up remote
-#library(ggrepel)
-
-
 
 #library(rsconnect)
 
@@ -43,18 +25,12 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 
 #### some constants for the update ####
 
-
-
-editionname <-  "We-gaan-het-zien"
-editienaam  <-  "We-gaan-het-zien"  
-#  vaccine.edition.name <- "wel-of-geen-Janssen"  #als-over-een-paar-weken-de-cijfers-onverhoopt-weer-door-het-dak-gaan"
-
-
-
+editionname <-  "feestje-met-12.000-man(m/v)"
+editienaam  <-  editionname
+vaccine.edition.name <- "we-hebben-nu-een-lekker-voorraadje"
 #number.in.DE <- "0"
 
 #### Start  ####
-
 dirname <- paste("data/",Sys.Date(),sep = "")
 dir.create(dirname)
 #####
@@ -63,7 +39,8 @@ dir.create(dirname)
 #### update at 14:00h ####
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 
-
+###
+###
 
 #### update at 15:15 ####
 
@@ -128,7 +105,7 @@ source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
-  # source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+   source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 
 
 
@@ -154,5 +131,26 @@ source("C:\\Rdir\\Rscripts\\21_ECDC.R")
 #source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     
 #source("C:\\Rdir\\Rscripts\\50_vaccine_in_storage_seperate.R")
 
+
+source("C:\\Rdir\\Rscripts\\41_vaccination_dashboard_import.R")
+
+
+
+vaccins.estimated.total
+estimated.new.today
+people.vaccinated
+people.fully.vaccinated
+
+vac.perc
+vac.perc.second
+
+ggd.new.today
+ha.new.today
+care.new.today
+
+freezer
+in.freezer
+
+long.est
 
 

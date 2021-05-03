@@ -142,12 +142,13 @@ kerst.df=data.frame(date=as.Date(c("2020-12-25")),event=c(kerst))
  Bevrijdingsdag.df=data.frame(date=as.Date(c("2021-05-05")),event=c("Bevrijdingsdag"))
  
  
- stap.een.df=data.frame(date=as.Date(c("2021-04-28")),event=c("Stap 1 - einde avondklok & terras open"))
- stap.twee.df=data.frame(date=as.Date(c("2021-05-11")),event=c("Stap 2 - weer naar buiten!"))
- stap.drie.df=data.frame(date=as.Date(c("2021-05-26")),event=c("Stap 3 - weer uit eten & naar de bios!"))
- stap.vier.df=data.frame(date=as.Date(c("2021-06-16")),event=c("Stap 4 - max 6 mensen thuis & evenementen"))
- stap.vijf.df=data.frame(date=as.Date(c("2021-07-07")),event=c("Stap 5 - max 8 mensen thuis"))
- stap.zes.df=data.frame(date=as.Date(c("2021-08-15")),event=c("Stap 6 - terug naar normaal"))
+ stap.een.df=data.frame(date=as.Date(c("2021-04-28")),event=c("Stap 1")) # - einde avondklok & terras open"))
+ stap.twee.old.df=data.frame(date=as.Date(c("2021-05-11")),event=c("Stap 2 - weer naar buiten!"))
+ stap.twee.df=data.frame(date=as.Date(c("2021-05-18")),event=c("Stap 2 - weer naar buiten!"))
+ stap.drie.df=data.frame(date=as.Date(c("2021-06-02")),event=c("Stap 3 - weer uit eten & naar de bios!"))
+ stap.vier.df=data.frame(date=as.Date(c("2021-06-23")),event=c("Stap 4 - max 6 mensen thuis & evenementen"))
+ stap.vijf.df=data.frame(date=as.Date(c("2021-07-14")),event=c("Stap 5 - max 8 mensen thuis"))
+ stap.zes.df=data.frame(date=as.Date(c("2021-08-18")),event=c("Stap 6 - terug naar normaal"))
  
  independence.day.df=data.frame(date=as.Date(c("2021-07-04")),event=c("Independence Day"))
 
@@ -309,10 +310,13 @@ ggplot(Merged_data_short)+
  # geom_vline(data=pasen.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "black")+
  # geom_text(data=pasen.df  , mapping=aes(x=date, y=12000, label=event), size=8, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.een.df  , mapping=aes(x=date, y=12000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.7)+
+  geom_text(data=stap.een.df  , mapping=aes(x=date, y=12000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.7)+
   
   
+  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.2)+
+  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=12000, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.2)+
+
   geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
   geom_text(data=stap.twee.df  , mapping=aes(x=date, y=12000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
@@ -443,13 +447,16 @@ ggplot(Merged_data_short)+
  #   geom_vline(data=pasen.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "white")+
  #   geom_text(data=pasen.df  , mapping=aes(x=date, y=12000, label=event), size=8, angle=-90, vjust=-0.4, hjust=0, color= "white")+
     
-    geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
-    geom_text(data=stap.een.df  , mapping=aes(x=date, y=12000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
+    geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "white", alpha = 0.7)+
+    geom_text(data=stap.een.df  , mapping=aes(x=date, y=12000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.7)+
     
+  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "white", alpha = 0.2)+
+  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=12000, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.2)+
+  
   geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
   geom_text(data=stap.twee.df  , mapping=aes(x=date, y=12000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
   
-  geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
+    geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
   geom_text(data=stap.drie.df  , mapping=aes(x=date, y=12000, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
   
   geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+

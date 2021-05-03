@@ -436,6 +436,16 @@ LCPS_datafeed_predict <- LCPS_datafeed_predict %>%
   mutate(MA_clin = rollapply(Kliniek_Nieuwe_Opnames_COVID, 7, mean, fill = NA, align = "right"))
 
 
+LCPS_datafeed_predict$MA_clin_lead_eight  <- lead(LCPS_datafeed_predict$MA_clin,7)
+LCPS_datafeed_predict$percentage <- LCPS_datafeed_predict$MA_clin_lead_eight/LCPS_datafeed_predict$MA_clin
+
+LCPS_datafeed_predict$MA_IC_lead_eight  <- lead(LCPS_datafeed_predict$MA_IC,7)
+LCPS_datafeed_predict$percentage.IC <- LCPS_datafeed_predict$MA_IC_lead_eight/LCPS_datafeed_predict$MA_IC
+
+
+
+
+
 LCPS_datafeed_7days_ago  <- last(LCPS_datafeed_predict, 8)
 LCPS_datafeed_7days_ago <- first(LCPS_datafeed_7days_ago,1)
 
@@ -446,7 +456,7 @@ clin.last.week <- LCPS_datafeed_7days_ago$MA_clin
 LCPS_datafeed_predict$MAIC_rel_7da <- LCPS_datafeed_predict$MA_IC/IC.last.week
 LCPS_datafeed_predict$MAClin_rel_7da <- LCPS_datafeed_predict$MA_clin/clin.last.week
 
-
+### number for the tweet  ###
 IC.perc.now <- round(last(LCPS_datafeed_predict$MAIC_rel_7da),2)*100
 clin.perc.now <- round(last(LCPS_datafeed_predict$MAClin_rel_7da),2)*100
 
@@ -462,12 +472,13 @@ hosp_new_hosp.2 <- paste0("Aantal nieuwe opnames kliniek:  ",hosp.new.b1)
 
 
 
-stap.een.df=data.frame(date=as.Date(c("2021-04-28")),event=c("Stap 1 - einde avondklok & terras open"))
-stap.twee.df=data.frame(date=as.Date(c("2021-05-11")),event=c("Stap 2 - weer naar buiten!"))
-stap.drie.df=data.frame(date=as.Date(c("2021-05-26")),event=c("Stap 3 - weer uit eten & naar de bios!"))
-stap.vier.df=data.frame(date=as.Date(c("2021-06-16")),event=c("Stap 4 - max 6 mensen thuis & evenementen"))
-stap.vijf.df=data.frame(date=as.Date(c("2021-07-07")),event=c("Stap 5 - max 8 mensen thuis"))
-stap.zes.df=data.frame(date=as.Date(c("2021-08-15")),event=c("Stap 6 - terug naar normaal"))
+stap.een.df=data.frame(date=as.Date(c("2021-04-28")),event=c("Stap 1")) # - einde avondklok & terras open"))
+stap.twee.old.df=data.frame(date=as.Date(c("2021-05-11")),event=c("Stap 2 - weer naar buiten!"))
+stap.twee.df=data.frame(date=as.Date(c("2021-05-18")),event=c("Stap 2 - weer naar buiten!"))
+stap.drie.df=data.frame(date=as.Date(c("2021-06-02")),event=c("Stap 3 - weer uit eten & naar de bios!"))
+stap.vier.df=data.frame(date=as.Date(c("2021-06-23")),event=c("Stap 4 - max 6 mensen thuis & evenementen"))
+stap.vijf.df=data.frame(date=as.Date(c("2021-07-14")),event=c("Stap 5 - max 8 mensen thuis"))
+stap.zes.df=data.frame(date=as.Date(c("2021-08-18")),event=c("Stap 6 - terug naar normaal"))
 
 
 tomorrow <- Sys.Date()+1
@@ -478,19 +489,23 @@ ggplot(LCPS_datafeed_predict)+
    geom_col(position = "dodge",  aes(x=Datum, y=Kliniek_Nieuwe_Opnames_COVID ), fill ="#4472C4")+       #"#F4B183")+  
   
   
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =80, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =40, ymax = 80, color = "black",fill = "orange", alpha = 0.5)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =12, ymax = 40, color = "black",fill = "yellow", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =0, ymax = 12, color = "black",fill = "green", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =80, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =40, ymax = 80, color = "black",fill = "orange", alpha = 0.5)+
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =12, ymax = 40, color = "black",fill = "yellow", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =0, ymax = 12, color = "black",fill = "green", alpha = 0.3)+ 
   
   
-  
-  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
   geom_text(data=stap.een.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
+  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=400, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
+  
+   geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
   geom_text(data=stap.twee.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
+  geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   
    geom_line(aes(x=Datum, y=MA_clin_lead), size =3, color = "#DAE3F3")+
@@ -558,19 +573,23 @@ ggplot(LCPS_datafeed_predict)+
   geom_col(position = "dodge", aes(x=Datum, y=IC_Nieuwe_Opnames_COVID ), fill = "#4472C4")+
   
   
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =20, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =10, ymax = 20, color = "black",fill = "orange", alpha = 0.5)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =3, ymax = 10, color = "black",fill = "yellow", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-05-20"), ymin =0, ymax = 3, color = "black",fill = "green", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =20, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =10, ymax = 20, color = "black",fill = "orange", alpha = 0.5)+
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =3, ymax = 10, color = "black",fill = "yellow", alpha = 0.4)+
+  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =0, ymax = 3, color = "black",fill = "green", alpha = 0.3)+ 
 
   
-  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
   geom_text(data=stap.een.df  , mapping=aes(x=date, y=70, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+ 
+  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
+  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=70, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
   
   geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
   geom_text(data=stap.twee.df  , mapping=aes(x=date, y=70, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  
+  geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=70, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   geom_line(aes(x=Datum, y=MA_IC_lead), size =3, color = "#DAE3F3")+
   geom_line(aes(x=Datum, y=MA_IC_lead), size =2)+
@@ -631,37 +650,37 @@ ggsave("data/plots/16x_IC_pred.png",width=16, height = 9)
 
 key <- "Datum"
 value <- "percentage"
-gathercols <- c("MAIC_rel_7da","MAClin_rel_7da")
+gathercols <- c("percentage","percentage.IC")
 LCPS_datafeed_predict.long <- gather(LCPS_datafeed_predict, key, value, gathercols) #(2:11))
 
 
 
 ggplot(LCPS_datafeed_predict.long, aes(x=Datum, y=value, color = key))+
 
-  geom_hline(yintercept=1)+
-  geom_hline(yintercept=0.9, color = "darkgreen")+
+  geom_hline(yintercept=1, size = 2)+
+  geom_hline(yintercept=0.9, color = "darkgreen", size = 1)+
+  geom_hline(yintercept=0.85, color = "darkgreen", size = 2)+
   
-  geom_smooth(size=2.5, se=FALSE, span = 0.1)+
+ # geom_point(size=2.5)+
+  geom_smooth(size=2.5, se=FALSE, span = 0.05)+
   
-  scale_color_manual( values=c("#4472C4", "#ED7D31"), labels=c("opnames kliniek", "opnames IC"))+
+  scale_color_manual( values=c("#4472C4", "#ED7D31"), labels=c("nieuwe opnames kliniek", "nieuwe opnames IC"))+
   
-  geom_point(data = LCPS_datafeed_7days_ago, aes(x=Datum, y= 1), size=5, color="black")+
+  
     
   scale_x_date(date_breaks = "1 week", 
                date_labels= format("%d %b"),
-               limits = as.Date(c("2021-02-15", NA)))+
+               limits = as.Date(c("2021-01-01", NA)))+
   
-  scale_y_continuous(limits = c(0.5, 1.2), breaks = c(1.1,1,0.9,0.75),labels = percent)+
+  scale_y_continuous(limits = c(0.75, 1.22), breaks = c(1.1,1,0.9,0.8,1.2) ,labels = percent)+
   
-  
-  
-  coord_cartesian(expand = FALSE)+
+ # coord_cartesian(expand = FALSE)+
   
   xlab("")+
   ylab("")+
   
   labs(title="OMT check", 
-       subtitle="Om een stap terug te doen, moet het percentage\n onder de 90% duiken.",
+       subtitle="Vergelijking van het lopende 7-daags gemiddelde, met de week ervoor.\n Om een stap te mogen zetten, moeten beide percentages het liefst onder de 85% duiken.",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
@@ -822,16 +841,16 @@ Pati%snten nu in het ziekenhuis:
 %sIC:       %s (%s)
 
 New: 
-%sKliniek:  %s (%sx #TeHoog)
+%sKliniek: %s (%sx #TeHoog)
 %sIC:     %s (%sx #TeHoog)
 
 
-#COVID19" # https://www.youtube.com/watch?v=KpYhePFx1qo"
+#COVID19" 
 
 
 tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             days.covid.in.nl, editionname,
-                            deP,
+                            deE,
                             hosp.total.dot,   hosp.total.b,     hosp.total.c,
                            
                             clinic.total.dot, hosp.total.b1,  hosp.total.c1,
@@ -859,14 +878,14 @@ check.emoji <- intToUtf8(0x2705)
 ic.perc.dot <- intToUtf8(0x1F7E1)     ### geel
 if (IC.perc.now > 100) {
   ic.perc.dot <- intToUtf8(0x1F534)     ### rood
-} else if (IC.perc.now < 90) {
+} else if (IC.perc.now < 85) {
   ic.perc.dot <- intToUtf8(0x1F7E2)     ### groen
 } 
 
 clin.perc.dot <- intToUtf8(0x1F7E1)     ### geel
-if (clin.perc.now > 90) {
+if (clin.perc.now > 100) {
   clin.perc.dot <- intToUtf8(0x1F534)     ### rood
-} else if (clin.perc.now < 90) {
+} else if (clin.perc.now < 85) {
   clin.perc.dot <- intToUtf8(0x1F7E2)     ### groen
 } 
 
@@ -878,10 +897,10 @@ tweet.LCPS.OMT.check.tweet <- "%s de OMT Check %s
 
 7-daags gemiddelde hoger of lager dan een week geleden? 
 Zitten we in een 'zekere daling'?
---> Groen bij 90%s of lager.
+--> Groen bij 85%s of lager.
 
 %s IC: %s%s 
-%s kliniek:    %s%s 
+%s Kliniek:    %s%s 
 
 "
 
