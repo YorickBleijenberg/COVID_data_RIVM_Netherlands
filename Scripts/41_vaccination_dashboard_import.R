@@ -86,7 +86,10 @@ second.dose <- as.integer((vaccins.estimated.total/100*22.3))
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)  # number of people with at least one dose.
 
-janssen.given <- 38000
+janssen.given <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated%20-%20janssen.csv",sep=",")
+janssen.given <- (janssen.given %>% filter(date == today ))
+janssen.given <- janssen.given$janssen.given
+
 people.fully.vaccinated <- second.dose + janssen.given      # number with 2 doses OR 1x Janssen
 
 estimated.new.today <- (vaccins.estimated.total - last(vacc_date_hist$total_estimated))
@@ -460,16 +463,16 @@ start.vaccination.nl = as.Date(c("2021-01-06"))
 days.vaccination.in.nl = as.numeric(Sys.Date() - start.vaccination.nl+1)
 
 vaccinated.people.total = vaccins.estimated.total
-vaccinated.first = vaccinated.people.total-vaccinated.second
+vaccinated.first = vaccinated.people.total-second.dose
 
 vac.perc <-  round((vaccinated.first/17474693*100), digits =2)
 vac.perc <- format(vac.perc, scientific=F)
 vac.perc.18 <-  round((vaccinated.first/14070340*100), digits =2)
 vac.perc.18 <- format(vac.perc.18, scientific=F)
 
-vac.perc.second <-  round((vaccinated.second/17474693*100), digits =2)
+vac.perc.second <-  round((second.dose/17474693*100), digits =2)
 vac.perc.second <- format(vac.perc.second, scientific=F)
-vac.perc.18.second <-  round((vaccinated.second/14070340*100), digits =2)
+vac.perc.18.second <-  round((second.dose/14070340*100), digits =2)
 vac.perc.18.second <- format(vac.perc.18.second, scientific=F)
 
 
