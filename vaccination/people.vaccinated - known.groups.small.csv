@@ -1,10 +1,12 @@
-vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type
-Thuiswonend 90+,,66116,59420,59420,COM
-Thuiswonend 85-89,,183571,167105,167105,COM
-Thuiswonend 80-84,,364462,319766,319766,COM
-Thuiswonend 75-79,,532614,86637,86637,COM
-Thuiswonend 70-74,,587801,3597,3597,COM
-Thuiswonend 66-69,,122563,6199,6199,COM
-Overige personen gevaccineerd door de GGD,,435434,204838,204838,COM/AZ
-Gevaccineerd door huisartsen (geschat),,963629,0,0,AZ
-Gevaccineerd door overige uitvoerders (geschat),,624222,263829,263829,COM/MOD/AZ
+vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,vaccin.type,Percentage eerste prik,Percentage tweede prik
+Thuiswonend 90+,,66623,60006,60006,COM,,
+Thuiswonend 85-89,,184976,169095,169095,COM,,
+Thuiswonend 80-84,,367143,329635,329635,COM,,
+Thuiswonend 75-79,,542819,133453,133453,COM,,
+Thuiswonend 70-74,,744418,4738,4738,COM,,
+Thuiswonend 60-64,,360019,12404,12404,COM,,
+Thuiswonend 66-70,,58296,32415,32415,,,
+Thuiswonend 55-59,,89310,37814,37814,,,
+Overige personen gevaccineerd door de GGD,,318505,130806,130806,COM/AZ,,
+Gevaccineerd door huisartsen (geschat),,1052207,0,0,AZ,,
+Gevaccineerd door overige uitvoerders (geschat),,664414,292747,292747,COM/MOD/AZ/JAN,,
