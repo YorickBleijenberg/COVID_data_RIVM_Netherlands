@@ -110,6 +110,13 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = t
                       sec.axis = dup_axis()
                       )+
 
+  annotate("rect", xmin = as.Date("2021-07-01"), xmax =as.Date("2021-08-01"), ymin =0, ymax = 250, color = "black",fill = "green", alpha = 0.3)+ 
+  
+  geom_text( aes( x=as.Date("2021-07-17"), y=125, label="OMT \ndoel"),
+             color="black", 
+             size=7 , angle=0, fontface="bold")+
+  
+  coord_cartesian(expand = FALSE)+
   
   scale_fill_manual  (values=c("#C5E0B4","#4472C4"), labels=c(hosp_clin.a, hosp_IC.a))+
   scale_color_manual(values=c("#767171","#3B3838"), labels=c(hosp_clin.a, hosp_IC.a))+
@@ -133,7 +140,7 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = t
           axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
-          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
 
 ggsave("data/plots/16b_IC_only.png",width=16, height = 9)
 
@@ -438,12 +445,11 @@ LCPS_datafeed_predict <- LCPS_datafeed_predict %>%
 
 LCPS_datafeed_predict$MA_clin_lead_eight  <- lead(LCPS_datafeed_predict$MA_clin,7)
 LCPS_datafeed_predict$percentage <- LCPS_datafeed_predict$MA_clin_lead_eight/LCPS_datafeed_predict$MA_clin
+LCPS_datafeed_predict$peak <- LCPS_datafeed_predict$MA_clin_lead_eight/266.5714
 
 LCPS_datafeed_predict$MA_IC_lead_eight  <- lead(LCPS_datafeed_predict$MA_IC,7)
 LCPS_datafeed_predict$percentage.IC <- LCPS_datafeed_predict$MA_IC_lead_eight/LCPS_datafeed_predict$MA_IC
-
-
-
+LCPS_datafeed_predict$peak.IC <- LCPS_datafeed_predict$MA_IC_lead_eight/53.57143
 
 
 LCPS_datafeed_7days_ago  <- last(LCPS_datafeed_predict, 8)
@@ -486,13 +492,13 @@ tomorrow <- Sys.Date()+1
 
 ggplot(LCPS_datafeed_predict)+
 
-   geom_col(position = "dodge",  aes(x=Datum, y=Kliniek_Nieuwe_Opnames_COVID ), fill ="#4472C4")+       #"#F4B183")+  
+   geom_col(position = "dodge",  aes(x=Datum, y=Kliniek_Nieuwe_Opnames_COVID ), fill ="#F4B183")+       #"#F4B183")+  
   
   
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =80, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =40, ymax = 80, color = "black",fill = "orange", alpha = 0.5)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =12, ymax = 40, color = "black",fill = "yellow", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =0, ymax = 12, color = "black",fill = "green", alpha = 0.3)+ 
+ # annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =80, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
+#  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =40, ymax = 80, color = "black",fill = "orange", alpha = 0.5)+
+#  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =12, ymax = 40, color = "black",fill = "yellow", alpha = 0.4)+
+#  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =0, ymax = 12, color = "black",fill = "green", alpha = 0.3)+ 
   
   
   geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
@@ -573,10 +579,10 @@ ggplot(LCPS_datafeed_predict)+
   geom_col(position = "dodge", aes(x=Datum, y=IC_Nieuwe_Opnames_COVID ), fill = "#4472C4")+
   
   
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =20, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =10, ymax = 20, color = "black",fill = "orange", alpha = 0.5)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =3, ymax = 10, color = "black",fill = "yellow", alpha = 0.4)+
-  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =0, ymax = 3, color = "black",fill = "green", alpha = 0.3)+ 
+ # annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =20, ymax = Inf, color = "black",fill = "red", alpha = 0.4)+
+#  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =10, ymax = 20, color = "black",fill = "orange", alpha = 0.5)+
+#  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =3, ymax = 10, color = "black",fill = "yellow", alpha = 0.4)+
+#  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =0, ymax = 3, color = "black",fill = "green", alpha = 0.3)+ 
 
   
   geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
@@ -657,22 +663,21 @@ LCPS_datafeed_predict.long <- gather(LCPS_datafeed_predict, key, value, gatherco
 
 ggplot(LCPS_datafeed_predict.long, aes(x=Datum, y=value, color = key))+
 
-  geom_hline(yintercept=1, size = 2)+
-  geom_hline(yintercept=0.9, color = "darkgreen", size = 1)+
-  geom_hline(yintercept=0.85, color = "darkgreen", size = 2)+
+  geom_hline(yintercept=1, size = 1, linetype = "dashed")+
+  geom_hline(yintercept=0.80, color = "darkgreen", size = 2)+
   
  # geom_point(size=2.5)+
   geom_smooth(size=2.5, se=FALSE, span = 0.05)+
   
-  scale_color_manual( values=c("#4472C4", "#ED7D31"), labels=c("nieuwe opnames kliniek", "nieuwe opnames IC"))+
+  scale_color_manual( values=c("#F4B183", "#4472C4"), labels=c("nieuwe opnames kliniek", "nieuwe opnames IC"))+
   
-  
+  #geom_col()
     
   scale_x_date(date_breaks = "1 week", 
                date_labels= format("%d %b"),
                limits = as.Date(c("2021-01-01", NA)))+
   
-  scale_y_continuous(limits = c(0.75, 1.22), breaks = c(1.1,1,0.9,0.8,1.2) ,labels = percent)+
+  scale_y_continuous(limits = c(0.50, 1.22), breaks = c(1.1,1,0.9,0.8,1.2,0.7) ,labels = label_percent(1))+
   
  # coord_cartesian(expand = FALSE)+
   
@@ -680,7 +685,7 @@ ggplot(LCPS_datafeed_predict.long, aes(x=Datum, y=value, color = key))+
   ylab("")+
   
   labs(title="OMT check", 
-       subtitle="Vergelijking van het lopende 7-daags gemiddelde, met de week ervoor.\n Om een stap te mogen zetten, moeten beide percentages het liefst onder de 85% duiken.",
+       subtitle="Vergelijking van het lopende 7-daags gemiddelde, met een week ervoor\n Om een stap te mogen zetten, moeten beide percentages het onder de 80% duiken.",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
@@ -705,7 +710,67 @@ ggplot(LCPS_datafeed_predict.long, aes(x=Datum, y=value, color = key))+
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
   
-ggsave("data/plots/16x_omt_check.png",width=16, height = 9)
+ggsave("data/16x_omt_check.png",width=16, height = 9)
+
+
+key <- "Datum"
+value <- "percentage"
+gathercols <- c("peak","peak.IC")
+LCPS_datafeed_predict.long <- gather(LCPS_datafeed_predict, key, value, gathercols) #(2:11))
+
+
+
+ggplot(LCPS_datafeed_predict.long, aes(x=Datum, y=value, color = key))+
+  
+  geom_hline(yintercept=1, size = 1, linetype = "dashed")+
+  geom_hline(yintercept=0.80, color = "darkgreen", size = 2)+
+  
+  # geom_point(size=2.5)+
+  geom_smooth(size=2.5, se=FALSE, span = 0.05)+
+  
+  scale_color_manual( values=c("#F4B183", "#4472C4"), labels=c("nieuwe opnames kliniek", "nieuwe opnames IC"))+
+  
+  #geom_col()
+  
+  scale_x_date(date_breaks = "1 week", 
+               date_labels= format("%d %b"),
+               limits = as.Date(c("2021-01-01", NA)))+
+  
+  scale_y_continuous(limits = c(0.50, 1.22), breaks = c(1.1,1,0.9,0.8,1.2,0.7) ,labels = label_percent(1))+
+  
+  # coord_cartesian(expand = FALSE)+
+  
+  xlab("")+
+  ylab("")+
+  
+  labs(title="OMT check", 
+       subtitle="Vergelijking van het lopende 7-daags gemiddelde, met de piek\n Om een stap te mogen zetten, moeten beide percentages het onder de 80% duiken.",
+       caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme_classic()+
+  theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
+  
+  
+  theme(legend.position =  "top",
+        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.margin = margin(3, 3, 3, 3),
+        legend.text = element_text(colour="black", size=20, face="bold"),
+        legend.direction='vertical')+
+  
+  theme(  plot.background = element_rect(fill = "#DAE3F3"),
+          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+          plot.subtitle = element_text(hjust = 0.5,size = 15,face = "italic"),
+          panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
+          axis.text = element_text(size=14,color = "black",face = "bold"),
+          axis.text.y = element_text(face="bold", color="black", size=14),
+          axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
+          axis.ticks.length = unit(0.5, "cm"),
+          axis.line = element_line(colour = "#DAE3F3"),
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+  
+  ggsave("data/16x_omt_check-peak.png",width=16, height = 9)
+
 
 ## 
 
@@ -869,25 +934,74 @@ post_tweet(tweet.LCPS.EN.tweet,  media = c("data/plots/16a_IC_hosp.png",
                                            "data/plots/16x_IC_pred.png"
                                            ))
 
+
+
+
+source("C:\\Rdir\\Rscripts\\01_lcps_data-NICE_graph.R")
+
+
+
+instoom.combi.big$zkh_peak_lag<- lag(instoom.combi.big$zkh_peak,3)
+instoom.combi.big$ic_peak_lag<- lag(instoom.combi.big$ic_peak,3)
+
+
+
+### number for the tweet  ###
+IC.NICE.perc.now <- round(last(instoom.combi.big$ic_peak_lag),2)*100
+clin.NICE.perc.now <- round(last(instoom.combi.big$zkh_peak_lag),2)*100
+
+IC.NICE.perc.now <- as.integer(IC.NICE.perc.now)
+clin.NICE.perc.now <- as.integer(clin.NICE.perc.now)
+
+######
+IC.lcps.perc.now <- round(last(instoom.combi.big$peak_IC_lcsp  ),2)*100
+clin.lcps.perc.now <- round(last(instoom.combi.big$peak_zkh_lcsp ),2)*100
+
+IC.lcps.perc.now <- as.integer(IC.lcps.perc.now)
+clin.lcps.perc.now <- as.integer(clin.lcps.perc.now)
+
+
+IC.lcps.perc.now
+IC.NICE.perc.now
+
+clin.lcps.perc.now
+clin.NICE.perc.now
+
+
 check.emoji <- intToUtf8(0x2705)
 
 
 
 
-
-ic.perc.dot <- intToUtf8(0x1F7E1)     ### geel
-if (IC.perc.now > 100) {
-  ic.perc.dot <- intToUtf8(0x1F534)     ### rood
-} else if (IC.perc.now < 85) {
-  ic.perc.dot <- intToUtf8(0x1F7E2)     ### groen
+ic.lcps.perc.dot <- intToUtf8(0x1F7E1)     ### geel
+if (IC.lcps.perc.now > 99) {
+  ic.lcps.perc.dot <- intToUtf8(0x1F534)     ### rood
+} else if (IC.lcps.perc.now < 81) {
+  ic.lcps.perc.dot <- intToUtf8(0x1F7E2)     ### groen
 } 
 
-clin.perc.dot <- intToUtf8(0x1F7E1)     ### geel
-if (clin.perc.now > 100) {
-  clin.perc.dot <- intToUtf8(0x1F534)     ### rood
-} else if (clin.perc.now < 85) {
-  clin.perc.dot <- intToUtf8(0x1F7E2)     ### groen
+ic.nice.perc.dot <- intToUtf8(0x1F7E1)     ### geel
+if (IC.NICE.perc.now > 99) {
+  ic.nice.perc.dot <- intToUtf8(0x1F534)     ### rood
+} else if (IC.NICE.perc.now < 81) {
+  ic.nice.perc.dot <- intToUtf8(0x1F7E2)     ### groen
 } 
+
+clin.lcps.perc.dot <- intToUtf8(0x1F7E1)     ### geel
+if (clin.lcps.perc.now > 99) {
+  clin.lcps.perc.dot <- intToUtf8(0x1F534)     ### rood
+} else if (clin.lcps.perc.now < 81) {
+  clin.lcps.perc.dot <- intToUtf8(0x1F7E2)     ### groen
+} 
+
+clin.nice.perc.dot <- intToUtf8(0x1F7E1)     ### geel
+if (clin.NICE.perc.now > 99) {
+  clin.nice.perc.dot <- intToUtf8(0x1F534)     ### rood
+} else if (clin.NICE.perc.now < 81) {
+  clin.nice.perc.dot <- intToUtf8(0x1F7E2)     ### groen
+} 
+
+
 
 
 
@@ -895,25 +1009,31 @@ if (clin.perc.now > 100) {
 
 tweet.LCPS.OMT.check.tweet <- "%s de OMT Check %s
 
-7-daags gemiddelde hoger of lager dan een week geleden? 
+7-daags gemiddelde hoger of lager dan de piek? 
 Zitten we in een 'zekere daling'?
---> Groen bij 85%s of lager.
+--> Groen bij 80%s of lager.
 
-%s IC: %s%s 
-%s Kliniek:    %s%s 
+%s IC - LCPS: %s%s 
+%s IC - NICE: %s%s 
 
+%s Kliniek - LCPS: %s%s 
+%s Kliniek - NICE: %s%s 
+
+*data NICE tot 3 dagen geleden ivm rapportagevertraging
 "
 
 tweet.LCPS.OMT.check.tweet <- sprintf(  tweet.LCPS.OMT.check.tweet,
                                         check.emoji,   check.emoji,
                                         deP,
-                                        ic.perc.dot,   IC.perc.now,   deP,
-                                        clin.perc.dot, clin.perc.now, deP  )
+                                        ic.lcps.perc.dot,   IC.lcps.perc.now,   deP,
+                                        ic.nice.perc.dot, IC.NICE.perc.now, deP, 
+                                        clin.lcps.perc.dot,   clin.lcps.perc.now,   deP,
+                                        clin.nice.perc.dot, clin.NICE.perc.now, deP)
 
 
 Encoding(tweet.LCPS.OMT.check.tweet) <- "UTF-8"
 
-post_tweet(tweet.LCPS.OMT.check.tweet,  media = c("data/plots/16x_omt_check.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.LCPS.OMT.check.tweet,  media = c("data/plots/16x_omt_check_nice_peak.png"), in_reply_to_status_id = get_reply_id())
                                         
                                            
 

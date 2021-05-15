@@ -63,7 +63,8 @@ casus.age.dif.play$`90+`    <- as.integer(casus.age.dif.play$`90+`)
 ### make agegroups
 casus.age.dif.play$young =  casus.age.dif.play$`0-9`   + casus.age.dif.play$`10-19` +
                             casus.age.dif.play$`20-29` + casus.age.dif.play$`30-39` + casus.age.dif.play$`40-49`
-casus.age.dif.play$middle = casus.age.dif.play$`50-59` + casus.age.dif.play$`60-69` 
+casus.age.dif.play$middle = casus.age.dif.play$`50-59`
+casus.age.dif.play$sixty = casus.age.dif.play$`60-69` 
 casus.age.dif.play$old  =  casus.age.dif.play$`70-79` 
 casus.age.dif.play$old80  =  casus.age.dif.play$`80-89`
 casus.age.dif.play$old90p  =  casus.age.dif.play$`90+`
@@ -71,6 +72,7 @@ casus.age.dif.play$old90p  =  casus.age.dif.play$`90+`
 
 casus.age.dif.play$MA.young.Change   <- rollmeanr(casus.age.dif.play$young   , 7, fill = 0)
 casus.age.dif.play$MA.middle.Change  <- rollmeanr(casus.age.dif.play$middle  , 7, fill = 0)
+casus.age.dif.play$MA.sixty.Change  <- rollmeanr(casus.age.dif.play$sixty  , 7, fill = 0)
 casus.age.dif.play$MA.old.Change     <- rollmeanr(casus.age.dif.play$old     , 7, fill = 0)
 casus.age.dif.play$MA.old80.Change   <- rollmeanr(casus.age.dif.play$old80   , 7, fill = 0)
 casus.age.dif.play$MA.old90p.Change   <- rollmeanr(casus.age.dif.play$old90p , 7, fill = 0)
@@ -78,7 +80,8 @@ casus.age.dif.play$MA.old90p.Change   <- rollmeanr(casus.age.dif.play$old90p , 7
 
 
 maxClinyoung <- 7172  # max(casus.age.dif.play$MA.young.Change, na.rm = TRUE)
-maxClinMid   <- 3244  # max(casus.age.dif.play$MA.middle.Change, na.rm = TRUE)
+maxClinMid   <- 2032  # max(casus.age.dif.play$MA.middle.Change, na.rm = TRUE)
+maxClinSixty <- 1217  # max(casus.age.dif.play$MA.sixty.Change, na.rm = TRUE)
 maxClinOld   <- 733   # max(casus.age.dif.play$MA.old.Change, na.rm = TRUE)
 maxClin80    <- 470   # max(casus.age.dif.play$MA.old80.Change, na.rm = TRUE)
 maxClin90p   <- 165   # max(casus.age.dif.play$MA.old90p.Change, na.rm = TRUE)
@@ -87,6 +90,7 @@ maxClin90p   <- 165   # max(casus.age.dif.play$MA.old90p.Change, na.rm = TRUE)
 
 casus.age.dif.play$MA.young.Change.relative  <- casus.age.dif.play$MA.young.Change /maxClinyoung
 casus.age.dif.play$MA.middle.Change.relative <- casus.age.dif.play$MA.middle.Change/maxClinMid
+casus.age.dif.play$MA.sixty.Change.relative <- casus.age.dif.play$MA.sixty.Change/maxClinSixty
 casus.age.dif.play$MA.old.Change.relative    <- casus.age.dif.play$MA.old.Change   /maxClinOld
 casus.age.dif.play$MA.old80.Change.relative  <- casus.age.dif.play$MA.old80.Change /maxClin80
 casus.age.dif.play$MA.old90p.Change.relative  <- casus.age.dif.play$MA.old90p.Change /maxClin90p
@@ -107,7 +111,7 @@ casus.age.dif.play.short <- casus.age.dif.play[casus.age.dif.play$date >"2021-02
 
 #colnames(casus.age.dif.play) <- c("50min","09","1090", "2029", "3039", "4049","blabla","6069","7079","8089","90p","date","unk")
 
-dag.label <- as.Date(Sys.Date()+3)
+dag.label <- as.Date(Sys.Date()+5)
 
 nine.Plus.label <- last(casus.age.dif.play$MA.old90p.Change.relative)
 five.min.label <- last(casus.age.dif.play$MA.young.Change.relative)
@@ -120,7 +124,16 @@ subtitle.label <- paste0("Verschil tov gisteren per leeftijdsgroep, ahv casusdat
                          )
 
 
-#######   
+#######
+
+label.five.min.label  <- last(casus.age.dif.play$MA.young.Change.relative  )
+label.five.label      <- last(casus.age.dif.play$MA.middle.Change.relative  )
+label.six.label       <- last(casus.age.dif.play$MA.sixty.Change.relative  )
+label.zeven.label     <- last(casus.age.dif.play$MA.old.Change.relative  )
+label.eight.label     <- last(casus.age.dif.play$MA.old80.Change.relative  )
+label.nine.label      <- last(casus.age.dif.play$MA.old90p.Change.relative  )
+
+#######
 
 ggplot(casus.age.dif.play)+
  
@@ -132,6 +145,10 @@ ggplot(casus.age.dif.play)+
   geom_line(  aes(x= date, MA.young.Change.relative),  lwd=3, color="#B8DE29FF")+
   geom_line(  aes(x= date, MA.middle.Change.relative),  lwd=4, color="#F5F5F5")+
   geom_line(  aes(x= date, MA.middle.Change.relative),  lwd=3, color="#55C667FF")+
+  
+  geom_line(  aes(x= date, MA.sixty.Change.relative),  lwd=4, color="#F5F5F5")+
+  geom_line(  aes(x= date, MA.sixty.Change.relative),  lwd=3, color="#29AF7FFF")+
+  
   geom_line(  aes(x= date, MA.old.Change.relative),    lwd=4, color="#F5F5F5")+
   geom_line(  aes(x= date, MA.old.Change.relative),    lwd=3, color="#1F968BFF")+
   geom_line(  aes(x= date, MA.old80.Change.relative),    lwd=4, color="#F5F5F5")+
@@ -139,11 +156,16 @@ ggplot(casus.age.dif.play)+
   geom_line(  aes(x= date, MA.old90p.Change.relative),    lwd=4, color="#F5F5F5")+
   geom_line(  aes(x= date, MA.old90p.Change.relative),    lwd=3, color="#440154FF")+
   
-  annotate("text", x = as.Date(dag.label), y = 0.43, label = "  50 min",  size=5, face = "bold", color = "#B8DE29FF")+
-  annotate("text", x = as.Date(dag.label), y = 0.36, label = " 50-69" ,  size=5, face = "bold", color = "#55C667FF")+
-  annotate("text", x = as.Date(dag.label), y = 0.29, label = " 70-79" ,  size=5, face = "italic", color = "#1F968BFF")+
-  annotate("text", x = as.Date(dag.label), y = 0.20, label = " 80-89" ,  size=5, face = "bold", color = "#404788FF")+
-  annotate("text", x = as.Date(dag.label), y = 0.13, label = "90+"   ,  size=5, face = "bold", color = "#440154FF")+
+  annotate("text", x = as.Date(dag.label), y = label.five.min.label, label = "- 50 min",  size=5, face = "bold", color = "#B8DE29FF")+
+ # annotate("text", x = as.Date(dag.label), y = label.five.nine.label, label = " 50-69" ,  size=5.2, face = "bold", color = "black")+
+  annotate("text", x = as.Date(dag.label), y = label.five.label, label = "- 50-59" ,  size=5, face = "bold", color = "#55C667FF")+
+  
+  annotate("text", x = as.Date(dag.label), y = label.six.label, label = "- 60-69" ,  size=5, face = "bold", color = "#29AF7FFF")+
+  
+
+  annotate("text", x = as.Date(dag.label), y = label.zeven.label, label = "- 70-79" ,  size=5, face = "italic", color = "#1F968BFF")+
+  annotate("text", x = as.Date(dag.label), y = label.eight.label, label = "- 80-89" ,  size=5, face = "bold", color = "#404788FF")+
+  annotate("text", x = as.Date(dag.label), y = label.nine.label, label = "- 90+"   ,  size=5, face = "bold", color = "#440154FF")+
   
   scale_y_continuous(limits = c(0, 1),labels = percent)+
   scale_x_date(date_breaks  = "1 months",date_labels= format("%b"),
@@ -154,8 +176,8 @@ ggplot(casus.age.dif.play)+
   xlab("")+
   ylab("")+
 
-geom_vline(xintercept = as.Date("2021-02-21"), linetype = "dotted") + 
-  annotate("text", x  = as.Date("2021-02-22"), y = 0.7, label = "57% \nvan de 85+ers heeft \neen eerste prik ontvangen \nen 61% van de 90+ers \n(thuiswonend)", size=3, angle=0, vjust=-0.4, hjust = 0, color = "black")+
+#  geom_vline(xintercept = as.Date("2021-02-21"), linetype = "dotted") + 
+ # annotate("text", x  = as.Date("2021-02-22"), y = 0.7, label = "57% \nvan de 85+ers heeft \neen eerste prik ontvangen \nen 61% van de 90+ers \n(thuiswonend)", size=3, angle=0, vjust=-0.4, hjust = 0, color = "black")+
   
   labs(title     = "Besmettingen",
        subtitle = subtitle.label,
@@ -180,5 +202,5 @@ geom_vline(xintercept = as.Date("2021-02-21"), linetype = "dotted") +
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-ggsave("data/99_leeftijd_relatief_case.png",width=16, height = 9)
+ggsave("data/plots/99_leeftijd_relatief_case.png",width=16, height = 9)
 

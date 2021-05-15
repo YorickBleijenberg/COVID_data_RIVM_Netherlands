@@ -113,7 +113,8 @@ ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.3)+
  # geom_point(size = 2)+
   
 facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
-  scale_x_date(date_breaks = "2 month", 
+ 
+   scale_x_date(date_breaks = "2 month", 
               date_labels= format("%d %b"),
            limits = as.Date(c("2020-11-12", today)))+
   theme_bw() + 
@@ -147,6 +148,7 @@ facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
   )
 
 ggsave("data/plots/75_Municipality-day-phd.png",width=13, height = 13)
+
 
 
 

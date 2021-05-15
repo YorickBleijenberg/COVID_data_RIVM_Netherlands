@@ -25,9 +25,9 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 
 #### some constants for the update ####
 
-editionname <-  "feestje-met-12.000-man(m/v)"
-editienaam  <-  editionname
-vaccine.edition.name <- "we-hebben-nu-een-lekker-voorraadje"
+editionname <-  "'Tot-de-zomer-zit-het-wel-goed.'"
+editienaam  <-  editionname 
+vaccine.edition.name <- "vaccins-werken-goedcijfers-zijn-er-niet-omdat-ze-er-niet-zijn"
 #number.in.DE <- "0"
 
 #### Start  ####
@@ -153,4 +153,6 @@ in.freezer
 
 long.est
 
+# vac.perc.18
+# vac.perc.18.second
 

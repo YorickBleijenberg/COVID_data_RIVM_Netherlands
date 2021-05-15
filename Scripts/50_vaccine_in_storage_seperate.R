@@ -43,7 +43,7 @@ vacc.dash <- merge(vacc.total.dash,vacc.total.done.dash)
 
 
 vaccination.data.filename <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_vaccine_deliverd_admin.csv")
-write.csv(vacc.dash, file = vaccination.data.filename, row.names = F)
+write.csv2(vacc.dash, file = vaccination.data.filename, row.names = F)
 
 
 

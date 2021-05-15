@@ -238,7 +238,7 @@ last.week <-Sys.Date() -7
 ggplot(df_today_bind.count, aes(x=weekOfDead.4, y=n, color=Agegroup))+
  # geom_line(stat="identity", position="stack")+
   
-  geom_line(size = 2)+
+  geom_smooth(size=2.5, se=FALSE, span = 0.3)+
   
   theme_classic()+
   
@@ -253,7 +253,6 @@ ggplot(df_today_bind.count, aes(x=weekOfDead.4, y=n, color=Agegroup))+
   
   #scale_x_date(date_breaks = "1 day", date_labels= format("%d-%b"),limits = as.Date(c(Sys.Date()-14, Sys.Date())))+
   
- # scale_fill_manual( values=c("#ff0000", "#faacac"), labels=c("vandaag gemeld", "eerder gemeld"))+
   scale_y_continuous(limits = c(0,333))+
   scale_x_date(limits = c(as.Date("2020-10-01"), last.week), breaks = "1 week",  labels = date_format("%V"))+
   coord_cartesian(expand = FALSE)+
@@ -281,7 +280,7 @@ ggplot(df_today_bind.count, aes(x=weekOfDead.4, y=n, color=Agegroup))+
     
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
 
-ggsave("data/74_dead_agegroup.png",width=16, height = 9)  
+ggsave("data/plots/74_dead_agegroup.png",width=16, height = 9)  
 
 
 
@@ -317,10 +316,11 @@ df_today_bind.count.long$key <- as.factor(df_today_bind.count.long$key)
 
 
 
-ggplot(df_today_bind.count.long, aes(x=weekOfDead.4, y=value, color=key))+
+ggplot(df_today_bind.count.long, aes(x=weekOfDead.4, y=value, color=factor(key, levels=c("six_rel","seven", "eight", "nine" ))  ))+
   # geom_line(stat="identity", position="stack")+
   
-  geom_line(size = 2)+
+  #geom_point()+
+  geom_smooth(size=2.5, se=FALSE, span = 0.21)+
   
   theme_classic()+
   
@@ -335,8 +335,10 @@ ggplot(df_today_bind.count.long, aes(x=weekOfDead.4, y=value, color=key))+
   
   #scale_x_date(date_breaks = "1 day", date_labels= format("%d-%b"),limits = as.Date(c(Sys.Date()-14, Sys.Date())))+
   
-  # scale_fill_manual( values=c("#ff0000", "#faacac"), labels=c("vandaag gemeld", "eerder gemeld"))+
- # scale_y_continuous(limits = c(0,333))+
+   scale_color_manual(values=c("#4472C4",  "#5D7D31","#ED7D31", "#ED5D31"), labels=c("60-69","70-79", "80-89", "90+" ))+
+  
+  
+ scale_y_continuous(labels = percent)+
   scale_x_date(limits = c(as.Date("2020-10-01"), last.week), breaks = "1 week",  labels = date_format("%V"))+
 #  coord_cartesian(expand = FALSE)+
   
@@ -363,7 +365,7 @@ ggplot(df_today_bind.count.long, aes(x=weekOfDead.4, y=value, color=key))+
     
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/74_dead_agegroup_rel.png",width=16, height = 9)  
+  ggsave("data/plots/74_dead_agegroup_rel.png",width=16, height = 9)  
 
 
 

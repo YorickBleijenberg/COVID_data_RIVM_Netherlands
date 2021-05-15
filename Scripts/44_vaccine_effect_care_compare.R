@@ -1,54 +1,100 @@
-
+new.date <- Sys.Date()
 today <- Sys.Date()
 
-read.verpleeg.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_verpleeghuizen.csv", sep = "")
-copy.verpleeg <- read.csv(read.verpleeg.path,sep=";")
 
-copy.verpleeg$date<-as.Date(copy.verpleeg$Date_of_statistic_reported)   #Adding a date to the case
+### add new date ####
+File_date_75 <- paste0("C:\\Rdir\\data\\", Sys.Date()-1 , "/",Sys.Date()-1, "_care_daily_diff.csv")
+old.casus <- read.csv(File_date_75,sep=",")
+old.casus$date <- as.Date(old.casus$date)
 
-verpleeg.sm <- copy.verpleeg[ -c(1,2,3,4,7,8)]
+new.disabled.file <- paste0("https://raw.githubusercontent.com/mzelst/covid-19/master/data-rivm/nursing-homes-per-day/nursery_daily_", new.date, ".csv", sep = "")
+new.casus <- fread(new.disabled.file)
+new.casus$date <- as.Date(new.casus$date)
+new.casus <- new.casus[,-c(2,4:6)]
 
-colnames(verpleeg.sm) <- c("cases_vplg","deceased_vplg","dateInTable")
+cassus.age.merge.fin <- rbind(old.casus, new.casus)
 
-###cases
-verpleeg.case.agg <- aggregate(verpleeg.sm$cases_vplg,     by=list(dateInTable=verpleeg.sm$dateInTable), FUN=sum)
-verpleeg.case.agg <- (verpleeg.case.agg %>% filter(dateInTable > "2020-07-07" & dateInTable < today-3))   # -3
-verpleeg.case.agg$MAx <- rollmeanr(verpleeg.case.agg$x, 7, fill = 0)
-verpleeg.case.agg$ma_x_lead  <- lead(verpleeg.case.agg$MAx,3)
+File_date_72 <- paste0("data//", Sys.Date() , "/",Sys.Date(), "_care_daily_diff.csv")
+write.csv(cassus.age.merge.fin, File_date_72, row.names=FALSE)
 
-verpleeg.case.agg <- verpleeg.case.agg[ -c(2,3)]
-colnames(verpleeg.case.agg) <- c("dateInTable", "cases_vplg_lead" )
 
-#### death
-verpleeg.death.agg <- aggregate(verpleeg.sm$deceased_vplg,     by=list(dateInTable=verpleeg.sm$dateInTable), FUN=sum)
-verpleeg.death.agg <- (verpleeg.death.agg %>% filter(dateInTable > "2020-07-07" & dateInTable < today))  # -10
-verpleeg.death.agg$MAx <- rollmeanr(verpleeg.death.agg$x, 7, fill = 0)
-verpleeg.death.agg$ma_x_lead  <- lead(verpleeg.death.agg$MAx,3)
+### make ready for the plot ####
 
-verpleeg.death.agg <- verpleeg.death.agg[ -c(2,3)]
-colnames(verpleeg.death.agg) <- c("dateInTable", "death_vplg_lead" )
+casus.care.merge.fin <- cassus.age.merge.fin
+
+colnames(casus.care.merge.fin) <- c("cases_vplg","deceased_vplg","dateInTable")
+
+verpleeg.case.agg <- (casus.care.merge.fin %>% filter(dateInTable > "2020-07-07" ))
+    
+#### get new rivm data ####
+# read.verpleeg.path <-paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_verpleeghuizen.csv", sep = "")
+# copy.verpleeg <- read.csv(read.verpleeg.path,sep=";")
+
+# copy.verpleeg$date<-as.Date(copy.verpleeg$Date_of_statistic_reported)   #Adding a date to the case
+
+# verpleeg.sm <- copy.verpleeg[ -c(1,2,3,4,7,8)]
+
+# colnames(verpleeg.sm) <- c("cases_vplg","deceased_vplg","dateInTable")
+
 
 #### generalpop
 relative <- Merged_data_short
-relative <- relative[ -c(2:8,10,11,13,14,16:19)]
+relative <- relative[ -c(4:19)]
 relative$dateInTable <- as.Date(relative$dateInTable)
 #relative <- (relative %>% filter(dateInTable < today-3))
 
 ####merge
 relative.table <- merge(verpleeg.case.agg,  relative, by = "dateInTable", all = TRUE)
-relative.table <- merge(verpleeg.death.agg, relative.table, by = "dateInTable", all = TRUE)
+# relative.table <- merge(verpleeg.death.agg, relative.table, by = "dateInTable", all = TRUE)
 
-### make relative
-maxVplgC <- max(relative.table$cases_vplg_lead, na.rm = TRUE)
-relative.table$cases_vplg_rel <- relative.table$cases_vplg_lead/maxVplgC
-maxCases <- max(relative.table$ma_c_lead, na.rm = TRUE)
-relative.table$cases_rel <- relative.table$ma_c_lead/maxCases
-maxVplgD <- max(relative.table$death_vplg_lead, na.rm = TRUE)
-relative.table$death_vplg_rel <- relative.table$death_vplg_lead/maxVplgD
-maxDeaths <- max(relative.table$ma_d_lead, na.rm = TRUE)
-relative.table$death_rel <- relative.table$ma_d_lead/maxDeaths
+relative.table$cases_other <- relative.table$cases-relative.table$cases_vplg
+relative.table$death_other <- relative.table$cases-relative.table$cases_vplg
 
-relative.table <- relative.table[ -c(2:6)]
+relative.table <- (relative.table %>% filter(dateInTable > "2020-11-07" ))
+
+
+relative.table$MAcases_care  <- rollmeanr(relative.table$cases_vplg,    7, fill = 0)
+relative.table$MAcases_other <- rollmeanr(relative.table$cases,         7, fill = 0)
+relative.table$MAdeaths_care <- rollmeanr(relative.table$deceased_vplg, 7, fill = 0)
+relative.table$MAdeath_other  <- rollmeanr(relative.table$dead,          7, fill = 0)
+
+
+###cases  ####
+#verpleeg.case.agg <- aggregate(verpleeg.sm$cases_vplg,     by=list(dateInTable=verpleeg.sm$dateInTable), FUN=sum)
+#verpleeg.case.agg <- (verpleeg.case.agg %>% filter(dateInTable > "2020-07-07" & dateInTable < today-3))   # -3
+#verpleeg.case.agg$MAx <- rollmeanr(verpleeg.case.agg$x, 7, fill = 0)
+#verpleeg.case.agg$ma_x_lead  <- lead(verpleeg.case.agg$MAx,3)
+
+#verpleeg.case.agg <- verpleeg.case.agg[ -c(2,3)]
+#colnames(verpleeg.case.agg) <- c("dateInTable", "cases_vplg_lead" )
+
+#### death
+#verpleeg.death.agg <- aggregate(verpleeg.sm$deceased_vplg,     by=list(dateInTable=verpleeg.sm$dateInTable), FUN=sum)
+#verpleeg.death.agg <- (verpleeg.death.agg %>% filter(dateInTable > "2020-07-07" & dateInTable < today))  # -10
+
+#verpleeg.death.agg <- casus.care.merge.fin
+
+#verpleeg.death.agg$MAx <- rollmeanr(verpleeg.death.agg$deaths_today , 7, fill = 0)
+#verpleeg.death.agg$ma_x_lead  <- lead(verpleeg.death.agg$MAx,3)
+
+#verpleeg.death.agg <- verpleeg.death.agg[ ,-c(1,2,4)]
+#colnames(verpleeg.death.agg) <- c("dateInTable", "death_vplg_lead" )
+
+
+
+
+
+### make relative ####
+maxVplgC <- max(relative.table$MAcases_care, na.rm = TRUE)
+relative.table$cases_vplg_rel <- relative.table$MAcases_care/maxVplgC
+maxCases <- max(relative.table$MAcases_other, na.rm = TRUE)
+relative.table$cases_rel <- relative.table$MAcases_other/maxCases
+maxVplgD <- max(relative.table$MAdeaths_care, na.rm = TRUE)
+relative.table$death_vplg_rel <- relative.table$MAdeaths_care/maxVplgD
+maxDeaths <- max(relative.table$MAdeath_other, na.rm = TRUE)
+relative.table$death_rel <- relative.table$MAdeath_other/maxDeaths
+
+relative.table <- relative.table[ -c(2:11)]
 
 
 # key <- "dateInTabel"
@@ -145,7 +191,7 @@ ggplot(relative.table.dead.long, aes(x=dateInTable, y=value, color = key))+
   
    
   scale_x_date(date_breaks = "1 months",date_labels= format("%b"),
-               limits = as.Date(c("2020-10-15", NA)))+
+               limits = as.Date(c("2020-11-14", NA)))+
 
   # scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
   
@@ -165,7 +211,7 @@ ggplot(relative.table.dead.long, aes(x=dateInTable, y=value, color = key))+
   
     
   labs(title = "Verpleeghuizen & de rest",
-       #subtitle = "Blauw = Nieuwe doden verpleeghuis \n Rood = Dagelijkse cijfers doden",
+       subtitle = "naar datum van rapportage",
        caption = paste("Bron: RIVM | Plot: @YorickB  | ",Sys.Date()))+
   
   theme(#legend.position = "none",   # no legend
@@ -222,7 +268,7 @@ subtitle.care.label <- paste0("Percentage nieuwe gevallen totaal sinds de winter
 
 
 relative.table.short <- relative.table
-relative.table.short <- (relative.table.short %>% filter( dateInTable > "2021-02-14" ))
+relative.table.short <- (relative.table.short %>% filter( dateInTable > "2021-02-20" ))
 
 
 ggplot(relative.table, aes(x=dateInTable))+
@@ -238,7 +284,7 @@ ggplot(relative.table, aes(x=dateInTable))+
   
   scale_y_continuous(labels = percent)+
   scale_x_date(date_breaks = "1 months",date_labels= format("%b"),
-               limits = as.Date(c("2020-07-15", NA)))+
+               limits = as.Date(c("2020-11-15", NA)))+
   
   #coord_cartesian(expand = FALSE)+
   

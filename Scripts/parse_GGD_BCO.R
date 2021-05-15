@@ -12,7 +12,7 @@ library(ggforce)
 
 weeknumber <- isoweek(Sys.Date())-1
 
-report<-"C:\\Rdir\\rivm-week\\2021-15-COVID-19_WebSite_rapport_wekelijks_20210420_1126_publicatie.pdf"
+report<-"C:\\Rdir\\rivm-week\\2021-18-COVID-19_WebSite_rapport_wekelijks_20210511_1153_final.pdf"
 
 
 # report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
@@ -119,7 +119,7 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
                      name = "", breaks = NULL, labels = NULL)+
   
   #scale_fill_brewer(palette="Set1")+
-  scale_fill_manual(values = c("#4daf4a","#ff7f00","#ffff33","#e41a1c","#377eb8","#a65628","#984ea3", "#a65628"))+
+  scale_fill_manual(values = c("#4daf4a","#ff7f00","#ffff33","#a65628","#e41a1c","#377eb8","#984ea3", "#a65628"))+
   
   #e41a1c - red --
   #ff7f00 - orange---

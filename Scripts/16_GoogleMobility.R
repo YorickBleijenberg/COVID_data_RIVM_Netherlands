@@ -79,11 +79,12 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18",
                                     "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17",
                                     "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
-                                    "2021-04-04")), 
+                                    "2021-04-04", "2021-04-27")), 
                      event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
                              "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9",
                              "Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", 
-                             "lockdown","" ,"avondklok", "basisscholen open", "kappers open", "Eerste Paasdag"))
+                             "lockdown","" ,"avondklok", "basisscholen open", "kappers open", 
+                             "Eerste Paasdag","koningsdag"))
 
 #persco.df=data.frame(date=as.Date(c("2021-02-25")), 
 #                     event=c("Meer risico PersCo"))

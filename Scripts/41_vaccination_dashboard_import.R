@@ -6,7 +6,7 @@ yesterday <- today-1
 opdeplank <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated%20-%20doses.received.csv",sep=",")
 opdeplank[is.na(opdeplank)] <- 0
 opdeplank$day <- as.Date(opdeplank$day)
-opdeplank <- (opdeplank %>% filter(day == today ))
+opdeplank <- (opdeplank %>% filter(day == yesterday ))
 freezer = opdeplank$total_all
 
 #### import historic vaccination data from GH - NOT from the current .json file #####
@@ -82,7 +82,7 @@ vaccins.registerd.hops  <- as.integer(0)   #is now "hugo schatting"
 
 
 #second dose estimation
-second.dose <- as.integer((vaccins.estimated.total/100*22.3)) 
+second.dose <- as.integer((vaccins.estimated.total/100*22.77)) 
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)  # number of people with at least one dose.
 
@@ -296,7 +296,7 @@ ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels
   
   annotate("rect", xmin = as.Date("2021-03-27"), xmax =as.Date("2021-04-02"), ymin =433394, ymax = 513016, color = "black",fill = "darkred", alpha = 0.2)+
   annotate("rect", xmin = as.Date("2021-03-27"), xmax =as.Date("2021-04-02"), ymin =0, ymax = 433394, color = "black",fill = "darkgray", alpha = 0.4)+
-  
+
   
   annotate("rect", xmin = as.Date("2021-04-03"), xmax =as.Date("2021-04-09"), ymin =499362, ymax = 624361, color = "black",fill = "darkred", alpha = 0.2)+
   annotate("rect", xmin = as.Date("2021-04-03"), xmax =as.Date("2021-04-09"), ymin =0, ymax = 499362, color = "black",fill = "gray", alpha = 0.4)+
@@ -316,15 +316,39 @@ ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels
   
   annotate("rect", xmin = as.Date("2021-05-01"), xmax =as.Date("2021-05-07"), ymin =0, ymax = 826926, color = "black",fill = "gray", alpha = 0.6)+
   annotate("rect", xmin = as.Date("2021-05-01"), xmax =as.Date("2021-05-07"), ymin =826926, ymax = 810012, color = "black",fill = "red", alpha = 0.6)+
+  annotate("rect", xmin = as.Date("2021-05-01"), xmax =as.Date("2021-05-07"), ymin =810012, ymax = 815056, color = "black",fill = "green", alpha = 0.6)+
   
   annotate("rect", xmin = as.Date("2021-05-08"), xmax =as.Date("2021-05-14"), ymin =0, ymax = 936739, color = "black",fill = "gray", alpha = 0.6)+
+  annotate("rect", xmin = as.Date("2021-05-08"), xmax =as.Date("2021-05-14"), ymin =936739, ymax = 962818, color = "black",fill = "green", alpha = 0.6)+
+  annotate("rect", xmin = as.Date("2021-05-08"), xmax =as.Date("2021-05-14"), ymin =962818, ymax = 1004594, color = "black",fill = "red", alpha = 0.6)+ #week 19 - 16th
   
-  annotate("rect", xmin = as.Date("2021-05-15"), xmax =as.Date("2021-05-21"), ymin =0, ymax = 1045985, color = "black",fill = "gray", alpha = 0.6)+
+  annotate("rect", xmin = as.Date("2021-05-15"), xmax =as.Date("2021-05-21"), ymin =0, ymax = 1030054, color = "black",fill = "gray", alpha = 0.6)+
+ # annotate("rect", xmin = as.Date("2021-05-15"), xmax =as.Date("2021-05-21"), ymin =1045985, ymax = 1025011, color = "black",fill = "red", alpha = 0.6)+ # week 20 - 23th
+  annotate("rect", xmin = as.Date("2021-05-15"), xmax =as.Date("2021-05-21"), ymin =1030054, ymax = 1025011, color = "black",fill = "red", alpha = 0.6)+ # week 20 - 23th
+  
+  annotate("rect", xmin = as.Date("2021-05-22"), xmax =as.Date("2021-05-28"), ymin =0, ymax = 1001617, color = "black",fill = "gray", alpha = 0.6)+ #week 20 - 30th
+  annotate("rect", xmin = as.Date("2021-05-22"), xmax =as.Date("2021-05-28"), ymin =1001617, ymax = 1062193, color = "black",fill = "green", alpha = 0.6)+ #week 20 - 30th
+  
+  annotate("rect", xmin = as.Date("2021-05-29"), xmax =as.Date("2021-06-04"), ymin =0, ymax = 1126586, color = "black",fill = "gray", alpha = 0.6)+ #week 21 - 6th
+
+#  annotate("rect", xmin = as.Date("2021-06-05"), xmax =as.Date("2021-06-11"), ymin =0, ymax = 1600000, color = "black",fill = "gray", alpha = 0.6)+
+#  annotate("rect", xmin = as.Date("2021-06-05"), xmax =as.Date("2021-06-11"), ymin =1600000, ymax = 1900000, color = "black",fill = "gray", alpha = 0.6)+
+  
+#  annotate("rect", xmin = as.Date("2021-06-12"), xmax =as.Date("2021-06-18"), ymin =0, ymax = 1600000, color = "black",fill = "gray", alpha = 0.6)+
+#  annotate("rect", xmin = as.Date("2021-06-12"), xmax =as.Date("2021-06-18"), ymin =1600000, ymax = 1900000, color = "black",fill = "gray", alpha = 0.6)+
+  
+#  annotate("rect", xmin = as.Date("2021-06-19"), xmax =as.Date("2021-06-25"), ymin =0, ymax = 1600000, color = "black",fill = "gray", alpha = 0.6)+
+#  annotate("rect", xmin = as.Date("2021-06-19"), xmax =as.Date("2021-06-25"), ymin =1600000, ymax = 1900000, color = "black",fill = "gray", alpha = 0.6)+
+  
+#  annotate("rect", xmin = as.Date("2021-06-26"), xmax =as.Date("2021-07-02"), ymin =0, ymax = 1600000, color = "black",fill = "gray", alpha = 0.6)+
+#  annotate("rect", xmin = as.Date("2021-06-26"), xmax =as.Date("2021-07-02"), ymin =1600000, ymax = 1900000, color = "black",fill = "gray", alpha = 0.6)+
+  
+
   
   
   geom_bar(stat='identity', color="black")+
   
-  scale_y_continuous(limits = c(0, NA), #breaks = c(200000, 400000, 600000),
+  scale_y_continuous(limits = c(0, 1250000), breaks = c(200000, 400000, 600000, 800000,1000000,1200000),
                      labels = label_comma(big.mark = ".", decimal.mark = ","))+  
   
   scale_fill_viridis_d() +
@@ -335,7 +359,7 @@ ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels
   ylab("")+
   
   labs(title = "Vaccinaties per week",
-       subtitle = "rood = bijstelling verwachting op dashboard",
+       subtitle = "rood/groen = bijstelling verwachting op dashboard",
        caption = paste("Bron: github.com/YorickBleijenberg | Plot: @YorickB  | ",Sys.Date()))+
   
   theme(legend.position = c(0.05, 0.5),
@@ -458,27 +482,25 @@ ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  factor(key, le
 
 
 
-
 start.vaccination.nl = as.Date(c("2021-01-06"))
 days.vaccination.in.nl = as.numeric(Sys.Date() - start.vaccination.nl+1)
 
-vaccinated.people.total = vaccins.estimated.total
-vaccinated.first = vaccinated.people.total-second.dose
 
-vac.perc <-  round((vaccinated.first/17474693*100), digits =2)
+vac.perc <-  round((people.vaccinated/17474693*100), digits =2)
 vac.perc <- format(vac.perc, scientific=F)
-vac.perc.18 <-  round((vaccinated.first/14070340*100), digits =2)
+vac.perc.18 <-  round((people.vaccinated/14070340*100), digits =2)
 vac.perc.18 <- format(vac.perc.18, scientific=F)
 
-vac.perc.second <-  round((second.dose/17474693*100), digits =2)
+vac.perc.second <-  round((people.fully.vaccinated/17474693*100), digits =2)
 vac.perc.second <- format(vac.perc.second, scientific=F)
-vac.perc.18.second <-  round((second.dose/14070340*100), digits =2)
+vac.perc.18.second <-  round((people.fully.vaccinated/14070340*100), digits =2)
 vac.perc.18.second <- format(vac.perc.18.second, scientific=F)
 
 
-spillage <- as.integer(vaccinated.people.total/99)*1
+spillage <- as.integer(long.est/99)*1
 bescas  <- 174330+70700
-in.freezer <- freezer-vaccinated.people.total-spillage-bescas
+in.freezer <- freezer-long.est-spillage-bescas
+
 
 
 
@@ -532,8 +554,8 @@ Totaal (geschat):
 
 7-daags gemiddelde: +%s per dag.
 
-Aan de beurt: geboren in of vóór 1955 of in 1961 & 1962
-coronabeeld.nl"
+Aan de beurt bij de GGD: medisch risico (1961 - 2003) 
+coronabeeld.nl"  
 
 # Schattingen:
 # 1e prik: %s
@@ -593,7 +615,8 @@ post_tweet(tweet.vaccination.speed.tweet,  media = c("data/plots/94_vaccinated_n
 tweet.vaccination.week.tweet <- "Vaccinaties per:
 - Dag van de week
 - Organisatie, per week
-Doden
+
+Overleden:
 - naar week van overlijden (max 2de golf op 100%s)
 - Verpleeghuizen vs de rest"
 tweet.vaccination.week.tweet <- sprintf(tweet.vaccination.week.tweet,
@@ -629,7 +652,9 @@ Encoding(tweet.vaccination.three.tweet) <- "UTF-8"
 #### tweet.vaccination.care.tweet ####
 
 tweet.vaccination.care.tweet <- "De Zien-we-al-een-vaccinatie-effect? grafiek
+
 Verschil nieuwe gevallen in verzorgingshuizen vs. de rest.
+
 *noot: de verpleeghuisdata van de laatste dagen is nog niet volledig en daarom niet weergegeven."
 
 tweet.vaccination.care.tweet <- sprintf(tweet.vaccination.care.tweet)
@@ -646,7 +671,10 @@ post_tweet(tweet.vaccination.care.tweet,  media = c("data/plots/98_leeftijd_rela
 #### tweet.vaccination.age.cases.tweet ####
 
 tweet.vaccination.age.cases.tweet <- "De Zien-we-al-een-vaccinatie-effect? grafiek
-Verschil nieuwe gevallen tussen verschillende leeftijdsgroepen."
+
+Verschil nieuwe gevallen tussen verschillende leeftijdsgroepen.
+
+Naar dag van rapportage"
 
 tweet.vaccination.age.cases.tweet <- sprintf(tweet.vaccination.age.cases.tweet)
 Encoding(tweet.vaccination.age.cases.tweet) <- "UTF-8"
@@ -687,8 +715,8 @@ post_tweet(tweet.vaccination.storage.tweet,  media = c("data/plots/80_vaccine_on
 
 
 #spillage
-#vac.perc.18
-#vac.perc.18.second
+vac.perc.18
+vac.perc.18.second
 
 #days.vaccination.in.nl
 vaccins.estimated.total

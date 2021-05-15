@@ -32,9 +32,8 @@ number_muni_cum_city_agg <- aggregate(number_muni_cum_prov$Total_reported,     b
 number_cum_city_spread <- spread(number_muni_cum_city_agg, City, x)
 
 number_cum_city_spread_small <- number_cum_city_spread[,c("Date",
-                                                          "Lansingerland",
-                                                          "Bunschoten",
-                                                          "Dronten")]
+                                                          "Amsterdam",
+                                                          "Rotterdam")]
   
 number_cum_city_gather <- gather(number_cum_city_spread_small, City,  x, -"Date")
 
@@ -60,14 +59,14 @@ number_new_city <- number_new_city[number_new_city$Date>"2020-07-01"&number_new_
 #### City plot new  ####
 
 ggplot(data = number_new_city, ) + 
-  geom_vline(aes(xintercept= as.Date("2021-02-09")), color="black", linetype = "dotted") +
+ # geom_vline(aes(xintercept= as.Date("2021-02-09")), color="black", linetype = "dotted") +
   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
-  facet_wrap(~ City, )+ # scales = "free_y")+
+   facet_wrap(~ City, )+ # scales = "free_y")+
   theme_bw() + 
   xlab("")+ 
   ylab("")+
-  labs(title = "Populatietesten",
+  labs(title = "Nieuwe gevallen",
        subtitle = "Nieuwe gevallen, 7-daags zwevend gemiddelde",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
