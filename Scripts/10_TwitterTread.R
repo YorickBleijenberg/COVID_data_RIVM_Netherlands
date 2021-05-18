@@ -153,7 +153,7 @@ post_tweet(tweet.cases.tweet,  media = c("data/plots/05_new_cases.png",
 
 #### week.tweet ####
 
-tweet.week.tweet <-  "De gaat-deze-week-boven-vorige-week-uitkomen? grafiek." # "De gaan-we-week-4-inhalen? grafiek."
+tweet.week.tweet <-  "De gaat-deze-week-onder-vorige-week-uitkomen? grafiek." # "De gaan-we-week-4-inhalen? grafiek."
 tweet.week.tweet <- sprintf(tweet.week.tweet)
 Encoding(tweet.week.tweet) <- "UTF-8"
 post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
@@ -187,7 +187,7 @@ if (kerst.niveau.week > 6250) {
   kest.niveau.text.week <- paste("zeer ernstig")
 }
 
-kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.freedom+11]
+kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.independence+11]
 kest.niveau.text.dag <- paste("waakzaam")      
 if (kerst.niveau.dag > 875) {                      #875
   kest.niveau.text.dag <- paste("zorgelijk")
@@ -199,8 +199,8 @@ if (kerst.niveau.dag > 6250) {
   kest.niveau.text.dag <- paste("zeer ernstig")
 }
 
-kerst.niveau.week <- "#TeHoog"
-kerst.niveau.dag  <- "#TeHoog"
+# kerst.niveau.week <- "#TeHoog"
+# kerst.niveau.dag  <- "#TeHoog"
 
 label = paste( doublingdayZ.1.text, "elke",doublingdayZ.1.int, "dagen")
 label = paste( doublingdayZ.text, "elke",doublingdayZ.int, "dagen")

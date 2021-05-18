@@ -1,5 +1,6 @@
 ##
 
+
 ####Check LSPC update
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
@@ -23,11 +24,12 @@ library(lubridate)
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
 source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
+
 #### some constants for the update ####
 
-editionname <-  "'Tot-de-zomer-zit-het-wel-goed.'"
+editionname <-  "1-prik-voor-een-paspoort"  # onterechte-hozanna-stemming
 editienaam  <-  editionname 
-vaccine.edition.name <- "vaccins-werken-goedcijfers-zijn-er-niet-omdat-ze-er-niet-zijn"
+vaccine.edition.name <- "voordringen"
 #number.in.DE <- "0"
 
 #### Start  ####
@@ -100,14 +102,6 @@ source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
  ##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
 
-##
-##
-
-source("C:\\Rdir\\Rscripts\\26_Municipality.R")
-
-   source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
-
-
 
 ##  source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
 ##  source("C:\\Rdir\\Rscripts\\43_NICE_vaccine_effect.R")
@@ -126,6 +120,17 @@ source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot_phd.R")
 source("C:\\Rdir\\Rscripts\\47_vaccine_effect_disabled.R")     
 
 source("C:\\Rdir\\Rscripts\\21_ECDC.R")
+
+
+
+##
+##
+
+source("C:\\Rdir\\Rscripts\\26_Municipality.R")
+
+source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+
+
 
 
 #source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     

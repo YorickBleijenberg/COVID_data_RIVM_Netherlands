@@ -69,7 +69,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
   xlab("")+ 
   ylab("")+
   
-  scale_x_date(limits=as.Date(c("2020-9-1", today)), date_breaks = "2 week", date_labels = "%d-%b") +
+  scale_x_date(limits=as.Date(c("2020-9-1", today)), date_breaks = "3 week", date_labels = "%d-%b") +
   scale_y_continuous(expand = c(0, 0), limits = c(0.5, 1.5), breaks = c(0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5)) +
   
   theme(axis.title.x=element_blank(),
@@ -80,7 +80,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, RIVM model 14 mei",
+  labs(title = "Reproductiegetal, RIVM model 18 mei",
        subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   

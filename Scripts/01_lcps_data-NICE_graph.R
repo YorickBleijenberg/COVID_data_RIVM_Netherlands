@@ -57,15 +57,17 @@ instroom.combi$ic_peak <- instroom.combi$IC_MA7/57.3
 
 
 instroom.combi$date <- as.Date(instroom.combi$date)
-
+instroom.combi <- instroom.combi[,c(1,6:9)]
+colnames(instroom.combi) <- c("date","week_zkh_NICE","peak_zkh_NICE", "week_IC_NICE","peak_IC_NICE" )
 
 instroom.lcps <- LCPS_datafeed_predict
-instroom.lcps$peak_zkh_lcsp <- lag(instroom.lcps$peak,7)
-instroom.lcps$peak_IC_lcsp <- lag(instroom.lcps$peak.IC,7)
+instroom.lcps$percentage <- lag(instroom.lcps$percentage,7)
+instroom.lcps$percentage.IC <- lag(instroom.lcps$percentage.IC,7)
 
-instroom.lcps <- instroom.lcps[,c(1,19,20)]
+instroom.lcps <- instroom.lcps[,c(1,10,11,13,14)]
 instroom.lcps <- instroom.lcps[instroom.lcps$Datum>"2021-01-01"&instroom.lcps$Datum<=today,]
-colnames(instroom.lcps) <- c("date", "peak_zkh_lcsp", "peak_IC_lcsp")
+colnames(instroom.lcps) <- c("date", "week_zkh_lcsp","peak_zkh_lcsp",  "week_IC_lcsp","peak_IC_lcsp")
+
 
 
 instoom.combi.big <- merge(instroom.lcps,instroom.combi, by= 'date', all.x = TRUE)
@@ -73,7 +75,7 @@ instoom.combi.big <- merge(instroom.lcps,instroom.combi, by= 'date', all.x = TRU
 
 key <- "date"
 value <- "percentage"
-gathercols <- c("zkh_peak","ic_peak", "peak_zkh_lcsp", "peak_IC_lcsp")
+gathercols <- c("peak_zkh_NICE","peak_IC_NICE", "peak_zkh_lcsp", "peak_IC_lcsp")
 instroom.combi.long1 <- gather(instoom.combi.big, key, value, gathercols) #(2:11))
 
 instroom.combi.long1$date = as.Date(instroom.combi.long1$date)
@@ -81,7 +83,7 @@ instroom.combi.long1$date = as.Date(instroom.combi.long1$date)
 
 
 
-ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("zkh_peak","peak_zkh_lcsp","ic_peak","peak_IC_lcsp"))))+
+ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("peak_zkh_NICE","peak_zkh_lcsp","peak_IC_NICE","peak_IC_lcsp"))))+
   
   geom_hline(yintercept=1, size = 1, linetype = "dashed")+
   geom_hline(yintercept=0.80, color = "darkgreen", size = 2, linetype = "dashed")+
@@ -100,12 +102,12 @@ ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("
                date_labels= format("%d %b"),
                limits = as.Date(c("2021-01-05", NA)))+
   
-  scale_y_continuous(limits = c(0, 1.025), breaks = c(1.1,1,0.8,1.2,0.75, 0.5,0.25,0) ,labels = label_percent(1))+
+  scale_y_continuous(limits = c(0, 1.025), breaks = c(1.1,1,0.8,0.6,0.4,0.2,0) ,labels = label_percent(1))+
   
   xlab("")+
   ylab("")+
   
-  labs(title="OMT check", 
+  labs(title="OMT check - daling vanaf de piek", 
        subtitle="Nieuwe opnames: vergelijking van het lopende 7-daags gemiddelde, met de piek\n Om een stap te mogen zetten, moeten alle percentages het onder de 80% duiken.",
        caption = paste("Bron: NICE / LCPS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -145,36 +147,36 @@ ggsave("data/plots/16x_omt_check_nice_peak.png",width=16, height = 9)
 
 key <- "date"
 value <- "percentage"
-gathercols <- c("zkh_percentage","ic_percentage")
-instroom.combi.long2 <- gather(instroom.combi, key, value, gathercols) #(2:11))
+gathercols <- c("week_zkh_NICE","week_zkh_lcsp","week_IC_NICE","week_IC_lcsp")
+instroom.combi.long2 <- gather(instoom.combi.big, key, value, gathercols) #(2:11))
 
 instroom.combi.long2$date = as.Date(instroom.combi.long2$date)
+instroom.combi.long2$value <-instroom.combi.long2$value-1
 
 
+ggplot(instroom.combi.long2, aes(x=date, y=value, color = factor(key, levels=c("week_zkh_NICE","week_zkh_lcsp","week_IC_NICE","week_IC_lcsp"))))+
 
+  geom_hline(yintercept=0, size = 1, linetype = "dashed")+
 
-ggplot(instroom.combi.long2, aes(x=date, y=value, color = key))+
-
+  geom_line(size=2.5)+
   
-  geom_hline(yintercept=1, size = 1, linetype = "dashed")+
-  geom_hline(yintercept=0.80, color = "darkgreen", size = 2)+
+   scale_color_manual( values=c("#f9b641","#eb8055","#593d9c","#042333"), 
+                      labels=c("NICE  - kliniek","LCPS - Kliniek","NICE  - IC","LCPS - IC"))+
   
-  geom_line(size=2.5, se=FALSE, span = 0.05)+
-  
-  scale_color_manual( values=c("#4472C4","#F4B183"), labels=c( "nieuwe opnames IC", "nieuwe opnames kliniek"))+
+  guides(color = guide_legend(reverse=TRUE))+
   
   scale_x_date(date_breaks = "1 week", 
                date_labels= format("%d %b"),
                limits = as.Date(c("2021-03-01", NA)))+
   
-  scale_y_continuous(limits = c(0.7, 1.3), breaks = c(1.1,1,0.9,0.8,1.2,0.75, 0.5,0.25,0) ,labels = label_percent(1))+
+  scale_y_continuous(limits = c(-0.35, 0.35),breaks = c(-0.3,-0.2,-0.1,0,0.3,0.2,0.1), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)
   
   xlab("")+
   ylab("")+
   
-  labs(title="OMT check - NICE", 
-       subtitle="Vergelijking van het lopende 7-daags gemiddelde, met een week ervoor\n Om een stap te mogen zetten, moeten beide percentages het onder de 80% duiken.",
-       caption = paste("Bron: NICE | Plot: @YorickB | ",Sys.Date()))+
+  labs(title="Nieuwe opnames - week-op-week", 
+       subtitle="Vergelijking van het lopende 7-daags gemiddelde, met de week ervoor",
+       caption = paste("Bron: NICE / LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
@@ -197,11 +199,7 @@ ggplot(instroom.combi.long2, aes(x=date, y=value, color = key))+
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
   
-  
-  
-#  ggsave("data/plots/16x_omt_check_nice-week.png", width=14, height = 14)  
-  
-ggsave("data/16x_omt_check_nice-week.png",width=16, height = 9)    
+ggsave("data/plots/16x_omt_check_week_on_week.png",width=16, height = 9)    
 
 
 

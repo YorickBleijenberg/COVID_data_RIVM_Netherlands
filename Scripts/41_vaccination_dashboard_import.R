@@ -554,7 +554,7 @@ Totaal (geschat):
 
 7-daags gemiddelde: +%s per dag.
 
-Aan de beurt bij de GGD: medisch risico (1961 - 2003) 
+Aan de beurt bij de GGD: 1965.
 coronabeeld.nl"  
 
 # Schattingen:

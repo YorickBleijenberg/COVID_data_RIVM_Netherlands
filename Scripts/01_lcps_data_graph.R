@@ -445,11 +445,11 @@ LCPS_datafeed_predict <- LCPS_datafeed_predict %>%
 
 LCPS_datafeed_predict$MA_clin_lead_eight  <- lead(LCPS_datafeed_predict$MA_clin,7)
 LCPS_datafeed_predict$percentage <- LCPS_datafeed_predict$MA_clin_lead_eight/LCPS_datafeed_predict$MA_clin
-LCPS_datafeed_predict$peak <- LCPS_datafeed_predict$MA_clin_lead_eight/266.5714
+LCPS_datafeed_predict$peak <- LCPS_datafeed_predict$MA_clin/266.5714
 
 LCPS_datafeed_predict$MA_IC_lead_eight  <- lead(LCPS_datafeed_predict$MA_IC,7)
 LCPS_datafeed_predict$percentage.IC <- LCPS_datafeed_predict$MA_IC_lead_eight/LCPS_datafeed_predict$MA_IC
-LCPS_datafeed_predict$peak.IC <- LCPS_datafeed_predict$MA_IC_lead_eight/53.57143
+LCPS_datafeed_predict$peak.IC <- LCPS_datafeed_predict$MA_IC/53.571143
 
 
 LCPS_datafeed_7days_ago  <- last(LCPS_datafeed_predict, 8)
@@ -473,16 +473,19 @@ clin.perc.now <- as.integer(clin.perc.now)
 LCPS_datafeed_predict$MA_clin_lead  <- lead(LCPS_datafeed_predict$MA_clin,3)
 LCPS_datafeed_predict$MA_IC_lead  <- lead(LCPS_datafeed_predict$MA_IC,3)
 
+# LCPS_datafeed_predict$percentage.clin.lcps <- lag(LCPS_datafeed_predict$percentage,7)
+# LCPS_datafeed_predict$percentage.IC.lpcs   <- lag(LCPS_datafeed_predict$percentage.IC,7)
+
 
 hosp_new_hosp.2 <- paste0("Aantal nieuwe opnames kliniek:  ",hosp.new.b1)
 
 
 
 stap.een.df=data.frame(date=as.Date(c("2021-04-28")),event=c("Stap 1")) # - einde avondklok & terras open"))
-stap.twee.old.df=data.frame(date=as.Date(c("2021-05-11")),event=c("Stap 2 - weer naar buiten!"))
-stap.twee.df=data.frame(date=as.Date(c("2021-05-18")),event=c("Stap 2 - weer naar buiten!"))
-stap.drie.df=data.frame(date=as.Date(c("2021-06-02")),event=c("Stap 3 - weer uit eten & naar de bios!"))
-stap.vier.df=data.frame(date=as.Date(c("2021-06-23")),event=c("Stap 4 - max 6 mensen thuis & evenementen"))
+stap.twee.old.df=data.frame(date=as.Date(c("2021-05-12")),event=c("Stap 2 - weer naar buiten!"))
+stap.twee.df=data.frame(date=as.Date(c("2021-05-19")),event=c("Stap 2 - weer naar buiten!"))
+stap.drie.df=data.frame(date=as.Date(c("2021-06-09")),event=c("Stap 3 - weer uit eten & naar de bios!"))
+stap.vier.df=data.frame(date=as.Date(c("2021-06-30")),event=c("Stap 4 - max 6 mensen thuis & evenementen"))
 stap.vijf.df=data.frame(date=as.Date(c("2021-07-14")),event=c("Stap 5 - max 8 mensen thuis"))
 stap.zes.df=data.frame(date=as.Date(c("2021-08-18")),event=c("Stap 6 - terug naar normaal"))
 
@@ -928,11 +931,11 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             )
 Encoding(tweet.LCPS.EN.tweet) <- "UTF-8"
 
-post_tweet(tweet.LCPS.EN.tweet,  media = c("data/plots/16a_IC_hosp.png",
+ post_tweet(tweet.LCPS.EN.tweet,  media = c("data/plots/16a_IC_hosp.png",
                                            "data/plots/16b_IC_only.png",
                                            "data/plots/16x_hosp_pred.png",
                                            "data/plots/16x_IC_pred.png"
-                                           ))
+                                            ))
 
 
 
@@ -941,8 +944,8 @@ source("C:\\Rdir\\Rscripts\\01_lcps_data-NICE_graph.R")
 
 
 
-instoom.combi.big$zkh_peak_lag<- lag(instoom.combi.big$zkh_peak,3)
-instoom.combi.big$ic_peak_lag<- lag(instoom.combi.big$ic_peak,3)
+instoom.combi.big$zkh_peak_lag<- lag(instoom.combi.big$peak_zkh_NICE,3)
+instoom.combi.big$ic_peak_lag<- lag(instoom.combi.big$peak_IC_NICE,3)
 
 
 
@@ -1003,7 +1006,7 @@ if (clin.NICE.perc.now > 99) {
 
 
 
-
+####  OMT check tweet #####
 
 
 
@@ -1035,7 +1038,27 @@ Encoding(tweet.LCPS.OMT.check.tweet) <- "UTF-8"
 
 post_tweet(tweet.LCPS.OMT.check.tweet,  media = c("data/plots/16x_omt_check_nice_peak.png"), in_reply_to_status_id = get_reply_id())
                                         
-                                           
+                        
+
+#### tweet.instroom.check.tweet #####
+
+
+tweet.instroom.check.tweet <- "De instroom:
+Stijging of daling?
+
+7-daags gemiddelde hoger of lager dan een week geleden?
+
+*data NICE tot 3 dagen geleden ivm rapportagevertraging
+"
+
+tweet.instroom.check.tweet <- sprintf(  tweet.instroom.check.tweet
+                              )
+Encoding(tweet.instroom.check.tweet) <- "UTF-8"
+post_tweet(tweet.instroom.check.tweet,  media = c("data/plots/16x_omt_check_week_on_week.png"), in_reply_to_status_id = get_reply_id())
+
+
+
+       ####  NL.tweet #####            
 
 
 tweet.LCPS.tweet <- "Dag %s, de %s editie
