@@ -1,7 +1,7 @@
-vac.group,number.in.group,Eerste prik,Tweede prik,people_fully_vaccinated,volwassen,Percentage eerste prik,Percentage tweede prik,,
-Aruba,112182,62683,52504,,,61,47,,
-Bonaire,21745,14230,11333,,,72,52,,
-Curaçao,155223,85921,71635,,,61,46,,
-St Maarten,41109,19056,13651,,,51,33,,
-Sint Eustatius,3142,1173,1022,1354,1653,41,33,71,62
-Saba,1918,1429,1380,1354,1653,82,72,86,83
+vac.group,number.in.group,Eerste prik,Tweede prik,Volledig gevaccineerd,volwassen,Percentage eerste prik,Percentage volledig gevaccineerd,,
+Aruba,112182,64748,55345,56365,,63,49,,
+Bonaire,21745,14468,11665,11665,,73,54,,
+Curaçao,155223,87255,74243,74243,,62,48,,
+St Maarten,41109,20126,14916,14916,,54,36,,
+Sint Eustatius,3142,1205,1031,1031,1653,42,33,73,62
+Saba,1918,1429,1380,1380,1653,82,72,86,83
