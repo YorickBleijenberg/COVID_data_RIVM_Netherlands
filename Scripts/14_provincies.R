@@ -54,7 +54,7 @@ number_new_prov <- number_new_prov %>%
 
 ####  Set date ####
 
-number_new_prov_short <- number_new_prov[number_new_prov$Date>"2020-07-01"&number_new_prov$Date<=Sys.Date(),]
+number_new_prov_short <- number_new_prov[number_new_prov$Date>"2021-06-01"&number_new_prov$Date<=Sys.Date(),]
 
 
 
@@ -65,7 +65,13 @@ ggplot(data = number_new_prov_short, ) +
   #geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
    geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
-  facet_wrap(~ Province,  scales = "free_y")+
+ 
+  scale_y_continuous(limits = c(0,NA) )+
+  
+   facet_wrap(~ Province,  scales = "free_y")+
+  
+ 
+  
   theme_bw() + 
   xlab("")+ 
   ylab("")+

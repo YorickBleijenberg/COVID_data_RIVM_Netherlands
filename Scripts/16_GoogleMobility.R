@@ -79,12 +79,20 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18",
                                     "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17",
                                     "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
-                                    "2021-04-04", "2021-04-27")), 
+                                    "2021-04-04", "2021-04-27", "2021-05-13",
+                                    
+                                    "2021-05-19", "2021-06-05", "2021-06-26"
+                                    
+                                    )), 
                      event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
                              "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9",
                              "Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", 
                              "lockdown","" ,"avondklok", "basisscholen open", "kappers open", 
-                             "Eerste Paasdag","koningsdag"))
+                             "Eerste Paasdag","koningsdag / stap 1", "hemelvaart",
+                             
+                              "Stap 2", "Stap 3 - Einde lockdown",  "Stap 4/5"
+                             
+                             ))
 
 #persco.df=data.frame(date=as.Date(c("2021-02-25")), 
 #                     event=c("Meer risico PersCo"))
@@ -253,7 +261,8 @@ ggplot(Google_mob_NL_short)+
   geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
   geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
   geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
-  ggsave("data/36_Google_data_NL_dots.png",width=16, height = 9)
+ 
+ggsave("data/36_Google_data_NL_dots.png",width=16, height = 9)
 
 
 #### Google NL tweet ####

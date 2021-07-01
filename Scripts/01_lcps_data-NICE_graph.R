@@ -85,8 +85,10 @@ instroom.combi.long1$date = as.Date(instroom.combi.long1$date)
 
 ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("peak_zkh_NICE","peak_zkh_lcsp","peak_IC_NICE","peak_IC_lcsp"))))+
   
-  geom_hline(yintercept=1, size = 1, linetype = "dashed")+
+  geom_hline(yintercept=1, size = 1)+ #, linetype = "dashed")+
   geom_hline(yintercept=0.80, color = "darkgreen", size = 2, linetype = "dashed")+
+  
+  geom_hline(yintercept=0.5, size = 1)+ #, linetype = "dashed")+
   
   geom_line(size=2)+
 
@@ -98,17 +100,17 @@ ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("
   scale_color_manual( values=c("#f9b641","#eb8055","#593d9c","#042333"), 
                       labels=c("NICE  - kliniek","LCPS - Kliniek","NICE  - IC","LCPS - IC"))+
   
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "2 week", 
                date_labels= format("%d %b"),
                limits = as.Date(c("2021-01-05", NA)))+
   
-  scale_y_continuous(limits = c(0, 1.025), breaks = c(1.1,1,0.8,0.6,0.4,0.2,0) ,labels = label_percent(1))+
+  scale_y_continuous(limits = c(0, 1.025), breaks = c(1.1,1,0.8,0.5,0.25,0) ,labels = label_percent(1))+
   
   xlab("")+
   ylab("")+
   
   labs(title="OMT check - daling vanaf de piek", 
-       subtitle="Nieuwe opnames: vergelijking van het lopende 7-daags gemiddelde, met de piek\n Om een stap te mogen zetten, moeten alle percentages het onder de 80% duiken.",
+       subtitle="Nieuwe opnames: vergelijking van het lopende 7-daags gemiddelde, met de piek.",
        caption = paste("Bron: NICE / LCPS | Plot: @YorickB | ",Sys.Date()))+
   
   guides(color = guide_legend(reverse=TRUE))+
@@ -143,18 +145,16 @@ ggsave("data/plots/16x_omt_check_nice_peak.png",width=16, height = 9)
 
 
 
-
-
 key <- "date"
 value <- "percentage"
 gathercols <- c("week_zkh_NICE","week_zkh_lcsp","week_IC_NICE","week_IC_lcsp")
 instroom.combi.long2 <- gather(instoom.combi.big, key, value, gathercols) #(2:11))
 
 instroom.combi.long2$date = as.Date(instroom.combi.long2$date)
-instroom.combi.long2$value <-instroom.combi.long2$value-1
+instroom.combi.long2$value2 <-instroom.combi.long2$value-1
 
 
-ggplot(instroom.combi.long2, aes(x=date, y=value, color = factor(key, levels=c("week_zkh_NICE","week_zkh_lcsp","week_IC_NICE","week_IC_lcsp"))))+
+ggplot(instroom.combi.long2, aes(x=date, y=value2, color = factor(key, levels=c("week_zkh_NICE","week_zkh_lcsp","week_IC_NICE","week_IC_lcsp"))))+
 
   geom_hline(yintercept=0, size = 1, linetype = "dashed")+
 
@@ -169,7 +169,7 @@ ggplot(instroom.combi.long2, aes(x=date, y=value, color = factor(key, levels=c("
                date_labels= format("%d %b"),
                limits = as.Date(c("2021-03-01", NA)))+
   
-  scale_y_continuous(limits = c(-0.35, 0.35),breaks = c(-0.3,-0.2,-0.1,0,0.3,0.2,0.1), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)
+  scale_y_continuous(limits = c(-0.6, 0.50),breaks = c(-0.5, -0.4,-0.3,-0.2,-0.1,0,0.3,0.2,0.1,0.4), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)
   
   xlab("")+
   ylab("")+

@@ -123,6 +123,25 @@ Encoding(tweet.cases.EN.tweet) <- "UTF-8"
 
  #  post_tweet(tweet.cases.EN.tweet)  #
 
+ 
+ #### week.tweet ####
+ 
+ tweet.week.tweet <- "The Will-this-week-overtake-last-week-? graph"
+ tweet.week.tweet <- sprintf(tweet.week.tweet)
+ Encoding(tweet.week.tweet) <- "UTF-8"
+ post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
+ 
+ 
+ 
+ #### tweet.positive.rate.tweet ####
+ 
+ tweet.positive.rate.tweet <- "Pecentage positive, and number of tests done."
+ tweet.positive.rate.tweet <- sprintf(tweet.positive.rate.tweet)
+ Encoding(tweet.positive.rate.tweet) <- "UTF-8"
+ post_tweet(tweet.positive.rate.tweet,  media = c("data/plots/22_tests_ggd_daily.png"), in_reply_to_status_id = get_reply_id())
+ 
+ 
+ 
  #### dead EN tweet ####
 
 
@@ -417,7 +436,7 @@ tweet.data.tweet <- sprintf(tweet.data.tweet,
                             PersColockdown
 )
 Encoding(tweet.data.tweet) <- "UTF-8"
-post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
+#post_tweet(tweet.data.tweet, in_reply_to_status_id = get_reply_id()) 
 
 
 #### tweet.cases.diff.tweet ####
@@ -429,7 +448,7 @@ tweet.cases.diff.tweet <- "1) Provinces
 "
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png", "data/07_EN_cases_diff.png", "data/07_cases_type1-monday.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png", "data/07_EN_cases_diff.png", "data/plots/07_cases_type1-monday.png"), in_reply_to_status_id = get_reply_id())  #
 
 ###    media = c("data/17_IC_only.png", "data/16_IC_hosp.png")
 
@@ -455,7 +474,7 @@ tweet.combi.2.tweet <- "1) New cases in the 16 big cities
 4) Weekly totals"
 tweet.combi.2.tweet <- sprintf(tweet.combi.2.tweet)
 Encoding(tweet.combi.2.tweet) <- "UTF-8"
-post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov_new-no-color.png","data/60_routekaart.png", "data/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.combi.2.tweet,  media = c("data/plots/18_city_new.png", "data/20_prov_new-no-color.png","data/plots/60_routekaart.png", "data/plots/65_Cases_by_week_facet-grid.png" ), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -474,11 +493,4 @@ post_tweet(tweet.combi.2.tweet,  media = c("data/18_city_new.png", "data/20_prov
 #Encoding(tweet.16city.tweet) <- "UTF-8"
 #post_tweet(tweet.16city.tweet,  media = c("data/20_EN_prov_new.png"), in_reply_to_status_id = get_reply_id()
 
-
-#### week.tweet ####
-
-tweet.week.tweet <- "The Will-this-week-overtake-last-week-? graph"
-tweet.week.tweet <- sprintf(tweet.week.tweet)
-Encoding(tweet.week.tweet) <- "UTF-8"
-post_tweet(tweet.week.tweet,  media = c("data/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
 

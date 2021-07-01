@@ -42,8 +42,8 @@ colnames(combi.1) = c("date", "gemeente_Naam", "gemeente_getal","phd")
 combi.1 <- subset(combi.1, gemeente_Naam !='')
 
 
-#combi.1 <- combi.1[combi.1$date>"2020-09-01",]
-combi.1 <- combi.1[combi.1$date>"2021-06-05",]    
+
+combi.1 <- combi.1[combi.1$date>"2020-09-01",]
 
 
   #### Calculate the 7 day MA per gemeente per day ####
@@ -75,9 +75,9 @@ while (i < 353)
   
   ### assign color value to municipality, according to the current trend.
   kleur <- paste("yellow")                              ### default value = yellow
-  if (((v_today > v_14d+2) | (v_today > v_7d+3))&(v_today < v_7d+7)) {       ### red if the current value is high than 14d ago+2 OR higher than 7 days ago +3
+  if (((v_today > v_14d+2) | (v_today > v_7d+3))&(v_today < v_7d+13)) {       ### red if the current value is high than 14d ago+2 OR higher than 7 days ago +3
     kleur <- paste("red")
-  } else if (v_today > v_7d+7) {                              ### darkred if the the difference is more than +13
+  } else if (v_today > v_7d+13) {                              ### darkred if the the difference is more than +13
     kleur <- paste("help")
   } else if (((v_today < v_14d-2) & (v_today < v_7d-2))| (v_today<1)) {
     kleur <- paste("green")  ### green if value is lower than 7 days AND 14 days ago (with at least a margin of 2 per 100K) OR lower than 1 per 100K
@@ -104,9 +104,6 @@ ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.3)+
   
  # geom_smooth(mapping = aes(x = date, y = MAphd, colour = kleur), size =0.5, span = 0.3)+  
    geom_line(mapping = aes(x = date, y = MAphd, colour = kleur), size =0.6)+
-  
-  
-#   scale_color_manual(values=c("green", "darkred",  "orange"))+
   scale_color_manual(values=c("green", "red", "darkred", "orange"))+
   
   
@@ -118,7 +115,7 @@ facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
  
    scale_x_date(date_breaks = "6 week", 
               date_labels= format("%d %b"),
-           limits = as.Date(c("2021-06-24", today)))+
+           limits = as.Date(c("2021-03-12", today)))+
   theme_bw() + 
   xlab("")+ 
   ylab("")+
@@ -150,4 +147,53 @@ facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
   )
 
 ggsave("data/plots/75_Municipality-day-phd.png",width=13, height = 13)
+
+
+
+
+##  ## post_tweet("test",  media = c("data/75_Municipality-day-phd.png"))
+
+
+
+
+
+#  RIVM_aantallen_gemeente_per_dag.combi.5 <- merge(RIVM_aantallen_gemeente_per_dag.combi, kleur.table)
+#  RIVM_aantallen_gemeente_per_dag.combi.5 <- RIVM_aantallen_gemeente_per_dag.combi.5[RIVM_aantallen_gemeente_per_dag.combi.5$date>"2020-09-01",]
+
+####  RIVM_aantallen_gemeente_per_dag.combi.filter <- RIVM_aantallen_gemeente_per_dag.combi.3[RIVM_aantallen_gemeente_per_dag.combi.3$gemeente_Naam == "Oostzaan",]
+####  RIVM_aantallen_gemeente_per_dag.combi.filter <- RIVM_aantallen_gemeente_per_dag.combi.filter[RIVM_aantallen_gemeente_per_dag.combi.filter$date > "2020-11-01",]
+
+
+
+
+#ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.5)+
+#   geom_line(mapping = aes(x = date, y = Total_reported, colour = kleur))+
+#   scale_color_manual(values=c("green", "red", "darkred", "orange"))+
+#   facet_wrap(~Gemeente_Naam)+ #, scales = "free_y")+
+#   theme_bw() + 
+#  xlab("")+ 
+#  ylab("")+
+#  labs(title = "Alle gemeenten",
+#      subtitle = "Nieuwe gevallen", # (Y-as wisselt)",
+#      caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+#  theme(plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+#  panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+#     legend.position = "none",   # no legend
+#           plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+#           plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+           
+#           axis.text = element_text(size=6,color = "black",face = "bold"),
+#           axis.text.y = element_text(face="bold", color="black", size=6),
+#           axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+#           axis.ticks.length = unit(0.2, "cm"),
+#           strip.text.x = element_text(size = 5, color = "black"),
+#           strip.background = element_rect(fill="gray"),  #, color="black"), #, size=0.2, linetype="solid"),
+#           panel.grid.major.x = element_blank(),
+#           panel.grid.minor.x = element_blank(),
+#           panel.grid.major.y = element_blank(),
+#           panel.grid.minor.y = element_blank(),
+#  )
+
+#ggsave("data/75_Municipality-perdag-1.png",width=13, height = 13)
 

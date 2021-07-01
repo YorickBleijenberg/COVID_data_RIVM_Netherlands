@@ -32,7 +32,7 @@ casus.age.dif.play$`MA.90+`    <- rollmeanr((casus.age.dif.play$`90+`  *100000/(
 
 
 #relative.casus.age.dif.play <- casus.age.dif.play[ -c(1:11,13:23)]
-casus.age.dif.play <- casus.age.dif.play[casus.age.dif.play$date >"2020-10-08",]
+casus.age.dif.play <- casus.age.dif.play[casus.age.dif.play$date >"2021-06-08",]   # "2020-10-08",]
 casus.age.dif.play.short <- casus.age.dif.play[casus.age.dif.play$date >"2021-02-16",]
 
 

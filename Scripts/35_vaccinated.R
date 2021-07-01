@@ -108,17 +108,17 @@ ggplot(total.vaccinated.gather,aes( x=Datum, y=valuecol, fill = keycol))+
   
   
   
-  geom_hline(yintercept=17474677, color = "green", size = 2)+
-  geom_hline(yintercept=15727209, color = "yellow", size = 2)+
-  geom_hline(yintercept=13979741, color = "orange", size = 2)+
-  geom_hline(yintercept=12232273, color = "darkred", size = 2)+
-  geom_hline(yintercept=10484806, color = "black", size = 2)+
+  geom_hline(yintercept=17502552, color = "green", size = 2)+
+#  geom_hline(yintercept=15727209, color = "yellow", size = 2)+
+#  geom_hline(yintercept=13979741, color = "orange", size = 2)+
+#  geom_hline(yintercept=12232273, color = "darkred", size = 2)+
+#  geom_hline(yintercept=10484806, color = "black", size = 2)+
   
   annotate("text", x = as.Date("2021-01-01"), y = 17761543, label = "100%", size=5,color = "black")+
-  annotate("text", x = as.Date("2021-01-01"), y = 16015388, label = "90%", size=5,color = "black")+
-  annotate("text", x = as.Date("2021-01-01"), y = 14269234, label = "80%", size=5,color = "black")+
-  annotate("text", x = as.Date("2021-01-01"), y = 12823080, label = "70%", size=5,color = "black")+
-  annotate("text", x = as.Date("2021-01-01"), y = 11006925, label = "60%", size=5,color = "black")+
+#  annotate("text", x = as.Date("2021-01-01"), y = 16015388, label = "90%", size=5,color = "black")+
+#  annotate("text", x = as.Date("2021-01-01"), y = 14269234, label = "80%", size=5,color = "black")+
+#  annotate("text", x = as.Date("2021-01-01"), y = 12823080, label = "70%", size=5,color = "black")+
+#  annotate("text", x = as.Date("2021-01-01"), y = 11006925, label = "60%", size=5,color = "black")+
   
   geom_bar(position="stack", stat="identity", width=1, alpha=0.8)+  # geom_bar(stat = "identity", aes( x=Datum, y=valuecol, fill = keycol ))+
   geom_line(position="stack", stat="identity")+

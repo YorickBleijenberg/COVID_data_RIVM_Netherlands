@@ -98,7 +98,7 @@ vaccins.registerd.hops  <- as.integer(0)   #is now "hugo schatting"
 
 
 #second dose estimation
-second.dose <- as.integer((vaccins.estimated.total/100*35.3)) 
+second.dose <- as.integer((vaccins.estimated.total/100*34.95)) 
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)  # number of people with at least one dose.
 
@@ -713,7 +713,7 @@ Naar dag van rapportage"
 tweet.vaccination.age.cases.tweet <- sprintf(tweet.vaccination.age.cases.tweet)
 Encoding(tweet.vaccination.age.cases.tweet) <- "UTF-8"
 
-# post_tweet(tweet.vaccination.age.cases.tweet,  media = c("data/plots/99_leeftijd_relatief_case.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.vaccination.age.cases.tweet,  media = c("data/plots/99_leeftijd_relatief_case.png"), in_reply_to_status_id = get_reply_id())
 
 
 
@@ -728,11 +728,7 @@ tweet.vaccination.storage.tweet <- "Hoe lang lagen de geprikte doses in de vriez
 tweet.vaccination.storage.tweet <- sprintf(tweet.vaccination.storage.tweet)
 Encoding(tweet.vaccination.storage.tweet) <- "UTF-8"
 
-# post_tweet(tweet.vaccination.storage.tweet,  media = c("data/plots/80_vaccine_on_shelf.png"), in_reply_to_status_id = get_reply_id())
-
-
-
-
+post_tweet(tweet.vaccination.storage.tweet,  media = c("data/plots/80_vaccine_on_shelf.png"), in_reply_to_status_id = get_reply_id())
 
 freezer      <-  format(freezer ,big.mark = ".", decimal.mark = ",")
 in.freezer   <-  format(in.freezer ,big.mark = ".", decimal.mark = ",")

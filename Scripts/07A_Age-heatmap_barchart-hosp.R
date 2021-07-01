@@ -23,7 +23,7 @@ casus.working<- casus.working[casus.working$weekbegin>"2020-07-01"&casus.working
 #Heatmap
 ggplot(casus.working,aes(weekbegin,Agegroup,fill=n))+
 geom_tile(size=1.5,color="#E4ECFC")+
-  geom_text(label=casus.working$n,size=5)+
+  geom_text(label=casus.working$n,size=5, angle=90)+
   scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 8, 
                        high = "#c00000")+
   scale_x_date(as.Date("2020-07-06"),breaks = "1 week",  labels = date_format("%V"))+
@@ -33,7 +33,7 @@ geom_tile(size=1.5,color="#E4ECFC")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Opnames in het ziekenhuis",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 19 & 20 kunnen nog (sterk) stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 25 & 26 kunnen nog (sterk) stijgen",fill=NULL,
        caption = paste("Bron data: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -50,7 +50,7 @@ ggsave("data/02_leeftijd_heatmap-hosp.png",width=16, height = 9)
 #Heatmap
 ggplot(casus.working,aes(weekbegin,Agegroup,fill=n))+
   geom_tile(size=1.5,color="#E4ECFC")+
-  geom_text(label=casus.working$n,size=5)+
+  geom_text(label=casus.working$n,size=5, angle=90)+
   scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 8, 
                        high = "#c00000")+
   scale_x_date(as.Date("2020-07-06"),breaks = "1 week",  labels = date_format("%V"))+
@@ -60,7 +60,7 @@ ggplot(casus.working,aes(weekbegin,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Hospitalization",
-       subtitle = "Number of cases within each agegroup. Week 19 & 20 will still rise.",fill=NULL,
+       subtitle = "Number of cases within each agegroup. Week 25 & 26 will still rise.",fill=NULL,
        caption = paste("Source: RIVM  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -71,7 +71,7 @@ ggplot(casus.working,aes(weekbegin,Agegroup,fill=n))+
         axis.ticks = element_line(colour = "#E4ECFC", size = 1, linetype = "solid"),
         axis.ticks.length = unit(0.3, "cm"),
         axis.title.x=element_blank())
-ggsave("data/02_EN_leeftijd_heatmap-hosp.png",width=16, height = 9)
+# ggsave("data/02_EN_leeftijd_heatmap-hosp.png",width=16, height = 9)
 
 
 
@@ -123,7 +123,7 @@ df_today_bind<- df_today_bind[df_today_bind$weekOfDead.4>"2020-07-01",]
 #Heatmap
 ggplot(df_today_bind,aes(weekOfDead.4,Agegroup,fill=n))+
   geom_tile(size=1.5,color="#FDE3E3")+
-  geom_text(label=df_today_bind$n,size=5)+
+  geom_text(label=df_today_bind$n,size=5, angle=90)+
   
   scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 9, 
                        high = "#c00000")+
@@ -136,7 +136,7 @@ ggplot(df_today_bind,aes(weekOfDead.4,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Overleden aan COVID-19",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 19 & 20 kunnen nog sterk stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 25 & 26 kunnen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),
@@ -154,7 +154,7 @@ ggsave("data/02_leeftijd_heatmap-dead.png",width=16, height = 9)
 
 ggplot(df_today_bind,aes(weekOfDead.4,Agegroup,fill=n))+
   geom_tile(size=1.5,color="#FDE3E3")+
-  geom_text(label=df_today_bind$n,size=5)+
+  geom_text(label=df_today_bind$n,size=5, angle=90)+
   scale_fill_gradient2(trans="sqrt",low = "#5B9BD5",mid="#FFEB84",midpoint = 9, 
                        high = "#c00000")+
   scale_x_date(as.Date("2020-07-06"),breaks = "1 week",  labels = date_format("%V"))+
@@ -166,7 +166,7 @@ ggplot(df_today_bind,aes(weekOfDead.4,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Deceased COVID-19",
-       subtitle = "Number of deaths, within each agegroup. Week 19 & 20 will still rise.",fill=NULL,
+       subtitle = "Number of deaths, within each agegroup. Week 25 & 26 will still rise.",fill=NULL,
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),
@@ -178,7 +178,7 @@ ggplot(df_today_bind,aes(weekOfDead.4,Agegroup,fill=n))+
         axis.ticks.length = unit(0.3, "cm"),
         axis.title.x=element_blank()
         )
-ggsave("data/02_EN_leeftijd_heatmap-dead.png",width=16, height = 9)
+# ggsave("data/02_EN_leeftijd_heatmap-dead.png",width=16, height = 9)
 
 
 

@@ -71,6 +71,8 @@ db <- tested_daily
 
 db$fact <- (4000 * db$infected_percentage)
 
+
+
 ggplot(data = db,)+  
   geom_bar(stat='identity', mapping = aes(x = date, y = tested_total), fill = "#ED7D31")+
   geom_line(mapping = aes(x = date, y = fact), colour = "#FFFFFF", size = 1 )+
@@ -84,8 +86,8 @@ ggplot(data = db,)+
                     sec.axis = sec_axis(~ . / 4000))+
   
  
-  scale_x_date(date_breaks = "1 week", 
-               date_labels= format("%d/%m"),
+  scale_x_date(date_breaks = "1 month", 
+               date_labels= format("%m"),
                limits = as.Date(c("2020-10-01", NA)))+
   
   geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),

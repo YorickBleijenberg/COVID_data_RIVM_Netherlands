@@ -2,7 +2,7 @@
 #require(rjson)
 #require(data.table)
 
-rm(list=ls())
+#rm(list=ls())
 
 ##  CBS_age_10yrs_GH <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/data-cbs/CBS_age_10yr_groups.csv",sep=";")
 CBS_age_10yrs_GH <-read.csv("C:\\Rdir\\data-contstant\\CBS_age_10yr_groups.csv",sep=";")
@@ -36,12 +36,12 @@ RIVM_verpleeghuizen<-read.csv("https://data.rivm.nl/covid-19/COVID-19_verpleeghu
 
 
 # adding date to the file names, and adding to the data folder
-File_date_1a <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_casus_landelijk.csv")
-File_date_1b <- paste0("rivm-data/","COVID-19_casus_landelijk_", format(Sys.time(), "%Y-%m-%d"),".csv")
-File_date_2 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_per_dag.csv")  
-File_date_3 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_cumulatief.csv")
-File_date_4 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_RIVM_rioolwaterdata.csv")
-File_date_5 <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_verpleeghuizen.csv")
+File_date_1a <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_COVID-19_casus_landelijk.csv")
+File_date_1b <- paste0("rivm-data/","COVID-19_casus_landelijk_", format(Sys.Date(), "%Y-%m-%d"),".csv")
+File_date_2 <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_per_dag.csv")  
+File_date_3 <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_COVID-19_aantallen_gemeente_cumulatief.csv")
+File_date_4 <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_COVID-19_RIVM_rioolwaterdata.csv")
+File_date_5 <- paste0("data/",format(Sys.Date(), "%Y-%m-%d"),"/",format(Sys.Date(), "%Y-%m-%d"), "_COVID-19_verpleeghuizen.csv")
 
 
 #writing the files

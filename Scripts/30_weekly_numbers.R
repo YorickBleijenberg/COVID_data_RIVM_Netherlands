@@ -43,6 +43,9 @@ weeknumber.df.sh.2$weekbegin <- floor_date(weeknumber.df.sh.2$date, " week", wee
 
 this.week <-floor_date(as.Date(today), " week", week_start = 1)
 
+weeknumber.df.sh.2_sum <- aggregate(weeknumber.df.sh.2$Total_reported,     by=list(dateInTable=weeknumber.df.sh.2$weekbegin ), FUN=sum)
+week.level = last(weeknumber.df.sh.2_sum$x)
+
 
 ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
@@ -88,9 +91,11 @@ ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week
   geom_text(mapping=aes(x=as.Date("2020-07-30"), y=4975, label="6.125 nieuwe gevallen per week"), size=4)+
   #geom_text(mapping=aes(x=30, y=67000, label="Weekrecord: week 44 - 68.488 gevallen"), size=4)+
 
-  geom_hline(yintercept=6125, linetype = "dashed")
+  geom_hline(yintercept=6125,       linetype = "dashed")+
+ # geom_hline(yintercept=, linetype = "dotted")
+geom_segment(aes(x = as.Date("2020-09-01"), y = week.level, xend = today, yend = week.level),linetype = "dotted", color = "black")
 
-ggsave("data/65_Cases_by_week.png",width=16, height = 9)
+ggsave("data/plots/65_Cases_by_week.png",width=16, height = 9)
 
 
 weeknumber.df.sh.3 <- weeknumber.df.sh.2
@@ -170,5 +175,5 @@ ggplot(weeknumber.df.sh.3, aes(x=weekbegin, y=Total_reported,fill = factor(week_
        #subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))
   
-ggsave("data/65_Cases_by_week_facet-grid.png",width=16, height = 9)
+ggsave("data/plots/65_Cases_by_week_facet-grid.png",width=16, height = 9)
 

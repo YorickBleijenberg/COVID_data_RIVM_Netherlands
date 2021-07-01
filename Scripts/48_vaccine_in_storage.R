@@ -86,8 +86,8 @@ ggplot(opdeplank, aes(x=date, y=Dagen))+
   
   scale_y_continuous(limits = c(0, 30))+
   
-  scale_x_date(date_breaks  = "1 week",
-               date_labels = "%d %b",
+  scale_x_date(date_breaks  = "1 month",
+               date_labels = "%b",
                limits  = as.Date(c("2021-01-06", as.character(yesterday) ))
                )+
   

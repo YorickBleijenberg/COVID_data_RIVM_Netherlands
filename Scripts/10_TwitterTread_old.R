@@ -153,14 +153,10 @@ post_tweet(tweet.cases.tweet,  media = c("data/plots/05_new_cases.png",
 
 #### week.tweet ####
 
-tweet.week.tweet <-  "Nieuwe gevallen" # "De gaan-we-week-4-inhalen? grafiek."
+tweet.week.tweet <-  "De gaat-deze-week-onder-vorige-week-uitkomen? grafiek." # "De gaan-we-week-4-inhalen? grafiek."
 tweet.week.tweet <- sprintf(tweet.week.tweet)
 Encoding(tweet.week.tweet) <- "UTF-8"
-post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png",
-                                        "data/plots/60_trendlines_cases.png",
-                                        "data/02_leeftijd_heatmap.png",
-                                        "data/03_leeftijd_relatief.png"
-                                        ), in_reply_to_status_id = get_reply_id())  
+post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png"), in_reply_to_status_id = get_reply_id())  
 
 
 
@@ -224,28 +220,31 @@ emoji_kerst <- intToUtf8(0x1F384)
 emoji_snowman <- intToUtf8(0x2603)
 emoji_snow <- intToUtf8(0x2744)
 
+tweet.kerst.tweet <- "Is de volgende stap in zicht?
 
-tweet.kerst.tweet <- "Hoe ziet de zomer eruit? "
-# Voorspelling met 7-d gem.:
-# Week-op-week (rood): 
-#  - %s elke %s dagen,
-# - Waakzaam over: %s dagen
-# - Niveau tijdens 4 juli: [%s]
-#Dag-op-dag (donkerblauw):
-#  - %s elke %s dagen,
-# - niveau tijdens 4 juli: [%s]
+Voorspelling met 7-d gem.:
 
-tweet.kerst.tweet <- sprintf(tweet.kerst.tweet #,
+Week-op-week (rood): 
+- %s elke %s dagen,
+- Waakzaam over: %s dagen
+- Niveau tijdens 4 juli: [%s]
+
+
+Dag-op-dag (donkerblauw):
+- %s elke %s dagen,
+- niveau tijdens 4 juli: [%s]
+"
+tweet.kerst.tweet <- sprintf(tweet.kerst.tweet,
                              
-                            # doublingdayZ.text,   doublingdayZ.int,
-                            # days.until.lvl2,
-                            # kest.niveau.text.dag,
+                             doublingdayZ.text,   doublingdayZ.int,
+                             days.until.lvl2,
+                             kest.niveau.text.dag,
                              
-                           #  doublingdayZ.1.text, doublingdayZ.1.int,
-                           #  kest.niveau.text.week
+                             doublingdayZ.1.text, doublingdayZ.1.int,
+                             kest.niveau.text.week
 )
 Encoding(tweet.kerst.tweet) <- "UTF-8"
-# post_tweet(tweet.kerst.tweet,  media = c("data/plots/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.kerst.tweet,  media = c("data/plots/60_trendlines_cases.png"), in_reply_to_status_id = get_reply_id())  #
 
 
 
@@ -383,13 +382,13 @@ tweet.age.tweet <- paste("Leeftijden en leeftijdsverdeling gemelde gevallen
 - Leeftijd relatief & absoluut
 - Heatmap, leeftijd relatief")
 
-#post_tweet(status = tweet.age.tweet, 
-#           media = c("data/01_leeftijd_barchart.png", 
-#                     "data/01_leeftijd_barchart_abs.png",
-#                     "data/02_leeftijd_heatmap.png",
-#                     "data/03_leeftijd_relatief.png"), 
-#           in_reply_to_status_id = get_reply_id()
-#)
+post_tweet(status = tweet.age.tweet, 
+           media = c("data/01_leeftijd_barchart.png", 
+                     "data/01_leeftijd_barchart_abs.png",
+                     "data/02_leeftijd_heatmap.png",
+                     "data/03_leeftijd_relatief.png"), 
+           in_reply_to_status_id = get_reply_id()
+)
 
 
 
@@ -599,7 +598,7 @@ tweet.data1.tweet <- sprintf(tweet.data1.tweet,
                             
 )
 Encoding(tweet.data1.tweet) <- "UTF-8"
-# post_tweet(tweet.data1.tweet, in_reply_to_status_id = get_reply_id()) 
+ post_tweet(tweet.data1.tweet, in_reply_to_status_id = get_reply_id()) 
 
 
 ### tweet.data2.tweet ####
@@ -623,7 +622,7 @@ tweet.data2.tweet <- sprintf(tweet.data2.tweet,
                              PersCoLockdownDays
 )
 Encoding(tweet.data2.tweet) <- "UTF-8"
-# post_tweet(tweet.data2.tweet, in_reply_to_status_id = get_reply_id()) 
+ post_tweet(tweet.data2.tweet, in_reply_to_status_id = get_reply_id()) 
 
 
 
@@ -640,10 +639,10 @@ tweet.cases.diff.tweet <- "1) provincies
 "
 tweet.cases.diff.tweet <- sprintf(tweet.cases.diff.tweet)
 Encoding(tweet.cases.diff.tweet) <- "UTF-8"
-# post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png",
-#                                               "data/07_cases_diff.png",
-#                                               "data/plots/07_cases_type1-monday.png",
-#                                               "data/81_coronamelder.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.cases.diff.tweet,  media = c("data/20_prov_new-test.png",
+                                              "data/07_cases_diff.png",
+                                              "data/plots/07_cases_type1-monday.png",
+                                              "data/81_coronamelder.png"), in_reply_to_status_id = get_reply_id())  #
 
 ###    media = c("data/17_IC_only.png", "data/16_IC_hosp.png")
 

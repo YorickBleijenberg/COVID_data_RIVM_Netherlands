@@ -75,7 +75,7 @@ ggplot(Merged_data_short)+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
-ggsave("data/05_new_cases.png",width=16, height = 9)
+ggsave("data/plots/05_new_cases.png",width=16, height = 9)
 
 
 
@@ -289,3 +289,10 @@ ggplot(Merged_data_short)+
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
 ggsave("data/13_EN_new_deceased.png",width=16, height = 9)
+
+
+
+daily.numbers.filename <- paste0("data/plots/",format(Sys.Date(), "%Y-%m-%d"), "_daily_numbers.csv")
+write.csv(Merged_data_7MA, file = daily.numbers.filename, row.names = F)
+
+

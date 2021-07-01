@@ -44,7 +44,8 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24", "2020-0
                                  "2020-11-23","2020-11-30","2020-12-07", "2020-12-14","2020-12-21",
                                  "2020-12-28","2021-01-04","2021-01-11", "2021-01-18","2021-01-25",
                                  "2021-02-01","2021-02-08","2021-02-15", "2021-03-01","2021-03-08",
-                                 "2021-03-15","2021-03-22","2021-03-29", "2021-04-05","2021-04-12"))
+                                 "2021-03-15","2021-03-22","2021-03-29", "2021-04-05","2021-04-12",
+                                 "2021-04-17"))
 
 dates_vline_mondays <- which((tested_daily.count$date %in% dates_vline_mondays))
 
@@ -94,8 +95,8 @@ ggplot(data = tested_daily.count,)+
   
   
   
-  scale_x_date(date_breaks = "2 week", 
-               date_labels= format("%d/%m"),
+  scale_x_date(date_breaks = "1 month", 
+               date_labels= format("%b"),
                limits = as.Date(c("2020-06-03", NA)))+
   
  # geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
