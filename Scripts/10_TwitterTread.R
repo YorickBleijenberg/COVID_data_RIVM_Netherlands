@@ -166,6 +166,29 @@ post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png",
 
 
 
+#### tweet.summer.zoom.tweet ####
+
+tweet.summer.zoom.tweet <-  "Zomer 2021
+
+Stijging van het 7 daags voortschrijdend gemiddelde tov het dal: %s %s
+
+Aantal verdubbelingen: %sx 
+
+
+" 
+tweet.summer.zoom.tweet <- sprintf(tweet.summer.zoom.tweet,
+                                   increase1a,   deP,
+                                   doubling1a)
+Encoding(tweet.summer.zoom.tweet) <- "UTF-8"
+post_tweet(tweet.summer.zoom.tweet,  media = c("data/plots/05_new_cases_2021.png",
+                                               "data/07_cases_type1_summer_2021.png",
+                                               "data/plots/22_tests_ggd_daily_zoom.png"
+), in_reply_to_status_id = get_reply_id())  
+
+
+
+
+
 
 
 
@@ -179,29 +202,29 @@ post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png",
 ###   50      -  1248
 ###   35      -   874
 
-kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.independence+5]   ##dag days.to.freedom
-kest.niveau.text.week <- paste("waakzaam")     
-if (kerst.niveau.week > 875) {                      #875
-  kest.niveau.text.week <- paste("zorgelijk")
-}
-if (kerst.niveau.week > 2500) {
-  kest.niveau.text.week <- paste("ernstig")
-}
-if (kerst.niveau.week > 6250) {
-  kest.niveau.text.week <- paste("zeer ernstig")
-}
+#kerst.niveau.week <- df.predict.lead.kerst$MACases_2[days.to.independence+5]   ##dag days.to.freedom
+#kest.niveau.text.week <- paste("waakzaam")     
+#if (kerst.niveau.week > 875) {                      #875
+#  kest.niveau.text.week <- paste("zorgelijk")
+#}
+#if (kerst.niveau.week > 2500) {
+#  kest.niveau.text.week <- paste("ernstig")
+#}
+#if (kerst.niveau.week > 6250) {
+#  kest.niveau.text.week <- paste("zeer ernstig")
+#}
 
-kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.independence+11]
-kest.niveau.text.dag <- paste("waakzaam")      
-if (kerst.niveau.dag > 875) {                      #875
-  kest.niveau.text.dag <- paste("zorgelijk")
-}
-if (kerst.niveau.dag > 2500) {
-  kest.niveau.text.dag <- paste("ernstig")
-}
-if (kerst.niveau.dag > 6250) {
-  kest.niveau.text.dag <- paste("zeer ernstig")
-}
+#kerst.niveau.dag <- df.predict.lead.kerst$MACases[days.to.independence+11]
+#kest.niveau.text.dag <- paste("waakzaam")      
+#if (kerst.niveau.dag > 875) {                      #875
+#  kest.niveau.text.dag <- paste("zorgelijk")
+#}
+#if (kerst.niveau.dag > 2500) {
+#  kest.niveau.text.dag <- paste("ernstig")
+#}
+#if (kerst.niveau.dag > 6250) {
+#  kest.niveau.text.dag <- paste("zeer ernstig")
+#}
 
 # kerst.niveau.week <- "#TeHoog"
 # kerst.niveau.dag  <- "#TeHoog"
@@ -573,6 +596,9 @@ PersCoSYOLO = as.Date("2021-04-20",'%Y-%m-%d')
 PersCoSYOLODays <- as.numeric(difftime(Sys.Date(),PersCoSYOLO, units = c("days")))
 PersCoNoLockdown = as.Date("2021-05-28",'%Y-%m-%d')
 PersCoLockdownDays <- as.numeric(difftime(Sys.Date(),PersCoNoLockdown, units = c("days")))
+
+
+#   difftime(as.POSIXct("2020-10-13"), as.POSIXct("2021-05-28", tz="UTC"), units="days")
 
 ### tweet.data1.tweet ####
 tweet.data1.tweet <- "Dagen sinds PersCo

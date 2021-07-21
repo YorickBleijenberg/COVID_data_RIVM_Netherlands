@@ -68,10 +68,12 @@ df4 <- df3
 #dates_vline <- which((df4$Datum %in% dates_vline))
 
 dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", 
-                                         "2020-11-18", "2020-12-15", "2021-01-23", "2021-02-08",  "2021-03-31")),
+                                         "2020-11-18", "2020-12-15", "2021-01-23", "2021-02-08",  "2021-03-31",
+                                         "2021-06-26", "2021-07-09")),
                           event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown",
                                   "verzwaring", "einde verzwaring", "lockdown", "                    avondklok",
-                                 "basisscholen open", "avondklok 22:00uur"))
+                                 "basisscholen open", "avondklok 22:00uur",
+                                 "Alles open!", "aanscherpingen"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]
@@ -97,7 +99,7 @@ theme_classic()+
   
 
   
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "4 week", 
                date_labels= format("%d-%b"),
                limits = as.Date(c("2020-07-01", Sys.Date() ))
                )+
@@ -133,7 +135,7 @@ theme_classic()+
     # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
   
   geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
-  geom_text(data=dates_vline  , mapping=aes(x=date, y=2500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
+  geom_text(data=dates_vline  , mapping=aes(x=date, y=12000, label=event), size=8, angle=90, vjust=-0.4, hjust="right", alpha = 0.8)+
   
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
@@ -169,36 +171,41 @@ ggsave("data/07_cases_type1.png",width=16, height = 9)
 
 
 
+df4_short  <- df4[df4$Datum>"2021-06-01",]
 
-
-ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
+ggplot(df4_short, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
   geom_col()+
   
   theme_classic()+
   xlab("")+ 
   ylab("")+
   
+  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
+  geom_text(data=dates_vline  , mapping=aes(x=date, y=2500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
+  
   scale_x_date(date_breaks = "14 day", 
                date_labels= format("%d-%b"),
-               limits = as.Date(c("2020-07-01", Sys.Date()+5)))+
+               limits = as.Date(c("2021-06-01", Sys.Date()+5)))+
 
-  scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
-                    labels=c(   "First day with symptoms (new/correction)", 
-                                "First day with symptoms",
-                                "Positive lab result",
-                                "Positive lab result (new/correction)",
-                                "Notification to GGD (new/correction)",
-                                "Notification to GGD"))+                                                               
+  
+  scale_fill_manual(values=c("#c55a11", 
+                             "#F8CBAD", 
+                             "#548235", 
+                             "#C5E0B4",  
+                             "#203864",   #blauw donker
+                             "#B4C7E7"),  #blauw
+                    labels=c(   "Melding aan GGD (nieuw/correctie)",
+                                "Melding aan GGD",
+                                "Eerste ziektedag (nieuw/correctie)",
+                                "Eerste ziektedag",
+                                "Positieve labuitslag (nieuw/correctie)",
+                                "Positieve labuitslag"))+
+  
+  
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
-  
-  #geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
-  #           col = "darkgray", lwd = 1, linetype= "dashed")+
-  #geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
-  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
-  
-  
-  labs(title = "Cases: compared to yesterday",
-       subtitle = "18-Sep: Press conference 'bars close an hour early'\n28-Sep: Press conference 'We aim for an R of 0.9'\n13-oct: Press conference semi-lockdown \n 5 - 19 nov heavier semi-lockdown",
+ 
+  labs(title = "Besmette personen: verschil met gisteren",
+      # subtitle = "P",
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position = c(0.2, 0.8),
@@ -207,24 +214,18 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
         legend.text = element_text(colour="black", size=10, face="bold"))+
   
   theme(
-    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
+    plot.background = element_rect(fill = "#F5F5F5"),
     panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
     plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
     plot.subtitle =  element_text(hjust=0.5,size = 18,color = "black", face = "italic"),
-    axis.text.x = element_text(face="bold", color="black", size=12), #, angle=45),
+    axis.text.x = element_text(face="bold", color="black", size=12),
     axis.text.y = element_text(face="bold", color="black", size=14),
     axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
     axis.ticks.length = unit(0.5, "cm"),
     axis.line = element_line(colour = "#F5F5F5"),
-    
-    #axis.labels.x=date_format("%d-%b"),
-    
-    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+ #,
-  #panel.grid.major.x = element_line(colour= "darkgray", linetype = "solid"))
-  
-  
-  
-  ggsave("data/07_EN_cases_type1.png",width=16, height = 9)  
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+ 
+
+  ggsave("data/07_cases_type1_summer_2021.png",width=16, height = 9)  
 
 
 

@@ -36,8 +36,8 @@ persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14",
                              "| Avondklok 22u", "| Stap 1", "| stap 2",
                              "| Stap 3 - einde lockdown", "| Stap 4&5"),
                      
-                     yas=c(1.01, 0.80, 0.7, 0.55,0.75,0.7,0.75, 0.85, 0.9, 0.85, 0.75, 0.7,
-                           0.65,0.7)) 
+                     yas=c(2, 1.6, 1.4, 1.1,1.6,1.1,1.5, 1.4, 1.3, 1.1, 1.5, 1.3,
+                           1.2,1.5)) 
 
 persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14",
                                           "2020-11-04", "2020-11-18", "2020-12-14",
@@ -76,7 +76,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
   ylab("")+
   
   scale_x_date(limits=as.Date(c("2020-9-1", today)), date_breaks = "1 months", date_labels = "%b") +
-  scale_y_continuous(expand = c(0, 0), limits = c(0.5, 1.5), breaks = c(0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0.5, 3.5))+ #   , breaks = c(0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5)) +
   
   theme(axis.title.x=element_blank(),
         axis.title.y=element_blank()
@@ -86,7 +86,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, RIVM model 29 juni",
+  labs(title = "Reproductiegetal, RIVM model 20 juli",
        #subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
@@ -122,8 +122,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
   geom_line(aes(y = Rt_avg, color = "Effectieve R"), color = "black",lwd=2) +
 
 
-ggsave("data/40_reproduction.png",width=16, height = 9)
-
+ggsave("data/plots/40_reproduction.png",width=16, height = 9)
 
 
 

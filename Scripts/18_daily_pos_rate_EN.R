@@ -59,9 +59,9 @@ last.tests.pos.value  <- format(last(tested_daily.count$positive_tests), big.mar
 
 
 
-values.subtitle <- paste0("Datum laatste datapunt: ",date.last.value, "\n aantal testen: ",last.tests.value,"\n",
-                          "Aantal testen positief: ", last.tests.pos.value, 
-                          "\n Percentage positief: ", last.pos.value,  "%    ---   7-daags gemiddelde percentage: ",last.pos_ma.value, "%")
+values.subtitle <- paste0("Date last data point: ",date.last.value, "\n Number of tests: ",last.tests.value,"\n",
+                          "Positive tests: ", last.tests.pos.value, 
+                          "\n Percentage positive: ", last.pos.value,  "%    ---   7-day moving average percentage: ",last.pos_ma.value, "%")
 
 
 
@@ -104,13 +104,13 @@ ggplot(data = tested_daily.count,)+
  # geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
 #                       col = "gray", lwd = 0.2, linetype= "dashed")+
   
-  coord_cartesian(expand = TRUE)+
+  coord_cartesian(expand = FALSE)+
   
   theme_classic()+
   
   labs(x = "",
        y = "",
-       title = " Aantal testen & percentage positief GGD'en",
+       title = "Number of tests and percentage positive, Municipal Health Services",
        subtitle = values.subtitle,
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
@@ -130,7 +130,7 @@ ggplot(data = tested_daily.count,)+
          axis.text.y.right = element_text(color = "#4472C4")
   )+
   
-ggsave("data/plots/22_tests_ggd_daily.png",width=16, height = 9)
+ggsave("data/plots/22_tests_ggd_daily_EN.png",width=16, height = 9)
 
 
 
@@ -156,7 +156,7 @@ ggplot(data = tested_daily.count,)+
   
   
   
-  scale_y_continuous(limits = c(0, NA), breaks = c(0, 10000, 20000,40000,60000,80000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
+  scale_y_continuous(limits = c(0, 60000), breaks = c(0, 10000, 20000,40000,60000,80000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
                      sec.axis = sec_axis(~ . / 400000, labels = percent))+
   
   

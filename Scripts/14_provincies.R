@@ -70,14 +70,17 @@ ggplot(data = number_new_prov_short, ) +
   
    facet_wrap(~ Province,  scales = "free_y")+
   
- 
+  scale_x_date(date_breaks = "2 week", 
+               date_labels= format("%d %b"))+
   
   theme_bw() + 
   xlab("")+ 
   ylab("")+
+  
   labs(title = "Provincies",
        subtitle = "Nieuwe gevallen, 7-daags zwevend gemiddelde  (Y-as wisselt)",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
          panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
          legend.position = "none",   # no legend

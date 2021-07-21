@@ -177,10 +177,10 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
   geom_line( size=2 )+
   
   #  scale_y_continuous(labels = percent)+
-  scale_x_date(limits=as.Date(c("2020-11-15", NA)), date_breaks = "1 months",date_labels= format("%b"))+
+  scale_x_date(limits=as.Date(c("2021-06-15", NA)), date_breaks = "1 week",date_labels= format("%d %b"))+
   # limits = as.Date(c("2021-01-6", NA)))+
   
-  scale_y_continuous(limits = c(0,80))+
+  scale_y_continuous(limits = c(0,10), breaks=  c(0,2,4,6,8,10))+
   
   
   #coord_cartesian(expand = FALSE)+
@@ -197,7 +197,7 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
   # scale_color_manual( values=c("#1F968BFF", "#481567FF"), labels=c("besmettingen totaal", "besmettingen verpleeghuizen" ))+
   
   labs(title = "Opnames Kliniek naar leeftijd",
-       subtitle = "Naar dag van rapportage",
+       subtitle = "Lopend 7-daags gemiddelde, naar dag van rapportage",
        caption = paste("Bron: NICE | Plot: @YorickB  | ",Sys.Date()))+
   
   theme(legend.position = "right",  #c(0.5, 0.925),
@@ -224,117 +224,66 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
 
 
 
-#abs.table.clinic.comp <- vacc.effect.age.ICU[ -c(2:28,34:38)]
 
 
 
 
-
-#abs.table.clinic.comp.long
-
-
-#abs.table.clinic.comp.long <- abs.table.clinic.comp %>% mutate(age_grouping = case_when(str_detect(Agegroup, "0-9") ~ '0-9', 
- #                                                                  str_detect(Agegroup, "10-19") ~ '10-19',
-  #                                                                 str_detect(Agegroup, "20-29") ~ '20-39',
-   #                                                                str_detect(Agegroup, "30-39") ~ '20-39',
-    #                                                               str_detect(Agegroup, "40-49") ~ '40-59',
-     #                                                              str_detect(Agegroup, "50-59") ~ '40-59',
-      #                                                             str_detect(Agegroup, "60-69") ~ '60-79',
-       #                                                            str_detect(Agegroup, "70-79") ~ '60-79',
-        #                                                           str_detect(Agegroup, "80-89") ~ '80-89',
-         #                                                          str_detect(Agegroup, "90+") ~ '90+',))
-
-#casus.working <-count(casus.working,date,age_grouping)
-
-#Take rolling 7-day averages
-#casus.working <- casus.working %>% 
-#  group_by(age_grouping) %>% 
-#  arrange(date) %>% 
-#  mutate(cases_avg=roll_mean(n, 7, align="right", fill=0))
-
-#dag<-strftime(Sys.Date()-1)
-
-#casus.working <- casus.working[casus.working$date>"2020-02-29"&casus.working$date<dag,]
-#casus.working$date <- as.Date(casus.working$date)
-
-
-#draw_key_polygon3 <- function(data, params, size) {
- # lwd <- min(data$size, min(size) / 4)
- # 
- # grid::rectGrob(
-#    width = grid::unit(0.6, "npc"),
-#    height = grid::unit(0.6, "npc"),
-#    gp = grid::gpar(
-#col = data$colour,
-#      fill = alpha(data$fill, data$alpha),
-#      lty = data$linetype,
-#      lwd = lwd * .pt,
-#      linejoin = "mitre"
-#    ))
-#}
-#GeomBar$draw_key = draw_key_polygon3
-
-
-#### PLOT  onderlinge verhouding ####
-
-#ggplot(casus.working, aes(date,cases_avg,fill=age_grouping))+
-#  geom_bar(stat="identity", position=position_fill(), width=1) + scale_y_reverse() +
-  
-  
-  
-
-#abs.table.clinic <- vacc.effect.age.ICU[ -c(2:28,34:38)]
-#abs.table.clinic <- abs.table.clinic[abs.table.clinic$Datum >"2020-10-15",]
-
-
-#key <- "Datum"
-#value = "test"
-#abs.table.clinic.long <- gather(abs.table.clinic, key, value, 2:6)
-#abs.table.clinic.long$key <- as.factor(abs.table.clinic.long$key)
-
-
-
-
-#ggplot(abs.table.clinic, aes(x=Datum, y= value, color = key))+
-#  geom_line( size=2 )+
+ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=c("MA.young.Change",
+                                                                                  "MA.three.Change",
+                                                                                  "MA.four.Change",
+                                                                                  "MA.fifty.Change",
+                                                                                  "MA.sixty.Change", 
+                                                                                  "MA.seven.Change",
+                                                                                  "MA.old80.Change"))))+
+  geom_col( size=2 )+
   
   #  scale_y_continuous(labels = percent)+
-#  scale_x_date(date_breaks = "1 months",date_labels= format("%b"))+
+  scale_x_date(limits=as.Date(c("2021-06-15", NA)), date_breaks = "1 week",date_labels= format("%d %b"))+
   # limits = as.Date(c("2021-01-6", NA)))+
   
+  scale_y_continuous(limits = c(0,10), breaks=  c(0,2,4,6,8,10))+
+  
+  
   #coord_cartesian(expand = FALSE)+
- # theme_classic()+
-#  xlab("")+
- # ylab("")+
+  theme_classic()+
+  xlab("")+
+  ylab("")+
+  
+  scale_color_manual( values=c("#f8766d", "#c49a00","#53b400","#00c094","#00b6eb","#a58aff","#fb61d7"), labels=c("30-","30-39", "40-49","50-59","60-69","70-79","80+"))+
+  
   
   #scale_fill_manual( values=c("#5c146e", "#fca50a", "darkgreen", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
- # scale_color_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen","test" ))+
+  # scale_color_brewer(palette = "RdYlBu", labels=c("50-", "50-69", "70-79","80-84", "85+" ))+
   
   # scale_color_manual( values=c("#1F968BFF", "#481567FF"), labels=c("besmettingen totaal", "besmettingen verpleeghuizen" ))+
   
- # labs(title = "Opnames Kliniek naar leeftijd",
-       #subtitle = "Blauw = Nieuwe besmettingen verpleeghuis \n Rood = Dagelijkse cijfers besmettingen",
-#       caption = paste("Bron: NICE | Plot: @YorickB  | ",Sys.Date()))+
+  labs(title = "Opnames Kliniek naar leeftijd",
+       subtitle = "Lopend 7-daags gemiddelde, naar dag van rapportage",
+       caption = paste("Bron: NICE | Plot: @YorickB  | ",Sys.Date()))+
   
-  #theme(#legend.position = "none",   # no legend
-  #  legend.title = element_blank(),  ## legend title
-  #  legend.position="top",
-  #  legend.direction = "vertical",
-  #  legend.background = element_rect(fill="#f5f5f5", size=0.5, linetype="solid"))+
+  theme(legend.position = "right",  #c(0.5, 0.925),
+        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=27, face="bold"))+
   
- # theme(
-#    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
-#    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
-#    plot.title = element_text(hjust = 0.5,size = 40,face = "bold"),
-#    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
-#    axis.text = element_text(size=14,color = "black",face = "bold"),
-#    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
-#    axis.ticks.length = unit(0.5, "cm"),
-#    axis.line = element_line(colour = "#F5F5F5"),
-#    panel.grid.major.x = element_blank(),
-#  panel.grid.minor.x = element_blank(),
- #   panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
+  theme(
+    plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
+    plot.title =     element_text(hjust = 0.5, size = 40, face = "bold"),
+    plot.subtitle =  element_text(hjust = 0.5, size = 20, color = "black", face = "italic"),
+    axis.text = element_text(size=20,color = "black",face = "bold"),
+    axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#DAE3F3"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
   
- # ggsave("data/99_vaccinated_compare_age_clinic_abs-22.png",width=16, height = 9)  
+  ggsave("data/plots/70_vaccinated_compare_age_clinic_abs_stapel.png",width=16, height = 9)  
+
+
+
+
+
 
 

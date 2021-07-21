@@ -87,8 +87,11 @@ ggplot(Merged_data_short)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
-    scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
-    labs(title = "New cases",
+    scale_y_continuous( limits = c(0, 7000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_x_date(date_breaks = "3 day", 
+               date_labels= format("%d %b"),
+               limits = as.Date(c("2021-06-25", NA)))+ 
+   labs(title = "New cases",
          subtitle = "with 7 day moving average",
          caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
     theme(
@@ -104,7 +107,7 @@ ggplot(Merged_data_short)+
         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
-        panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
+        panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
 ggsave("data/05_EN_new_cases.png",width=16, height = 9)
 
 
@@ -294,5 +297,58 @@ ggsave("data/13_EN_new_deceased.png",width=16, height = 9)
 
 daily.numbers.filename <- paste0("data/plots/",format(Sys.Date(), "%Y-%m-%d"), "_daily_numbers.csv")
 write.csv(Merged_data_7MA, file = daily.numbers.filename, row.names = F)
+
+
+#### doubling check cases ####
+Merged_data_short_2021 <- Merged_data_short[Merged_data_short$fixedDate>"2021-06-01",]
+
+
+minMA_summer2021 <- min(Merged_data_short_2021$MACases)
+current_MA <- last(Merged_data_short_2021$MACases)
+
+#minMA_summer2021 <- 600
+#current_MA <- 1100
+
+increase1a <- (current_MA/minMA_summer2021)*100
+increase1a <- round(increase1a, digits =0)
+
+
+doubling1a <- log2(current_MA/minMA_summer2021)
+doubling1a <- round(doubling1a, digits =2)
+
+
+new.cases.subtitle <- paste0("Stijging van het 7 daags voortschrijdend gemiddelde tov het dal: ", increase1a , "%\n",
+                             "Dat is: ", doubling1a, " verdubbeling")
+
+ggplot(Merged_data_short_2021)+
+
+    geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+
+  
+  scale_fill_manual(values=c("#96afde"))+
+  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#F5F5F5",lwd = 3)+
+  geom_line(mapping = aes(x=fixedDate, y=ma_c_lead), color = "#44546a",lwd = 2)+
+  
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
+theme_classic()+
+  xlab("")+ 
+  ylab("")+
+  labs(title = new.cases.title,
+       subtitle = new.cases.subtitle,
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  theme(
+    plot.background = element_rect(fill = "#F5F5F5"), 
+    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+    legend.position = "none", 
+    plot.title    =  element_text(hjust = 0.5 , size = 30, face = "bold"),
+    plot.subtitle =  element_text(hjust = 0.5 , size = 15, color = "black", face = "italic"),
+    axis.text = element_text(size=14,color = "black",face = "bold"),
+    axis.text.y = element_text(face="bold", color="black", size=14), 
+    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#F5F5F5"),
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
+ggsave("data/plots/05_new_cases_2021.png",width=16, height = 9)
+
 
 

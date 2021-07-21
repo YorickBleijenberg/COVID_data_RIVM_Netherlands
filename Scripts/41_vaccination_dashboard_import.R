@@ -98,7 +98,7 @@ vaccins.registerd.hops  <- as.integer(0)   #is now "hugo schatting"
 
 
 #second dose estimation
-second.dose <- as.integer((vaccins.estimated.total/100*35.3)) 
+second.dose <- as.integer((vaccins.estimated.total/100*37.6)) 
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)  # number of people with at least one dose.
 
@@ -107,6 +107,9 @@ janssen.given <- (janssen.given %>% filter(date == today-1 ))
 janssen.given <- janssen.given$janssen.given
 
 people.fully.vaccinated <- second.dose + janssen.given      # number with 2 doses OR 1x Janssen
+
+people.vaccinated.short = round(people.vaccinated/1000000, 1)
+people.fully.vaccinated.short = round(people.fully.vaccinated/1000000, 1)
 
 estimated.new.today <- (vaccins.estimated.total - last(vacc_date_hist$total_estimated))
 reported.new.today <- (vaccins.reported.total - last(vacc_date_hist$total_registerd))
@@ -519,20 +522,24 @@ start.vaccination.nl = as.Date(c("2021-01-06"))
 days.vaccination.in.nl = as.numeric(Sys.Date() - start.vaccination.nl+1)
 
 
-vac.perc <-  round((people.vaccinated/17474693*100), digits =2)
+vac.perc <-  round((people.vaccinated/17474693*100), digits =1)
 vac.perc <- format(vac.perc, scientific=F)
-vac.perc.18 <-  round((people.vaccinated/14070340*100), digits =2)
+vac.perc.18 <-  round((people.vaccinated/14070340*100), digits =1)
 vac.perc.18 <- format(vac.perc.18, scientific=F)
+vac.perc.12 <-  round((people.vaccinated/15252908*100), digits =1)
+vac.perc.12 <- format(vac.perc.12, scientific=F)
 
-vac.perc.second <-  round((people.fully.vaccinated/17474693*100), digits =2)
+vac.perc.second <-  round((people.fully.vaccinated/17474693*100), digits =1)
 vac.perc.second <- format(vac.perc.second, scientific=F)
-vac.perc.18.second <-  round((people.fully.vaccinated/14070340*100), digits =2)
+vac.perc.18.second <-  round((people.fully.vaccinated/14070340*100), digits =1)
 vac.perc.18.second <- format(vac.perc.18.second, scientific=F)
+vac.perc.12.second <-  round((people.fully.vaccinated/15252908*100), digits =1)
+vac.perc.12.second <- format(vac.perc.12.second, scientific=F)
 
 
 spillage <- as.integer(long.est/99)*1
 bescas  <- 380000
-suriname <- 90000+60000+100000
+suriname <- 90000+60000+100000+ 150000 +500000   #3x suriname  #1x Kaapverdie # 1x covax
 in.freezer <- freezer-long.est-spillage-bescas-suriname
 
 

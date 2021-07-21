@@ -158,9 +158,9 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
                                                                                   "MA.old80.Change"))))+
   geom_line( size=3 )+
   
-  #  scale_y_continuous(labels = percent)+
-  scale_x_date(date_breaks = "1 months",date_labels= format("%b"),
- limits = as.Date(c("2020-12-10", NA)))+
+   scale_y_continuous(limits = c(0,5))+
+  scale_x_date(date_breaks = "1 week",date_labels= format("%d %b"),
+ limits = as.Date(c("2021-06-10", NA)))+
   
   #coord_cartesian(expand = FALSE)+
   theme_classic()+

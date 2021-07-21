@@ -130,7 +130,7 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = t
                       )+
 
   
-  ####  coord_cartesian(expand = FALSE)+
+  coord_cartesian(expand = FALSE)+
   
   scale_fill_manual  (values=c("#C5E0B4","#4472C4"), labels=c(hosp_clin.a, hosp_IC.a))+
   scale_color_manual(values=c("#767171","#3B3838"), labels=c(hosp_clin.a, hosp_IC.a))+
@@ -491,7 +491,7 @@ LCPS_datafeed_predict$MA_IC_lead  <- lead(LCPS_datafeed_predict$MA_IC,3)
 # LCPS_datafeed_predict$percentage.IC.lpcs   <- lag(LCPS_datafeed_predict$percentage.IC,7)
 
 
-hosp_new_hosp.2 <- paste0("Aantal nieuwe opnames kliniek:  ",hosp.new.b1)
+hosp_new_hosp.2.en <- paste0("NUmber of new hospitalizations:  ",hosp.new.b1)
 
 
 
@@ -531,23 +531,23 @@ ggplot(LCPS_datafeed_predict)+
 #  annotate("rect", xmin = as.Date("2020-10-18"), xmax =as.Date("2021-06-03"), ymin =0, ymax = 12, color = "black",fill = "green", alpha = 0.3)+ 
   
   
-  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
-  geom_text(data=stap.een.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  #geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
+ # geom_text(data=stap.een.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
-  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=400, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
+  #geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
+ # geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=400, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
   
-   geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.twee.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  # geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  #geom_text(data=stap.twee.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=80, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=290, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=80, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=290, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=80, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=290, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   
    geom_line(data = LCPS_datafeed_predict, aes(x=Datum, y=MA_clin_lead), size =3, color = "#DAE3F3")+
@@ -557,10 +557,10 @@ ggplot(LCPS_datafeed_predict)+
                date_labels= format("%d %b"),
                name="",
 #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2021-06-01", "2021-08-30")))+
+               limits = as.Date(c("2021-05-01", "2021-08-1")))+
   
 #  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
-scale_y_continuous(limits = c(0, 80), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,20,40,60,80,200,300,400))+
+scale_y_continuous(limits = c(0, 300), labels = label_comma(big.mark = ".", decimal.mark = ","))+ #, breaks = c(0,20,40,60,80,200,300,400))+
   
   
    
@@ -575,7 +575,7 @@ scale_y_continuous(limits = c(0, 80), labels = label_comma(big.mark = ".", decim
   coord_cartesian(expand = FALSE)+
   
   ylab("")+
-  labs(title=hosp_new_hosp.2, 
+  labs(title=hosp_new_hosp.2.en, 
      # subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -603,7 +603,7 @@ scale_y_continuous(limits = c(0, 80), labels = label_comma(big.mark = ".", decim
 #           colour = "black", size=2, alpha=0.7, arrow =arrow(type = "open",length = unit(2,"mm")))
   
   
-ggsave("data/plots/16x_hosp_pred.png",width=16, height = 9)
+ggsave("data/plots/16x_hosp_pred_EN.png",width=16, height = 9)
 
 #hosp_IC <- paste0("IC:            ",hosp.IC.b2, "   (", hosp.IC.c2 , ")")
 hosp_new_IC.2 <- paste0("Aantal nieuwe opnames IC:  ",hosp.new.b2)
@@ -957,34 +957,6 @@ deP <- intToUtf8(0x0025)
 clin.tehoog <- round(hosp.new.b1 / 12 , 0)
 ic.tehoog   <- round(hosp.new.b2 / 3  , 0)
 
-hosp.total.new.today <- hosp.new.b1+ hosp.new.b2
-
-#### Risico nieuw
-# <4 - waakzaam = 70 per week = >10 per dag
-# 4-16 - zorgelijk = 70-280 p/w = 10-40 p/d
-# 16-27 - ernstig = 280-472,5 p/w = 40-67,5 p/d
-# > 27 - zeer ernstig = 472,5 p/w - > 67 p/d
-
-
-
-hosp.total.new.dot <- intToUtf8(0x1F7E1)     ### geel
-if (hosp.total.new.today > 67) {
-  hosp.total.new.dot <- intToUtf8(0x1F534)     ### rood
-} else if (hosp.total.new.today < 10) {
-  hosp.total.new.dot <- intToUtf8(0x1F7E2)     ### groen
-} 
-
-
-hosp.total.new.lvl <- "ernstig"
-if (hosp.total.new.today > 67) {
-  hosp.total.new.lvl <- "Zeer Ernstig"     
-} else if (hosp.total.new.today < 10) {
-  hosp.total.new.lvl <-  "Waakzaam"   
-} else if (hosp.total.new.today > 9 & hosp.total.new.today < 40) {
-  hosp.total.new.lvl <- "zorgelijk"   
-}
-
-
 
 tweet.LCPS.EN.tweet <- "Dag %s, de %s editie
 
@@ -996,9 +968,9 @@ Pati%snten nu in het ziekenhuis:
 %sKliniek:  %s (%s)
 %sIC:       %s (%s)
 
-Nieuwe opnames: %s [%s%s]
-Kliniek: %s 
-IC:     %s
+Nieuwe opnames: 
+%sKliniek: %s 
+%sIC:     %s
 
 
 #COVID19" 
@@ -1012,13 +984,8 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             clinic.total.dot, hosp.total.b1,  hosp.total.c1,
                             ic.total.dot,     hosp.IC.b2,  hosp.IC.c2,
                           
-                            hosp.total.new.today, hosp.total.new.dot, hosp.total.new.lvl,
-                            
-                            hosp.new.b1,   # clin.tehoog, # hosp.new.c1, hosp.cl.new.dot,
-                            hosp.new.b2    # ,     ic.tehoog    # hosp.new.c2, hosp.ic.new.dot,
-                            
-                            
-                            
+                            hosp.cl.new.dot, hosp.new.b1,   # clin.tehoog, # hosp.new.c1,
+                            hosp.ic.new.dot, hosp.new.b2    # ,     ic.tehoog    # hosp.new.c2,
 #                            flag.D, flag.E,
 #                            number.in.DE
                             )

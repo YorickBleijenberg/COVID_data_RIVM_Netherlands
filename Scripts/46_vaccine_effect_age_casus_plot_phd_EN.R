@@ -32,7 +32,7 @@ casus.age.dif.play$`MA.90+`    <- rollmeanr((casus.age.dif.play$`90+`  *100000/(
 
 
 #relative.casus.age.dif.play <- casus.age.dif.play[ -c(1:11,13:23)]
-casus.age.dif.play <- casus.age.dif.play[casus.age.dif.play$date > "2021-05-26",]  #"2021-06-08",]
+casus.age.dif.play <- casus.age.dif.play[casus.age.dif.play$date >"2020-10-08",]   # "2020-10-08",]
 casus.age.dif.play.short <- casus.age.dif.play[casus.age.dif.play$date >"2021-02-16",]
 
 
@@ -74,6 +74,8 @@ ggplot(casus.age.dif.play.long)+
   scale_color_brewer(palette = "RdYlBu", labels=c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70-79","80-89","90+"))+
  # scale_colour_viridis_d(option = "cividis")+
   
+  scale_y_continuous( limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
   theme(#legend.position = "none",   # no legend
     legend.title       = element_blank(),  ## legend title
     legend.position    = "right",
@@ -81,8 +83,8 @@ ggplot(casus.age.dif.play.long)+
     legend.background  = element_rect(fill="darkgrey", size=0.5, linetype="solid"),
     legend.text = element_text(colour="black", size=22, face="bold"))+
   
-  labs(title     = "Besmettingen",
-       subtitle = "per 100.000, binnen de groep \n verschil tussen casusfiles \n 7-daags lopende gemiddelden",  #subtitle.label,
+  labs(title     = "New cases",
+       subtitle = "per 100.000, within the agegroup \n difference between casusfiles",  #subtitle.label,
        caption   = paste("Bron: RIVM | Plot: @YorickB  | ",Sys.Date()))+
   
   theme(
@@ -97,8 +99,11 @@ ggplot(casus.age.dif.play.long)+
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
-ggsave("data/plots/99_leeftijd_case_phd.png",width=16, height = 9)
+ggsave("data/plots/99_leeftijd_case_phd_EN.png",width=16, height = 9)
   
+
+
+
 
 
 ggplot(casus.age.dif.play.long)+
@@ -108,13 +113,18 @@ ggplot(casus.age.dif.play.long)+
   #scale_color_discrete(safe_colorblind_palette)
   theme_classic()+
   
-  scale_y_continuous(trans='log2', breaks = c(1,2,4,8,16,32,64,128,256))+
-  
   xlab("")+
   ylab("")+
   
   scale_color_brewer(palette = "RdYlBu", labels=c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70-79","80-89","90+"))+
   # scale_colour_viridis_d(option = "cividis")+
+  
+  scale_y_continuous( limits = c(0, 20), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  
+  scale_x_date(date_breaks = "1 week", 
+               date_labels= format("%b"),
+               limits = as.Date(c("2021-06-01", NA)))+
+  
   
   theme(#legend.position = "none",   # no legend
     legend.title       = element_blank(),  ## legend title
@@ -123,8 +133,8 @@ ggplot(casus.age.dif.play.long)+
     legend.background  = element_rect(fill="darkgrey", size=0.5, linetype="solid"),
     legend.text = element_text(colour="black", size=22, face="bold"))+
   
-  labs(title     = "Besmettingen",
-       subtitle = "per 100.000, binnen de groep \n verschil tussen casusfiles\n 7-daags lopende gemiddelden",  #subtitle.label,
+  labs(title     = "New cases",
+       subtitle = "per 100.000, within the agegroup \n difference between casusfiles",  #subtitle.label,
        caption   = paste("Bron: RIVM | Plot: @YorickB  | ",Sys.Date()))+
   
   theme(
@@ -139,8 +149,9 @@ ggplot(casus.age.dif.play.long)+
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
-  ggsave("data/plots/99_leeftijd_case_phd_log.png",width=9, height = 9)
-ggsave("data/plots/99_leeftijd_case_phd_log_wide.png",width=16, height = 9)
+  ggsave("data/plots/99_leeftijd_case_phd_EN_zoom.png",width=16, height = 9)
+
+
 
 
 

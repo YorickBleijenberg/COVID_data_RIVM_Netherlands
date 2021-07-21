@@ -12,7 +12,7 @@ library(ggforce)
 
 weeknumber <- isoweek(Sys.Date())-1
 
-report<-"C:\\Rdir\\rivm-week\\2021-18-COVID-19_WebSite_rapport_wekelijks_20210511_1153_final.pdf"
+report<-"C:\\Rdir\\rivm-week\\2021-28-COVID-19_WebSite_rapport_wekelijks_20210720_1149_final.pdf"
 
 
 # report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
@@ -66,7 +66,7 @@ bco_no.setting <- (ggd_bco1$aantal.this.week[2]+ggd_bco1$aantal.this.week[3]+ggd
 bco.setting.perc <- 1-(bco_no.setting/bco_tot)
 
 
-ggd_bco3 <- ggd_bco2[-c(2, 4, 21), ]
+ggd_bco3 <- ggd_bco2[-c(2, 4, 18), ]
 sum.bco3 <- (sum(ggd_bco3$perc.this.week)/100)
 
 ggd_bco3$percentage.relative <-   (ggd_bco3$aantal.this.week/bco_yes.setting/sum.bco3)
@@ -101,15 +101,17 @@ ggd_bco5 <- ggd_bco5 %>%
   mutate(end = 2 * pi * cumsum(percentage.overall)/sum(percentage.overall),
          start = lag(end, default = 0),
          middle = 0.5 * (start + end),
-         hjust = ifelse(middle > pi, 1, 0),
+         hjust = ifelse(middle > pi, 1.1, 0),
          vjust = ifelse(middle < pi/2 | middle > 3 * pi/2, 0, 1))
 
 
 
+subtitle.title <- paste("BCO, gevallen week", weeknumber, " (tabel 8 & 9)")
+
 ggplot(ggd_bco5) + 
 geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
                  start = start, end = end, fill = Label)) +
-  geom_text(aes(x = 1.05 * sin(middle), y = 1.05 * cos(middle), label = Label,
+  geom_text(aes(x = 1.05 * sin(middle), y = 1.1 * cos(middle), label = Label,
                 hjust = hjust, vjust = vjust)) +
   coord_fixed() +
   
@@ -119,7 +121,7 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
                      name = "", breaks = NULL, labels = NULL)+
   
   #scale_fill_brewer(palette="Set1")+
-  scale_fill_manual(values = c("#4daf4a","#ff7f00","#ffff33","#a65628","#e41a1c","#377eb8","#984ea3", "#a65628"))+
+  scale_fill_manual(values = c("#4daf4a","#ff7f00","#ffff33","#a65628","#e41a1c","#984ea3","#377eb8", "#a65628"))+
   
   #e41a1c - red --
   #ff7f00 - orange---
@@ -132,7 +134,7 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
   
   
   labs(title = "Setting van mogelijk besmetting",
-         subtitle = "BCO, gevallen afgelopen week (tabel 8 & 9)",
+         subtitle = subtitle.title,
        #                  "semi-lockdown op 14 oktober\n",
        #                  "Herfstvakantie midden/zuid: 17-25 oktober"),
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
@@ -149,5 +151,7 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
           # axis.line = element_line(colour = "black"),
   )
 
-ggsave("data/86_setting_gg.png",width=16, height = 9)
-
+  plot.save.path <- paste0("data/86_setting_gg_week_", weeknumber, ".png")
+  
+ggsave("data/plots/86_setting_gg_week.png", width=16, height = 9)
+ggsave(plot.save.path ,width=16, height = 9)

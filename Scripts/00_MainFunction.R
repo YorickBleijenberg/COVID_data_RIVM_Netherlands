@@ -27,10 +27,12 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 
 
 #### some constants for the update ####
-
-editionname <-  "#BewustOnbeschermden"
-vaccine.edition.name <- "Deel-tieners-Schiermonnikoog-al-gevaccineerd"
-leeftijd             <- "2003"
+# moedig-voorwaarts
+# Niemand-had-dit-zien-aankomen
+# we-hebben-domme-dingen-gedaan-in-het-zicht-van-de-haven
+editionname <- "Welkom-terug-in-risiconiveau:-ZEER-ERNSTIG" #  De beste methode om het virus te bestrijden is het niet te hebben.a"  De-R-is-toch-in-de-maand #Reizen-tijdens-klimaat-ramp crisis-in-een-crisis
+vaccine.edition.name <- "grote-vaccinatie-update"
+leeftijd             <- "2009"
 
 editienaam  <-  editionname 
 #number.in.DE <- "0"
@@ -44,6 +46,7 @@ dir.create(dirname)
 #### update at 14:00h ####
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
+source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 
 ###
@@ -52,6 +55,8 @@ source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
 #### update at 15:15 ####
 
 source("C:\\Rdir\\Rscripts\\18_daily_pos_rate.R")
+
+source("C:\\Rdir\\Rscripts\\19_Reproduction.R")
 
 source("C:\\Rdir\\Rscripts\\02_RIVM_data_importer_and_archiver.R")
 
@@ -116,21 +121,27 @@ source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
 source("C:\\Rdir\\Rscripts\\44_vaccine_effect_care_compare.R")
 
+
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
+
 source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot.R")       
 source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot_phd.R")
 
 source("C:\\Rdir\\Rscripts\\47_vaccine_effect_disabled.R")     
 
-source("C:\\Rdir\\Rscripts\\21_ECDC-old.R")
+source("C:\\Rdir\\Rscripts\\21_ECDC.R")
 
 
 
 ##
 ##
+
+
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
-source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+
 
 
 
@@ -138,140 +149,117 @@ source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 #source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     
 #source("C:\\Rdir\\Rscripts\\50_vaccine_in_storage_seperate.R")
 
-
-source("C:\\Rdir\\Rscripts\\41_vaccination_dashboard_import.R")
-
-
-
-vaccins.estimated.total
-estimated.new.today
-people.vaccinated
-people.fully.vaccinated
-
-vac.perc
-vac.perc.second
-
-ggd.new.today
-ha.new.today
-care.new.today
-
-freezer
-in.freezer
-
-long.est
-
- vac.perc.18
- vac.perc.18.second
-
-
- 
- tweet.percentages.tweet <- "Schattingen
- 
-
- 
- Volwassenen
- - Eerste prik: %s%s
- - Volledig gevaccineerd: %s%s
- 
- Alle Nederlanders
- - Eerste prik: %s%s
- - Volledig gevaccineerd: %s%s
- 
-
- - Eerste prikken: %s
- - Volledig gevaccineerd: %s
- 
-"
- 
- tweet.percentages.tweet <- sprintf(  tweet.percentages.tweet,
-                                      vac.perc.18,deP,
-                                      vac.perc.18.second,deP,
-                                      vac.perc,deP,
-                                      vac.perc.second,deP,
-                                      people.vaccinated,
-                                      people.fully.vaccinated
-                                      )
- 
- Encoding(tweet.percentages.tweet) <- "UTF-8"
- post_tweet(tweet.percentages.tweet,  media = c("data/belgische_hokjes.png"), in_reply_to_status_id = get_reply_id())
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- #### tweet.instroom.check.tweet #####
- 
- 
- tweet.instroom.check.tweet <- "De instroom:
-Stijging of daling?
-
-7-daags gemiddelde hoger of lager dan een week geleden?
-
-*data NICE tot 3 dagen geleden ivm rapportagevertraging
-"
- 
- tweet.instroom.check.tweet <- sprintf(  tweet.instroom.check.tweet
- )
- Encoding(tweet.instroom.check.tweet) <- "UTF-8"
- post_tweet(tweet.instroom.check.tweet,  media = c("data/plots/16x_omt_check_week_on_week.png"), in_reply_to_status_id = get_reply_id())
  
  
  
  #### tweet.hospital.effect.tweet ####
  
- tweet.hospital.effect.tweet <- "Verschillen opnames tussen verschillende leeftijdsgroepen."
+ tweet.hospital.effect.tweet <- "Opnames"
  
  tweet.hospital.effect.tweet <- sprintf(tweet.hospital.effect.tweet)
  Encoding(tweet.hospital.effect.tweet) <- "UTF-8"
  
  post_tweet(tweet.hospital.effect.tweet,  media = c("data/plots/70_vaccinated_compare_age_clinic_abs.png",
-                                                    "data/plots/70_vaccinated_compare_age_clinic.png",
+                                                    "data/plots/16x_omt_check_nice_peak.png",
+                                                    # "data/plots/70_vaccinated_compare_age_clinic.png",
                                                     "data/plots/71_vaccinated_compare_age_ICU_abs.png",
-                                                    "data/plots/71_vaccinated_compare_age_IC.png"
+                                                    # "data/plots/71_vaccinated_compare_age_IC.png"
+                                                    "data/plots/16x_omt_check_week_on_week.png" 
  ), in_reply_to_status_id = get_reply_id())
  
  
  
  
- ####  NL.tweet #####            
+ source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
  
  
- tweet.LCPS.tweet <- "Dag %s, de %s editie
-
-Pati%snten nu in het ziekenhuis:
-(het verschil met gisteren)
-
-%s (%s)
-
-Kliniek:  %s (%s)
-IC:          %s (%s)
-
-Nieuwe opnames:
-Kliniek:    %s 
-IC:        %s 
-
-#COVID19 #TeHoog "#https://www.youtube.com/watch?v=KpYhePFx1qo"
  
  
- tweet.LCPS.tweet <- sprintf(tweet.LCPS.tweet,
-                             days.covid.in.nl, editienaam,
-                             deE, 
-                             
-                             hosp.total.b,     hosp.total.c,
-                             hosp.total.b1,    hosp.total.c1,
-                             hosp.IC.b2,       hosp.IC.c2,
-                             
-                             hosp.new.b1,   # clin.tehoog,
-                             hosp.new.b2    # ,   ic.tehoog
+ 
+ 
+ 
+ ###
+ *****
+ 
+ ####
+ *****
+ 
+ ####
+ 
+ 
+ 
+ 
+ 
+ source("C:\\Rdir\\Rscripts\\41_vaccination_dashboard_import.R")
+ 
+ 
+ 
+ vaccins.estimated.total
+ estimated.new.today
+ people.vaccinated
+ people.fully.vaccinated
+ 
+ vac.perc
+ vac.perc.second
+ 
+ ggd.new.today
+ ha.new.today
+ care.new.today
+ 
+ freezer
+ in.freezer
+ 
+ long.est
+ 
+ vac.perc.18
+ vac.perc.18.second
+ 
+ 
+ #vac.perc.second <- 48.5
+ 
+ 
+ 
+ tweet.percentages.tweet <- "Schattingen
+ 
+
+ 
+
+ 
+ 12+
+ - 1e prik: %s%s
+ - Volledig gevaccineerd: %s%s
+ 
+ 
+ Alle Nederlanders
+ - 1e prik: %s%s
+ - Volledig gevaccineerd: %s%s
+ 
+
+ - 1e prikken: %s miljoen
+ - Volledig gevaccineerd: %s miljoen
+ 
+"
+ 
+ tweet.percentages.tweet <- sprintf(  tweet.percentages.tweet,
+                                      #  vac.perc.18,        deP,
+                                      # vac.perc.18.second, deP,
+                                      
+                                      vac.perc.12,        deP,
+                                      vac.perc.12.second, deP,
+                                      
+                                      vac.perc,           deP,
+                                      vac.perc.second,    deP,
+                                      
+                                      people.vaccinated.short,
+                                      people.fully.vaccinated.short
  )
- Encoding(tweet.LCPS.tweet) <- "UTF-8"
  
- lcps_file <- paste0("data/00_", today , "_lcsp.txt")
- write.table(tweet.LCPS.tweet, file = lcps_file, sep = "\t",row.names = FALSE) #, col.names = NA)
+ Encoding(tweet.percentages.tweet) <- "UTF-8"
+ post_tweet(tweet.percentages.tweet,  media = c("data/belgische_hokjes.png"), in_reply_to_status_id = get_reply_id())
  
  
+ #  Volwassenen
+ # - 1e prik: %s%s
+ # - Volledig gevaccineerd: %s%s

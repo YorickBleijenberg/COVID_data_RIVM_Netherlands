@@ -165,11 +165,11 @@ ggplot(instroom.combi.long2, aes(x=date, y=value2, color = factor(key, levels=c(
   
   guides(color = guide_legend(reverse=TRUE))+
   
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "2 week", 
                date_labels= format("%d %b"),
                limits = as.Date(c("2021-03-01", NA)))+
   
-  scale_y_continuous(limits = c(-0.6, 0.50),breaks = c(-0.5, -0.4,-0.3,-0.2,-0.1,0,0.3,0.2,0.1,0.4), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)
+ # scale_y_continuous(limits = c(-1, 1),breaks = c(-0.5, -0.4,-0.3,-0.2,-0.1,0,0.3,0.2,0.1,0.4), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)
   
   xlab("")+
   ylab("")+
