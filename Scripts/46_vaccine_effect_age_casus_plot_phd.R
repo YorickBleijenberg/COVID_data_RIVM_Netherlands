@@ -38,7 +38,6 @@ casus.age.dif.play.short <- casus.age.dif.play[casus.age.dif.play$date >"2021-02
 
 
 
-
 casus.age.dif.play.test <- casus.age.dif.play[,-(1:11)]   
 casus.age.dif.play.test <- casus.age.dif.play.test[,-(2)]   
 

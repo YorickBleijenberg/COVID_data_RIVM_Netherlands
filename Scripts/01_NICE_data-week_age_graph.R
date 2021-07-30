@@ -56,8 +56,6 @@ ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, leve
   
   scale_x_date( limits = c(as.Date("2021-06-02"), NA), breaks = "week",  labels = date_format("%V"))+
   
-  
-  
   labs(title = "Nieuwe opnames ziekenhuis per week",
        #subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: NICE | Plot: @YorickB | ",Sys.Date()))+
@@ -98,7 +96,7 @@ ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, leve
   geom_bar(stat='identity', position=position_fill())+
   
   scale_fill_manual(values = wes_palette("GrandBudapest1", 7, type = "continuous"))+ 
-  scale_x_date( limits = c(as.Date("2020-02-02"), NA), breaks = "2 week",  labels = date_format("%V"))+
+  scale_x_date( limits = c(as.Date("2020-02-24"), NA), breaks = "2 week",  labels = date_format("%V"))+
   scale_y_continuous( label = percent_format(), sec.axis = sec_axis(~ . * 1, label = percent_format()))+
   
   
@@ -148,7 +146,7 @@ leeftijd.IC.week <- rjson::fromJSON(file = "https://stichting-nice.nl/covid-19/p
   map(as.data.table) %>%
   rbindlist(fill = TRUE)
 
-leeftijd.IC.week <- as.data.frame(t(leeftijd.klinisch.week[c(1,2,4,6,8,10,12,14),]))
+leeftijd.IC.week <- as.data.frame(t(leeftijd.IC.week[c(1,2,4,6,8,10,12,14),]))
 
 
 leeftijd.IC.week$V1 <- unlist(leeftijd.IC.week$V1)
@@ -164,19 +162,19 @@ leeftijd.IC.week$sum <- (leeftijd.IC.week$V2 + leeftijd.IC.week$V3 +
                            leeftijd.IC.week$V4 + leeftijd.IC.week$V4 + leeftijd.IC.week$V6 +
                            leeftijd.IC.week$V7 + leeftijd.IC.week$V8)
 
-colnames(leeftijd.klinisch.week) <- c("date","0-29","30-39","40-49", "50-59", "60-69", "70-79", "80+", "totaal")
+colnames(leeftijd.IC.week) <- c("date","0-29","30-39","40-49", "50-59", "60-69", "70-79", "80+", "totaal")
 
 
 
 library(wesanderson)
 
 
-leeftijd.klinisch.week$date <- as.Date(leeftijd.klinisch.week$date)
+leeftijd.IC.week$date <- as.Date(leeftijd.IC.week$date)
 
 
 key <- "date"
 value <- "number.in.hosp"
-leeftijd.klinisch.week.long <- gather(leeftijd.klinisch.week, key, value, 2:8)
+leeftijd.IC.week.long <- gather(leeftijd.IC.week, key, value, 2:8)
 
 #colnames (leeftijd.klinisch.week.long) <- c("date", "total" , "age", "number.in.hosp")
 
@@ -184,7 +182,7 @@ leeftijd.klinisch.week.long <- gather(leeftijd.klinisch.week, key, value, 2:8)
 #### plot  #####
 
 
-ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, levels=c("80+",
+ggplot(leeftijd.IC.week.long, aes(x=date, y=value, fill = factor(key, levels=c("80+",
                                                                                      "70-79",
                                                                                      "60-69",
                                                                                      "50-59",
@@ -193,13 +191,13 @@ ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, leve
                                                                                      "0-29"))))+
   
   geom_bar(stat='identity')+
-  scale_fill_manual(values = wes_palette("GrandBudapest1", 7, type = "continuous"))+ 
+  scale_fill_manual(values = wes_palette("Darjeeling2", 7, type = "continuous"))+ 
   
   scale_x_date( limits = c(as.Date("2021-06-02"), NA), breaks = "week",  labels = date_format("%V"))+
   
   
   
-  labs(title = "Nieuwe opnames ziekenhuis per week",
+  labs(title = "Nieuwe opnames IC per week",
        #subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: NICE | Plot: @YorickB | ",Sys.Date()))+
   
@@ -224,11 +222,11 @@ ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, leve
     axis.ticks.length = unit(0.5, "cm"),
     axis.line = element_line(colour = "#F5F5F5"))+
   
-  ggsave("data/plots/77_NICE_age_hosp_per_week.png",width=16, height = 9)
+  ggsave("data/plots/77_NICE_age_IC_per_week.png",width=16, height = 9)
 
 
 
-ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, levels=c("80+",
+ggplot(leeftijd.IC.week.long, aes(x=date, y=value, fill = factor(key, levels=c("80+",
                                                                                      "70-79",
                                                                                      "60-69",
                                                                                      "50-59",
@@ -238,12 +236,12 @@ ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, leve
   
   geom_bar(stat='identity', position=position_fill())+
   
-  scale_fill_manual(values = wes_palette("GrandBudapest1", 7, type = "continuous"))+ 
-  scale_x_date( limits = c(as.Date("2020-02-02"), NA), breaks = "2 week",  labels = date_format("%V"))+
+  scale_fill_manual(values = wes_palette("Darjeeling2", 7, type = "continuous"))+ 
+  scale_x_date( limits = c(as.Date("2020-02-24"), NA), breaks = "2 week",  labels = date_format("%V"))+
   scale_y_continuous( label = percent_format(), sec.axis = sec_axis(~ . * 1, label = percent_format()))+
   
   
-  labs(title = "Nieuwe opnames ziekenhuis per week",
+  labs(title = "Nieuwe opnames IC per week",
        subtitle = "Relative verhouding tussen groepen onderling.",
        caption = paste("Bron: NICE | Plot: @YorickB | ",Sys.Date()))+
   
@@ -270,7 +268,7 @@ ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, leve
     axis.line = element_line(colour = "#F5F5F5"),
     panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
   
-  ggsave("data/plots/77_NICE_age_hosp_per_week_rel.png",width=16, height = 9)
+  ggsave("data/plots/77_NICE_age_IC_per_week_rel.png",width=16, height = 9)
 
 
 

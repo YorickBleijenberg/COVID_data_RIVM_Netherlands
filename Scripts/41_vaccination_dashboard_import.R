@@ -98,7 +98,7 @@ vaccins.registerd.hops  <- as.integer(0)   #is now "hugo schatting"
 
 
 #second dose estimation
-second.dose <- as.integer((vaccins.estimated.total/100*37.6)) 
+second.dose <- as.integer((vaccins.estimated.total/100*39.5)) 
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)  # number of people with at least one dose.
 

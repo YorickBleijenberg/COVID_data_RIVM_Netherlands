@@ -177,10 +177,10 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
   geom_line( size=2 )+
   
   #  scale_y_continuous(labels = percent)+
-  scale_x_date(limits=as.Date(c("2021-06-15", NA)), date_breaks = "1 week",date_labels= format("%d %b"))+
+  scale_x_date(limits=as.Date(c("2021-05-15", NA)), date_breaks = "1 week",date_labels= format("%d %b"))+
   # limits = as.Date(c("2021-01-6", NA)))+
   
-  scale_y_continuous(limits = c(0,10), breaks=  c(0,2,4,6,8,10))+
+  scale_y_continuous(limits = c(0,15), breaks=  c(0,2,4,6,8,10,12,14))+
   
   
   #coord_cartesian(expand = FALSE)+
@@ -219,67 +219,6 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
     panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
   
   ggsave("data/plots/70_vaccinated_compare_age_clinic_abs.png",width=16, height = 9)  
-
-
-
-
-
-
-
-
-
-ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=c("MA.young.Change",
-                                                                                  "MA.three.Change",
-                                                                                  "MA.four.Change",
-                                                                                  "MA.fifty.Change",
-                                                                                  "MA.sixty.Change", 
-                                                                                  "MA.seven.Change",
-                                                                                  "MA.old80.Change"))))+
-  geom_col( size=2 )+
-  
-  #  scale_y_continuous(labels = percent)+
-  scale_x_date(limits=as.Date(c("2021-06-15", NA)), date_breaks = "1 week",date_labels= format("%d %b"))+
-  # limits = as.Date(c("2021-01-6", NA)))+
-  
-  scale_y_continuous(limits = c(0,10), breaks=  c(0,2,4,6,8,10))+
-  
-  
-  #coord_cartesian(expand = FALSE)+
-  theme_classic()+
-  xlab("")+
-  ylab("")+
-  
-  scale_color_manual( values=c("#f8766d", "#c49a00","#53b400","#00c094","#00b6eb","#a58aff","#fb61d7"), labels=c("30-","30-39", "40-49","50-59","60-69","70-79","80+"))+
-  
-  
-  #scale_fill_manual( values=c("#5c146e", "#fca50a", "darkgreen", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
-  # scale_color_brewer(palette = "RdYlBu", labels=c("50-", "50-69", "70-79","80-84", "85+" ))+
-  
-  # scale_color_manual( values=c("#1F968BFF", "#481567FF"), labels=c("besmettingen totaal", "besmettingen verpleeghuizen" ))+
-  
-  labs(title = "Opnames Kliniek naar leeftijd",
-       subtitle = "Lopend 7-daags gemiddelde, naar dag van rapportage",
-       caption = paste("Bron: NICE | Plot: @YorickB  | ",Sys.Date()))+
-  
-  theme(legend.position = "right",  #c(0.5, 0.925),
-        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid",colour ="black"),
-        legend.title = element_blank(),
-        legend.text = element_text(colour="black", size=27, face="bold"))+
-  
-  theme(
-    plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
-    panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
-    plot.title =     element_text(hjust = 0.5, size = 40, face = "bold"),
-    plot.subtitle =  element_text(hjust = 0.5, size = 20, color = "black", face = "italic"),
-    axis.text = element_text(size=20,color = "black",face = "bold"),
-    axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
-    axis.ticks.length = unit(0.5, "cm"),
-    axis.line = element_line(colour = "#DAE3F3"),
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
-  
-  ggsave("data/plots/70_vaccinated_compare_age_clinic_abs_stapel.png",width=16, height = 9)  
 
 
 

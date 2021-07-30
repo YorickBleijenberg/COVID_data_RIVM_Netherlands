@@ -22,8 +22,8 @@ get_reply_id <- function(rel_increase) {
 
 #import from LCPS website
 
-LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")  
-
+LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")  
+#LCPS_datafeed<-read.csv("C:\\Rdir\\data\\covid-19_lcpsfeed.csv", sep=",")
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 #LCPS_datafeed$week<-strftime(LCPS_datafeed$Datum,format = "%V")
 
@@ -560,7 +560,7 @@ ggplot(LCPS_datafeed_predict)+
                limits = as.Date(c("2021-06-01", "2021-08-30")))+
   
 #  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
-scale_y_continuous(limits = c(0, 80), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,20,40,60,80,200,300,400))+
+scale_y_continuous(limits = c(0, 110), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,20,40,60,80,100,300,400))+
   
   
    
@@ -665,9 +665,9 @@ ggplot(LCPS_datafeed_predict)+
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%d %b"),
 #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2021-06-01", "2021-08-30")))+
+               limits = as.Date(c("2021-05-15", "2021-08-30")))+
 #  scale_y_continuous(limits = c(0, 80), breaks = c(0,3,10,20,30,50,70))+
-   scale_y_continuous(limits = c(0, 20), breaks = c(0,5,10,15,20,50,70))+
+   scale_y_continuous(limits = c(0, 40), breaks = c(0,5,10,15,20,50,70))+
   
 #  geom_hline(yintercept=20,  size = 1)+
 #  geom_hline(yintercept=10,  size = 1)+
@@ -1147,6 +1147,22 @@ Encoding(tweet.instroom.check.tweet) <- "UTF-8"
 
 
 
+#### tweet.NICE.NEW.tweet ####
+
+tweet.NICE.NEW.tweet <- "Opnames per week - NICE"
+
+tweet.NICE.NEW.tweet <- sprintf(tweet.NICE.NEW.tweet)
+Encoding(tweet.NICE.NEW.tweet) <- "UTF-8"
+
+post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_week.png",
+                                            "data/plots/77_NICE_age_hosp_per_week_rel.png",
+                                            "data/plots/77_NICE_age_IC_per_week.png",
+                                            "data/plots/77_NICE_age_IC_per_week_rel.png" 
+), in_reply_to_status_id = get_reply_id())
+
+
+
+
 #### tweet.hospital.effect.tweet ####
 
 tweet.hospital.effect.tweet <- "Opnames"
@@ -1162,6 +1178,14 @@ Encoding(tweet.hospital.effect.tweet) <- "UTF-8"
                                                   "data/plots/16x_omt_check_week_on_week.png" 
  ), in_reply_to_status_id = get_reply_id())
 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
  
  
  

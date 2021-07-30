@@ -3,7 +3,8 @@
 
 
 ####Check LSPC update
-LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19.csv",sep=",")
+LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")
+#LCPS_datafeed<-read.csv("C:\\Rdir\\data\\covid-19_lcpsfeed.csv", sep=",")
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
 last(LCPS_datafeed,2)
@@ -30,8 +31,8 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\
 # moedig-voorwaarts
 # Niemand-had-dit-zien-aankomen
 # we-hebben-domme-dingen-gedaan-in-het-zicht-van-de-haven
-editionname <- "Welkom-terug-in-risiconiveau:-ZEER-ERNSTIG" #  De beste methode om het virus te bestrijden is het niet te hebben.a"  De-R-is-toch-in-de-maand #Reizen-tijdens-klimaat-ramp crisis-in-een-crisis
-vaccine.edition.name <- "grote-vaccinatie-update"
+editionname <- "Delta-Delta-Delta" #  De beste methode om het virus te bestrijden is het niet te hebben.a"  De-R-is-toch-in-de-maand #Reizen-tijdens-klimaat-ramp crisis-in-een-crisis
+vaccine.edition.name <- "donderdag-update"
 leeftijd             <- "2009"
 
 editienaam  <-  editionname 
@@ -150,7 +151,20 @@ source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 #source("C:\\Rdir\\Rscripts\\50_vaccine_in_storage_seperate.R")
 
  
- 
+#### tweet.NICE.NEW.tweet ####
+
+tweet.NICE.NEW.tweet <- "Opnames per week - NICE"
+
+tweet.NICE.NEW.tweet <- sprintf(tweet.NICE.NEW.tweet)
+Encoding(tweet.NICE.NEW.tweet) <- "UTF-8"
+
+post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_week.png",
+                                            "data/plots/77_NICE_age_hosp_per_week_rel.png",
+                                            "data/plots/77_NICE_age_IC_per_week.png",
+                                            "data/plots/77_NICE_age_IC_per_week_rel.png" 
+), in_reply_to_status_id = get_reply_id())
+
+
  
  
  

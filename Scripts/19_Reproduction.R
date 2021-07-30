@@ -29,27 +29,27 @@ persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14",
                                     "2020-11-04", "2020-11-18", "2020-12-14",
                                     "2021-01-23", "2021-02-08", "2021-03-03",
                                     "2021-03-31", "2021-04-28", "2021-05-11",
-                                    "2021-06-05", "2021-06-26")), 
+                                    "2021-06-05", "2021-06-26", "2021-07-09")), 
                      event=c("|Kroeg uurtje eerder dicht", "|We gaan voor\nR=0,9","|Semi-lockdown\n(0.75-0.99)",
                              "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring","| lockdown, R=0.8",
                              "| Avondklok & \nbezoekbeperking", "| Basisscholen open", "| Kappers open",
                              "| Avondklok 22u", "| Stap 1", "| stap 2",
-                             "| Stap 3 - einde lockdown", "| Stap 4&5"),
+                             "| Stap 3 - einde lockdown", "| Stap 4&5", "| Extra \n maatregelen"),
                      
                      yas=c(2, 1.6, 1.4, 1.1,1.6,1.1,1.5, 1.4, 1.3, 1.1, 1.5, 1.3,
-                           1.2,1.5)) 
+                           1.2,1.5, 2)) 
 
 persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14",
                                           "2020-11-04", "2020-11-18", "2020-12-14",
                                           "2021-01-25", "2021-02-08", "2021-03-03",
                                           "2021-03-31", "2021-04-28", "2021-05-11",
-                                          "2021-06-05", "2021-06-26")),
+                                          "2021-06-05", "2021-06-26", "2021-07-09")),
                            
                            event=c("19 Sep", "29 Sep", "14 Okt",
                                    "5 Nov" , "18 Nov", "14 Dec",
                                    "23 Jan", "8 Feb" , "3 Maa" ,
                                    "31 Maa", "28 Apr", "11 May",
-                                   "5 jun", "26 jun"))
+                                   "5 jun", "26 jun", "9 jul"))
 
 #r.estimate.df = data.frame(date_start=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04")), 
 #                           date_end=as.Date(c("2020-11-17", "2020-10-14", "2020-11-17", "2020-11-17"))
@@ -86,7 +86,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, RIVM model 20 juli",
+  labs(title = "Reproductiegetal, RIVM model 30 juli",
        #subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
