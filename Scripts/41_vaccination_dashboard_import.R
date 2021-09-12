@@ -1,5 +1,6 @@
 
 
+
 get_reply_id <- function(rel_increase) {
   my_timeline <- get_timeline(rtweet:::home_user()) ## Pull my own tweets
   reply_id <- my_timeline$status_id[1] ## Status ID for reply
@@ -98,7 +99,7 @@ vaccins.registerd.hops  <- as.integer(0)   #is now "hugo schatting"
 
 
 #second dose estimation
-second.dose <- as.integer((vaccins.estimated.total/100*39.5)) 
+second.dose <- as.integer((vaccins.estimated.total/100*45.2)) 
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)  # number of people with at least one dose.
 
@@ -107,6 +108,10 @@ janssen.given <- (janssen.given %>% filter(date == today-1 ))
 janssen.given <- janssen.given$janssen.given
 
 people.fully.vaccinated <- second.dose + janssen.given      # number with 2 doses OR 1x Janssen
+
+people.fully.NOT.vaccinated = 17500000-people.fully.vaccinated
+
+people.fully.NOT.vaccinated.short = round(people.fully.NOT.vaccinated/1000000, 1)
 
 people.vaccinated.short = round(people.vaccinated/1000000, 1)
 people.fully.vaccinated.short = round(people.fully.vaccinated/1000000, 1)
@@ -198,10 +203,10 @@ ggplot(new.vacc.df.work.long)+
   geom_line( aes(x=date, y=MAnew_lead), color = "#f5f5f5", size = 4)+
   geom_line( aes(x=date, y=MAnew_lead), color = "black", size = 2)+  
   
-  scale_x_date(date_breaks = "1 weeks", 
+  scale_x_date(date_breaks = "4 weeks", 
                date_labels= format("%d/%m"),
                limits = as.Date(c("2021-01-6", NA)))+
-  scale_y_continuous(limits = c(NA, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
+  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
   
   #coord_cartesian(expand = FALSE)+
   theme_classic()+
@@ -273,7 +278,7 @@ ggplot(new.vacc.df.work, aes(x=weekbegin, y=new , fill = factor(week_day, levels
   
   geom_bar(stat='identity', color="black")+
   
-  scale_y_continuous(limits = c(NA, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
+  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+  #breaks = c(2500, 5000, 7500,10000,12500,15000),
   
   scale_fill_viridis_d() +
   
@@ -436,7 +441,7 @@ ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  factor(key, le
   #             date_labels= format("%d/%m"),
   #             limits = as.Date(c("2021-01-6", "2021-02-08")))+
   
-  scale_y_continuous(limits = c(NA, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   scale_fill_manual( values=c("#d7191c", "#2c7bb6",  "#fdae61","#8a9296"), labels=c ("ziekenhuizen/zorginstellingen","huisartsen", "GGD'en","Hugo correctie"))+
   
@@ -521,6 +526,8 @@ ggplot(new.vacc.df.work.long , aes(x=weekbegin, y=value , fill =  factor(key, le
 start.vaccination.nl = as.Date(c("2021-01-06"))
 days.vaccination.in.nl = as.numeric(Sys.Date() - start.vaccination.nl+1)
 
+not.ful.vac.perc <-  round((people.fully.NOT.vaccinated/17474693*100), digits =1)
+not.ful.vac.perc <- format(not.ful.vac.perc, scientific=F)
 
 vac.perc <-  round((people.vaccinated/17474693*100), digits =1)
 vac.perc <- format(vac.perc, scientific=F)
@@ -538,7 +545,7 @@ vac.perc.12.second <- format(vac.perc.12.second, scientific=F)
 
 
 spillage <- as.integer(long.est/99)*1
-bescas  <- 380000
+bescas  <- 400000
 suriname <- 90000+60000+100000+ 150000 +500000   #3x suriname  #1x Kaapverdie # 1x covax
 in.freezer <- freezer-long.est-spillage-bescas-suriname
 
@@ -595,7 +602,6 @@ Totaal (geschat):
 
 7-daags gemiddelde: +%s per dag.
 
-Aan de beurt bij de GGD: %s.
 coronabeeld.nl"  
 
 # Schattingen:
@@ -603,14 +609,15 @@ coronabeeld.nl"
 # 2e prik: %s
 
 #Leeftijd aan de beurt: %s (%s/%s en ouder)
+# Aan de beurt bij de GGD: %s
 
 tweet.vaccination.start.tweet <- sprintf(tweet.vaccination.start.tweet,
                                          emoji_syringe, days.vaccination.in.nl, vaccine.edition.name,#emoji_syringe,
                                          estimated.new.today,dagRecordVaccination,
                                          vaccins.estimated.total,
                                          #vaccins.reported.total,reported.new.today,
-                                         s_dayMA_tot,
-                                         leeftijd
+                                         s_dayMA_tot #,
+                                       #  leeftijd
                                          
 )
 
@@ -743,7 +750,8 @@ Encoding(tweet.vaccination.storage.tweet) <- "UTF-8"
 
 freezer      <-  format(freezer ,big.mark = ".", decimal.mark = ",")
 in.freezer   <-  format(in.freezer ,big.mark = ".", decimal.mark = ",")
-people.fully.vaccinated   <-  format(people.fully.vaccinated ,big.mark = ".", decimal.mark = ",")
+people.fully.vaccinated   <-   format(people.fully.vaccinated ,big.mark = ".", decimal.mark = ",")
+people.fully.NOT.vaccinated <- format(people.fully.NOT.vaccinated ,big.mark = ".", decimal.mark = ",")
 
 
 

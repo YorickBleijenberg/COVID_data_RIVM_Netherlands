@@ -17,6 +17,7 @@ ic_intake <- ic_intake %>%
   mutate(IC_MA7 = rollapply(sum, 7, mean, fill = NA, align = "right"))
 ic_intake$IC_MA7 = round(ic_intake$IC_MA7, 1)
 
+intake.total <- ic_intake
 
 ic_intake <- ic_intake[ic_intake$date>"2021-01-01"&ic_intake$date<=today-3,]
 
@@ -37,6 +38,22 @@ zkh_new <- zkh_new %>%
   mutate(zkh_MA7 = rollapply(sum, 7, mean, fill = NA, align = "right"))
 zkh_new$zkh_MA7 = round(zkh_new$zkh_MA7, 1)
 
+#combi intake year
+intake.total$sum_ic <-intake.total$sum
+zkh_new.work <-zkh_new
+zkh_new.work$sum_zkh <- zkh_new.work$sum
+instroom.combi.year = merge(intake.total,zkh_new.work, by="date")
+
+instroom.combi.year <- instroom.combi.year[,-c(2:5,7:10),]
+
+today <- Sys.Date()
+
+File_date_674 <- paste0("data/",today,"/",today,"_nice_instroom.csv")
+write.csv2(instroom.combi.year, File_date_674, row.names=FALSE) 
+
+
+
+#further
 zkh_new <- zkh_new[zkh_new$date>"2021-01-01"&zkh_new$date<=today-3,]
 
 instroom.combi = merge(zkh_new,ic_intake, by="date")

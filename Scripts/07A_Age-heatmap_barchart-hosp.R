@@ -33,7 +33,7 @@ geom_tile(size=1.5,color="#E4ECFC")+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Opnames in het ziekenhuis",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 29 & 30 kunnen nog (sterk) stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 35 & 36 kunnen nog (sterk) stijgen",fill=NULL,
        caption = paste("Bron data: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -60,7 +60,7 @@ ggplot(casus.working,aes(weekbegin,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Hospitalization",
-       subtitle = "Number of cases within each agegroup. Week 29 & 30 will still rise.",fill=NULL,
+       subtitle = "Number of cases within each agegroup. Week 35 & 36 will still rise.",fill=NULL,
        caption = paste("Source: RIVM  | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#E4ECFC"),
         panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
@@ -136,7 +136,7 @@ ggplot(df_today_bind,aes(weekOfDead.4,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Overleden aan COVID-19",
-       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 29 & 30 kunnen nog sterk stijgen",fill=NULL,
+       subtitle = "Absolute getallen, binnen de leeftijdsgroep. Week 35 & 36 kunnen nog sterk stijgen",fill=NULL,
        caption = paste("Bron data: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),
@@ -166,7 +166,7 @@ ggplot(df_today_bind,aes(weekOfDead.4,Agegroup,fill=n))+
   ylab("")+
   theme(legend.position = "none")+
   labs(title = "Deceased COVID-19",
-       subtitle = "Number of deaths, within each agegroup. Week 29 & 30 will still rise.",fill=NULL,
+       subtitle = "Number of deaths, within each agegroup. Week 35 & 36 will still rise.",fill=NULL,
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(plot.background = element_rect(fill = "#FDE3E3"),
         panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),

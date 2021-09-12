@@ -208,6 +208,7 @@ last.26.hosp.risk.working$sumRIVM <- last.26.hosp.risk.working$`20-CDelta`+
 # last.26.hosp.risk.working$sumVaceffect.delay7 <- last.26.hosp.risk.sum.Std$date+7
 
 last.26.hosp.risk.working$date.delay7 <- last.26.hosp.risk.working$date+7
+last.26.hosp.risk.working$date.delay13 <- last.26.hosp.risk.working$date+10
 
 last.26.hosp.risk.working.age <- last.26.hosp.risk.working
 
@@ -244,8 +245,12 @@ ggplot(LCPS_datafeed_predict)+
   geom_point(data=last.26.hosp.risk.working, aes(x=date.delay7, y = sumSanqDeltaVac, color = 'sumSanqDeltaVac'))+   
   
   
-  geom_smooth(data=last.26.hosp.risk.working, aes(x=date.delay7, y = sumNoVac, color = 'sumNoVac'))+
-  geom_smooth(data=last.26.hosp.risk.working, aes(x=date.delay7, y = sumNoVacDelta, color = 'sumNoVacDelta'))+
+  geom_smooth(data=last.26.hosp.risk.working, aes(x=date.delay13, y = sumSanqDeltaVac, color = 'sumSanqDeltaVac'))+
+
+  
+  
+ # geom_smooth(data=last.26.hosp.risk.working, aes(x=date.delay7, y = sumNoVac, color = 'sumNoVac'))+
+ # geom_smooth(data=last.26.hosp.risk.working, aes(x=date.delay7, y = sumNoVacDelta, color = 'sumNoVacDelta'))+
   
   geom_smooth(data=last.26.hosp.risk.working, aes(x=date.delay7, y = sumRawFactor, color = 'sumRawFactor'))+
   
@@ -279,7 +284,7 @@ ggplot(LCPS_datafeed_predict)+
                date_labels= format("%d %b"),
                name="",
                #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2021-05-20", "2021-08-05")))+
+               limits = as.Date(c("2021-05-20", NA)))+
   
   #  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
   scale_y_continuous(limits = c(0, 175), labels = label_comma(big.mark = ".", decimal.mark = ","))+ # , breaks = c(0,25,50,75,100,125,150,175,200))+

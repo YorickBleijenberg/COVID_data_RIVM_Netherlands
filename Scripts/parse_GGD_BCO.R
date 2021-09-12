@@ -12,7 +12,7 @@ library(ggforce)
 
 weeknumber <- isoweek(Sys.Date())-1
 
-report<-"C:\\Rdir\\rivm-week\\2021-29-COVID-19_WebSite_rapport_wekelijks_20210727_1152_final.pdf"
+report<-"C:\\Rdir\\rivm-week\\2021-36-COVID-19_WebSite_rapport_wekelijks_20210907_1122_final.pdf"
 
 
 # report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
@@ -66,7 +66,7 @@ bco_no.setting <- (ggd_bco1$aantal.this.week[2]+ggd_bco1$aantal.this.week[3]+ggd
 bco.setting.perc <- 1-(bco_no.setting/bco_tot)
 
 
-ggd_bco3 <- ggd_bco2[-c(2, 4,19), ]
+ggd_bco3 <- ggd_bco2[-c(2, 4,22), ]
 sum.bco3 <- (sum(ggd_bco3$perc.this.week)/100)
 
 ggd_bco3$percentage.relative <-   (ggd_bco3$aantal.this.week/bco_yes.setting/sum.bco3)
@@ -155,3 +155,4 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
   
 ggsave("data/plots/86_setting_gg_week.png", width=16, height = 9)
 ggsave(plot.save.path ,width=16, height = 9)
+

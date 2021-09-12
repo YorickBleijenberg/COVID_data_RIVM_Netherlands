@@ -73,7 +73,12 @@ number_new_city <- number_new_city[number_new_city$Date>"2020-07-01"&number_new_
 ggplot(data = number_new_city, ) + 
   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
-  facet_wrap(~ City,  scales = "free_y")+
+ 
+   facet_wrap(~ City,  scales = "free_y")+
+  
+  scale_x_date(date_breaks = "3 month", 
+               date_labels= format("%b"))+
+  
   theme_bw() + 
   xlab("")+ 
   ylab("")+
@@ -106,7 +111,12 @@ ggsave("data/18_city_new.png",width=16, height = 9)
 ggplot(data = number_new_city, ) + 
   geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
-  facet_wrap(~ City,  scales = "free_y")+
+ 
+   facet_wrap(~ City,  scales = "free_y")+
+  
+  scale_x_date(date_breaks = "3 month", 
+               date_labels= format("%b"))+
+  
   theme_bw() + 
   xlab("")+ 
   ylab("")+

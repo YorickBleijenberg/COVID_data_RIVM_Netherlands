@@ -10,7 +10,7 @@ library(ggforce)
 ####
 
 
-olympic.report<-"https://gtimg.tokyo2020.org/image/upload/production/zcf7dlrn4edbleqtfwit.pdf"
+olympic.report<-"https://gtimg.tokyo2020.org/image/upload/production/f1hb0dii9g3d4eet4aj5.pdf"
 
 
 #### page 1 ####
@@ -225,11 +225,11 @@ ggsave("data/plots/00_olympics.png",width=16, height = 9)
 
 #### page last ####
 area.olyimpics.table.total <- locate_areas(olympic.report,
-                                           pages=c(9))
+                                           pages=c(17))
 
 olyimpics.table <- extract_tables(olympic.report,
                                   output = "data.frame",
-                                  pages = c(9),
+                                  pages = c(17),
                                   area = area.olyimpics.table.total,
                                   guess=FALSE)
 

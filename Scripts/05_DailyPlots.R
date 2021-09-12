@@ -296,7 +296,7 @@ ggsave("data/13_EN_new_deceased.png",width=16, height = 9)
 
 
 daily.numbers.filename <- paste0("data/plots/",format(Sys.Date(), "%Y-%m-%d"), "_daily_numbers.csv")
-write.csv(Merged_data_7MA, file = daily.numbers.filename, row.names = F)
+write.csv2(Merged_data_7MA, file = daily.numbers.filename, row.names = F)
 
 
 #### doubling check cases ####

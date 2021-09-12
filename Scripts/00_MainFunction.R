@@ -2,6 +2,7 @@
 
 
 
+
 ####Check LSPC update
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")
 #LCPS_datafeed<-read.csv("C:\\Rdir\\data\\covid-19_lcpsfeed.csv", sep=",")
@@ -26,13 +27,13 @@ library(lubridate)
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
 source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
 
-
 #### some constants for the update ####
 # moedig-voorwaarts
 # Niemand-had-dit-zien-aankomen
 # we-hebben-domme-dingen-gedaan-in-het-zicht-van-de-haven
-editionname <- "Delta-Delta-Delta" #  De beste methode om het virus te bestrijden is het niet te hebben.a"  De-R-is-toch-in-de-maand #Reizen-tijdens-klimaat-ramp crisis-in-een-crisis
-vaccine.edition.name <- "donderdag-update"
+# ik-kan-de-weggegooide-vaccins-niet-zien-dus-projecteer-ik-mijn-boosheid-op-Hugo
+editionname <- "waar-was-jij-2-decennia-geleden?"
+vaccine.edition.name <- "einde-van-de-zomer"
 leeftijd             <- "2009"
 
 editienaam  <-  editionname 
@@ -49,6 +50,7 @@ source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
 source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
+
 
 ###
 ###
@@ -142,7 +144,7 @@ source("C:\\Rdir\\Rscripts\\21_ECDC.R")
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
-
+source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 
 
 
@@ -165,24 +167,6 @@ post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_wee
 ), in_reply_to_status_id = get_reply_id())
 
 
- 
- 
- 
- #### tweet.hospital.effect.tweet ####
- 
- tweet.hospital.effect.tweet <- "Opnames"
- 
- tweet.hospital.effect.tweet <- sprintf(tweet.hospital.effect.tweet)
- Encoding(tweet.hospital.effect.tweet) <- "UTF-8"
- 
- post_tweet(tweet.hospital.effect.tweet,  media = c("data/plots/70_vaccinated_compare_age_clinic_abs.png",
-                                                    "data/plots/16x_omt_check_nice_peak.png",
-                                                    # "data/plots/70_vaccinated_compare_age_clinic.png",
-                                                    "data/plots/71_vaccinated_compare_age_ICU_abs.png",
-                                                    # "data/plots/71_vaccinated_compare_age_IC.png"
-                                                    "data/plots/16x_omt_check_week_on_week.png" 
- ), in_reply_to_status_id = get_reply_id())
- 
  
  
  
@@ -229,7 +213,8 @@ post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_wee
  
  vac.perc.18
  vac.perc.18.second
- 
+ vac.perc.12
+ vac.perc.12.second
  
  #vac.perc.second <- 48.5
  
@@ -254,6 +239,10 @@ post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_wee
  - 1e prikken: %s miljoen
  - Volledig gevaccineerd: %s miljoen
  
+Niet tegen Delta beschermd:
+- %s miljoen
+- %s%s
+ 
 "
  
  tweet.percentages.tweet <- sprintf(  tweet.percentages.tweet,
@@ -267,7 +256,10 @@ post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_wee
                                       vac.perc.second,    deP,
                                       
                                       people.vaccinated.short,
-                                      people.fully.vaccinated.short
+                                      people.fully.vaccinated.short,
+                                      
+                                      people.fully.NOT.vaccinated.short,
+                                      not.ful.vac.perc,    deP
  )
  
  Encoding(tweet.percentages.tweet) <- "UTF-8"

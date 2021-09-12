@@ -53,7 +53,7 @@ ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week
   
   geom_bar(stat='identity')+
   
-  scale_x_date( limits = c(as.Date("2020-07-02"), NA), breaks = "week",  labels = date_format("%V"))+
+  scale_x_date( limits = c(as.Date("2020-07-02"), NA), breaks = "2 week",  labels = date_format("%V"))+
  # coord_cartesian(expand = FALSE)+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   

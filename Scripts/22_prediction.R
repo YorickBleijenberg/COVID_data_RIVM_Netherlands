@@ -99,7 +99,7 @@ df.predict.lead.kerst$fixedDate <- today+df.predict.lead.kerst$NumDays-11
 ### import daling and set emojis  #####
 
 df.daling.4 <- read.csv("C:\\Rdir\\data-contstant\\daling-2.csv" ,sep=";")
-colnames(df.daling.4) = c("Datum", "r7", "r8","r9", "r10", "r12", "r14", "r16", "r21", "r28","r18", "r15","r105","r_12_4", "r_26_3")
+colnames(df.daling.4) = c("Datum", "r7", "r8","r9", "r10", "r12", "r14", "r16", "r21", "r28","r18", "r15","r105","r_12_4", "r_26_3", "r_wvl")
 df.daling.4$Datum <- as.Date(df.daling.4$Datum)
 
 emoji_kerst <- intToUtf8(0x1F384)
@@ -136,6 +136,7 @@ Encoding(verkiezingen) <- "UTF-8"
 sint.persco.df =data.frame(date=as.Date(c("2021-04-13")),event=c(sint.persco))
  
 kerst.df=data.frame(date=as.Date(c("2020-12-25")),event=c(kerst))
+kerst.df.2021=data.frame(date=as.Date(c("2021-12-25")),event=c(kerst))
  
  carnaval.df=data.frame(date=as.Date(c("2021-02-14", "2021-02-16")),event=c(" ", carnaval))
  
@@ -150,17 +151,23 @@ kerst.df=data.frame(date=as.Date(c("2020-12-25")),event=c(kerst))
  stap.twee.old.df=data.frame(date=as.Date(c("2021-05-11")),event=c("Stap 2 - weer naar buiten!"))
  stap.twee.df=data.frame(date=as.Date(c("2021-05-19")),event=c("Stap 2"))
  stap.drie.df=data.frame(date=as.Date(c("2021-06-05")),event=c("Stap 3 - einde lockdown"))
-
+ independence.day.df=data.frame(date=as.Date(c("2021-07-04")),event=c("Independence Day"))
+ 
+ 
  stap.vier.df=data.frame(date=as.Date(c("2021-06-26")),event=c("Stap 4 & 5 "))
- stap.vier.old.df=data.frame(date=as.Date(c("2021-06-30")),event=c("Stap 4 & 5 "))
+ stap.vier.old.df=data.frame(date=as.Date(c("2021-06-30")),event=c("Stap 4"))
  
  stap.vijf.df=data.frame(date=as.Date(c("2021-07-21")),event=c("Stap 5 - max 8 mensen thuis"))
 
  stap.zes.old.df=data.frame(date=as.Date(c("2021-09-01")),event=c("Stap 6"))
- stap.zes.df=data.frame(date=as.Date(c("2021-08-14")),event=c("Stap 6 - terug naar normaal"))
  
- independence.day.df=data.frame(date=as.Date(c("2021-07-04")),event=c("Independence Day"))
+ stap.acht.df=data.frame(date=as.Date(c("2021-08-30")),event=c("Stap 6a - geen 1,5m in het onderwijs "))
+ stap.zes.df=data.frame(date=as.Date(c("2021-09-20")),event=c("Stap 6b - geen 1,5m meer "))
+ stap.zeven.df=data.frame(date=as.Date(c("2021-11-01")),event=c("Stap 6c - terug naar normaal "))
 
+ 
+  
+ 
  
  
  
@@ -195,7 +202,7 @@ if (doublingdayZ.1<0){
 
 #title.kerst <- paste("De 'kunnen we Independence Day vieren?' grafiek")
 
-title.kerst <- paste("De Yorick-mompelt-iets-over-de-Y-as grafiek")
+title.kerst <- paste("De de-datums-zijn-geen-beloftes grafiek")
 
 
 
@@ -224,15 +231,15 @@ ggplot(Merged_data_short)+
   ### stoplicht
  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-07-08"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.6)+
  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-07-06"), ymin =2500, ymax = 6250, color = "black",fill = "orange", alpha = 0.5)+
- annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-09-15"), ymin =875, ymax = 2500, color = "black",fill = "yellow", alpha = 0.4)+
- annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-09-15"), ymin =0, ymax = 875, color = "black",fill = "green", alpha = 0.3)+ 
+ annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =875, ymax = 2500, color = "black",fill = "yellow", alpha = 0.4)+
+ annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =0, ymax = 875, color = "black",fill = "green", alpha = 0.3)+ 
   
   
   
   ### ECDC kleur
-  annotate("rect", xmin = as.Date("2021-07-08"), xmax =as.Date("2021-09-15"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.7)+ 
-  annotate("rect", xmin = as.Date("2021-07-06"), xmax =as.Date("2021-09-15"), ymin =2500, ymax = 6250, color = "black",fill = "red", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-06-20"), xmax =as.Date("2021-09-15"), ymin =0, ymax = 625, color = "black",fill = "green", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-07-08"), xmax =as.Date("2021-11-25"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.7)+ 
+  annotate("rect", xmin = as.Date("2021-07-06"), xmax =as.Date("2021-11-25"), ymin =2500, ymax = 6250, color = "black",fill = "red", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-06-20"), xmax =as.Date("2021-11-25"), ymin =0, ymax = 625, color = "black",fill = "green", alpha = 0.3)+ 
   
   geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
   scale_fill_manual(values=c("black"))+
@@ -252,26 +259,26 @@ ggplot(Merged_data_short)+
   annotate("text", x = as.Date("2021-06-01"), y = 1650, label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="left")+
   annotate("text", x = as.Date("2021-06-01"), y = 350,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="left")+
   
-  annotate("text", x = as.Date("2021-09-14"), y = 7500, label = "ECDC donkerrood", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 4375, label = "ECDC rood", size=10,color = "black",face = "bold", hjust ="right")+  #5000
-
+  #annotate("text", x = as.Date("2021-11-24"), y = 7500, label = " donkerrood", size=10,color = "black",face = "bold", hjust ="right")+
+  #annotate("text", x = as.Date("2021-11-24"), y = 4375, label = " rood", size=10,color = "black",face = "bold", hjust ="right")+  #5000
+  #annotate("text", x = as.Date("2021-11-24"), y = 1750, label = " oranje", size=10,color = "black",face = "bold", hjust ="right")+  
+  #annotate("text", x = as.Date("2021-11-24"), y = 300,  label = " groen",  size=9,color  = "black",face = "bold", hjust ="right")+
   
   
-  
-  annotate("text", x = as.Date("2021-09-14"), y = 6350, label = "250/100K/week - 6250", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 2600, label = "100/100K/week - 2500", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 975, label = "35/100K/week - 875", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 525, label = "50/100K/ 2 weken - 625", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 6350, label = "250/100K/week - 6250", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 2600, label = "100/100K/week - 2500", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 975, label = "35/100K/week - 875", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 525, label = "50/100K/ 2 weken - 625", size=3,color = "black",face = "bold", hjust ="right")+
   
   
   
   
   
    ## ECDC
-  annotate("text", x = as.Date("2021-09-14"), y = 300,  label = "ECDC niveau 'groen'", size=9,color = "black",face = "bold", hjust ="right")+
-  annotate("curve", x = as.Date("2021-03-20"), xend =as.Date("2021-03-25"), 
-           y = 800, yend = 625, curvature = -0.2,
-           colour = "black", size=2, alpha=0.8, arrow =arrow(type = "closed",length = unit(2,"mm")))+
+
+  #annotate("curve", x = as.Date("2021-03-20"), xend =as.Date("2021-03-25"), 
+  #         y = 800, yend = 625, curvature = -0.2,
+   #        colour = "black", size=2, alpha=0.8, arrow =arrow(type = "closed",length = unit(2,"mm")))+
   
    ## prediction lines
 ####  geom_line(data=df.daling.4, aes(x=Datum, y=r7), size = 1.25, color = "black")+
@@ -282,8 +289,10 @@ ggplot(Merged_data_short)+
 ###geom_line(data=df.daling.4, aes(x=Datum, y=r14), size = 1.25, color = "lightgray", linetype = "dashed" )+
   # geom_line(data=df.daling.4, aes(x=Datum, y=r16))+
 ####  geom_line(data=df.daling.4, aes(x=Datum, y=r18))+     #waakzaam met kerst
- # geom_line(data=df.daling.4, aes(x=Datum, y=r15))+
-  # geom_line(data=df.daling.4, aes(x=Datum, y=r105))+    # ECDC groen met kerst
+ 
+# geom_line(data=df.daling.4, aes(x=Datum, y=r_wvl) , size = 1.25, color = "black", linetype = "dashed" )+
+
+    # geom_line(data=df.daling.4, aes(x=Datum, y=r105))+    # ECDC groen met kerst
 #####  geom_line(data=df.daling.4, aes(x=Datum, y=r21), size = 1.25, color = "black")+
 ########geom_line(data=df.daling.4, aes(x=Datum, y=r28), size = 1.25, color = "gray", linetype = "dashed" )+
 
@@ -380,12 +389,17 @@ ggplot(Merged_data_short)+
   geom_vline(data=stap.vijf.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.2)+
   geom_text(data=stap.vijf.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.2)+
   
-  geom_vline(data=stap.zes.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black", alpha = 0.2)+
-  geom_text(data=stap.zes.old.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.2)+
+#  geom_vline(data=stap.zes.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black", alpha = 0.2)+
+#  geom_text(data=stap.zes.old.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.2)+
   
   geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
   geom_text(data=stap.zes.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
+  geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+  geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   
   
@@ -415,7 +429,7 @@ ggplot(Merged_data_short)+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2021-06-01", "2021-09-15")))+
+               limits = as.Date(c("2021-06-01", "2021-11-25")))+
   
   labs(title = title.kerst,
          subtitle = "met 14-daags voortschrijdend gemiddelde",
@@ -513,22 +527,29 @@ geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed",
   geom_text(data=stap.twee.df  , mapping=aes(x=date, y=6950, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
   
   geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
-  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=3400, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
+  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
   
   geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
-  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=3400, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
+  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
   
   geom_vline(data=stap.vier.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white", alpha = 0.2)+
-  geom_text(data=stap.vier.old.df  , mapping=aes(x=date, y=3400, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.2)+
+  geom_text(data=stap.vier.old.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.2)+
   
   geom_vline(data=stap.vijf.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "white", alpha = 0.2)+
-  geom_text(data=stap.vijf.df  , mapping=aes(x=date, y=3400, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.2)+
+  geom_text(data=stap.vijf.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.2)+
   
-  geom_vline(data=stap.zes.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white", alpha = 0.2)+
-  geom_text(data=stap.zes.old.df  , mapping=aes(x=date, y=3400, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.2)+
+ # geom_vline(data=stap.zes.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white", alpha = 0.2)+
+ # geom_text(data=stap.zes.old.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white", alpha = 0.2)+
   
   geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
-  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=3400, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
+  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
+  
+  geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
+  geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
+  
+  geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "white")+
+  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=9750, label=event), size=7, angle=-90, vjust=-0.4, hjust=0, color= "white")+
+  
   
   
 theme_classic()+

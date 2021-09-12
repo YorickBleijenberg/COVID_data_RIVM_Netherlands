@@ -167,7 +167,7 @@ ggplot(casus.age.dif.play)+
   annotate("text", x = as.Date(dag.label), y = label.eight.label, label = "- 80-89" ,  size=5, face = "bold", color = "#404788FF")+
   annotate("text", x = as.Date(dag.label), y = label.nine.label, label = "- 90+"   ,  size=5, face = "bold", color = "#440154FF")+
   
-  scale_y_continuous(limits = c(0, 1),labels = percent)+
+  scale_y_continuous(limits = c(0, 1.3),labels = percent)+
   scale_x_date(date_breaks  = "1 months",date_labels= format("%b"),
                     limits  = as.Date(c("2020-10-01", NA)))+
   

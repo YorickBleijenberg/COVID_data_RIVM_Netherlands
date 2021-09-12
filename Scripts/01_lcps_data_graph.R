@@ -111,15 +111,14 @@ lcps_working_2_long <- lcps_working_2_long[lcps_working_2_long$date>"2020-03-06"
 ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = type, fill = type))+
 
   
-  #  annotate("rect", xmin = as.Date("2021-07-01"), xmax =as.Date("2021-08-01"), ymin =200, ymax = 250, color = "black",fill = "yellow", alpha = 0.3)+ 
+    annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-11-01"), ymin =0, ymax = 100, color = "black",fill = "blue", alpha = 0.3)+ 
   #  annotate("rect", xmin = as.Date("2021-07-01"), xmax =as.Date("2021-08-01"), ymin =0, ymax = 200, color = "black",fill = "green", alpha = 0.5)+ 
   
-  #  geom_text( aes( x=as.Date("2021-07-17"), y=100, label="OMT \ndoel"),
-  #             color="black", 
-  #             size=7 , angle=0, fontface="bold")+
+    geom_text( aes( x=as.Date("2021-09-15"), y=50, label="Gommers \ndoel: 100"),
+               color="black", 
+               size=4 , angle=0, fontface="bold")+
   
-  
-  
+
         geom_bar(stat='identity')+
         
   scale_x_date(name="")+
@@ -366,7 +365,8 @@ ic.cumulative <- rjson::fromJSON(file = "https://www.stichting-nice.nl/covid-19/
 
 ic.cumulative$date <-as.Date(ic.cumulative$date)
 ic.cumulative.1 <- ic.cumulative[ic.cumulative$date < "2020-07-01"]
-ic.cumulative.2 <- ic.cumulative[ic.cumulative$date > "2020-07-01"]
+ic.cumulative.2 <- ic.cumulative[ic.cumulative$date > "2020-07-01" & ic.cumulative$date < "2021-07-02"]
+ic.cumulative.3 <- ic.cumulative[ic.cumulative$date > "2021-07-01"]
 
 first.wave.total.ic <- last(ic.cumulative.1$value)
 second.wave.total.ic <- (last(ic.cumulative.2$value)-first.wave.total.ic)
@@ -380,7 +380,8 @@ hospital.cumulative <- rjson::fromJSON(file = "https://www.stichting-nice.nl/cov
 
 hospital.cumulative$date <-as.Date(hospital.cumulative$date)
 hospital.cumulative.1 <- hospital.cumulative[hospital.cumulative$date < "2020-07-01"]
-hospital.cumulative.2 <- hospital.cumulative[hospital.cumulative$date > "2020-07-01"]
+hospital.cumulative.2 <- hospital.cumulative[hospital.cumulative$date > "2020-07-01" & hospital.cumulative$date > "2020-07-01"]
+hospital.cumulative.3 <- hospital.cumulative[hospital.cumulative$date > "2021-07-01"]
 
 first.wave.total <- last(hospital.cumulative.1$value)
 second.wave.total <- (last(hospital.cumulative.2$value)-first.wave.total)
@@ -501,7 +502,10 @@ stap.twee.df=data.frame(date=as.Date(c("2021-05-19")),event=c("Stap 2"))
 stap.drie.df=data.frame(date=as.Date(c("2021-06-05")),event=c("Stap 3 - einde lockdown"))
 stap.vier.df=data.frame(date=as.Date(c("2021-06-26")),event=c("Stap 4 & 5"))
 # stap.vijf.df=data.frame(date=as.Date(c("2021-07-21")),event=c("Stap 5 - max 8 mensen thuis"))
-stap.zes.df=data.frame(date=as.Date(c("2021-08-18")),event=c("Stap 6 - terug naar normaal"))
+stap.acht.df=data.frame(date=as.Date(c("2021-08-30")),event=c("Stap 6a - geen 1,5m in het onderwijs "))
+stap.zes.df=data.frame(date=as.Date(c("2021-09-20")),event=c("Stap 6b - geen 1,5m meer "))
+stap.zeven.df=data.frame(date=as.Date(c("2021-11-01")),event=c("Stap 6c - terug naar normaal "))
+
 
 
 tomorrow <- Sys.Date()+1
@@ -549,6 +553,13 @@ ggplot(LCPS_datafeed_predict)+
   geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
   geom_text(data=stap.zes.df  , mapping=aes(x=date, y=80, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
+  geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=80, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+  geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=80, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+  
   
    geom_line(data = LCPS_datafeed_predict, aes(x=Datum, y=MA_clin_lead), size =3, color = "#DAE3F3")+
    geom_line(data = LCPS_datafeed_predict, aes(x=Datum, y=MA_clin_lead), size =2)+
@@ -557,7 +568,7 @@ ggplot(LCPS_datafeed_predict)+
                date_labels= format("%d %b"),
                name="",
 #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2021-06-01", "2021-08-30")))+
+               limits = as.Date(c("2021-06-01", "2021-09-15")))+
   
 #  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
 scale_y_continuous(limits = c(0, 110), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,20,40,60,80,100,300,400))+
@@ -645,16 +656,22 @@ ggplot(LCPS_datafeed_predict)+
   geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=70, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
   
   geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.twee.df  , mapping=aes(x=date, y=70, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_text(data=stap.twee.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=20, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=20, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=20, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+  geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+  geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   
   
@@ -665,9 +682,9 @@ ggplot(LCPS_datafeed_predict)+
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%d %b"),
 #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2021-05-15", "2021-08-30")))+
+               limits = as.Date(c("2021-05-15", "2021-09-15")))+
 #  scale_y_continuous(limits = c(0, 80), breaks = c(0,3,10,20,30,50,70))+
-   scale_y_continuous(limits = c(0, 40), breaks = c(0,5,10,15,20,50,70))+
+   scale_y_continuous(limits = c(0, 40), breaks = c(0,5,10,15,20,25,70))+
   
 #  geom_hline(yintercept=20,  size = 1)+
 #  geom_hline(yintercept=10,  size = 1)+
