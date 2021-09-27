@@ -2,7 +2,6 @@
 
 
 
-
 ####Check LSPC update
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")
 #LCPS_datafeed<-read.csv("C:\\Rdir\\data\\covid-19_lcpsfeed.csv", sep=",")
@@ -25,19 +24,14 @@ library(scales)
 library(lubridate)
 
 source("C:\\Rdir\\Rscripts\\geom_stream.R")
-source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")  ## source("C:\\Rdir\\Rscripts\\03test_TwitterAuthentication.r")
+source("C:\\Rdir\\Rscripts\\store\\03A_TwitterAuthentication.r")
 
 #### some constants for the update ####
-# moedig-voorwaarts
-# Niemand-had-dit-zien-aankomen
-# we-hebben-domme-dingen-gedaan-in-het-zicht-van-de-haven
-# ik-kan-de-weggegooide-vaccins-niet-zien-dus-projecteer-ik-mijn-boosheid-op-Hugo
-editionname <- "waar-was-jij-2-decennia-geleden?"
-vaccine.edition.name <- "einde-van-de-zomer"
+editionname <- "stem-op-@SignaalWaarde-> https://podcastawards.nl/stem <-"  
+vaccine.edition.name <- "het-CTB-gaf-maar-kleine-boost-qua-1e-prikken"
 leeftijd             <- "2009"
 
 editienaam  <-  editionname 
-#number.in.DE <- "0"
 
 #### Start  ####
 dirname <- paste("data/",Sys.Date(),sep = "")
@@ -49,8 +43,8 @@ dir.create(dirname)
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
 source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
-source("C:\\Rdir\\Rscripts\\01_lcps_data_graph.R")
-
+source("C:\\Rdir\\Rscripts\\01_lcps_data_graph_new.R")
+# source("C:\\Rdir\\Rscripts\\68_OMT_counter.R")
 
 ###
 ###
@@ -99,7 +93,22 @@ source("C:\\Rdir\\Rscripts\\29_coronamelder.R")
 
 source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
+source("C:\\Rdir\\Rscripts\\44_vaccine_effect_care_compare.R")
 
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
+
+source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot.R")       
+source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot_abs.R")
+source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot_phd.R")
+
+source("C:\\Rdir\\Rscripts\\47_vaccine_effect_disabled.R")     
+
+source("C:\\Rdir\\Rscripts\\21_ECDC.R")
+
+source("C:\\Rdir\\Rscripts\\26_Municipality.R")
+
+source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 
 
 ###
@@ -110,49 +119,8 @@ source("C:\\Rdir\\Rscripts\\30_weekly_numbers.R")
 
 ###
 ###
-###
 
 
- ##  source("C:\\Rdir\\Rscripts\\10_EN_TwitterTread.R")
-
-
-##  source("C:\\Rdir\\Rscripts\\35_vaccinated.R")
-##  source("C:\\Rdir\\Rscripts\\43_NICE_vaccine_effect.R")
-#   source("C:\\Rdir\\Rscripts\\17_Herstvakantie-effect.R")
-#   source("C:\\Rdir\\Rscripts\\33_christmas_deaths.R")
-
-
-source("C:\\Rdir\\Rscripts\\44_vaccine_effect_care_compare.R")
-
-
-source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
-source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
-
-source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot.R")       
-source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot_phd.R")
-
-source("C:\\Rdir\\Rscripts\\47_vaccine_effect_disabled.R")     
-
-source("C:\\Rdir\\Rscripts\\21_ECDC.R")
-
-
-
-##
-##
-
-
-
-source("C:\\Rdir\\Rscripts\\26_Municipality.R")
-
-source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
-
-
-
-
-#source("C:\\Rdir\\Rscripts\\48_vaccine_in_storage.R")     
-#source("C:\\Rdir\\Rscripts\\50_vaccine_in_storage_seperate.R")
-
- 
 #### tweet.NICE.NEW.tweet ####
 
 tweet.NICE.NEW.tweet <- "Opnames per week - NICE"
@@ -216,7 +184,6 @@ post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_wee
  vac.perc.12
  vac.perc.12.second
  
- #vac.perc.second <- 48.5
  
  
  
@@ -266,6 +233,3 @@ Niet tegen Delta beschermd:
  post_tweet(tweet.percentages.tweet,  media = c("data/belgische_hokjes.png"), in_reply_to_status_id = get_reply_id())
  
  
- #  Volwassenen
- # - 1e prik: %s%s
- # - Volledig gevaccineerd: %s%s

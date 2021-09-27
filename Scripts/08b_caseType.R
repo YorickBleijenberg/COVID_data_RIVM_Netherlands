@@ -69,11 +69,11 @@ df4 <- df3
 
 dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", 
                                          "2020-11-18", "2020-12-15", "2021-01-23", "2021-02-08",  "2021-03-31",
-                                         "2021-06-26", "2021-07-09")),
+                                         "2021-06-26", "2021-07-09", "2021-08-30","2021-09-25")),
                           event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown",
                                   "verzwaring", "einde verzwaring", "lockdown", "                    avondklok",
                                  "basisscholen open", "avondklok 22:00uur",
-                                 "Alles open!", "aanscherpingen"))
+                                 "Alles open!", "aanscherpingen", "geen 1,5meter in HO", "geen 1,5 meter meer"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]
@@ -94,13 +94,11 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
 
 theme_classic()+
     xlab("")+ 
-  ylab("")+
+    ylab("")+
 
   
-
-  
-  scale_x_date(date_breaks = "4 week", 
-               date_labels= format("%d-%b"),
+  scale_x_date(date_breaks = "month", 
+               date_labels= format("%b"),
                limits = as.Date(c("2020-07-01", Sys.Date() ))
                )+
 
@@ -117,25 +115,9 @@ theme_classic()+
                                   "Positieve labuitslag (nieuw/correctie)",
                                   "Positieve labuitslag"))+
   
-  #scale_fill_manual(values=c("#548235", 
-  #                           "#C5E0B4", 
-  #                           "#203864", 
-  #                           "#B4C7E7",
-  #                           "#c55a11", 
-  #                           "#F8CBAD"), 
-  #                  labels=c(   "Eerste ziektedag (nieuw/correctie)",
-  #                              "Eerste ziektedag",
-  #                              "Positieve labuitslag (nieuw/correctie)",
-  #                              "Positieve labuitslag",
-  #                              "Melding aan GGD (nieuw/correctie)",
-  #                              "Melding aan GGD"))+
   
-  # geom_vline(xintercept = as.numeric(df4$Datum[dates_vline]),
-   #      col = "darkgray", lwd = 1, linetype= "dashed")+
-    # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
-  
-  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
-  geom_text(data=dates_vline  , mapping=aes(x=date, y=12000, label=event), size=8, angle=90, vjust=-0.4, hjust="right", alpha = 0.8)+
+  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 0.5, linetype= "dashed")+
+  geom_text(data=dates_vline  , mapping=aes(x=date, y=12000, label=event), size=5, angle=90, vjust=-0.4, hjust="right", alpha = 0.8)+
   
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
@@ -143,7 +125,7 @@ labs(title = "Besmette personen: verschil met gisteren",
     # subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown\n5 t/m 18 nov, verzwaring semi-lockdown", #  OMT: 'Een lagere R is beter'",
      caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
-   theme(legend.position = c(0.2, 0.8),
+   theme(legend.position = c(0.1, 0.4),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
@@ -180,8 +162,8 @@ ggplot(df4_short, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_d
   xlab("")+ 
   ylab("")+
   
-  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 1, linetype= "dashed")+
-  geom_text(data=dates_vline  , mapping=aes(x=date, y=2500, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
+  geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 0.5, linetype= "dashed")+
+  geom_text(data=dates_vline  , mapping=aes(x=date, y=4000, label=event), size=8, angle=90, vjust=-0.4, hjust=0)+
   
   scale_x_date(date_breaks = "14 day", 
                date_labels= format("%d-%b"),
@@ -208,7 +190,7 @@ ggplot(df4_short, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_d
       # subtitle = "P",
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
-  theme(legend.position = c(0.2, 0.8),
+  theme(legend.position = c(0.6, 0.8),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
@@ -287,8 +269,8 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
   theme_classic()+
   xlab("")+ 
   ylab("")+
-    scale_x_date(date_breaks = "2 week", 
-               date_labels= format("%d-%b"),
+    scale_x_date(date_breaks = "month", 
+               date_labels= format("%b"),
                limits = as.Date(c("2020-07-01", Sys.Date() ))
   )+
   
@@ -300,14 +282,14 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
                                 "Melding aan GGD (nieuw/correctie)",
                                 "Melding aan GGD"))+
   
-    geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),
-             col = "darkgray", lwd = 0.5, linetype= "dashed")+
+ #   geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),
+#             col = "darkgray", lwd = 0.5, linetype= "dashed")+
     # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
     labs(title = "Besmette personen: verschil met gisteren",
        subtitle = "Maandagen", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
-  theme(legend.position = c(0.2, 0.8),
+  theme(legend.position = c(0.6, 0.8),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+

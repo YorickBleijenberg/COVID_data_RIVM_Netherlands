@@ -177,7 +177,7 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
   geom_line( size=2 )+
   
   #  scale_y_continuous(labels = percent)+
-  scale_x_date(limits=as.Date(c("2021-05-15", NA)), date_breaks = "1 week",date_labels= format("%d %b"))+
+  scale_x_date(limits=as.Date(c("2021-05-15", NA)), date_breaks = "month",date_labels= format("%b"))+
   # limits = as.Date(c("2021-01-6", NA)))+
   
   scale_y_continuous(limits = c(0,15), breaks=  c(0,2,4,6,8,10,12,14))+

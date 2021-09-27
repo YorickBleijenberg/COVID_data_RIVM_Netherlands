@@ -229,46 +229,40 @@ ggplot(Merged_data_short)+
   
 
   ### stoplicht
- annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-07-08"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.6)+
- annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-07-06"), ymin =2500, ymax = 6250, color = "black",fill = "orange", alpha = 0.5)+
- annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =875, ymax = 2500, color = "black",fill = "yellow", alpha = 0.4)+
- annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =0, ymax = 875, color = "black",fill = "green", alpha = 0.3)+ 
+ #annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-07-08"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.6)+
+ #annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-07-06"), ymin =2500, ymax = 6250, color = "black",fill = "orange", alpha = 0.5)+
+ #annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =0, ymax = 875, color = "black",fill = "green", alpha = 0.3)+ 
   
   
+
+# 500 - 6250
+# 200 - 2500
+#  75 -  938
+#  50 -  625
+
   
   ### ECDC kleur
-  annotate("rect", xmin = as.Date("2021-07-08"), xmax =as.Date("2021-11-25"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.7)+ 
-  annotate("rect", xmin = as.Date("2021-07-06"), xmax =as.Date("2021-11-25"), ymin =2500, ymax = 6250, color = "black",fill = "red", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-06-20"), xmax =as.Date("2021-11-25"), ymin =0, ymax = 625, color = "black",fill = "green", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =6250, ymax = Inf, color = "black",fill = "red", alpha = 0.7)+ 
+  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =2500, ymax = 6250, color = "black",fill = "red", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =625, ymax = 2500, color = "black",fill = "yellow", alpha = 0.4)+
+  #annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =625, ymax = 938, color = "black",fill = "green", alpha = 0.3)+
+  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-25"), ymin =0, ymax = 625, color = "black",fill = "green", alpha = 0.5)+ 
+  
   
   geom_bar(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+     #, color = "#96afde"
   scale_fill_manual(values=c("black"))+
   
   
-   
-  ### routekaart kleuren ###
- # annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2020-12-31"), ymin =6250, ymax = Inf, color = "black",fill = "#68032F", alpha = 1)+
- # annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2020-12-31"), ymin =3750, ymax = 6250, color = "black",fill = "#BC2166", alpha = 1)+
- # annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2020-12-31"), ymin =1250, ymax = 3750, color = "black",fill = "#DB5C94", alpha = 1)+
- # annotate("rect", xmin = as.Date("2020-07-01"), xmax =as.Date("2020-12-31"), ymin =0, ymax = 1250, color = "black",fill = "#F291BC", alpha = 1)+ 
-  
- # geom_point(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+
-   
-  annotate("text", x = as.Date("2021-06-01"), y = 7500, label = "Zeer Ernstig", size=10,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2021-06-01"), y = 4375, label = "Ernstig", size=10,color = "black",face = "bold", hjust ="left")+  #5000
-  annotate("text", x = as.Date("2021-06-01"), y = 1650, label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="left")+
-  annotate("text", x = as.Date("2021-06-01"), y = 350,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="left")+
-  
-  #annotate("text", x = as.Date("2021-11-24"), y = 7500, label = " donkerrood", size=10,color = "black",face = "bold", hjust ="right")+
-  #annotate("text", x = as.Date("2021-11-24"), y = 4375, label = " rood", size=10,color = "black",face = "bold", hjust ="right")+  #5000
-  #annotate("text", x = as.Date("2021-11-24"), y = 1750, label = " oranje", size=10,color = "black",face = "bold", hjust ="right")+  
-  #annotate("text", x = as.Date("2021-11-24"), y = 300,  label = " groen",  size=9,color  = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 7500, label = "donkerrood", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 4375, label = "rood", size=10,color = "black",face = "bold", hjust ="right")+  #5000
+  annotate("text", x = as.Date("2021-11-24"), y = 1650, label = "oranje", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 350,  label = "groen", size=10,color = "black",face = "bold", hjust ="right")+
   
   
-  annotate("text", x = as.Date("2021-11-24"), y = 6350, label = "250/100K/week - 6250", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-11-24"), y = 2600, label = "100/100K/week - 2500", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-11-24"), y = 975, label = "35/100K/week - 875", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-11-24"), y = 525, label = "50/100K/ 2 weken - 625", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 6350, label = "500/100K/ 2 weken - 6250", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 2600, label = "200/100K/ 2 weken - 2500", size=3,color = "black",face = "bold", hjust ="right")+
+  #annotate("text", x = as.Date("2021-11-24"), y = 1038, label = "75/100K/ 2 weken - 875", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-24"), y = 725, label = "50/100K/ 2 weken - 625", size=3,color = "black",face = "bold", hjust ="right")+
   
   
   
@@ -431,8 +425,8 @@ ggplot(Merged_data_short)+
                date_labels= format("%b"),
                limits = as.Date(c("2021-06-01", "2021-11-25")))+
   
-  labs(title = title.kerst,
-         subtitle = "met 14-daags voortschrijdend gemiddelde",
+  labs(title = "ECDC",
+         subtitle = "met 14-daags voortschrijdend gemiddelde \n Met percentage positief tussen 1% en 4%",
          caption = paste("Bron: RIVM | Plot: @YorickB  | ",Sys.Date()))+
   theme(
       plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
@@ -478,23 +472,23 @@ ggplot(Merged_data_short)+
   
   
   ### routekaart kleuren ###
-   annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-09-15"), ymin =6250, ymax = Inf, color = "black",fill = "#68032F", alpha = 1)+
-   annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-09-15"), ymin =2500, ymax = 6250, color = "black",fill = "#BC2166", alpha = 1)+
-   annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-09-15"), ymin =875, ymax = 2500, color = "black",fill = "#DB5C94", alpha = 1)+
-  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-09-15"), ymin =0, ymax = 875, color = "black",fill = "#F291BC", alpha = 1)+ 
+   annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-15"), ymin =6250, ymax = Inf, color = "black",fill = "#68032F", alpha = 1)+
+   annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-15"), ymin =2500, ymax = 6250, color = "black",fill = "#BC2166", alpha = 1)+
+   annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-15"), ymin =875, ymax = 2500, color = "black",fill = "#DB5C94", alpha = 1)+
+  annotate("rect", xmin = as.Date("2021-06-01"), xmax =as.Date("2021-11-15"), ymin =0, ymax = 875, color = "black",fill = "#F291BC", alpha = 1)+ 
   
   # geom_point(stat='identity', mapping = aes(x=fixedDate, y=cases, fill = "x"))+
   
 
   
-  annotate("text", x = as.Date("2021-09-14"), y = 7500, label = "Zeer Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 3000, label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+  #5000
-  annotate("text", x = as.Date("2021-09-14"), y = 1650, label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 400,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-14"), y = 7500, label = "Zeer Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-14"), y = 3000, label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+  #5000
+  annotate("text", x = as.Date("2021-11-14"), y = 1650, label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-14"), y = 400,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2021-09-14"), y = 6350, label = "250/100K/week - 6250", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 2600, label = "100/100K/week - 2500", size=3,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-09-14"), y = 975, label = "35/100K/week - 875", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-14"), y = 6350, label = "250/100K/week - 6250", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-14"), y = 2600, label = "100/100K/week - 2500", size=3,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2021-11-14"), y = 975, label = "35/100K/week - 875", size=3,color = "black",face = "bold", hjust ="right")+
 
   
   
@@ -514,7 +508,7 @@ ggplot(Merged_data_short)+
 #  geom_vline(data=sint.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1.5, color = "black")+
 #  geom_text(data=sint.df  , mapping=aes(x=date, y=10000, label=event), size=4, angle=-90, vjust=-0.4, hjust=0, color= "#F5F5F5")+
   
-### PersCo ######
+### PersCo ###
   
 
 geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "white", alpha = 0.7)+
@@ -563,9 +557,9 @@ theme_classic()+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2021-06-01", "2021-09-15")))+
+               limits = as.Date(c("2021-06-01", "2021-11-15")))+
   
-  labs(title = title.kerst,
+  labs(title = "Oude routekaart",
        subtitle = "met 7-daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM | Plot: @YorickB  | ",Sys.Date()))+
   theme(

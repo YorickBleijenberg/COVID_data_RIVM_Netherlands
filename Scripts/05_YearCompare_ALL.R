@@ -288,21 +288,27 @@ ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
 
 
 
-tweet.year.compare.all.tweet <- "Vergelijking 2020 - 2021:
+tweet.year.compare.all.tweet <- "Vergelijking 2020 - 2021: Hoe staat het er vandaag voor t.o.v. vorig jaar?
 
-Het hele jaar.
+Bezetting ziekenhuis: %s --> %s
 
+
+7-daagse gemiddelden:
+- besmettingen: %s --> %s
+- doden: %s --> %s
+- opnames: %s --> %s
 " 
 
 
 tweet.year.compare.all.tweet <- sprintf(tweet.year.compare.all.tweet,
-                               MAhospOccu.last.year, MAhospOccu.today,
-                               MAcases.last.year,    MAcases.today,
-                               MAdead.last.year,     MAdead.today,
-                               MAhospNew.last.year,  MAhospNew.today
-                               
+                                    MAhospOccu.last.year, MAhospOccu.today,
+                                    MAcases.last.year,    MAcases.today,
+                                    MAdead.last.year,     MAdead.today,
+                                    MAhospNew.last.year,  MAhospNew.today
+                                    
 )
 Encoding(tweet.year.compare.all.tweet) <- "UTF-8"
+
 
 post_tweet(tweet.year.compare.all.tweet,  media = c("data/plots/11_20.21_compare_cases_all.png",
                                            "data/plots/11_20.21_compare_dead_all.png",

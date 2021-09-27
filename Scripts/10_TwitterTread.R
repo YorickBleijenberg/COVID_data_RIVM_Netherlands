@@ -191,7 +191,7 @@ post_tweet(tweet.summer.zoom.tweet,  media = c("data/plots/05_new_cases_2021.png
 
 
 
-source("C:\\Rdir\\Rscripts\\05_YearCompare.R")
+source("C:\\Rdir\\Rscripts\\05_YearCompare_ALL.R")
 
 
 
@@ -808,19 +808,15 @@ post_tweet(tweet.positive.rate.tweet,  media = c("data/plots/22_tests_ggd_daily.
 
 #### tweet.positive.rate.tweet ####
 
-tweet.positive.age.tweet <- "Positieve testen per leeftijdsgroep"
+tweet.positive.age.tweet <- "Aantal besmettingen binnen de leeftijdsgroepen.
+Absoluut & per 100.000.
+Normale schaal & logaritmisch."
 tweet.positive.age.tweet <- sprintf(tweet.positive.age.tweet)
 Encoding(tweet.positive.age.tweet) <- "UTF-8"
-post_tweet(tweet.positive.age.tweet,  media = c("data/plots/99_leeftijd_case_phd.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.positive.age.tweet,  media = c("data/plots/99_leeftijd_case_abs_short.png",
+                                                "data/plots/99_leeftijd_case_phd_short.png",
+                                                "data/plots/99_leeftijd_case_abs_log.png",
+                                                "data/plots/99_leeftijd_case_phd_log.png"), in_reply_to_status_id = get_reply_id())
 
 
-
-
-#### tweet.positive.rate.log.tweet ####
-
-tweet.positive.age.log.tweet <- "Positieve testen per leeftijdsgroep
-Y-as: log-schaal"
-tweet.positive.age.log.tweet <- sprintf(tweet.positive.age.log.tweet)
-Encoding(tweet.positive.age.log.tweet) <- "UTF-8"
-post_tweet(tweet.positive.age.log.tweet,  media = c("data/plots/99_leeftijd_case_phd_log_wide.png"), in_reply_to_status_id = get_reply_id())
 
