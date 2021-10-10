@@ -27,8 +27,8 @@ source("C:\\Rdir\\Rscripts\\geom_stream.R")
 source("C:\\Rdir\\Rscripts\\store\\03A_TwitterAuthentication.r")
 
 #### some constants for the update ####
-editionname <- "stem-op-@SignaalWaarde-> https://podcastawards.nl/stem <-"  
-vaccine.edition.name <- "het-CTB-gaf-maar-kleine-boost-qua-1e-prikken"
+editionname <- "Laatste-dag-om-te-stemmen-op-SignaalWaarde --> https://podcastawards.nl/stem <--"  
+vaccine.edition.name <- "het-CTB-effect"
 leeftijd             <- "2009"
 
 editienaam  <-  editionname 
@@ -44,7 +44,7 @@ source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
 source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph_new.R")
-# source("C:\\Rdir\\Rscripts\\68_OMT_counter.R")
+source("C:\\Rdir\\Rscripts\\68_OMT_counter.R")
 
 ###
 ###
@@ -128,11 +128,9 @@ tweet.NICE.NEW.tweet <- "Opnames per week - NICE"
 tweet.NICE.NEW.tweet <- sprintf(tweet.NICE.NEW.tweet)
 Encoding(tweet.NICE.NEW.tweet) <- "UTF-8"
 
-post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_week.png",
-                                            "data/plots/77_NICE_age_hosp_per_week_rel.png",
-                                            "data/plots/77_NICE_age_IC_per_week.png",
-                                            "data/plots/77_NICE_age_IC_per_week_rel.png" 
-), in_reply_to_status_id = get_reply_id())
+# post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_week.png", "data/plots/77_NICE_age_hosp_per_week_rel.png",
+#                                            "data/plots/77_NICE_age_IC_per_week.png","data/plots/77_NICE_age_IC_per_week_rel.png" 
+# ), in_reply_to_status_id = get_reply_id())
 
 
  
@@ -158,7 +156,7 @@ post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_wee
  
  
  
- source("C:\\Rdir\\Rscripts\\41_vaccination_dashboard_import.R")
+ # source("C:\\Rdir\\Rscripts\\41_vaccination_dashboard_import.R")
  
  
  
@@ -230,6 +228,6 @@ Niet tegen Delta beschermd:
  )
  
  Encoding(tweet.percentages.tweet) <- "UTF-8"
- post_tweet(tweet.percentages.tweet,  media = c("data/belgische_hokjes.png"), in_reply_to_status_id = get_reply_id())
+#  post_tweet(tweet.percentages.tweet,  media = c("data/belgische_hokjes.png"), in_reply_to_status_id = get_reply_id())
  
  
