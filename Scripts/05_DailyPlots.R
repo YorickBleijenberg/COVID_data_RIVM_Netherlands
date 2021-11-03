@@ -25,8 +25,8 @@ persco.df.2=data.frame(date=as.Date(c("2020-12-25", "2021-01-01", "2021-01-12","
                      event=c( "kerst", "1 jan", "persco", "einde lockdown?"))
 
 
-
-new.cases.title <-  paste("Nieuw gemelde besmettingen  -  ",  (last(Merged_data_7MA$cases)))
+new.cases.title.number  <- format( (last(Merged_data_7MA$cases)), big.mark="." ,decimal.mark=",")
+new.cases.title <-  paste("Nieuw gemelde besmettingen  -  ", new.cases.title.number )
 
 
 ggplot(Merged_data_short)+
@@ -107,8 +107,8 @@ ggplot(Merged_data_short)+
         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
-        panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
-ggsave("data/05_EN_new_cases.png",width=16, height = 9)
+        panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
+#ggsave("data/05_EN_new_cases.png",width=16, height = 9)
 
 
 
@@ -173,7 +173,7 @@ ggplot(Merged_data_short)+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
-ggsave("data/06_EN_new_cases_log.png",width=16, height = 9)
+#ggsave("data/06_EN_new_cases_log.png",width=16, height = 9)
 
 
 
@@ -233,7 +233,7 @@ ggplot(Merged_data_short)+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
-ggsave("data/09_EN_new_hosp.png",width=16, height = 9)
+#ggsave("data/09_EN_new_hosp.png",width=16, height = 9)
 
 
 
@@ -291,7 +291,7 @@ ggplot(Merged_data_short)+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
-ggsave("data/13_EN_new_deceased.png",width=16, height = 9)
+#ggsave("data/13_EN_new_deceased.png",width=16, height = 9)
 
 
 
@@ -334,7 +334,7 @@ theme_classic()+
   xlab("")+ 
   ylab("")+
   labs(title = new.cases.title,
-       subtitle = new.cases.subtitle,
+       subtitle =  "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   theme(
     plot.background = element_rect(fill = "#F5F5F5"), 

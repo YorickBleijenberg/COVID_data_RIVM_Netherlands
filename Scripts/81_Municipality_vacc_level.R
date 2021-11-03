@@ -10,8 +10,8 @@ gemeente.inwoners.vax_level <- gemeente.inwoners.vax_level[ -c(2,4,7:9)]
 
 
 read.aantal.gemeente.path <- paste("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(), "_COVID-19_aantallen_gemeente_per_dag.csv",sep="")
-# RIVM_aantallen_gemeente_per_dag <- read.csv(read.aantal.gemeente.path,sep=";")
-  RIVM_aantallen_gemeente_per_dag<-read.csv("https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.csv",sep=";")  #import from RIVM website
+ RIVM_aantallen_gemeente_per_dag <- read.csv(read.aantal.gemeente.path,sep=";")
+#  RIVM_aantallen_gemeente_per_dag<-read.csv("https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.csv",sep=";")  #import from RIVM website
 
 RIVM_aantallen_gemeente_per_dag$date <- as.Date(RIVM_aantallen_gemeente_per_dag$Date_of_publication)
 RIVM_aantallen_gemeente_per_dag.vax  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,4:9)]
@@ -43,7 +43,7 @@ vax_lvl.daily.numbers.dead <- aggregate(vax_lvl.daily.numbers$death.phd,     by=
                                                                                      gemeente_Naam  = vax_lvl.daily.numbers$vax_level),FUN=sum)
 colnames(vax_lvl.daily.numbers.dead) = c("date", "vax_level","phd")
 vax_lvl.daily.numbers.dead <- vax_lvl.daily.numbers.dead[vax_lvl.daily.numbers.dead$date>"2020-10-15",]
-vax_lvl.daily.numbers.dead <- vax_lvl.daily.numbers.dead %>% group_by(vax_level) %>% mutate(MAphd = rollapply(phd, 7, mean, fill = NA, align = "right"))
+vax_lvl.daily.numbers.dead <- vax_lvl.daily.numbers.dead %>% group_by(vax_level) %>% mutate(MAphd = rollapply(phd, 14, mean, fill = NA, align = "right"))
 
 
 
@@ -71,7 +71,7 @@ ggplot(vax_lvl.daily.numbers.cases.short)+
  
   labs(title = "RIVM besmettingen - indeling obv de huidige vaccinatiegraad",
        subtitle = "Aantal nieuwe besmettingen per 100k \n met 7 daags voortschrijdend gemiddelde",
-       caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme(
     plot.background = element_rect(fill = "#F5F5F5"),
@@ -109,7 +109,7 @@ ggplot(vax_lvl.daily.numbers.hosp.short)+
   
   labs(title = "RIVM opnames - indeling obv de huidige vaccinatiegraad",
        subtitle = "Aantal nieuwe opnames per 100k \n met 7 daags voortschrijdend gemiddelde",
-       caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme(
     plot.background = element_rect(fill = "#E4ECFC"),
@@ -145,8 +145,8 @@ ggplot(vax_lvl.daily.numbers.dead.short)+
         legend.text = element_text(colour="black", size=10, face="bold"))+
   
   labs(title = "RIVM doden - indeling obv de huidige vaccinatiegraad",
-       subtitle = "Aantal nieuwe doden per 100k \n met 7 daags voortschrijdend gemiddelde",
-       caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
+       subtitle = "Aantal nieuwe doden per 100k \n met 14 daags voortschrijdend gemiddelde",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme(
     plot.background = element_rect(fill = "#FDE3E3"),

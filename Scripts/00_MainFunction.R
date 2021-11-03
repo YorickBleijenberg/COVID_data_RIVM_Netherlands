@@ -1,6 +1,14 @@
 ##
 
 
+#Als ik de regering was, zou ik het ook niet hebben over de doden.
+#want: "elke dode is er één teveel".  
+#en hier zie je eigenlijk gewoon de kosten van falend beleid in mensenlevens.
+
+
+#### de-kosten-van-falend-corona-beleid-zijn-mensenlevens.
+#### we-zijn-er-nog-lang-niet
+
 
 ####Check LSPC update
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")
@@ -23,12 +31,12 @@ library(data.table)
 library(scales)
 library(lubridate)
 
-source("C:\\Rdir\\Rscripts\\geom_stream.R")
+#source("C:\\Rdir\\Rscripts\\geom_stream.R")
 source("C:\\Rdir\\Rscripts\\store\\03A_TwitterAuthentication.r")
 
 #### some constants for the update ####
-editionname <- "Laatste-dag-om-te-stemmen-op-SignaalWaarde --> https://podcastawards.nl/stem <--"  
-vaccine.edition.name <- "het-CTB-effect"
+editionname <-  "Houdt-de-werkelijkheid-zich-een-beetje-aan-de-prognose?"  #"AlLEeN-sAmEn-KrIjGeN-wE-cOrOnA" 
+vaccine.edition.name <- "BIZAR:-3de-prikken-niet-in-de-data"
 leeftijd             <- "2009"
 
 editienaam  <-  editionname 
@@ -43,7 +51,7 @@ dir.create(dirname)
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
 source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
-source("C:\\Rdir\\Rscripts\\01_lcps_data_graph_new.R")
+source("C:\\Rdir\\Rscripts\\01_lcps_data_graph_new_small.R")
 source("C:\\Rdir\\Rscripts\\68_OMT_counter.R")
 
 ###
@@ -119,6 +127,11 @@ source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 
 ###
 ###
+
+
+source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+
+
 
 
 #### tweet.NICE.NEW.tweet ####

@@ -29,6 +29,8 @@ ggplot(Merged_data_short)+
    
    theme_classic()+
    
+   scale_y_continuous(limits = c(-100, 100), breaks = c(-25,-50,-75,-100, 0,25,50,75,100) )+ #,labels = (label_percent(1)) )+
+   
    xlab("")+ 
    ylab("")+
    
@@ -90,7 +92,7 @@ ggplot(Merged_data_short)+
       axis.line = element_line(colour = "#F5F5F5"),
       panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed")
    )
-ggsave("data/05_EN_growth_cases.png",width=16, height = 9)
+#ggsave("data/05_EN_growth_cases.png",width=16, height = 9)
 
 
 
@@ -168,7 +170,7 @@ ggplot(Merged_data_short)+
       axis.line = element_line(colour = "#E4ECFC"),
       panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed")
    )
-ggsave("data/05_EN_growth_hosp.png",width=16, height = 9)
+#ggsave("data/05_EN_growth_hosp.png",width=16, height = 9)
 
 
 
@@ -253,5 +255,5 @@ ggplot(Merged_data_short)+
       axis.line = element_line(colour = "#FDE3E3"),
       panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed")
    )
-ggsave("data/05_EN_growth_dead.png",width=16, height =9)
+#ggsave("data/05_EN_growth_dead.png",width=16, height =9)
 

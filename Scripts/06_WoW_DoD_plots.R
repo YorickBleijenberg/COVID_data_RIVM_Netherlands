@@ -83,7 +83,7 @@ ggplot(test.d.f.3, aes(x = dateInTable, y = seday, fill = colour)) +
     #axis.ticks.length = unit(0.5, "cm"),
     axis.line = element_line(colour = "#F5F5F5"),
   )
-ggsave("data/08_EN_new_cases_WoW.png",width=16, height = 9)  
+#ggsave("data/08_EN_new_cases_WoW.png",width=16, height = 9)  
 
 
 

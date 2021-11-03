@@ -35,6 +35,10 @@ gemeente.combi$bible_inw[is.na(gemeente.combi$bible_inw)] <- 16351492 # 15851498
 RIVM_aantallen_gemeente_per_dag.combi.bible<- merge(RIVM_aantallen_gemeente_per_dag.1,  gemeente.combi)
 
 RIVM_aantallen_gemeente_per_dag.combi.bible$phd <- (RIVM_aantallen_gemeente_per_dag.combi.bible$Total_reported/RIVM_aantallen_gemeente_per_dag.combi.bible$bible_inw)*100000
+#RIVM_aantallen_gemeente_per_dag.combi.bible$phd <- (RIVM_aantallen_gemeente_per_dag.combi.bible$Hospital_admission/RIVM_aantallen_gemeente_per_dag.combi.bible$bible_inw)*100000
+#RIVM_aantallen_gemeente_per_dag.combi.bible$phd <- (RIVM_aantallen_gemeente_per_dag.combi.bible$Deceased/RIVM_aantallen_gemeente_per_dag.combi.bible$bible_inw)*100000
+
+
 
 
 combi.3 <- aggregate(RIVM_aantallen_gemeente_per_dag.combi.bible$phd,     by=list(date=RIVM_aantallen_gemeente_per_dag.combi.bible$date,
@@ -49,7 +53,7 @@ combi.3 <- combi.3[combi.3$date>"2020-09-15",]
 
 combi.33 <- combi.3 %>% 
   group_by(bible) %>% 
-  mutate(MAphd = rollapply(phd, 7, mean, fill = NA, align = "right"))
+  mutate(MAphd = rollapply(phd, 21, mean, fill = NA, align = "right"))
 
 #combi.3 <- combi.3[combi.3$date>"2020-09-01",]
 
@@ -63,6 +67,7 @@ ggplot(combi.33)+
   
   theme_classic()+
   xlab("")+ 
+  
   ylab("")+
   
   theme(legend.position = "top",
@@ -70,9 +75,7 @@ ggplot(combi.33)+
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
  
-
-  
-  labs(title = "De biblebelt grafiek",
+   labs(title = "De biblebelt grafiek",
        subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
   
@@ -90,12 +93,124 @@ ggplot(combi.33)+
     axis.line = element_line(colour = "#F5F5F5"),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  
-  
-  
+ggsave("data/75_Municipality-bible-ma-URK-21.png",width=16, height = 09)
 
-  ggsave("data/75_Municipality-bible-ma-URK.png",width=16, height = 09)
 
+
+RIVM_aantallen_gemeente_per_dag.combi.bible$phd <- (RIVM_aantallen_gemeente_per_dag.combi.bible$Hospital_admission/RIVM_aantallen_gemeente_per_dag.combi.bible$bible_inw)*100000
+
+
+combi.3 <- aggregate(RIVM_aantallen_gemeente_per_dag.combi.bible$phd,     by=list(date=RIVM_aantallen_gemeente_per_dag.combi.bible$date,
+                                                                                  gemeente_Naam=RIVM_aantallen_gemeente_per_dag.combi.bible$bible), 
+                     FUN=sum)
+colnames(combi.3) = c("date", "bible","phd")
+
+combi.3 <- combi.3[combi.3$date>"2020-09-15",]
+
+#combi.3$bible <- as.factor(combi.3$bible)
+
+
+combi.33 <- combi.3 %>% 
+  group_by(bible) %>% 
+  mutate(MAphd = rollapply(phd, 21, mean, fill = NA, align = "right"))
+
+#combi.3 <- combi.3[combi.3$date>"2020-09-01",]
+
+combi.33 <- combi.33[combi.33$date>"2020-09-22",]
+
+
+ggplot(combi.33)+
+  geom_line(aes(x=date, y=MAphd, color=bible), size = 3)+
+  
+  scale_fill_discrete(name = "Dose", labels = c("A", "C"))+
+  
+  theme_classic()+
+  xlab("")+ 
+  
+  ylab("")+
+  
+  theme(legend.position = "top",
+        legend.background = element_rect(fill="#E4ECFC",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10, face="bold"))+
+  
+  labs(title = "De biblebelt grafiek - ziekenhuisopnames",
+       subtitle = "met 7 daags voortschrijdend gemiddelde",
+       caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme(
+    plot.background = element_rect(fill = "#E4ECFC"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#E4ECFC", colour = "#E4ECFC"),
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+    #scale_x_date(),
+    axis.text = element_text(size=14,color = "black",face = "bold"),
+    #axis.text.x=element_blank(),
+    axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+    axis.ticks = element_line(colour = "#E4ECFC", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#E4ECFC"),
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
+  
+  ggsave("data/75_Municipality-bible-ma-URK-21-hosp.png",width=16, height = 09)
+
+
+
+
+RIVM_aantallen_gemeente_per_dag.combi.bible$phd <- (RIVM_aantallen_gemeente_per_dag.combi.bible$Deceased/RIVM_aantallen_gemeente_per_dag.combi.bible$bible_inw)*100000
+combi.3 <- aggregate(RIVM_aantallen_gemeente_per_dag.combi.bible$phd,     by=list(date=RIVM_aantallen_gemeente_per_dag.combi.bible$date,
+                                                                                  gemeente_Naam=RIVM_aantallen_gemeente_per_dag.combi.bible$bible), 
+                     FUN=sum)
+colnames(combi.3) = c("date", "bible","phd")
+
+combi.3 <- combi.3[combi.3$date>"2020-09-15",]
+
+#combi.3$bible <- as.factor(combi.3$bible)
+
+
+combi.33 <- combi.3 %>% 
+  group_by(bible) %>% 
+  mutate(MAphd = rollapply(phd, 21, mean, fill = NA, align = "right"))
+
+#combi.3 <- combi.3[combi.3$date>"2020-09-01",]
+
+combi.33 <- combi.33[combi.33$date>"2020-09-22",]
+
+
+ggplot(combi.33)+
+  geom_line(aes(x=date, y=MAphd, color=bible), size = 3)+
+  
+  scale_fill_discrete(name = "Dose", labels = c("A", "C"))+
+  
+  theme_classic()+
+  xlab("")+ 
+  
+  ylab("")+
+  
+  theme(legend.position = "top",
+        legend.background = element_rect(fill="#FDE3E3",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10, face="bold"))+
+  
+  labs(title = "De biblebelt grafiek - doden",
+       subtitle = "met 7 daags voortschrijdend gemiddelde",
+       caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme(
+    plot.background = element_rect(fill = "#FDE3E3"), #background color/size (border color and size)
+    panel.background = element_rect(fill = "#FDE3E3", colour = "#FDE3E3"),
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
+    #scale_x_date(),
+    axis.text = element_text(size=14,color = "black",face = "bold"),
+    #axis.text.x=element_blank(),
+    axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+    axis.ticks = element_line(colour = "#FDE3E3", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#FDE3E3"),
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
+  
+  ggsave("data/75_Municipality-bible-ma-URK-21-dead.png",width=16, height = 09)
 
 
 

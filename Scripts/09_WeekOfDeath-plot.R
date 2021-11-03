@@ -221,7 +221,7 @@ ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
     
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))#,
 
-ggsave("data/15_EN_dead_diff.png",width=16, height = 9)  
+# ggsave("data/15_EN_dead_diff.png",width=16, height = 9)  
 
 
 

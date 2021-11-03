@@ -12,7 +12,7 @@ library(ggforce)
 
 weeknumber <- isoweek(Sys.Date())-1
 
-report<-"C:\\Rdir\\rivm-week\\2021-36-COVID-19_WebSite_rapport_wekelijks_20210907_1122_final.pdf"
+report<-"C:\\Rdir\\rivm-week\\2021-43-COVID-19_WebSite_rapport_wekelijks_20211102_1145_final.pdf"
 
 
 # report <- "https://www.rivm.nl/sites/default/files/2021-02/COVID-19_WebSite_rapport_wekelijks_20210209_1115_final.pdf"
@@ -23,11 +23,11 @@ report<-"C:\\Rdir\\rivm-week\\2021-36-COVID-19_WebSite_rapport_wekelijks_2021090
 
 #### zonder colnames ####
 area.table.ggd.total <- locate_areas(report,
-                                          pages=c(25))
+                                          pages=c(27))
 
 ggd_bco1 <- extract_tables(report,
                            output = "data.frame",
-                           pages = c(25),
+                           pages = c(27),
                            area = area.table.ggd.total,
                            guess=FALSE)
 
@@ -43,17 +43,19 @@ write.csv(ggd_bco1,file = ggdBCOFile, row.names = F)
 
 ### include headder ###
 area.table.ggd.total <- locate_areas(report,
-                                     pages=c(26))
+                                     pages=c(28))
 
 ggd_bco2 <- extract_tables(report,
                            output = "data.frame",
-                           pages = c(26),
+                           pages = c(28),
                            area = area.table.ggd.total,
                            guess=FALSE)
 
 ggd_bco2 <- do.call(rbind,ggd_bco2)
 
 colnames(ggd_bco2) <- c("setting","aantal.31-9","perc.31-9","aantal.this.week", "perc.this.week")
+
+
 
 ggdBCO2File <- paste0("data-dashboards/bco/ggd_bco2_", weeknumber, ".csv")
 write.csv(ggd_bco2,file = ggdBCO2File, row.names = F)
@@ -66,7 +68,7 @@ bco_no.setting <- (ggd_bco1$aantal.this.week[2]+ggd_bco1$aantal.this.week[3]+ggd
 bco.setting.perc <- 1-(bco_no.setting/bco_tot)
 
 
-ggd_bco3 <- ggd_bco2[-c(2, 4,22), ]
+ggd_bco3 <- ggd_bco2[-c(2, 4, 18), ]
 sum.bco3 <- (sum(ggd_bco3$perc.this.week)/100)
 
 ggd_bco3$percentage.relative <-   (ggd_bco3$aantal.this.week/bco_yes.setting/sum.bco3)
@@ -133,7 +135,7 @@ geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
   
   
   
-  labs(title = "Setting van mogelijk besmetting",
+  labs(title = "Setting van mogelijke besmetting",
          subtitle = subtitle.title,
        #                  "semi-lockdown op 14 oktober\n",
        #                  "Herfstvakantie midden/zuid: 17-25 oktober"),

@@ -168,17 +168,14 @@ post_tweet(tweet.week.tweet,  media = c("data/plots/65_Cases_by_week.png",
 
 #### tweet.summer.zoom.tweet ####
 
-tweet.summer.zoom.tweet <-  "Zomer 2021
+tweet.summer.zoom.tweet <-  "Zomer/najaar 2021
 
-Stijging van het 7 daags voortschrijdend gemiddelde tov het dal: %s %s
 
-Aantal verdubbelingen: %sx 
 
 
 " 
-tweet.summer.zoom.tweet <- sprintf(tweet.summer.zoom.tweet,
-                                   increase1a,   deP,
-                                   doubling1a)
+tweet.summer.zoom.tweet <- sprintf(tweet.summer.zoom.tweet
+                                )
 Encoding(tweet.summer.zoom.tweet) <- "UTF-8"
 post_tweet(tweet.summer.zoom.tweet,  media = c("data/plots/05_new_cases_2021.png",
                                                "data/07_cases_type1_summer_2021.png",
@@ -191,10 +188,10 @@ post_tweet(tweet.summer.zoom.tweet,  media = c("data/plots/05_new_cases_2021.png
 
 
 
-source("C:\\Rdir\\Rscripts\\05_YearCompare_ALL.R")
+#source("C:\\Rdir\\Rscripts\\05_YearCompare_ALL.R")
+#source("C:\\Rdir\\Rscripts\\80_Opening_Compare.R")
 
-
-
+source("C:\\Rdir\\Rscripts\\83_wave2_vs_wave5_compare.R")
 
 #### kerst tweet ####
 

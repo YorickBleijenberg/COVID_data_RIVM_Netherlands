@@ -117,8 +117,8 @@ ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("
   scale_color_manual( values=c("#f9b641","#eb8055","#593d9c","#042333"), 
                       labels=c("NICE  - kliniek","LCPS - Kliniek","NICE  - IC","LCPS - IC"))+
   
-  scale_x_date(date_breaks = "2 week", 
-               date_labels= format("%d %b"),
+  scale_x_date(date_breaks = "month", 
+               date_labels= format("%b"),
                limits = as.Date(c("2021-01-05", NA)))+
   
   scale_y_continuous(limits = c(0, 1.025), breaks = c(1.1,1,0.8,0.5,0.25,0) ,labels = label_percent(1))+
@@ -182,8 +182,8 @@ ggplot(instroom.combi.long2, aes(x=date, y=value2, color = factor(key, levels=c(
   
   guides(color = guide_legend(reverse=TRUE))+
   
-  scale_x_date(date_breaks = "2 week", 
-               date_labels= format("%d %b"),
+  scale_x_date(date_breaks = "month", 
+               date_labels= format("%b"),
                limits = as.Date(c("2021-03-01", NA)))+
   
  # scale_y_continuous(limits = c(-1, 1),breaks = c(-0.5, -0.4,-0.3,-0.2,-0.1,0,0.3,0.2,0.1,0.4), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)

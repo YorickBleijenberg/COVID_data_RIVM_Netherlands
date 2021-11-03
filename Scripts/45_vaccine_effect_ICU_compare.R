@@ -120,9 +120,9 @@ ggplot(relative.table.clinic.long, aes(x=Datum, y= value, color = factor(key, le
     axis.line = element_line(colour = "#DAE3F3"),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+    panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))#+
   
-ggsave("data/plots/71_vaccinated_compare_age_IC.png",width=16, height = 9)  
+#ggsave("data/plots/71_vaccinated_compare_age_IC.png",width=16, height = 9)  
 
 
 
@@ -156,11 +156,11 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
                                                                                   "MA.sixty.Change", 
                                                                                   "MA.seven.Change",
                                                                                   "MA.old80.Change"))))+
-  geom_line( size=3 )+
+  geom_line( size=2.5 )+
   
-   scale_y_continuous(limits = c(0,5))+
+   scale_y_continuous(limits = c(0,NA))+
   scale_x_date(date_breaks = "month",date_labels= format("%b"),
- limits = as.Date(c("2021-06-10", NA)))+
+ limits = as.Date(c("2021-02-10", NA)))+
   
   #coord_cartesian(expand = FALSE)+
   theme_classic()+
@@ -174,7 +174,8 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
   #scale_fill_manual( values=c("#5c146e", "#fca50a", "darkgreen", "#dd513a"), labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
   #scale_color_brewer(palette = "RdYlBu", labels=c("zorginstellingen", "GGD'en","Huisartsen", "ziekenhuizen" ))+
   
-  scale_color_manual( values=c("#f8766d", "#c49a00","#53b400","#00c094","#00b6eb","#a58aff","#fb61d7"), labels=c("30-","30-39", "40-49","50-59","60-69","70-79","80+"))+
+  scale_color_manual( values=c("#6561ac", "#0087d2","#0eb24e","#fcb711","#f37023","#cd004b","#292526"), labels=c("30-","30-39", "40-49","50-59","60-69","70-79","80+"))+
+  
   
   labs(title = "Opnames IC naar leeftijd",
        subtitle = "Naar dag van rapportage",

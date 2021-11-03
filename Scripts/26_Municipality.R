@@ -43,7 +43,7 @@ combi.1 <- subset(combi.1, gemeente_Naam !='')
 
 
 #combi.1 <- combi.1[combi.1$date>"2020-09-01",]
-combi.1 <- combi.1[combi.1$date>"2021-06-05",]    
+combi.1 <- combi.1[combi.1$date>"2020-01-05",]    
 
 
   #### Calculate the 7 day MA per gemeente per day ####
@@ -91,7 +91,7 @@ while (i < 353)
 
 RIVM_aantallen_gemeente_per_dag.combi.3 <- merge(combi.2, kleur.table)
 
-RIVM_aantallen_gemeente_per_dag.combi.3 <- RIVM_aantallen_gemeente_per_dag.combi.3[RIVM_aantallen_gemeente_per_dag.combi.3$date>"2021-03-10",]
+RIVM_aantallen_gemeente_per_dag.combi.3 <- RIVM_aantallen_gemeente_per_dag.combi.3[RIVM_aantallen_gemeente_per_dag.combi.3$date>"2021-08-01",]
 
 
 #RIVM_aantallen_gemeente_per_dag.combi.filter <- RIVM_aantallen_gemeente_per_dag.combi.3[RIVM_aantallen_gemeente_per_dag.combi.3$gemeente_Naam == "Oostzaan",]
@@ -116,9 +116,9 @@ ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.3)+
   
 facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
  
-   scale_x_date(date_breaks = "6 week", 
-              date_labels= format("%d %b"),
-           limits = as.Date(c("2021-06-24", today)))+
+   scale_x_date(date_breaks = "1 month", 
+              date_labels= format("%b"),
+           limits = as.Date(c("2021-08-01", today)))+
   theme_bw() + 
   xlab("")+ 
   ylab("")+
@@ -147,7 +147,7 @@ facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
          panel.grid.minor.x = element_blank(),
          panel.grid.major.y = element_blank(),
          panel.grid.minor.y = element_blank(),
-  )
+  )+
 
 ggsave("data/plots/75_Municipality-day-phd.png",width=13, height = 13)
 

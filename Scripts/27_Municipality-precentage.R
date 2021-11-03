@@ -27,3 +27,9 @@ ggplot(data = number_tot_cumu_sh.2) +
   scale_y_continuous(limits = c(0, NA),  label = percent_format())
 
 ggsave("data/25_perc_cases_city.png",width=16, height = 9)
+
+
+
+
+File_date_muni_cumi <- paste0("data/city_cumulative.csv")
+write.csv2(number_tot_cumu_sh.2, File_date_muni_cumi, row.names=FALSE)

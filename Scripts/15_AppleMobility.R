@@ -36,7 +36,7 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2116HotfixDev17/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2119HotfixDev15/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -105,12 +105,20 @@ persco.df.2 <- 1
 persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18",
                                     "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17",
                                     "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
-                                    "2021-04-04", "2021-04-27", "2021-05-13")), 
-                     event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
-                             "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9",
-                             "Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", 
-                             "lockdown","" ,"avondklok", "basisscholen open", "kappers open", 
-                             "Eerste Paasdag","koningsdag", "hemelvaart"))
+                                    "2021-04-04", "2021-04-27", "2021-05-13",
+                                    
+                                    "2021-05-19", "2021-06-05", "2021-06-26", "2021-09-25"
+                                    
+)), 
+event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
+        "inteligente lockdown", "kroeg uurtje eerder dicht", "We gaan voor R=0,9",
+        "Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", 
+        "lockdown","" ,"avondklok", "basisscholen open", "kappers open", 
+        "Eerste Paasdag","koningsdag / stap 1", "hemelvaart",
+        
+        "Stap 2", "Stap 3 - Einde lockdown",  "Stap 4/5", "Einde 1,5-metersamenleving"
+        
+))
 
 ov.min <-  min(Apple_mob_nl_short$MAOV, na.rm=T)
 auto.min <-  min(Apple_mob_nl_short$MAauto , na.rm=T)

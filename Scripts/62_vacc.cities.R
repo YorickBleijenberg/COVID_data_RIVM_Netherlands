@@ -29,3 +29,4 @@ vac.cities.combi <- merge(vac.data.cities,gemeente.inwoners)
 vac.cities.combi.filter <- vac.cities.combi
 
 vac.cities.combi.filter <- vac.cities.combi.filter[vac.cities.combi.filter$vac.status == "Volledig gevaccineerd" & vac.cities.combi.filter$geboortejaar == "Alle volwassenen" ,]
+
