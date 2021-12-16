@@ -30,30 +30,34 @@ persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14",
                                     "2021-01-23", "2021-02-08", "2021-03-03",
                                     "2021-03-31", "2021-04-28", "2021-05-11",
                                     "2021-06-05", "2021-06-26", "2021-07-09",
-                                    "2021-09-25")), 
+                                    "2021-09-25",
+                                    "2021-11-02", "2021-11-12", "2021-11-28")), 
                      event=c("|Kroeg uurtje eerder dicht", "|We gaan voor\nR=0,9","|Semi-lockdown\n(0.75-0.99)",
                              "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring","| lockdown, R=0.8",
                              "| Avondklok & \nbezoekbeperking", "| Basisscholen open", "| Kappers open",
                              "| Avondklok 22u", "| Stap 1", "| stap 2",
                              "| Stap 3 - einde lockdown", "| Stap 4&5", "| Extra \n maatregelen",
-                             "| Stap 6 - einde 1,5m samenleving"),
+                             "| Stap 6 - einde 1,5m samenleving",
+                             "| Halve maatregelen","| 'Harde klap'", "| avondclockdown"),
                      
                      yas=c(2, 1.6, 1.4, 1.1,1.6,1.1,1.5, 1.4, 1.3, 1.1, 1.5, 1.3,
-                           1.2,1.5, 2, 2)) 
+                           1.2,1.5, 2, 1.45,1.35,1.25,1.1)) 
 
 persco.dates <- data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14",
                                           "2020-11-04", "2020-11-18", "2020-12-14",
                                           "2021-01-25", "2021-02-08", "2021-03-03",
                                           "2021-03-31", "2021-04-28", "2021-05-11",
                                           "2021-06-05", "2021-06-26", "2021-07-09",
-                                          "2021-09-25")),
+                                          "2021-09-25",
+                                          "2021-11-02", "2021-11-12", "2021-11-28")),
                            
                            event=c("19 Sep", "29 Sep", "14 Okt",
                                    "5 Nov" , "18 Nov", "14 Dec",
                                    "23 Jan", "8 Feb" , "3 Maa" ,
                                    "31 Maa", "28 Apr", "11 May",
                                    "5 jun", "26 jun", "9 jul",
-                                   "25 sep"))
+                                   "25 sep",
+                                   "2 Nov", "12 Nov", "28 Nov"))
 
 #r.estimate.df = data.frame(date_start=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14", "2020-11-04")), 
 #                           date_end=as.Date(c("2020-11-17", "2020-10-14", "2020-11-17", "2020-11-17"))
@@ -90,7 +94,7 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
        y = "Reproductiegetal",
        color = "Legend") +
   
-  labs(title = "Reproductiegetal, RIVM model 2 november",
+  labs(title = "Reproductiegetal, RIVM model 26 november",
        #subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
@@ -127,6 +131,95 @@ ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
 
 
 ggsave("data/plots/40_reproduction.png",width=16, height = 9)
+
+
+
+
+
+
+persco.df=data.frame(date=as.Date(c("2020-09-19", "2020-09-29", "2020-10-14",
+                                    "2020-11-04", "2020-11-18", "2020-12-14",
+                                    "2021-01-23", "2021-02-08", "2021-03-03",
+                                    "2021-03-31", "2021-04-28", "2021-05-11",
+                                    "2021-06-05", "2021-06-26", "2021-07-09",
+                                    "2021-09-25",
+                                    "2021-11-02", "2021-11-12", "2021-11-28")), 
+                     event=c("|Kroeg uurtje eerder dicht", "|We gaan voor\nR=0,9","|Semi-lockdown\n(0.75-0.99)",
+                             "|verzwaring\nsemi-lockdown\n(0.72-0.91)", "|Einde verzwaring","| lockdown, R=0.8",
+                             "| Avondklok & \nbezoekbeperking", "| Basisscholen open", "| Kappers open",
+                             "| Avondklok 22u", "| Stap 1", "| stap 2",
+                             "| Stap 3 - einde lockdown", "| Stap 4&5", "| Extra \n maatregelen",
+                             "| Stap 6 - einde 1,5m samenleving",
+                             "| Halve maatregelen","| 'Harde klap'", "| avondclockdown"),
+                     
+                     yas=c(1.45, 1.3, 1.225, 1.1,1.4,1.1,1.3, 1.4, 1.2, 1.1, 1.45, 1.3,
+                           1.2,1.45, 1.3, 1.45,1.35,1.25,1.1)) 
+
+
+
+
+
+
+
+#### plot zoom ####
+
+ggplot(last.date.old.wide.2, aes(x=Date, y=Rt_avg, group = 1))+
+  
+  geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted")+
+  
+  theme_classic() + 
+  xlab("")+ 
+  ylab("")+
+  
+  scale_x_date(limits=as.Date(c("2020-9-1", today)), date_breaks = "1 months", date_labels = "%b") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0.5, 1.5)   , breaks = c(0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5)) +
+  
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank()
+  )+
+  
+  labs(x = "Datum",
+       y = "Reproductiegetal",
+       color = "Legend") +
+  
+  labs(title = "Reproductiegetal, RIVM model 13 December",
+       #subtitle = "Met de beleidsdoelen voor de R", #  OMT: 'Een lagere R is beter'",
+       caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
+  
+  theme( plot.background = element_rect(fill = "#F5F5F5"),
+         panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+         plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+         plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
+         axis.text = element_text(size=14,color = "black",face = "bold"),
+         axis.text.y = element_text(face="bold", color="black", size=16),
+         axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+         axis.ticks.length = unit(0.5, "cm"),
+         axis.line = element_line(colour = "#F5F5F5"),
+         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"),
+  )+
+  
+  geom_hline(yintercept=1)+
+  
+  #   annotate("rect", xmin = as.Date("2020-09-29"), xmax = as.Date("2020-10-14"), ymin = 0.95, ymax = 0.85, fill = "red", alpha = 0.3)+
+  #  annotate("rect", xmin = as.Date("2020-10-14"), xmax = as.Date("2020-11-04"), ymin = 0.75, ymax = 0.99, fill = "blue", alpha = 0.2)+
+  #  annotate("rect", xmin = as.Date("2020-11-04"), xmax = as.Date("2020-11-18"), ymin = 0.72, ymax = 0.91, fill = "green", alpha = 0.3)+
+  #  annotate("rect", xmin = as.Date("2020-11-18"), xmax = as.Date("2020-12-14"), ymin = 0.75, ymax = 0.99, fill = "blue", alpha = 0.2)+
+  #  annotate("rect", xmin = as.Date("2020-12-14"), xmax = as.Date("2021-03-12"), ymin = 0.75, ymax = 0.85, fill = "red", alpha = 0.3)+
+  
+  geom_text(data=persco.df, mapping=aes(x=date, y=yas, label=event), size=5, angle=0, vjust=-0.4, hjust=0.012, face="bold")+
+  
+  #  geom_text(mapping=aes(x= as.Date("2020-10-15"), y=0.6, label="Het 'hamerpakket'"), size=6, angle=0, vjust=-0.4, hjust=0.012)+
+  
+  geom_text(data=persco.dates, mapping=aes(x=date, y=0.55, label=event), size=3.5, angle=0, vjust=0, hjust=0.012)+
+  
+  geom_line(aes(y = Rt_low), lwd=0.6) +
+  geom_line(aes(y = Rt_up), lwd=0.6) +
+  geom_ribbon(aes(ymin=Rt_low,ymax=Rt_up), fill="darkred", alpha = 0.2) +
+  geom_line(aes(y = Rt_avg, color = "Effectieve R"), color = "black",lwd=2) +
+  
+  
+ggsave("data/plots/40_reproduction_zoom.png",width=16, height = 9)
+
 
 
 

@@ -160,7 +160,7 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
   
    scale_y_continuous(limits = c(0,NA))+
   scale_x_date(date_breaks = "month",date_labels= format("%b"),
- limits = as.Date(c("2021-02-10", NA)))+
+ limits = as.Date(c("2020-12-10", NA)))+
   
   #coord_cartesian(expand = FALSE)+
   theme_classic()+

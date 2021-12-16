@@ -54,7 +54,7 @@ write.csv2(instroom.combi.year, File_date_674, row.names=FALSE)
 
 
 #further
-zkh_new <- zkh_new[zkh_new$date>"2021-01-01"&zkh_new$date<=today-3,]
+zkh_new <- zkh_new[zkh_new$date>"2020-08-01"&zkh_new$date<=today-3,]
 
 instroom.combi = merge(zkh_new,ic_intake, by="date")
 instroom.combi <- instroom.combi[,c(1,5,9)]
@@ -65,11 +65,11 @@ instroom.combi$IC_MA7_eight  <- lead(instroom.combi$IC_MA7,7)
 
 instroom.combi$zkh_percentage <- instroom.combi$zkh_MA7_eight/instroom.combi$zkh_MA7
 instroom.combi$zkh_percentage <- lag(instroom.combi$zkh_percentage,7)
-instroom.combi$zkh_peak <- instroom.combi$zkh_MA7/257.4
+instroom.combi$zkh_peak <- instroom.combi$zkh_MA7/257.4                       #### pieken
 
 instroom.combi$ic_percentage <- instroom.combi$IC_MA7_eight/instroom.combi$IC_MA7
 instroom.combi$ic_percentage <- lag(instroom.combi$ic_percentage,7)
-instroom.combi$ic_peak <- instroom.combi$IC_MA7/57.3
+instroom.combi$ic_peak <- instroom.combi$IC_MA7/57.3                       #### pieken
 
 
 
@@ -82,7 +82,7 @@ instroom.lcps$percentage <- lag(instroom.lcps$percentage,7)
 instroom.lcps$percentage.IC <- lag(instroom.lcps$percentage.IC,7)
 
 instroom.lcps <- instroom.lcps[,c(1,10,11,13,14)]
-instroom.lcps <- instroom.lcps[instroom.lcps$Datum>"2021-01-01"&instroom.lcps$Datum<=today,]
+instroom.lcps <- instroom.lcps[instroom.lcps$Datum>"2020-09-01"&instroom.lcps$Datum<=today,]
 colnames(instroom.lcps) <- c("date", "week_zkh_lcsp","peak_zkh_lcsp",  "week_IC_lcsp","peak_IC_lcsp")
 
 
@@ -119,14 +119,14 @@ ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("
   
   scale_x_date(date_breaks = "month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2021-01-05", NA)))+
+               limits = as.Date(c("2020-10-25", NA)))+
   
-  scale_y_continuous(limits = c(0, 1.025), breaks = c(1.1,1,0.8,0.5,0.25,0) ,labels = label_percent(1))+
+  scale_y_continuous(limits = c(0, NA), breaks = c(1.1,1,0.8,0.5,0.25,0) ,labels = label_percent(1))+
   
   xlab("")+
   ylab("")+
   
-  labs(title="OMT check - daling vanaf de piek", 
+  labs(title="OMT check - daling vanaf de voorjaarspiek", 
        subtitle="Nieuwe opnames: vergelijking van het lopende 7-daags gemiddelde, met de piek.",
        caption = paste("Bron: NICE / LCPS | Plot: @YorickB | ",Sys.Date()))+
   

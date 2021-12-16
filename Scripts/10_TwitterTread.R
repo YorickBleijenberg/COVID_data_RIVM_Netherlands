@@ -49,7 +49,7 @@ maxValueCase <- max(copy_cases$cases, na.rm = TRUE)
 dagRecordCase <- "."
 
 if(a == maxValueCase){
-  dagRecordCase <- paste(". (Nieuw dagrecord",intToUtf8(0x26a0), ")",sep = "")
+  dagRecordCase <- paste(". (Nieuw dagrecord",intToUtf8(0x1F973), ")",sep = "")
 }else {
   dagRecordCase <- "."}
 
@@ -188,10 +188,10 @@ post_tweet(tweet.summer.zoom.tweet,  media = c("data/plots/05_new_cases_2021.png
 
 
 
-#source("C:\\Rdir\\Rscripts\\05_YearCompare_ALL.R")
+#### source("C:\\Rdir\\Rscripts\\05_YearCompare_ALL.R")
 #source("C:\\Rdir\\Rscripts\\80_Opening_Compare.R")
 
-source("C:\\Rdir\\Rscripts\\83_wave2_vs_wave5_compare.R")
+#### source("C:\\Rdir\\Rscripts\\83_wave2_vs_wave5_compare.R")
 
 #### kerst tweet ####
 

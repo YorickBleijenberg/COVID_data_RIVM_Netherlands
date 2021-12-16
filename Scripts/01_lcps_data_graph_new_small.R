@@ -1,4 +1,5 @@
 
+
 library(tidyverse)
 #library(ggrepel)
 library(rtweet)
@@ -23,8 +24,9 @@ get_reply_id <- function(rel_increase) {
 #import from LCPS website
 
 LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")  
-#LCPS_datafeed<-read.csv("C:\\Rdir\\data\\covid-19_lcpsfeed.csv", sep=",")
+#LCPS_datafeed<-read.csv("C:\\Rdir\\data\\2021-11-28\\2021-11-28_COVID-19_LCSP2.csv", sep=";")
 LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
+#LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%Y-%m-%d")
 #LCPS_datafeed$week<-strftime(LCPS_datafeed$Datum,format = "%V")
 
 
@@ -41,12 +43,15 @@ LCPS_datafeed_old<-read.csv("C:\\Rdir\\LCPS-data\\tm11_01.csv",sep=";")
 LCPS_datafeed_old$date <- as.Date(LCPS_datafeed_old$date ,format="%Y-%m-%d")
 
 
+#####  remove international ####
+ LCPS_datafeed <- LCPS_datafeed[,-c(3)]
+
 
 LCPS_datafeed[is.na(LCPS_datafeed)] <- 0
 
 #### copy to tempfiles ####
 
-
+#Aant het typen voor RTL Nieuws ## easter egg
 
 lcps_working_1 <- LCPS_datafeed
 lcps_working_old <- LCPS_datafeed_old
@@ -64,6 +69,9 @@ lcps_working_old <- lcps_working_old[lcps_working_old$date>"2020-02-26"&lcps_wor
 
 
 ##### data for IC graph  ####
+
+beds_non_covid  <- first(LCPS_datafeed$IC_Bedden_Non_COVID)
+beds_covid      <- first(LCPS_datafeed$IC_Bedden_COVID)
 
 
 lcps_working_1a  <- lcps_working_1[,c("date","IC_covid_nl","IC_neg")]
@@ -93,12 +101,13 @@ hosp.total.y <- format(hosp.total.y, big.mark="." ,decimal.mark=",")
 hosp_title.a <- paste0("Aantal patienten op de IC: ", hosp.total.y, "  (", hosp.total.z , ")")
 
 hosp.total.boss <- format(hosp.total.boss, big.mark="." ,decimal.mark=",")
-hosp_title.boss <- paste0("Schatting IC capaciteit: ", hosp.total.boss, " bedden")
+hosp_title.boss <- paste0("Benodigde IC capaciteit: ", hosp.total.boss, " bedden")
 
 
 
 hosp.total.x1   <- as.integer(lcps.sh.2$A_IC_neg[1])  #yesterday
 hosp.total.y1   <- as.integer(lcps.sh.2$A_IC_neg[2])  #today
+hosp.total.y1.level  <- hosp.total.y1
 hosp.total.z1   <- hosp.total.y1 - hosp.total.x1
 hosp.total.y1  <- format( hosp.total.y1, big.mark="." ,decimal.mark=",")
 hosp_clin.a <- paste0("non-covid:   ",hosp.total.y1, "  (", hosp.total.z1 , ")")
@@ -158,6 +167,102 @@ ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = t
 ggsave("data/plots/16b_IC_only.png",width=16, height = 9)
 
 
+
+
+
+#### total IC plot reverse ####
+
+
+#ggplot(data = lcps_working_tot_c_1_long, mapping = aes(x = date, y = number, color = factor(type, levels=c("IC_covid_nl", "clinic_nl"))))+  #, fill = type))+
+  
+  ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = factor(type, levels=c("B_IC_covid_nl", "A_IC_neg")),fill = factor(type, levels=c("B_IC_covid_nl", "A_IC_neg"))))+
+  
+  geom_bar(stat='identity')+
+  
+  scale_x_date(name="")+
+  ylab("")+
+  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","),
+                      breaks=c(250,500,750,1000,1250,1500),
+                      sec.axis = dup_axis()
+  )+
+#  scale_fill_manual  (values=c("#C5E0B4","#4472C4"), labels=c(hosp_clin.a, hosp_IC.a))+
+#  scale_color_manual(values=c("#767171","#3B3838"), labels=c(hosp_clin.a, hosp_IC.a))+
+  
+  scale_fill_manual  (values=c("#4472C4","#C5E0B4"), labels=c(hosp_IC.a, hosp_clin.a))+
+  scale_color_manual(values=c("#3B3838","#767171"), labels=c(hosp_IC.a, hosp_clin.a))+
+  
+  labs(title= "Afschaling reguliere zorg", 
+       subtitle="Minimum IC eerste golf: 345 bedden non-covid",
+       caption = paste("Source: LCPS & NICE | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme_classic()+
+  theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
+  
+  theme(legend.position = c(0.5, 0.9),
+        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=20, face="bold"))+
+  
+  theme(  plot.background = element_rect(fill = "#DAE3F3"), 
+          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+          plot.subtitle = element_text(hjust = 0.5,size = 10),
+          panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
+          axis.text = element_text(size=14,color = "black",face = "bold"),
+          axis.text.y = element_text(face="bold", color="black", size=14),
+          axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
+          axis.ticks.length = unit(0.5, "cm"),
+          axis.line = element_line(colour = "#DAE3F3"),
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+  
+  geom_segment(aes(x = as.Date("2020-03-10"), y = hosp.total.y1.level, xend = as.Date(today), yend = hosp.total.y1.level),linetype = "dashed", color = "red")+
+  
+  
+  ggsave("data/plots/16b_IC_only_reverse.png",width=16, height = 9)
+
+
+
+
+
+
+ggplot(data = lcps_working_2_long, mapping = aes(x = date, y = number, color = type, fill = type))+
+  
+  geom_bar(stat='identity', position=position_fill(), width=1)+
+  
+  scale_x_date(name="")+
+  ylab("")+
+ scale_y_continuous( labels = scales::percent,
+                     sec.axis = dup_axis())+
+                    #  breaks=c(250,500,750,1000,1250,1500),
+                    # sec.axis = dup_axis()
+ # )+
+  
+  scale_fill_manual  (values=c("#C5E0B4","#4472C4"), labels=c("non-covid", "covid"))+
+  scale_color_manual(values=c("#767171","#3B3838"), labels=c("non-covid", "covid"))+
+  
+  labs(title = "verhouding covid / non-covid op de IC", # subtitle=" ",
+       caption = paste("Source: LCPS & NICE | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme_classic()+
+  theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
+  
+  theme(legend.position = c(0.5, 0.9),
+        legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=20, face="bold"))+
+  
+  theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
+          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+          panel.background = element_rect(fill = "#DAE3F3", colour = "#DAE3F3"),
+          axis.text = element_text(size=14,color = "black",face = "bold"),
+          axis.text.y = element_text(face="bold", color="black", size=14),  #, angle=45),
+          axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
+          axis.ticks.length = unit(0.5, "cm"),
+          axis.line = element_line(colour = "#DAE3F3"),
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+  
+  ggsave("data/plots/16b_IC_only_fill.png",width=16, height = 9)
+
+
 IC_occupation2  <- IC_occupation
 IC_occupation2$boss <-188
 
@@ -179,30 +284,30 @@ colnames(lcps_working_3_long) <- c("date", "type", "number")
 ggplot(data = lcps_working_3_long,
        mapping = aes(x = date, y = number, color = factor(type, levels=c("boss","A_IC_neg", "B_IC_covid_nl")), fill = factor(type, levels=c("boss","A_IC_neg", "B_IC_covid_nl"))))+
   
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-01"), ymin =1150, ymax = 1350, color = "black",fill = "black", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-01"), ymin =950, ymax = 1150, color = "black",fill = "red", alpha = 0.5)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-01"), ymin =400, ymax = 950, color = "black",fill = "blue", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-01"), ymin =200, ymax = 400, color = "black",fill = "red", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-01"), ymin =100, ymax = 200, color = "black",fill = "yellow", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-01"), ymin =0, ymax = 100, color = "black",fill = "blue", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-31"), ymin =1150, ymax = 1350, color = "black",fill = "black", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-31"), ymin =950, ymax = 1150, color = "black",fill = "red", alpha = 0.5)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-31"), ymin =400, ymax = 950, color = "black",fill = "blue", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-31"), ymin =200, ymax = 400, color = "black",fill = "red", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-31"), ymin =100, ymax = 200, color = "black",fill = "yellow", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2021-12-31"), ymin =0, ymax = 100, color = "black",fill = "blue", alpha = 0.3)+ 
  
   
-  geom_text( aes( x=as.Date("2021-11-15"), y=1330, label="1.350 - Hugo doel"),
+  geom_text( aes( x=as.Date("2021-12-15"), y=1330, label="1.350 - Hugo doel"),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2021-11-15"), y=1170, label="1.150 - IC max (piek) "),
+  geom_text( aes( x=as.Date("2021-12-15"), y=1130, label="1.150 - IC max (piek) "),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2021-11-15"), y=970, label="950 - IC max (langdurig)"),
+  geom_text( aes( x=as.Date("2021-12-15"), y=930, label="950 - IC max (langdurig)"),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2021-11-15"), y=420, label="400 - max COVID-19 (zonder griep)"),
+  geom_text( aes( x=as.Date("2021-12-15"), y=380, label="400 - max COVID-19 (zonder griep)"),
              color="black", size=4 , angle=0, fontface="bold")+
   
-  geom_text( aes( x=as.Date("2021-11-15"), y=220, label="200 - max COVID-19 (met griep)"),
+  geom_text( aes( x=as.Date("2021-12-15"), y=180, label="200 - max COVID-19 (met griep)"),
              color="black", size=4 , angle=0, fontface="bold")+
   
-  geom_text( aes( x=as.Date("2021-11-15"), y=50, label="Gommers goed zorg doel:\n max 100 covid op IC"),
+  geom_text( aes( x=as.Date("2021-12-15"), y=50, label="Gommers goed zorg doel:\n max 100 covid op IC"),
              color="black", size=4 , angle=0, fontface="bold")+
   
   geom_bar(stat='identity')+
@@ -304,9 +409,9 @@ ggplot(data = lcps_flu_long, mapping = aes(x = date, y = number, color = type, f
           axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
-          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))#+
   
-  ggsave("data/plots/16b_IC_only_flu.png",width=16, height = 9)
+ # ggsave("data/plots/16b_IC_only_flu.png",width=16, height = 9)
 
 
 
@@ -332,6 +437,7 @@ lcps.sh.1 <- tail(lcps.both.df,n=2)
 
 hosp.total.a   <- as.integer(lcps.sh.1$IC_covid_nl [1]+lcps.sh.1$clinic_nl[1])  #yesterday
 hosp.total.b   <- as.integer(lcps.sh.1$IC_covid_nl [2]+lcps.sh.1$clinic_nl[2])  #today
+hosp.total.now <- hosp.total.b
 hosp.total.c   <- hosp.total.b - hosp.total.a
 hosp.total.b <- format(hosp.total.b, big.mark="." ,decimal.mark=",")
 hosp_title <- paste0("Aantal patienten met COVID-19 nu in het ziekenhuis: ", hosp.total.b, "  (", hosp.total.c , ")")
@@ -348,6 +454,8 @@ hosp.IC.c2   <- hosp.IC.b2 - hosp.IC.a2
 hosp.IC.b2  <- format( hosp.IC.b2, big.mark="." ,decimal.mark=",")
 hosp_IC <- paste0("IC:          ",hosp.IC.b2, "  (", hosp.IC.c2 , ")")
 
+
+#### total hospital plot ####
 
 
 ggplot(data = lcps_working_tot_c_1_long, mapping = aes(x = date, y = number, color = type, fill = type))+
@@ -378,9 +486,13 @@ ggplot(data = lcps_working_tot_c_1_long, mapping = aes(x = date, y = number, col
           axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
-        panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))
+        panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+
+geom_segment(aes(x = as.Date("2020-09-01"), y = hosp.total.now, xend = as.Date(today), yend = hosp.total.now),linetype = "dotted", color = "black")+
+
 
 ggsave("data/plots/16a_IC_hosp.png",width=16, height = 9)
+
 
 
 
@@ -523,7 +635,6 @@ ggplot(wave.compare.gather, aes(wave, value, fill= type))+
   
   scale_x_discrete(labels= c("Eerste golf", "Tweede golf"))+
 
-  
   scale_fill_manual  (values=c("#F4B183","#4472C4"), labels=c(wave.perc.hosp, wave.perc.ic))+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
@@ -563,9 +674,9 @@ LCPS_datafeed_predict <- LCPS_datafeed_predict[order(LCPS_datafeed_predict$Datum
 #### Calculate the 7 day MA per gemeente per day ####
  
 LCPS_datafeed_predict <- LCPS_datafeed_predict %>% 
-  mutate(MA_IC = rollapply(IC_Nieuwe_Opnames_COVID, 7, mean, fill = NA, align = "right"))
+  mutate(MA_IC = rollapply(IC_Nieuwe_Opnames_COVID_Nederland, 7, mean, fill = NA, align = "right"))
 LCPS_datafeed_predict <- LCPS_datafeed_predict %>% 
-  mutate(MA_clin = rollapply(Kliniek_Nieuwe_Opnames_COVID, 7, mean, fill = NA, align = "right"))
+  mutate(MA_clin = rollapply(Kliniek_Nieuwe_Opnames_COVID_Nederland, 7, mean, fill = NA, align = "right"))
 
 
 LCPS_datafeed_predict$MA_clin_lead_eight  <- lead(LCPS_datafeed_predict$MA_clin,7)
@@ -613,6 +724,12 @@ stap.acht.df=data.frame(date=as.Date(c("2021-08-30")),event=c("Stap 6a - geen 1,
 stap.zes.df=data.frame(date=as.Date(c("2021-09-25")),event=c("Stap 6b - geen 1,5m meer "))
 stap.zeven.df=data.frame(date=as.Date(c("2021-11-01")),event=c("Stap 6c - terug naar normaal "))
 
+halve.maat.df=data.frame(date=as.Date(c("2021-11-02")),event=c("Halve maatregelen "))
+stevige.klap.df=data.frame(date=as.Date(c("2021-11-12")),event=c("'stevige klap'"))
+wertk.het.df=data.frame(date=as.Date(c("2021-11-28")),event=c("Avondclockdown"))
+
+
+
 
 
 tomorrow <- Sys.Date()+1
@@ -631,35 +748,46 @@ ggplot(LCPS_datafeed_predict)+
                  ymax = Inf,
   ), fill = "gray", alpha = 0.025)+
   
-   geom_col(position = "dodge",  aes(x=Datum, y=Kliniek_Nieuwe_Opnames_COVID ), fill ="#c47945")+    
+   geom_col(position = "dodge",  aes(x=Datum, y=Kliniek_Nieuwe_Opnames_COVID_Nederland), fill ="#c47945")+    
   
   
-  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
-  geom_text(data=stap.een.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+#  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
+#  geom_text(data=stap.een.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
-  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=400, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
+#  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
+ # geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=400, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
   
-   geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.twee.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+ #  geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+ # geom_text(data=stap.twee.df  , mapping=aes(x=date, y=400, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=130, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+ # geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+ # geom_text(data=stap.drie.df  , mapping=aes(x=date, y=495, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=130, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+ # geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+ # geom_text(data=stap.vier.df  , mapping=aes(x=date, y=495, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=133, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  #geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+ # geom_text(data=stap.zes.df  , mapping=aes(x=date, y=495, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "gray")+
-  geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=133, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "gray")+
+  #geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "gray")+
+  #geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=295, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "gray")+
   
-  geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=133, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+ # geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=495, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
   
- 
+  
+ # geom_vline(data=halve.maat.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+ # geom_text(data=halve.maat.df  , mapping=aes(x=date, y=495, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+ # geom_vline(data=stevige.klap.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+ # geom_text(data=stevige.klap.df  , mapping=aes(x=date, y=495, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+#  geom_vline(data=wertk.het.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+ # geom_text(data=wertk.het.df  , mapping=aes(x=date, y=495, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+
+  
    geom_line(data = LCPS_datafeed_predict, aes(x=Datum, y=MA_clin_lead), size =3, color = "#DAE3F3")+
    geom_line(data = LCPS_datafeed_predict, aes(x=Datum, y=MA_clin_lead), size =2)+
 
@@ -667,26 +795,25 @@ ggplot(LCPS_datafeed_predict)+
                date_labels= format("%b"),
                name="",
 #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2021-06-01", "2021-12-20")))+
+               limits = as.Date(c("2020-10-17", "2022-02-20")))+
   
 #  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
-scale_y_continuous(limits = c(0, 250), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,25,50,75,100,125,150,175,200,225,250))+
+scale_y_continuous(limits = c(0, 500), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,50,100,200,300,400,500))+
    
     geom_hline(yintercept=100, size = 1)+
     geom_hline(yintercept=40, size = 1)+
 
-  annotate("text", x = as.Date("2021-12-18"), y = 105, label = "100 per dag", size=4,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 45, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="right")+
-
+  annotate("text", x = as.Date("2022-02-18"), y = 105, label = "100 per dag", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 45, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2021-12-18"), y = 135,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 125, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 175,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 150, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2021-12-18"), y = 70,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 60, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 80,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 58, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2021-12-18"), y = 20,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 12, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 29,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 10, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
   
   
   coord_cartesian(expand = FALSE)+
@@ -695,7 +822,6 @@ scale_y_continuous(limits = c(0, 250), labels = label_comma(big.mark = ".", deci
   labs(title=hosp_new_hosp.2, 
      # subtitle="Om een stap terug te doen, moet het aantal\n onder de signaalwaarde zitten voor twee weken",
        caption = paste("Bron: LCPS | Plot: @YorickB | ",Sys.Date()))+
-  
   
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
@@ -710,7 +836,6 @@ scale_y_continuous(limits = c(0, 250), labels = label_comma(big.mark = ".", deci
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
-  
 
 ggsave("data/plots/16x_hosp_pred.png",width=16, height = 9)
 
@@ -732,33 +857,44 @@ ggplot(LCPS_datafeed_predict)+
                  ymax = Inf,
   ), fill = "gray", alpha = 0.025)+
   
-  geom_col(position = "dodge", aes(x=Datum, y=IC_Nieuwe_Opnames_COVID ), fill = "#4472C4")+
+  geom_col(position = "dodge", aes(x=Datum, y=IC_Nieuwe_Opnames_COVID_Nederland), fill = "#4472C4")+
   
 
 
-  geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
-  geom_text(data=stap.een.df  , mapping=aes(x=date, y=70, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+ # geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black")+
+#  geom_text(data=stap.een.df  , mapping=aes(x=date, y=70, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
  
-  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
-  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=70, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
+#  geom_vline(data=stap.twee.old.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 0.5, color = "black", alpha = 0.3)+
+#  geom_text(data=stap.twee.old.df  , mapping=aes(x=date, y=70, label=event), size=5, angle=-90, vjust=-0.4, hjust=0, color= "black", alpha = 0.3)+
   
-  geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.twee.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+#  geom_vline(data=stap.twee.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=stap.twee.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+#  geom_vline(data=stap.drie.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=stap.drie.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+#  geom_vline(data=stap.vier.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=stap.vier.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+#  geom_vline(data=stap.zes.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=stap.zes.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
   
-  geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "gray")+
-  geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "gray")+
+  # geom_vline(data=stap.zeven.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "gray")+
+  # geom_text(data=stap.zeven.df  , mapping=aes(x=date, y=45, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "gray")+
   
-  geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
-  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=35, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+#  geom_vline(data=stap.acht.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=stap.acht.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+  
+#  geom_vline(data=halve.maat.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=halve.maat.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+#  geom_vline(data=stevige.klap.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=stevige.klap.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
+ # geom_vline(data=wertk.het.df,  mapping=aes(xintercept=date), linetype = "dashed", size = 1, color = "black")+
+#  geom_text(data=wertk.het.df  , mapping=aes(x=date, y=79, label=event), size=6, angle=-90, vjust=-0.4, hjust=0, color= "black")+
+  
   
   
   
@@ -769,27 +905,27 @@ ggplot(LCPS_datafeed_predict)+
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
 #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2021-05-15", "2021-12-20")))+
+               limits = as.Date(c("2020-10-17", "2022-02-20")))+
 #  scale_y_continuous(limits = c(0, 80), breaks = c(0,3,10,20,30,50,70))+
-   scale_y_continuous(limits = c(0, 40), breaks = c(0,5,10,15,20,25,70))+
+   scale_y_continuous(limits = c(0, 80), breaks = c(0,10,20,30,40,50,60,70))+
   
   
     geom_hline(yintercept=25,  size = 1)+
     geom_hline(yintercept=10,  size = 1)+
 
   
-  annotate("text", x = as.Date("2021-12-18"), y = 26, label = "25 per dag", size=4,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 26, label = "25 per dag", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="right")+
  
 
-  annotate("text", x = as.Date("2021-12-18"), y = 35,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 33, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 35,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 32, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2021-12-18"), y = 17.5,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 15.5, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 17.5,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 14.5, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2021-12-18"), y = 5,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2021-12-18"), y = 3, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 5,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
+  annotate("text", x = as.Date("2022-02-18"), y = 3, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
   
   
   coord_cartesian(expand = FALSE)+
@@ -803,9 +939,6 @@ ggplot(LCPS_datafeed_predict)+
   
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
-  
-  
-
   
   theme(  plot.background = element_rect(fill = "#DAE3F3"), #background color/size (border color and size)
           plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
@@ -956,12 +1089,15 @@ Pati%snten nu in het ziekenhuis:
 
 %s%s (%s)
 
-%sKliniek:  %s (%s)
-%sIC:       %s (%s)
+Kliniek:  %s (%s)
+IC:       %s (%s)
+
+%s%s%s
+
 
 Nieuwe opnames: 
 Kliniek: %s 
-IC:        %s 
+IC:        %s
 
 Huidig risiconiveau:
 %s%s%s
@@ -974,12 +1110,13 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             deE,
                             hosp.total.dot,   hosp.total.b,     hosp.total.c,
                            
-                            clinic.total.dot, hosp.total.b1,  hosp.total.c1,
-                            ic.total.dot,     hosp.IC.b2,  hosp.IC.c2,
+                            hosp.total.b1,  hosp.total.c1,
+                            hosp.IC.b2,  hosp.IC.c2,
+                            flag.D,flag.E,inDE,
 
                             
                             hosp.new.b1,   
-                            hosp.new.b2,  
+                            hosp.new.b2,
                             
                             hosp.new.dot, hosp.new.lvl , hosp.new.dot
 )
@@ -1034,32 +1171,25 @@ Encoding(tweet.hospital.effect.tweet) <- "UTF-8"
  
  
  
+ #### tweet.afschaling.tweet ####
+ 
+ tweet.afschaling.tweet <- "Afschaling zorg.
+ Minimum eerste golf: 345 bedden non-covid"
+ 
+ tweet.afschaling.tweet <- sprintf(tweet.afschaling.tweet)
+ Encoding(tweet.afschaling.tweet) <- "UTF-8"
+ 
+ post_tweet(tweet.afschaling.tweet,  media = c("data/plots/16b_IC_only_reverse.png"
+                                               ), in_reply_to_status_id = get_reply_id())
+ 
+ 
+ 
+ 
  
  
 
  
  
- 
-####  IC zoom tweet #####          
-
-
-tweet.zoom.tweet <- 
-
-"IC grenzen n.a.v. Gommers op @op1npo.
-
-Hugo: 'Kunnen jullie opschalen boven de 1.350?'
-Gommers: 'Onzinnige vraag'. ''max 1.150''.
-
-*Noot: bovenop de bezetting zijn er ook ~188 BOSS bedden (Beds for Safety and Support), die je er bij moet optellen.
-"
-
-
-tweet.zoom.tweet <- sprintf(tweet.zoom.tweet)
-Encoding(tweet.zoom.tweet) <- "UTF-8"
-
-post_tweet(tweet.zoom.tweet,  media = c("data/plots/16b_IC_only_zoom.png" 
-), in_reply_to_status_id = get_reply_id())
-
 
 
 

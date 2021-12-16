@@ -64,7 +64,7 @@ ggplot(leeftijd.klinisch.week.long, aes(x=date, y=value, fill = factor(key, leve
   xlab("")+ 
   ylab("")+
 
-  theme(legend.position = c(0.95, 0.5),
+  theme(legend.position = c(0.05, 0.5),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
@@ -205,7 +205,7 @@ ggplot(leeftijd.IC.week.long, aes(x=date, y=value, fill = factor(key, levels=c("
   xlab("")+ 
   ylab("")+
   
-  theme(legend.position = c(0.95, 0.5),
+  theme(legend.position = c(0.05, 0.5),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+

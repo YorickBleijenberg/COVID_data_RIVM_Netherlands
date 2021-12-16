@@ -7,7 +7,7 @@ age.pyramide <- age.pyramide [,-(5:8)]
 
 
 age.pyramide.first <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated%20-%20eerste.prik.perc.csv")
-age.pyramide.first <- age.pyramide.first [-(1:36),]
+age.pyramide.first <- age.pyramide.first [-(1:40),]
 colnames(age.pyramide.first) <- c("week", "12-17",	"18-24",	"25-29",	"30-34",	"35-39",	"40-44",	"45-49",	"50-54",	"55-59",	"60-64",	"65-69",	"70-74",	"75-79",	"80-84",	"85-89", "90+")
 age.pyramide.first.long <- gather(age.pyramide.first, key, value, 2:17)
 age.pyramide.first.long$week <- as.numeric(age.pyramide.first.long$week)
@@ -16,7 +16,7 @@ age.pyramide.first.long$value <- as.numeric(age.pyramide.first.long$value)
 
 
 age.pyramide.second <-read.csv("https://raw.githubusercontent.com/YorickBleijenberg/COVID_data_RIVM_Netherlands/master/vaccination/people.vaccinated%20-%20tweede.prik.perc.csv")
-age.pyramide.second <- age.pyramide.second [-(1:36),]
+age.pyramide.second <- age.pyramide.second [-(1:40),]
 colnames(age.pyramide.second) <- c("week", "12-17",	"18-24",	"25-29",	"30-34",	"35-39",	"40-44",	"45-49",	"50-54",	"55-59",	"60-64",	"65-69",	"70-74",	"75-79",	"80-84",	"85-89", "90+")
 age.pyramide.second.long <- gather(age.pyramide.second, key, value, 2:17)
 age.pyramide.second.long$week <- as.numeric(age.pyramide.second.long$week)

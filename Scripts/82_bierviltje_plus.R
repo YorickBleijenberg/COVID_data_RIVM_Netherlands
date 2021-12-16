@@ -1,7 +1,7 @@
 
 
 
-case_predict.file <-paste("C:\\Rdir\\data\\2021-11-07\\2021-11-07_casus_daily_age_dif.csv")
+case_predict.file <-paste0("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(),"_casus_daily_age_dif.csv")
 case_predict <- read.csv(case_predict.file,sep=";")
 case_predict <- case_predict[,-c(1,13)]
 colnames(case_predict) <- c("very_young","young", "twenty", "thirty", "forthy", "fithy", "sixty", "seventy", "old","very_old", "date")
@@ -42,14 +42,33 @@ case_predict <- case_predict[case_predict$date>"2021-03-20",]
 #case_predict$seventy_hosp_pred = case_predict$seventy   *0.120
 #case_predict$old_hosp_pred     = case_predict$old       *0.2
 
-case_predict$young_hosp_pred   = case_predict$young     *0.004
-case_predict$twenty_hosp_pred  = case_predict$twenty    *0.0045
+#case_predict$young_hosp_pred   = case_predict$young     *0.004
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.0045
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.01
+#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.012
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.08
+#case_predict$old_hosp_pred     = case_predict$old       *0.15
+
+#case_predict$young_hosp_pred   = case_predict$young     *0.002
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075
+#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.025
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.06
+#case_predict$old_hosp_pred     = case_predict$old       *0.127
+
+
+case_predict$young_hosp_pred   = case_predict$young     *0.003
+case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 #5
 case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006
-case_predict$forthy_hosp_pred  = case_predict$forthy    *0.01
-case_predict$fithy_hosp_pred   = case_predict$fithy     *0.012
+case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075
+case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013
 case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03
-case_predict$seventy_hosp_pred = case_predict$seventy   *0.08
-case_predict$old_hosp_pred     = case_predict$old       *0.15
+case_predict$seventy_hosp_pred = case_predict$seventy   *0.07
+case_predict$old_hosp_pred     = case_predict$old       *0.14
 
 
 case_predict$hosp_adm_rate = case_predict$young_hosp_pred + case_predict$twenty_hosp_pred+
@@ -136,7 +155,7 @@ hosp_real_testdata <- gather(hosp_real, keycol, valuecol, gathercols)
 
 
 ggplot()+
-  geom_line(data=hosp_real_testdata, aes(x=date, y=valuecol, color=keycol), size=2)+
+  geom_point(data=hosp_real_testdata, aes(x=date, y=valuecol, color=keycol), size=2)+
   geom_line(data=case_predict_input, aes(x=date, y=valuecol, color=keycol))+
   
   facet_wrap(~ keycol,  scales = "free_y")+
@@ -176,6 +195,9 @@ zkh_new <- zkh_new[zkh_new$date>"2021-03-20",]
 
 ggplot()+
   geom_line(data=case_predict, aes(x=date, y=hosp_adm_rate), color = "blue", size = 2)+
+  
+  geom_line(data=zkh_new, aes(x=date, y=sum), color = "black", size=1)+
+  
   geom_point(data=zkh_new, aes(x=date, y=sum), color = "gray", size=3)+
   geom_point(data=zkh_new, aes(x=date, y=sum), color = "black", size=2)+
   
@@ -191,13 +213,6 @@ ggplot()+
   theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))
 
 ggsave("data/plots/bierviltje_plus_hosp.png",width=16, height = 9)
-
-
-
-
-
-
-
 
 
 

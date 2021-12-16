@@ -208,7 +208,7 @@ ggplot(LCPS.compare, aes(x=rawDate, y = total.occupation))+
 NICE.compare <- instroom.combi.year
 NICE.compare$total.intake <- NICE.compare$sum_ic + NICE.compare$sum_zkh
 
-NICE.compare <- head(NICE.compare, - 3)   
+NICE.compare <- head(NICE.compare, - 2)   
 
 NICE.compare$total.intake.ma <- rollmeanr(NICE.compare$total.intake, 7, fill = 0)
 
@@ -288,7 +288,7 @@ ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
 
 
 
-tweet.year.compare.all.tweet <- "Vergelijking 2020 - 2021: Hoe staat het er vandaag voor t.o.v. vorig jaar?
+tweet.year.compare.all.tweet <- "Vergelijking 2020 - 2021: Hoe staat het ervoor t.o.v. vorig jaar?
 
 Bezetting ziekenhuis: %s --> %s
 

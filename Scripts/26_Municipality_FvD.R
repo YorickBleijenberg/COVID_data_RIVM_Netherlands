@@ -4,6 +4,8 @@ today <- Sys.Date()
 
 
 inwo_gem_bible <- "C:\\Rdir\\data-contstant\\biblebeltURK.csv"
+inwo_gem_bible <- "C:\\Rdir\\data-contstant\\FvD_stemmers.csv"
+
 gemeente.inwoners.bible <- read.csv(inwo_gem_bible,sep=";")
 colnames(gemeente.inwoners.bible) = c("Municipality_code", "Gemeente_Naam", "inwoners", "bible", "bible_inw")
 gemeente.inwoners.bible <- gemeente.inwoners.bible[ -c(2:3)]
@@ -21,14 +23,16 @@ RIVM_aantallen_gemeente_per_dag.1  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,4:
 
 gemeente.combi <- merge(gemeente.inwoners,gemeente.inwoners.bible, by = "Municipality_code", all.x = TRUE)
 
-gemeente.combi$bible[is.na(gemeente.combi$bible)] <- "not_bible"
+#gemeente.combi$bible[is.na(gemeente.combi$bible)] <- "not_bible"
+gemeente.combi$bible[is.na(gemeente.combi$bible)] <- "not_fvd"
 # 1556260
 #17407758
 #15851498
 
 #1056266
 #16.351.492
-gemeente.combi$bible_inw[is.na(gemeente.combi$bible_inw)] <-  17500000-1791491  #16351492 # 15851498
+    ###gemeente.combi$bible_inw[is.na(gemeente.combi$bible_inw)] <-  17500000-1791491  #16351492 # 15851498
+gemeente.combi$bible_inw[is.na(gemeente.combi$bible_inw)] <-  17500000-1094135  #16351492 # 15851498
 
 
 
@@ -75,7 +79,7 @@ ggplot(combi.33)+
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
  
-   labs(title = "De biblebelt grafiek",
+   labs(title = "De FvD grafiek",
        subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
   
@@ -93,7 +97,7 @@ ggplot(combi.33)+
     axis.line = element_line(colour = "#F5F5F5"),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-ggsave("data/75_Municipality-bible-ma-URK-21.png",width=16, height = 09)
+ggsave("data/75_Municipality-bible-ma-URK-21_FvD.png",width=16, height = 09)
 
 
 
@@ -134,7 +138,7 @@ ggplot(combi.33)+
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
   
-  labs(title = "De biblebelt grafiek - ziekenhuisopnames",
+  labs(title = "De FvD grafiek - ziekenhuisopnames",
        subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
   
@@ -152,7 +156,7 @@ ggplot(combi.33)+
     axis.line = element_line(colour = "#E4ECFC"),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/75_Municipality-bible-ma-URK-21-hosp.png",width=16, height = 09)
+  ggsave("data/75_Municipality-bible-ma-URK-21-hosp_FvD.png",width=16, height = 09)
 
 
 
@@ -192,7 +196,7 @@ ggplot(combi.33)+
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=10, face="bold"))+
   
-  labs(title = "De biblebelt grafiek - doden",
+  labs(title = "De FvD grafiek - doden",
        subtitle = "met 7 daags voortschrijdend gemiddelde",
        caption = paste("Bron: RIVM/wikipedia | Plot: @YorickB | ",Sys.Date()))+
   
@@ -210,7 +214,7 @@ ggplot(combi.33)+
     axis.line = element_line(colour = "#FDE3E3"),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/75_Municipality-bible-ma-URK-21-dead.png",width=16, height = 09)
+  ggsave("data/75_Municipality-bible-ma-URK-21-dead_FvD.png",width=16, height = 09)
 
 
 

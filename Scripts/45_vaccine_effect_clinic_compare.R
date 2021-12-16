@@ -12,7 +12,7 @@ vacc.effect.age$Datum <- as.Date(vacc.effect.age$Datum)
 type.of.data = "Klinisch"
 
 
-vacc.effect.age.ICU <- (vacc.effect.age  %>% filter(Type == type.of.data & Datum > "2020-09-15")) # & Datum < "2021-02-01"))  #  Klinisch
+vacc.effect.age.ICU <- (vacc.effect.age  %>% filter(Type == type.of.data & Datum > "2020-07-15")) # & Datum < "2021-02-01"))  #  Klinisch
 
 # vacc.effect.age.ICU <- (vacc.effect.age  %>% filter(Type == type.of.data & Datum > "2020-12-01" & Datum < "2021-02-01")) #peak winter
 
@@ -177,7 +177,7 @@ ggplot(abs.table.clinic.long, aes(x=Datum, y= value, color = factor(key, levels=
   geom_line( size=2.5 )+
   
   #  scale_y_continuous(labels = percent)+
-  scale_x_date(limits=as.Date(c("2021-02-10", NA)), date_breaks = "month",date_labels= format("%b"))+
+  scale_x_date(limits=as.Date(c("2020-11-10", NA)), date_breaks = "month",date_labels= format("%b"))+
   # limits = as.Date(c("2021-01-6", NA)))+
   
   scale_y_continuous(limits = c(0,NA))+

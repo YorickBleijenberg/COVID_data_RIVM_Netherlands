@@ -21,7 +21,7 @@ ggplot(year.compare.cases)+
     geom_line(aes(x=DmJDays, y= MACases, color = "#3c81b9"), lwd=3)+
     geom_line(aes(x=onefiveDays, y= MACases, color = "#e5292b"), lwd=3)+
   
-  scale_color_manual(values = c("#e5292b","#3c81b9"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
+  scale_color_manual(values = c("#3c81b9","#e5292b"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
   
   scale_x_continuous(limits = c(-21, 71), breaks = c(-21,-14,-7,0,7,14,21,28,35,42,49,56,63,70))+
   scale_y_continuous(limits = c(0, NA))+ 
@@ -68,10 +68,10 @@ ggplot(year.compare.cases)+
   geom_line(aes(x=DmJDays, y= MAdead, color = "#3c81b9"), lwd=3)+
   geom_line(aes(x=onefiveDays, y= MAdead, color = "#e5292b"), lwd=3)+
   
-  scale_color_manual(values = c("#e5292b","#3c81b9"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
+  scale_color_manual(values = c("#3c81b9", "#e5292b"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
   
   scale_x_continuous(limits = c(-21, 71), breaks = c(-21,-14,-7,0,7,14,21,28,35,42,49,56,63,70))+
-  scale_y_continuous(limits = c(0, 20))+ 
+  scale_y_continuous(limits = c(0, 30))+ 
   
   geom_vline(xintercept=0) +
   
@@ -131,10 +131,10 @@ ggplot(LCPS.compare)+
   geom_line(aes(x=DmJDays, y= total.occupation, color = "#3c81b9"), lwd=3)+
   geom_line(aes(x=onefiveDays, y= total.occupation, color = "#e5292b"), lwd=3)+
   
-  scale_color_manual(values = c("#e5292b","#3c81b9"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
+  scale_color_manual(values = c("#3c81b9","#e5292b"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
   
   scale_x_continuous(limits = c(-21, 71), breaks = c(-21,-14,-7,0,7,14,21,28,35,42,49,56,63,70))+
-  scale_y_continuous(limits = c(0, 1000), breaks = c(0,250,500,750,1000))+ 
+  scale_y_continuous(limits = c(0, 2000))+ 
   
   geom_vline(xintercept=0) +
   
@@ -198,10 +198,10 @@ ggplot(NICE.compare)+
   geom_line(aes(x=DmJDays, y= total.intake.ma, color = "#3c81b9"), lwd=3)+
   geom_line(aes(x=onefiveDays, y= total.intake.ma, color = "#e5292b"), lwd=3)+
   
-  scale_color_manual(values = c("#e5292b","#3c81b9"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
+  scale_color_manual(values = c("#3c81b9","#e5292b"),labels=c ("#DansenMetJanssen", "Einde anderhalvemetersamenleving") )+
   
   scale_x_continuous(limits = c(-21, 71), breaks = c(-21,-14,-7,0,7,14,21,28,35,42,49,56,63,70))+
-  scale_y_continuous(limits = c(0, 150), breaks = c(0,25,50,75,100,125,150))+ 
+  scale_y_continuous(limits = c(0, 250))+ 
   
   geom_vline(xintercept=0) +
   

@@ -60,7 +60,7 @@ estimated.given.all <- merge(estimated.given.all,estimated.given.ggd2,all = TRUE
 estimated.given.all$date <- as.Date(as.POSIXct(estimated.given.all$date , origin="1970-01-01"))
 estimated.given.all$date2 <- as.Date(as.POSIXct(estimated.given.all$date2 , origin="1970-01-01"))
 
-vac.given.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vac.all.given.jsn.csv")
+vac.given.filename <- paste0("data/",format(today, "%Y-%m-%d"),"/",format(today, "%Y-%m-%d"), "_vac.all.given.jsn.csv")
 write.csv2(estimated.given.all, file = vac.given.filename, row.names = F)
 
 #### store doses delivered, and still in stock ((not)available) ####
@@ -69,7 +69,7 @@ vaccine_stock$date_unix <- as.Date(as.POSIXct(vaccine_stock$date_unix , origin="
 vaccine_stock$date_of_insertion_unix <- as.Date(as.POSIXct(vaccine_stock$date_of_insertion_unix , origin="1970-01-01"))
 vaccine_stock[is.na(vaccine_stock)] <- 0
 
-vaccine_stock.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vaccine_stock.csv")
+vaccine_stock.filename <- paste0("data/",format(today, "%Y-%m-%d"),"/",format(today, "%Y-%m-%d"), "_vaccine_stock.csv")
 write.csv2(vaccine_stock, file = vaccine_stock.filename, row.names = F)
 
 #### store doses delivered, and expected ####
@@ -81,7 +81,7 @@ vaccine_delivery_per_supplier$date_start_unix <- as.Date(as.POSIXct(vaccine_deli
 vaccine_delivery_per_supplier$date_end_unix  <- as.Date(as.POSIXct(vaccine_delivery_per_supplier$date_end_unix , origin="1970-01-01"))
 vaccine_delivery_per_supplier <- vaccine_delivery_per_supplier[order(vaccine_delivery_per_supplier$date_start_unix ),]   #order by date
 
-vaccine_stock.filename <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_vaccine_delivery_per_supplier.csv")
+vaccine_stock.filename <- paste0("data/",format(today, "%Y-%m-%d"),"/",format(today, "%Y-%m-%d"), "_vaccine_delivery_per_supplier.csv")
 write.csv2(vaccine_delivery_per_supplier, file = vaccine_stock.filename, row.names = F)
 
 # vaccine_delivery<- locale_dat$vaccine_delivery$values
@@ -99,7 +99,7 @@ vaccins.registerd.hops  <- as.integer(0)   #is now "hugo schatting"
 
 
 #second dose estimation
-second.dose <- as.integer((vaccins.estimated.total/100*45.2)) 
+second.dose <- as.integer((vaccins.estimated.total/100*45.7)) 
 
 people.vaccinated <- (vaccins.estimated.total-second.dose)  # number of people with at least one dose.
 
@@ -140,7 +140,7 @@ new.vacc.df <- rbind(vacc_date_hist, new.row.df)
 
 new.vacc.df[is.na(new.vacc.df)] <- 0
 
-daily.vaccination.data.filename.x <- paste0("data/plots/",format(Sys.Date(), "%Y-%m-%d"), "_vaccine-data.csv")
+daily.vaccination.data.filename.x <- paste0("data/plots/",format(today, "%Y-%m-%d"), "_vaccine-data.csv")
 write.csv(new.vacc.df, file = daily.vaccination.data.filename.x, row.names = F)
 
 ##### check if max (dagrecord) ######
@@ -602,13 +602,15 @@ Totaal (geschat):
 
 7-daags gemiddelde: +%s per dag.
 
-coronabeeld.nl"  
+coronabeeld.nl 
+
+
+
+Leeftijd aan de beurt: %s (%s/%s en ouder)" 
 
 # Schattingen:
 # 1e prik: %s
 # 2e prik: %s
-
-#Leeftijd aan de beurt: %s (%s/%s en ouder)
 # Aan de beurt bij de GGD: %s
 
 tweet.vaccination.start.tweet <- sprintf(tweet.vaccination.start.tweet,
@@ -617,7 +619,7 @@ tweet.vaccination.start.tweet <- sprintf(tweet.vaccination.start.tweet,
                                          vaccins.estimated.total,
                                          #vaccins.reported.total,reported.new.today,
                                          s_dayMA_tot #,
-                                       #  leeftijd
+                                         leeftijd
                                          
 )
 
@@ -626,7 +628,7 @@ Encoding(tweet.vaccination.start.tweet) <- "UTF-8"
 baner.path<- paste0("data/",Sys.Date(),"-banner.png")
 
 post_tweet(tweet.vaccination.start.tweet,   media = c("data/plots/94_vaccinated_new.png",
-                                                      "data/plots/98_leeftijd_relatief_care.png",
+                                                     # "data/plots/98_leeftijd_relatief_care.png",
                                                       "data/plots/95_vaccinated_week_day.png",
                                                       "data/plots/80_vaccine_on_shelf.png")) # media = c(baner.path))
 
@@ -665,15 +667,16 @@ tweet.vaccination.week.tweet <- "Vaccinaties per:
 - Organisatie, per week
 
 Overleden:
-- naar week van overlijden (max 2de golf op 100%s)
-- Verpleeghuizen vs de rest"
+- naar week van overlijden (max 2de golf op 100%s)"
+#- Verpleeghuizen vs de rest"
 tweet.vaccination.week.tweet <- sprintf(tweet.vaccination.week.tweet,
                                         deP)
 Encoding(tweet.vaccination.week.tweet) <- "UTF-8"
 post_tweet(tweet.vaccination.week.tweet,  media = c( "data/plots/95_vaccinated_week_new.png", 
                                                      "data/plots/95_vaccinated_week_day_estimation.png",
-                                                     "data/plots/74_dead_agegroup_rel.png",
-                                                     "data/plots/98_vaccinated_compare_death.png"), in_reply_to_status_id = get_reply_id())
+                                                     "data/plots/74_dead_agegroup_rel.png"#,
+                                                     #"data/plots/98_vaccinated_compare_death.png"
+                                                     ), in_reply_to_status_id = get_reply_id())
 
 
 #### run vaccination script

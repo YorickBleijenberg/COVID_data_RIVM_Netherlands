@@ -38,25 +38,25 @@ last.point <- last(tested_daily.toedit)
 
 ggplot(tested_daily.toedit, aes(perc_pos, vdphd, colour=date))+
   
-  annotate("rect", xmin = 0, xmax =1, ymin = 500, ymax = 725, color = "black",fill = "darkred", alpha = 0.9)+
-  annotate("rect", xmin = 1, xmax =22, ymin =500, ymax = 725, color = "black",fill = "darkred", alpha = 0.9)+
-  annotate("rect", xmin = 4, xmax =22, ymin =500, ymax = 725, color = "black",fill = "darkred", alpha = 0.9)+
+  annotate("rect", xmin = 0, xmax =1, ymin = 500, ymax = 2000, color = "black",fill = "darkred", alpha = 0.9)+
+  annotate("rect", xmin = 1, xmax =27, ymin =500, ymax = 2000, color = "black",fill = "darkred", alpha = 0.9)+
+  annotate("rect", xmin = 4, xmax =27, ymin =500, ymax = 2000, color = "black",fill = "darkred", alpha = 0.9)+
   
   annotate("rect", xmin = 0, xmax =1, ymin = 200, ymax = 500, color = "black",fill = "red", alpha = 0.5)+
   annotate("rect", xmin = 1, xmax =4, ymin = 200, ymax = 500, color = "black",fill = "red", alpha = 0.5)+
-  annotate("rect", xmin = 4, xmax =22, ymin =200, ymax = 500, color = "black",fill = "red", alpha = 0.5)+
+  annotate("rect", xmin = 4, xmax =27, ymin =200, ymax = 500, color = "black",fill = "red", alpha = 0.5)+
   
   annotate("rect", xmin = 0, xmax =1, ymin = 75, ymax = 200, color = "black",fill = "orange", alpha = 0.9)+
   annotate("rect", xmin = 1, xmax =4, ymin = 75, ymax = 200, color = "black",fill = "orange", alpha = 0.9)+
-  annotate("rect", xmin = 4, xmax =22, ymin = 75, ymax = 200, color = "black",fill = "red", alpha = 0.5)+
+  annotate("rect", xmin = 4, xmax =27, ymin = 75, ymax = 200, color = "black",fill = "red", alpha = 0.5)+
   
   annotate("rect", xmin = 0, xmax =1, ymin = 50, ymax = 75, color = "black", fill = "green", alpha = 0.9)+
   annotate("rect", xmin = 1, xmax =4, ymin = 50, ymax = 75, color = "black", fill = "orange", alpha = 0.9)+
-  annotate("rect", xmin = 4, xmax =22, ymin = 50, ymax = 75,color = "black", fill = "orange", alpha = 0.9)+ 
+  annotate("rect", xmin = 4, xmax =27, ymin = 50, ymax = 75,color = "black", fill = "orange", alpha = 0.9)+ 
   
   annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 50,color = "black", fill = "green", alpha = 0.75)+
   annotate("rect", xmin = 1, xmax = 4, ymin = 0, ymax = 50,color = "black", fill = "green", alpha = 0.75)+
-  annotate("rect", xmin = 4, xmax = 22, ymin = 0, ymax = 50,color = "black", fill = "orange", alpha = 0.9)+ 
+  annotate("rect", xmin = 4, xmax = 27, ymin = 0, ymax = 50,color = "black", fill = "orange", alpha = 0.9)+ 
   
   
   
@@ -68,10 +68,10 @@ ggplot(tested_daily.toedit, aes(perc_pos, vdphd, colour=date))+
   
   geom_point(data=last.point, color="green", size = 3)+
   
-  scale_x_continuous(labels = scales::percent_format(scale = 1,accuracy = 1), breaks = c(0,1,4,5,10,15,20))+ #, trans = log2_trans())+
+  scale_x_continuous(labels = scales::percent_format(scale = 1,accuracy = 1), breaks = c(0,1,4,5,10,15,20,25,30))+ #, trans = log2_trans())+
   scale_color_gradient(low="gray", high="darkblue")+
   
-  scale_y_continuous(limits = c(0, 725),breaks = c(0,50,75,200,500))+
+  scale_y_continuous(limits = c(0, 2000),breaks = c(0,50,75,200,500,1000,2000))+
   
   theme_classic()+
   xlab("Percentage positieve testen")+ 

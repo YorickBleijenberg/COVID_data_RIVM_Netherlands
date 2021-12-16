@@ -54,7 +54,7 @@ number_new_prov <- number_new_prov %>%
 
 ####  Set date ####
 
-number_new_prov_short <- number_new_prov[number_new_prov$Date>"2021-06-01"&number_new_prov$Date<=Sys.Date(),]
+number_new_prov_short <- number_new_prov[number_new_prov$Date>"2020-06-01"&number_new_prov$Date<=Sys.Date(),]
 
 
 
@@ -110,17 +110,24 @@ ggsave("data/20_prov_new-no-color.png",width=16, height = 9)
 #### Province plot new EN ####
 
 ggplot(data = number_new_prov_short, ) + 
-  geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
+  geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), colour = "black", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
+  
   facet_wrap(~ Province, scales = "free_y")+
   
   theme_bw() + 
   
   xlab("")+ 
   ylab("")+
+  
+  scale_x_date(date_breaks = "1 month", 
+               date_labels= format("%b"),
+               limits = as.Date(c("2021-11-01", NA))
+  )+
   labs(title = "Provinces",
        subtitle = "New cases, 7 day moving average  (Y-axes changes)",
        caption = paste("Source: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
          panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
          legend.position = "none",   # no legend
@@ -450,6 +457,7 @@ ggplot(data = prov.combi.all) +
   labs(title = "Provincies",
        subtitle = "Nieuwe gevallen, 7-daags zwevend gemiddelde",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
          panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
         # legend.position = "none",   # no legend

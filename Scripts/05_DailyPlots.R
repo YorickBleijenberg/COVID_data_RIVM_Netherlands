@@ -121,9 +121,7 @@ ggplot(Merged_data_short)+
     theme_classic()+
     xlab("")+ 
     ylab("")+
-    scale_y_continuous(trans='log2', labels = label_comma(big.mark = ".", decimal.mark = ","))+
-    #lims(x= c(NA, NA), y = c(16, NA))+
-    #ylim(16, NA)+
+    scale_y_continuous(limits = c(1024, 33000), trans='log2', labels = label_comma(big.mark = ".", decimal.mark = ","))+
     labs(title = "Nieuw gemelde besmettingen, logaritmisch",
          subtitle = "met 7 daags voortschrijdend gemiddelde",
          caption = paste("Bron: RIVM | Plot: @YorickB  | ",Sys.Date()))+
@@ -141,7 +139,7 @@ ggplot(Merged_data_short)+
         axis.ticks.length = unit(0.5, "cm"),
         axis.line = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
-ggsave("data/06_new_cases_log.png",width=16, height = 9)
+ggsave("data/06_new_cases_log_line.png",width=16, height = 9)
 
 
 

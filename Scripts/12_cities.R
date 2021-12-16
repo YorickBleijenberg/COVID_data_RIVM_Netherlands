@@ -64,7 +64,7 @@ number_new_city <- number_new_city %>%
 
 ####  Set date ####
 
-number_new_city <- number_new_city[number_new_city$Date>"2020-07-01"&number_new_city$Date<=Sys.Date(),]
+number_new_city <- number_new_city[number_new_city$Date>"2021-08-01"&number_new_city$Date<=Sys.Date(),]
 
 
 
@@ -109,13 +109,15 @@ ggplot(data = number_new_city, ) +
 ggsave("data/18_city_new.png",width=16, height = 9)
 
 ggplot(data = number_new_city, ) + 
-  geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
+  geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), colour = "black", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
  
    facet_wrap(~ City,  scales = "free_y")+
   
-  scale_x_date(date_breaks = "3 month", 
-               date_labels= format("%b"))+
+  scale_x_date(date_breaks = "1 month", 
+               date_labels= format("%b"),
+               limits = as.Date(c("2021-11-01", NA))
+               )+
   
   theme_bw() + 
   xlab("")+ 

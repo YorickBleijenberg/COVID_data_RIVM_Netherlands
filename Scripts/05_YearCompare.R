@@ -290,14 +290,14 @@ ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
 
 tweet.year.compare.tweet <- "Vergelijking 2020 - 2021: Hoe staat het er vandaag voor t.o.v. vorig jaar?
 
-
-- Hogere bezetting ziekenhuis: %s --> %s
+2020 - 2021
+Bezetting ziekenhuis: %s --> %s
 
 
 7-daagse gemiddelden:
-- Meer besmettingen: %s --> %s
-- Meer doden: %s --> %s
-- Meer opnames: %s --> %s
+- besmettingen: %s --> %s
+- doden: %s --> %s
+- opnames: %s --> %s
 " 
 
 

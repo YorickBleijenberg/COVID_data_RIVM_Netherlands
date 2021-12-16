@@ -32,11 +32,15 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 ## https://covid19-static.cdn-apple.com/covid19-mobility-data/2023HotfixDev10/v3/en-us/applemobilitytrends-2020-12-17.csv
 #  https://covid19-static.cdn-apple.com/covid19-mobility-data/2024HotfixDev9/v3/en-us/applemobilitytrends-2021-01-08.csv
 
+#  https://covid19-static.cdn-apple.com/covid19-mobility-data/2202HotfixDev8/v3/en-us/applemobilitytrends-2021-11-11.csv
 
+## 2021-11-16
+
+## 2021-11-19
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2119HotfixDev15/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2203HotfixDev20/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -80,6 +84,7 @@ Apple_mob_nl_short$MAlopen  <- lead(Apple_mob_nl_short$MAlopen, 3)
 Apple_mob_nl_short <- Apple_mob_nl_short[-1:-6,]
 
 
+Apple_mob_nl_short$OV <- Apple_mob_nl_short$OV-100
 
 #### gather the table ####
 
@@ -106,8 +111,8 @@ persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2
                                     "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17",
                                     "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
                                     "2021-04-04", "2021-04-27", "2021-05-13",
-                                    
-                                    "2021-05-19", "2021-06-05", "2021-06-26", "2021-09-25"
+                                    "2021-05-19", "2021-06-05", "2021-06-26", "2021-09-25",
+                                    "2021-11-02", "2021-11-12", "2021-11-28"
                                     
 )), 
 event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
@@ -115,24 +120,26 @@ event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht"
         "Semi-lockdown", "verzwaring semi-lockdown", "Einde herfstvakantie", "Einde verzwaring", 
         "lockdown","" ,"avondklok", "basisscholen open", "kappers open", 
         "Eerste Paasdag","koningsdag / stap 1", "hemelvaart",
-        
-        "Stap 2", "Stap 3 - Einde lockdown",  "Stap 4/5", "Einde 1,5-metersamenleving"
+        "Stap 2", "Stap 3 - Einde lockdown",  "Stap 4/5", "Einde 1,5-metersamenleving",
+        "Halve Maatregelen", "'Harde klap'", "avondclockdown"
         
 ))
+
 
 ov.min <-  min(Apple_mob_nl_short$MAOV, na.rm=T)
 auto.min <-  min(Apple_mob_nl_short$MAauto , na.rm=T)
 lopen.min <-  min(Apple_mob_nl_short$MAlopen, na.rm=T)
 
-ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=Type))+ 
+
+
+ggplot(Apple_mob_nl_short, x=date)+
   
-  #geom_hline(yintercept = ov.min,    linetype = "dashed", color = "#619cff")+
-  #geom_hline(yintercept = auto.min,  linetype = "dashed", color = "#f8766d")+
-  #geom_hline(yintercept = lopen.min, linetype = "dashed", color = "#10be45")+
-  
+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -80.5, xend = as.Date("2021-01-15"), yend = -80.5),linetype = "dashed", color = "#619cff")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -54.2, xend = as.Date("2021-01-15"), yend = -54.2),linetype = "dashed", color = "#f8766d")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -56.1, xend = as.Date("2021-01-15"), yend = -56.1),linetype = "dashed", color = "#10be45")+
+  
+  geom_point(aes(x=date, y = OV,    color = "Openbaar Vervoer"), lwd=1.5) +
   
   
   geom_hline(yintercept=0) +
@@ -143,7 +150,7 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
   geom_line(aes(x=date, y = MAlopen, color = "Lopen"), lwd=2) +
   geom_line(aes(x=date, y = MAauto, color = "Auto"), lwd=2) +
     geom_line(aes(x=date, y = MAOV),color = "#F5F5F5", lwd=3) +
-  geom_line(aes(x=date, y = MAOV, color = "Openbaar vervoer"), lwd=2) +
+  geom_line(aes(x=date, y = MAOV, color = "Openbaar Vervoer"), lwd=2) +
   
   theme_classic()+
   xlab("")+ 
@@ -168,7 +175,6 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
   
   theme( plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
          panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
-         #legend.position = "none",   # no legend
          plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
          plot.subtitle =  element_text(hjust=0.5 ,size = 15,color = "black", face = "italic"),
          
@@ -182,13 +188,7 @@ ggplot(Apple_mob_nl_short, x=date)+  #aes(Datum, valuecol_am, group=Type, color=
          ### facet label custom
          strip.text.x = element_text(size = 13, color = "black"),
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
-  
- # geom_vline(xintercept = as.Date("2020-09-19"), linetype = "dotted") + 
- # geom_vline(xintercept = as.Date("2020-09-29"), linetype = "dotted") + 
- # geom_vline(xintercept = as.Date("2020-10-14"), linetype = "dotted") + 
- # geom_vline(xintercept = as.Date("2020-11-04"), linetype = "dotted") 
 
-  
   ggsave("data/30_Apple_data.png",width=16, height = 9)
 
 

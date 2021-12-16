@@ -11,7 +11,7 @@ OMTmax = 3400
 LCPS_OMT_Feed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")  
 LCPS_OMT_Feed$Datum <- as.Date(LCPS_OMT_Feed$Datum ,format="%d-%m-%Y")
 
-LCPS_OMT_Feed <- LCPS_OMT_Feed [, -c(2,3,4,6)]  
+LCPS_OMT_Feed <- LCPS_OMT_Feed [, -c(2,3,4,5,7)]  
 LCPS_OMT_Feed_sept <-  (LCPS_OMT_Feed %>% filter(Datum > "2021-09-15" ))
 Sum_IC_since_sept <- sum(LCPS_OMT_Feed_sept$IC_Nieuwe_Opnames_COVID)
 

@@ -115,10 +115,10 @@ ggplot(casus.age.dif.play.long)+
   xlab("")+
   ylab("")+
   
-   scale_x_date(date_breaks = "1 week", 
-                date_labels= format("%d %b"),
+   scale_x_date(date_breaks = "month", 
+                date_labels= format("%b"),
                 limits = as.Date(c("2021-08-01", NA)))+
-   scale_y_continuous(limits = c(NA, 100))+
+   scale_y_continuous(limits = c(NA, 200))+
   
   scale_color_brewer(palette = "RdYlBu", labels=c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70-79","80-89","90+"))+
   # scale_colour_viridis_d(option = "cividis")+

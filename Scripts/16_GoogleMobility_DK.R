@@ -25,8 +25,8 @@ Yesterday <- Sys.Date()-1
 
 temp <- tempfile()
 download.file("https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip",temp)
-google_mob_raw2020 <- read.csv(unz(temp, "2020_NL_Region_Mobility_Report.csv"),sep=",")
-google_mob_raw2021 <- read.csv(unz(temp, "2021_NL_Region_Mobility_Report.csv"),sep=",")
+google_mob_raw2020 <- read.csv(unz(temp, "2020_DK_Region_Mobility_Report.csv"),sep=",")
+google_mob_raw2021 <- read.csv(unz(temp, "2021_DK_Region_Mobility_Report.csv"),sep=",")
 
 
 google_mob_raw <- rbind(google_mob_raw2020, google_mob_raw2021)
@@ -120,7 +120,7 @@ theme_classic()+
   scale_color_manual(values = c("#3c81b9", "#54b251", "#fe8003", "#9951a4", "#e5292b"))+
   
   
-  labs(title = "Google Mobility - Nederland",
+  labs(title = "Google Mobility - Denmark",
       subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
       caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   
@@ -146,15 +146,16 @@ theme_classic()+
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
   
   geom_hline(yintercept=0) +
-  geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
+ 
+  # geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
+  #geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
 
-  geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
-  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)
+ # geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
+ # geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)
   
 
 
-ggsave("data/36_Google_data_NL.png",width=16, height = 9)
+ggsave("data/36_Google_data_DK.png",width=16, height = 9)
 
 
 
@@ -184,7 +185,7 @@ ggplot(Google_mob_NL_short)+
   xlab("")+ 
   ylab("")+
   scale_color_manual(values = c("#3c81b9", "#54b251", "#fe8003", "#9951a4", "#e5292b"))+
-  labs(title = "Google Mobility - Nederland",
+  labs(title = "Google Mobility - Denmark",
        subtitle = paste("7-daags zwevend gemiddele | Actueel tot:", Last_date_in_Google_file), #, "\n - semi-lockdown op 14 oktober\n - einde herfstvakantie op 25 oktober \n- verzwaring semi-lockdown"),
        caption = paste("Source: Google LLC 'Google COVID-19 Community Mobility Reports',   https://www.google.com/covid19/mobility/,  Accessed:",Sys.Date(), "    | Plot: @YorickB | ",Sys.Date()))+
   theme(legend.position = c(0.20,0.15),
@@ -206,12 +207,14 @@ ggplot(Google_mob_NL_short)+
          strip.text.x = element_text(size = 13, color = "black"),
          strip.background = element_rect(color="black", fill="gray", size=1.5, linetype="solid"))+
   geom_hline(yintercept=0) +
-  geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
-  geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
-  geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
-  geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
  
-ggsave("data/36_Google_data_NL_dots.png",width=16, height = 9)
+  # geom_vline(xintercept = as.Date("2020-09-18"), linetype = "dotted") + 
+  # geom_vline(xintercept = as.Date("2020-09-28"), linetype = "dotted") + 
+ 
+  # geom_vline(data=persco.df, mapping=aes(xintercept=date), color="black", linetype = "dotted") +
+  #geom_text(data=persco.df, mapping=aes(x=date, y=-98, label=event), size=4, angle=90, vjust=-0.4, hjust=0)+
+ 
+ggsave("data/36_Google_data_DK_dots.png",width=16, height = 9)
 
 
 #### Google NL tweet ####
@@ -270,7 +273,7 @@ tweet.GoogleM.NL.tweet <- sprintf(tweet.GoogleM.NL.tweet,
 Encoding(tweet.GoogleM.NL.tweet) <- "UTF-8"
 
 
- post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"))
+ post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_DK.png"))
 ## post_tweet(tweet.GoogleM.NL.tweet,  media = c("data/36_Google_data_NL.png"), in_reply_to_status_id = get_reply_id())
 
 
@@ -285,7 +288,7 @@ raw data dots"
 
 tweet.GoogleM.raw.tweet <- sprintf(tweet.GoogleM.raw.tweet)
 Encoding(tweet.GoogleM.raw.tweet) <- "UTF-8"
-post_tweet(tweet.GoogleM.raw.tweet,  media = c("data/36_Google_data_NL_dots.png"), in_reply_to_status_id = get_reply_id())  #
+post_tweet(tweet.GoogleM.raw.tweet,  media = c("data/36_Google_data_DK_dots.png"), in_reply_to_status_id = get_reply_id())  #
 
 
  

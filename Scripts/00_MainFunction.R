@@ -9,14 +9,34 @@
 #### de-kosten-van-falend-corona-beleid-zijn-mensenlevens.
 #### we-zijn-er-nog-lang-niet
 
-
 ####Check LSPC update
-LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")
+
 #LCPS_datafeed<-read.csv("C:\\Rdir\\data\\covid-19_lcpsfeed.csv", sep=",")
-LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
-LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
-last(LCPS_datafeed,2)
-last(LCPS_datafeed$Datum) == Sys.Date()
+
+
+message = "bla"
+cycle = 0
+
+repeat {
+   
+   LCPS_datafeed<-read.csv("https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",sep=",")
+   LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
+   LCPS_datafeed <- LCPS_datafeed[order(LCPS_datafeed$Datum),]
+   last(LCPS_datafeed,2)
+   last(LCPS_datafeed$Datum) == Sys.Date()
+   
+   date.check.update <- last(LCPS_datafeed$Datum)
+   if (date.check.update == as.Date(Sys.Date())){
+      message <- "GO GO GO GO GO"
+      time = Sys.time()
+      source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
+      break
+   }
+   cycle = cycle+1
+   time = Sys.time()
+   Sys.sleep(150)
+}
+
 
 #library(rsconnect)
 
@@ -34,10 +54,14 @@ library(lubridate)
 #source("C:\\Rdir\\Rscripts\\geom_stream.R")
 source("C:\\Rdir\\Rscripts\\store\\03A_TwitterAuthentication.r")
 
+
+
 #### some constants for the update ####
-editionname <-  "Houdt-de-werkelijkheid-zich-een-beetje-aan-de-prognose?"  #"AlLEeN-sAmEn-KrIjGeN-wE-cOrOnA" 
-vaccine.edition.name <- "BIZAR:-3de-prikken-niet-in-de-data"
-leeftijd             <- "2009"
+beds_current_capacity <- 1222
+inDE                  <- last(LCPS_datafeed$IC_Bedden_COVID_Internationaal,1)
+editionname <- "extraordinary-acceleration"
+vaccine.edition.name <- "weer-geen-open-booster-vaccinatie-data"
+leeftijd             <- "1952"
 
 editienaam  <-  editionname 
 
@@ -52,6 +76,9 @@ source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
 source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 source("C:\\Rdir\\Rscripts\\01_lcps_data_graph_new_small.R")
+
+beds_current_capacity <- beds_current_capacity
+source("C:\\Rdir\\Rscripts\\01_lcps_data_zoom.R")
 source("C:\\Rdir\\Rscripts\\68_OMT_counter.R")
 
 ###
@@ -129,7 +156,15 @@ source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 ###
 
 
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
+source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
+
+
 source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+
+source("C:\\Rdir\\Rscripts\\33_sint_2021_deaths.R")
+
+
 
 
 
@@ -147,9 +182,7 @@ Encoding(tweet.NICE.NEW.tweet) <- "UTF-8"
 
 
  
- 
- 
- source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
+# source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
  
  
  

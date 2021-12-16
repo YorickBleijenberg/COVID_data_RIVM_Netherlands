@@ -287,7 +287,7 @@ ggplot(LCPS_datafeed_predict)+
                limits = as.Date(c("2021-02-20", NA)))+
   
   #  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
-  scale_y_continuous(limits = c(0, 350), labels = label_comma(big.mark = ".", decimal.mark = ","))+ # , breaks = c(0,25,50,75,100,125,150,175,200))+
+  scale_y_continuous(limits = c(0, 450), labels = label_comma(big.mark = ".", decimal.mark = ","))+ # , breaks = c(0,25,50,75,100,125,150,175,200))+
 
 coord_cartesian(expand = FALSE)+
   
