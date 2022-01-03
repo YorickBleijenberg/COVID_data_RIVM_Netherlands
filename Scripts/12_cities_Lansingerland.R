@@ -32,8 +32,7 @@ number_muni_cum_city_agg <- aggregate(number_muni_cum_prov$Total_reported,     b
 number_cum_city_spread <- spread(number_muni_cum_city_agg, City, x)
 
 number_cum_city_spread_small <- number_cum_city_spread[,c("Date",
-                                                          "Amsterdam",
-                                                          "Rotterdam")]
+                                                          "Amsterdam")]
   
 number_cum_city_gather <- gather(number_cum_city_spread_small, City,  x, -"Date")
 
@@ -52,7 +51,7 @@ number_new_city <- number_new_city %>%
 
 ####  Set date ####
 
-number_new_city <- number_new_city[number_new_city$Date>"2020-07-01"&number_new_city$Date<=Sys.Date(),]
+number_new_city <- number_new_city[number_new_city$Date>"2021-09-01"&number_new_city$Date<=Sys.Date(),]
 
 
 
@@ -60,7 +59,7 @@ number_new_city <- number_new_city[number_new_city$Date>"2020-07-01"&number_new_
 
 ggplot(data = number_new_city, ) + 
  # geom_vline(aes(xintercept= as.Date("2021-02-09")), color="black", linetype = "dotted") +
-  geom_point(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
+  geom_bar(stat='identity', mapping = aes(x = Date, y = newCases), colour = "gray", size = 2)+
   geom_line(mapping = aes(x = Date, y = MAnewCases), colour = "darkred", size =1.5)+
    facet_wrap(~ City, )+ # scales = "free_y")+
   theme_bw() + 
@@ -90,5 +89,5 @@ ggplot(data = number_new_city, ) +
          panel.grid.minor.y = element_blank(),
   )
 
-ggsave("data/18_city_new_Lansingerland.png",width=16, height = 9)
+ggsave("data/18_city_new_Amsterdam.png",width=16, height = 9)
 

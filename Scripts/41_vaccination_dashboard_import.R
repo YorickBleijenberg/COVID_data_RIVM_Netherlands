@@ -136,7 +136,9 @@ colnames(new.row.df) <- c("date_of_update","date","week","total_registerd",
                           "ggd_total","hosp_total","care_total","ha_total",
                           "registerd_new","estimated_new","people_fully_vaccinated_new","ggd_new" ,"hosp_new","care_new","ha_new")
 
-new.vacc.df <- rbind(vacc_date_hist, new.row.df)
+new.vacc.df <- rbind(vacc_date_hist)
+#new.vacc.df <- rbind(vacc_date_hist, new.row.df)
+
 
 new.vacc.df[is.na(new.vacc.df)] <- 0
 
@@ -171,7 +173,7 @@ new.vacc.df.work <- new.vacc.df
 
 new.vacc.df.work[is.na(new.vacc.df.work)] <- 0
 
-new.vacc.df.work$for_MA <- new.vacc.df.work$estimated_new         # $care_new  + new.vacc.df.work$ggd_new + new.vacc.df.work$ha_new
+new.vacc.df.work$for_MA <- new.vacc.df.work$estimated_new      # $care_new  + new.vacc.df.work$ggd_new + new.vacc.df.work$ha_new
 new.vacc.df.work$MAnew  <- rollmeanr(new.vacc.df.work$for_MA, 7, fill = 0)
 new.vacc.df.work$MAnew_lead  <- lead(  new.vacc.df.work$MAnew,3)
 s_dayMA_tot <- last(new.vacc.df.work$MAnew)
@@ -186,7 +188,7 @@ s_dayMA_tot <- format(as.integer(s_dayMA_tot) ,big.mark = ".", decimal.mark = ",
 key <- "date"
 value <- "vacc_total"
 #gathercols <- c("Besmettingen","Opnames","Overleden")
-gathercols <- c("hosp_new","care_new","ggd_new", "ha_new")
+gathercols <- c("hosp_new","care_new","ggd_new", "ha_new", "booster_new")
 new.vacc.df.work.long <- gather(new.vacc.df.work, key, value, gathercols)
 
 #new.vacc.df.work.long$key <- as.factor(new.vacc.df.work.long$key, c("ggd_new","hosp_new","care_new", "ha_new"))
@@ -261,12 +263,12 @@ new.vacc.df.work$weekbegin <- floor_date(new.vacc.df.work$date, " week", week_st
 
 this.week <-floor_date(as.Date(today), " week", week_start = 1) 
 
-new.vacc.df.work$new <- new.vacc.df.work$ggd_new+new.vacc.df.work$hosp_new+ new.vacc.df.work$care_new + new.vacc.df.work$ha_new
+new.vacc.df.work$new <- new.vacc.df.work$ggd_new+new.vacc.df.work$hosp_new+ new.vacc.df.work$care_new + new.vacc.df.work$ha_new + new.vacc.df.work$booster_new
 
 
 key <- "week"
 value <- "vacc_total"
-gathercols <- c("hosp_new","care_new","ggd_new", "ha_new")
+gathercols <- c("hosp_new","care_new","ggd_new", "ha_new", "booster_new")
 new.vacc.df.work.long <- gather(new.vacc.df.work, key, value, gathercols)
 
 

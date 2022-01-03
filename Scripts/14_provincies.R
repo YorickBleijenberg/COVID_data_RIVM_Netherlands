@@ -122,7 +122,7 @@ ggplot(data = number_new_prov_short, ) +
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2021-11-01", NA))
+               limits = as.Date(c("2021-11-15", NA))
   )+
   labs(title = "Provinces",
        subtitle = "New cases, 7 day moving average  (Y-axes changes)",

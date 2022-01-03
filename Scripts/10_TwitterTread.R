@@ -784,12 +784,10 @@ Encoding(tweet.christ.death.tweet) <- "UTF-8"
 
 #### Lansingerland tweet ####
 
-tweet.Lansingerland.tweet <- "- Lansingerland 1x.
-- Bunschoten: Zo vaak als mensen willen; tussen 8 februari en 19 maart. (6 weken)
-- Dronten: vanaf 10 februari, 6 weken. elke anderhalve week/twee weken (3x p.p.)"
+tweet.Lansingerland.tweet <- "- Amsterdam"
 tweet.Lansingerland.tweet <- sprintf(tweet.Lansingerland.tweet)
 Encoding(tweet.Lansingerland.tweet) <- "UTF-8"
-#post_tweet(tweet.Lansingerland.tweet,  media = c("data/18_city_new_Lansingerland.png"), in_reply_to_status_id = get_reply_id())
+post_tweet(tweet.Lansingerland.tweet,  media = c("data/18_city_new_Amsterdam.png"), in_reply_to_status_id = get_reply_id())
 
 
 

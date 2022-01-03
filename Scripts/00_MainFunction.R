@@ -55,11 +55,10 @@ library(lubridate)
 source("C:\\Rdir\\Rscripts\\store\\03A_TwitterAuthentication.r")
 
 
-
 #### some constants for the update ####
-beds_current_capacity <- 1222
+beds_current_capacity <- 1159
 inDE                  <- last(LCPS_datafeed$IC_Bedden_COVID_Internationaal,1)
-editionname <- "extraordinary-acceleration"
+editionname <- "wie-wordt-de-nieuwe-beddenbaas?"
 vaccine.edition.name <- "weer-geen-open-booster-vaccinatie-data"
 leeftijd             <- "1952"
 
@@ -79,7 +78,7 @@ source("C:\\Rdir\\Rscripts\\01_lcps_data_graph_new_small.R")
 
 beds_current_capacity <- beds_current_capacity
 source("C:\\Rdir\\Rscripts\\01_lcps_data_zoom.R")
-source("C:\\Rdir\\Rscripts\\68_OMT_counter.R")
+# source("C:\\Rdir\\Rscripts\\68_OMT_counter.R")
 
 ###
 ###
@@ -139,7 +138,7 @@ source("C:\\Rdir\\Rscripts\\46_vaccine_effect_age_casus_plot_phd.R")
 
 source("C:\\Rdir\\Rscripts\\47_vaccine_effect_disabled.R")     
 
-source("C:\\Rdir\\Rscripts\\21_ECDC.R")
+#source("C:\\Rdir\\Rscripts\\21_ECDC.R")
 
 source("C:\\Rdir\\Rscripts\\26_Municipality.R")
 
@@ -158,6 +157,7 @@ source("C:\\Rdir\\Rscripts\\01_NICE_data-week_age_graph.R")
 
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_ICU_compare.R")
 source("C:\\Rdir\\Rscripts\\45_vaccine_effect_clinic_compare.R")
+
 
 
 source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")

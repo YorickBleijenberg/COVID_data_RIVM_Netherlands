@@ -70,12 +70,12 @@ df4 <- df3
 dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", 
                                          "2020-11-18", "2020-12-15", "2021-01-23", "2021-02-08",  "2021-03-31",
                                          "2021-06-26", "2021-07-09", "2021-08-30","2021-09-25",
-                                         "2021-11-02", "2021-11-12", "2021-11-28")),
+                                         "2021-11-02", "2021-11-12", "2021-11-28", "2021-12-19")),
                           event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown",
                                   "verzwaring", "einde verzwaring", "lockdown", "                    avondklok",
                                  "basisscholen open", "avondklok 22:00uur",
                                  "Alles open!", "aanscherpingen", "geen 1,5meter in HO", "geen 1,5 meter meer",
-                                 "Halve maatregelen", "Harde klap", "Avondclockdown"))
+                                 "Halve maatregelen", "Harde klap", "Avondclockdown", "lockdown"))
 
 
 df4 <- df4[df4$Datum>"2020-07-01",]

@@ -344,9 +344,9 @@ ggplot(data = lcps_working_3_long,
           axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
-          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed")) 
   
-  ggsave("data/plots/16b_IC_only_zoom.png",width=16, height = 9)
+ # ggsave("data/plots/16b_IC_only_zoom.png",width=16, height = 9)
 
 
 

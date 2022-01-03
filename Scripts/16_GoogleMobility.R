@@ -75,7 +75,8 @@ persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2
                                     "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
                                     "2021-04-04", "2021-04-27", "2021-05-13",
                                     "2021-05-19", "2021-06-05", "2021-06-26", "2021-09-25",
-                                    "2021-11-02", "2021-11-12", "2021-11-28"
+                                    "2021-11-02", "2021-11-12", "2021-11-28", "2021-12-19",
+                                    "2022-01-01"
                                     
 )), 
 event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
@@ -84,7 +85,8 @@ event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht"
         "lockdown","" ,"avondklok", "basisscholen open", "kappers open", 
         "Eerste Paasdag","koningsdag / stap 1", "hemelvaart",
         "Stap 2", "Stap 3 - Einde lockdown",  "Stap 4/5", "Einde 1,5-metersamenleving",
-        "Halve Maatregelen", "'Harde klap'", "Avondclockdown"
+        "Halve Maatregelen", "'Harde klap'", "Avondclockdown", "lockdown",
+        ""
         
 ))
 
@@ -106,6 +108,13 @@ ggplot(Google_mob_NL_short)+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date("2021-01-15"), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date("2021-01-15"), yend = -48.6),linetype = "dashed", color = "#e5292b")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = 17.4, xend = as.Date("2021-01-15"), yend = 17.4),linetype = "dashed", color = "#9951a4")+
+  
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -60.1, xend = as.Date("2022-01-15"), yend = -60.1),linetype = "dashed", color = "#54b251")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -22.4, xend = as.Date("2022-01-15"), yend = -22.4),linetype = "dashed", color = "#fe8003")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -65.3, xend = as.Date("2022-01-15"), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -56.0, xend = as.Date("2022-01-15"), yend = -56.0),linetype = "dashed", color = "#e5292b")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = 17.4, xend = as.Date("2022-01-15"), yend = 17.4),linetype = "dashed", color = "#9951a4")+
+  
   
   geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2) +
   geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2) +
@@ -167,6 +176,14 @@ ggplot(Google_mob_NL_short)+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -65.3, xend = as.Date("2021-01-15"), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = -48.6, xend = as.Date("2021-01-15"), yend = -48.6),linetype = "dashed", color = "#e5292b")+
   geom_segment(aes(x = as.Date("2020-12-15"), y = 17.4, xend = as.Date("2021-01-15"), yend = 17.4),linetype = "dashed", color = "#9951a4")+
+  
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -60.1, xend = as.Date("2022-01-15"), yend = -60.1),linetype = "dashed", color = "#54b251")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -22.4, xend = as.Date("2022-01-15"), yend = -22.4),linetype = "dashed", color = "#fe8003")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -65.3, xend = as.Date("2022-01-15"), yend = -65.3),linetype = "dashed", color = "#3c81b9")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = -56.0, xend = as.Date("2022-01-15"), yend = -56.0),linetype = "dashed", color = "#e5292b")+
+  geom_segment(aes(x = as.Date("2021-12-15"), y = 17.4, xend = as.Date("2022-01-15"), yend = 17.4),linetype = "dashed", color = "#9951a4")+
+  
+  
   
   geom_line(aes(x=Datum, y = MA_retail_recreatie,    color = "Retail & recreatie"), lwd=2, alpha=0.25) +
   geom_line(aes(x=Datum, y = MA_supermarkt_apotheek, color = "Supermarkt & Apotheek"), lwd=2, alpha=0.25) +

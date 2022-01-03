@@ -116,7 +116,7 @@ ggplot(data= RIVM_aantallen_gemeente_per_dag.combi.3)+
   
 facet_wrap(~gemeente_Naam, )+ #  scales = "free_y")+
  
-   scale_x_date(date_breaks = "1 month", 
+   scale_x_date(date_breaks = "4 month", 
               date_labels= format("%b"),
            limits = as.Date(c("2021-08-01", today)))+
   theme_bw() + 

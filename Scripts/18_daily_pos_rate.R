@@ -91,7 +91,7 @@ ggplot(data = tested_daily.count,)+
   
   
   
-  scale_y_continuous(limits = c(0, 130000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
+  scale_y_continuous(limits = c(0, 160000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
                      sec.axis = sec_axis(~ . / 400000, labels = percent))+
   
   
@@ -153,7 +153,7 @@ ggplot(data = tested_daily.count,)+
   geom_line(mapping = aes(x = date, y = MA_perc_fact), colour = "black", size = 2 )+
   
   
-  scale_y_continuous(limits = c(0, 130000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
+  scale_y_continuous(limits = c(0, 160000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
                      sec.axis = sec_axis(~ . / 400000, labels = percent))+
   
   

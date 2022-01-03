@@ -40,7 +40,7 @@ source("C:\\Rdir\\Rscripts\\03A_TwitterAuthentication.r")
 
 Yesterday <- Sys.Date()-1
 
-Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2203HotfixDev20/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
+Apple.file <- paste0("https://covid19-static.cdn-apple.com/covid19-mobility-data/2204HotfixDev29/v3/en-us/applemobilitytrends-",Yesterday, ".csv")
 
 
 #### read the latested Apple mobility report from disk ####
@@ -112,7 +112,7 @@ persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2
                                     "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
                                     "2021-04-04", "2021-04-27", "2021-05-13",
                                     "2021-05-19", "2021-06-05", "2021-06-26", "2021-09-25",
-                                    "2021-11-02", "2021-11-12", "2021-11-28"
+                                    "2021-11-02", "2021-11-12", "2021-11-28", "2021-12-19"
                                     
 )), 
 event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
@@ -121,7 +121,7 @@ event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht"
         "lockdown","" ,"avondklok", "basisscholen open", "kappers open", 
         "Eerste Paasdag","koningsdag / stap 1", "hemelvaart",
         "Stap 2", "Stap 3 - Einde lockdown",  "Stap 4/5", "Einde 1,5-metersamenleving",
-        "Halve Maatregelen", "'Harde klap'", "avondclockdown"
+        "Halve Maatregelen", "'Harde klap'", "avondclockdown", "lockdown"
         
 ))
 

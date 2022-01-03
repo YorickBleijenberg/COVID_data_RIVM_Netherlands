@@ -19,11 +19,49 @@ beds_total       = 188 + beds_covid  +  beds_non_covid
 beds_needed      = beds_total-beds_current_capacity
 boss_open      = 188 - beds_needed
 
-tekort.label <- paste("BOSS tekort:           ", beds_needed)
-boss.open    <- paste("BOSS open:           ", boss_open)
+
+if (beds_needed < 0) {
+  beds.needed.dot <- intToUtf8(0x1F7E2)     ### groen
+  tekort.label <- paste("BOSS tekort:           ---")
+  beds_needed.neg = -beds_needed
+  beds_needed.tweet     <- paste(beds.needed.dot, "Geen IC-bedden tekort. Vrije bedden: ", beds_needed.neg)
+  
+  
+} else if (beds_needed > 0) {
+  beds.needed.dot <- intToUtf8(0x1F534)     ### rood
+  tekort.label <- paste("BOSS tekort:           ", beds_needed)
+  beds_needed.tweet     <- paste(beds.needed.dot, beds_needed, "IC-bedden tekort (gaat af van de BOSS bedden, die eigenlijk vrij moeten blijven)")
+  
+  
+} else if (beds_needed == 0)
+  {beds.needed.dot <- intToUtf8(0x1F7E1)   ### geel
+  tekort.label <- paste("BOSS tekort:           ---")
+beds_needed.tweet     <- paste(beds.needed.dot, beds_needed, "geen IC-bedden tekort.")}
+
+  
+
+  
+  
+if (boss_open < 188) {
+    hosp.total.dot <- intToUtf8(0x1F7E2)     ### groen
+    boss.open    <- paste("BOSS open:           ", boss_open)
+    
+  } else if (boss_open > 188) {
+    hosp.total.dot <- intToUtf8(0x1F534)     ### rood
+    boss.open    <- paste("BOSS open:           188")
+    
+  } else
+    {hosp.total.dot <- intToUtf8(0x1F7E1)     ### geel
+  boss.open    <- paste("BOSS open:           ", 188)}
+
 
 IC_occupation3 <- merge(IC_occupation3,lcps.capacity.hist, all.x=TRUE)
 IC_occupation3$needed <- (IC_occupation3$boss+IC_occupation3$B_IC_covid_nl+IC_occupation3$A_IC_neg)-IC_occupation3$ic_capacity
+
+
+IC_occupation3$needed[IC_occupation3$needed < 0] <- 0    
+
+
 IC_occupation3$boss_minus = IC_occupation3$boss-IC_occupation3$needed
 IC_occupation3$over <- IC_occupation3$ic_capacity - (IC_occupation3$boss+IC_occupation3$B_IC_covid_nl+IC_occupation3$A_IC_neg)
 
@@ -48,34 +86,34 @@ ggplot(data = lcps_working_4_long,
        mapping = aes(x = date, y = number, color = factor(type, levels=c("over", "needed", "boss_minus","A_IC_neg", "B_IC_covid_nl")), 
                      fill = factor(type, levels=c("over","needed", "boss_minus","A_IC_neg", "B_IC_covid_nl"))))+
   
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-01-30"), ymin =1350, ymax = 1500, color = "black",fill = "black", alpha = 0.9)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-01-30"), ymin =1150, ymax = 1350, color = "black",fill = "black", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-01-30"), ymin =950, ymax = 1150, color = "black",fill = "red", alpha = 0.5)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-01-30"), ymin =400, ymax = 950, color = "black",fill = "blue", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-01-30"), ymin =200, ymax = 400, color = "black",fill = "red", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-01-30"), ymin =100, ymax = 200, color = "black",fill = "yellow", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-01-30"), ymin =0, ymax = 100, color = "black",fill = "blue", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =1350, ymax = 1500, color = "black",fill = "black", alpha = 0.9)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =1150, ymax = 1350, color = "black",fill = "black", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =950, ymax = 1150, color = "black",fill = "red", alpha = 0.5)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =400, ymax = 950, color = "black",fill = "blue", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =200, ymax = 400, color = "black",fill = "red", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =100, ymax = 200, color = "black",fill = "yellow", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =0, ymax = 100, color = "black",fill = "blue", alpha = 0.3)+ 
 
   
-  geom_text( aes( x=as.Date("2022-01-10"), y=1450, label=" CODE BLACK"),
+  geom_text( aes( x=as.Date("2022-02-10"), y=1450, label=" CODE BLACK"),
              color="white", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-01-10"), y=1300, label="1.350 - Hugo's\nopschalingsdoel"),
+  geom_text( aes( x=as.Date("2022-02-10"), y=1300, label="1.350 - Hugo's\nopschalingsdoel"),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-01-10"), y=1130, label="1.150 - IC max (piek) "),
+  geom_text( aes( x=as.Date("2022-02-10"), y=1130, label="1.150 - IC max (piek) "),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-01-10"), y=930, label="950 - IC max (langdurig)"),
+  geom_text( aes( x=as.Date("2022-02-10"), y=930, label="950 - IC max (langdurig)"),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-01-10"), y=380, label="400 - max COVID-19 (zonder griep)"),
+  geom_text( aes( x=as.Date("2022-02-10"), y=380, label="400 - max COVID-19 (zonder griep)"),
              color="black", size=4 , angle=0, fontface="bold")+
   
-  geom_text( aes( x=as.Date("2022-01-10"), y=180, label="200 - max COVID-19 (met griep)"),
+  geom_text( aes( x=as.Date("2022-02-10"), y=180, label="200 - max COVID-19 (met griep)"),
              color="black", size=4 , angle=0, fontface="bold")+
   
-  geom_text( aes( x=as.Date("2022-01-10"), y=50, label="Gommers goed zorg doel:\n max 100 covid op IC"),
+  geom_text( aes( x=as.Date("2022-02-10"), y=50, label="Gommers goed zorg doel:\n max 100 covid op IC"),
              color="black", size=4 , angle=0, fontface="bold")+
   
   geom_bar(stat='identity')+
@@ -83,7 +121,7 @@ ggplot(data = lcps_working_4_long,
   scale_x_date(name="",
                date_breaks = "1 month",
                date_labels= format("%b"),
-               limits = as.Date(c("2021-08-01", NA)))+
+               limits = as.Date(c("2021-08-12", NA)))+
   ylab("")+
   scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","),
                       breaks=c(100, 200,400,750,950,1150,1350),
@@ -100,7 +138,7 @@ ggplot(data = lcps_working_4_long,
   theme_classic()+
   theme(strip.background=element_blank(), strip.text=element_text(face="bold", size=rel(1)))+
   
-  theme(legend.position = c(0.5, 0.9),
+  theme(legend.position = c(0.3, 0.9),
         legend.background = element_rect(fill="#DAE3F3",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=20, face="bold"))+
@@ -126,11 +164,6 @@ ggplot(data = lcps_working_4_long,
 ####  IC zoom tweet #####          
 
 
-beds.needed.dot <-  intToUtf8(0x1F534)  
-beds_needed     <- paste(beds.needed.dot, beds_needed, "IC-bedden tekort (gaat af van de BOSS bedden, die eigenlijk vrij moeten blijven)")
-
-beds_total  <- format( beds_total,  big.mark="." ,decimal.mark=",")
-beds_current_capacity  <- format( beds_current_capacity,  big.mark="." ,decimal.mark=",")
 
 
 tweet.zoom.tweet <- 
@@ -153,7 +186,7 @@ tweet.zoom.tweet <- sprintf(tweet.zoom.tweet,
                             beds_covid,
                             beds_total,
                             beds_current_capacity,
-                            beds_needed)
+                            beds_needed.tweet)
 Encoding(tweet.zoom.tweet) <- "UTF-8"
 
 post_tweet(tweet.zoom.tweet,  media = c("data/plots/16b_IC_only_zoom.png" 
