@@ -59,7 +59,7 @@ IC_occupation3 <- merge(IC_occupation3,lcps.capacity.hist, all.x=TRUE)
 IC_occupation3$needed <- (IC_occupation3$boss+IC_occupation3$B_IC_covid_nl+IC_occupation3$A_IC_neg)-IC_occupation3$ic_capacity
 
 
-IC_occupation3$needed[IC_occupation3$needed < 0] <- 0    
+IC_occupation3$needed[IC_occupation3$needed < 0] <- 0    ### make sure beds are not double counted
 
 
 IC_occupation3$boss_minus = IC_occupation3$boss-IC_occupation3$needed
