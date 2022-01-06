@@ -24,12 +24,12 @@ tested_daily.count <- tested_daily.count %>%
 
 colnames(tested_daily.count) <- c("date", "values.tested_total", "positive_tests", "values.infected_percentage", "MA_perc")
 
-tested_daily.count$fact <- (4000 * tested_daily.count$values.infected_percentage)
+tested_daily.count$fact <- (3000 * tested_daily.count$values.infected_percentage)
 tested_daily.count$MA_perc  <- round(frollmean(tested_daily.count$values.infected_percentage,7),1)
 
 tested_daily.count$MA_perc_lead  <- lead(tested_daily.count$MA_perc,3)
 
-tested_daily.count$MA_perc_fact <- (4000 * tested_daily.count$MA_perc_lead)
+tested_daily.count$MA_perc_fact <- (3000 * tested_daily.count$MA_perc_lead)
 
 
 tested_daily.count$Ma_tot_tests <-  round(frollmean(tested_daily.count$values.tested_total ,7),0)
@@ -91,8 +91,8 @@ ggplot(data = tested_daily.count,)+
   
   
   
-  scale_y_continuous(limits = c(0, 160000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
-                     sec.axis = sec_axis(~ . / 400000, labels = percent))+
+  scale_y_continuous(limits = c(0, 150000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
+                     sec.axis = sec_axis(~ . / 300000, labels = percent))+
   
   
   
@@ -153,8 +153,8 @@ ggplot(data = tested_daily.count,)+
   geom_line(mapping = aes(x = date, y = MA_perc_fact), colour = "black", size = 2 )+
   
   
-  scale_y_continuous(limits = c(0, 160000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
-                     sec.axis = sec_axis(~ . / 400000, labels = percent))+
+  scale_y_continuous(limits = c(0, 150000), breaks = c(0, 10000, 20000,40000,60000,80000,100000,120000)  ,labels = label_number(big.mark = ".", decimal.mark = ","),
+                     sec.axis = sec_axis(~ . / 300000, labels = percent))+
   
   
   scale_x_date(date_breaks = "1 month", 
