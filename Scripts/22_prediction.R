@@ -438,7 +438,7 @@ geom_vline(data=carnaval2022.df,  mapping=aes(xintercept=date), linetype = "dash
     #ylim(16, NA)+
  
   #scale_y_continuous(limits = c(0, 5000),breaks = c(500, 1000, 1500,2000,2500,3000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
-  scale_y_continuous(limits = c(0, 25000),breaks = c(5000,  10000, 15000,20000, 25000, 30000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 40000),breaks = c(5000,  10000, 15000,20000, 25000, 30000,35000,40000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   
     
@@ -742,7 +742,7 @@ geom_vline(data=stap.een.df,  mapping=aes(xintercept=date), linetype = "dashed",
 theme_classic()+
   xlab("")+
   ylab("")+
-  scale_y_continuous(limits = c(0, 25000),breaks = c(5000, 10000, 15000,20000,25000,30000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(limits = c(0, 40000),breaks = c(5000, 10000, 15000,20000,25000,30000), labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
   coord_cartesian(expand = FALSE)+
   

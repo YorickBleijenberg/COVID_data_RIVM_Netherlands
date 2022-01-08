@@ -56,9 +56,9 @@ source("C:\\Rdir\\Rscripts\\store\\03A_TwitterAuthentication.r")
 
 
 #### some constants for the update ####
-beds_current_capacity <- 1159
+beds_current_capacity <- 1139
 inDE                  <- last(LCPS_datafeed$IC_Bedden_COVID_Internationaal,1)
-editionname <- "wie-wordt-de-nieuwe-beddenbaas?"
+editionname <- "een-lager-individueel-risico,-maar-hoger-systeem-risico"
 vaccine.edition.name <- "weer-geen-open-booster-vaccinatie-data"
 leeftijd             <- "1952"
 
@@ -84,6 +84,8 @@ source("C:\\Rdir\\Rscripts\\01_lcps_data_zoom.R")
 ###
 
 #### update at 15:15 ####
+
+source("C:\\Rdir\\Rscripts\\18_daily_pos_rate_marino.R")
 
 source("C:\\Rdir\\Rscripts\\18_daily_pos_rate.R")
 
@@ -165,115 +167,10 @@ source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
 source("C:\\Rdir\\Rscripts\\33_sint_2021_deaths.R")
 
 
+ # source("C:\\Rdir\\Rscripts\\05_YearCompare_ALL.R")
+ # source("C:\\Rdir\\Rscripts\\83_Delta_vs_Omicron_compare.R")
 
+source("C:\\Rdir\\Rscripts\\82_bierviltje_plus.R")
 
-
-
-#### tweet.NICE.NEW.tweet ####
-
-tweet.NICE.NEW.tweet <- "Opnames per week - NICE"
-
-tweet.NICE.NEW.tweet <- sprintf(tweet.NICE.NEW.tweet)
-Encoding(tweet.NICE.NEW.tweet) <- "UTF-8"
-
-# post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_week.png", "data/plots/77_NICE_age_hosp_per_week_rel.png",
-#                                            "data/plots/77_NICE_age_IC_per_week.png","data/plots/77_NICE_age_IC_per_week_rel.png" 
-# ), in_reply_to_status_id = get_reply_id())
-
-
- 
-# source("C:\\Rdir\\Rscripts\\10_TwitterTread.R")
- 
- 
- 
- 
- 
- 
- 
- ###
- *****
- 
- ####
- *****
- 
- ####
- 
- 
- 
- 
- 
- # source("C:\\Rdir\\Rscripts\\41_vaccination_dashboard_import.R")
- 
- 
- 
- vaccins.estimated.total
- estimated.new.today
- people.vaccinated
- people.fully.vaccinated
- 
- vac.perc
- vac.perc.second
- 
- ggd.new.today
- ha.new.today
- care.new.today
- 
- freezer
- in.freezer
- 
- long.est
- 
- vac.perc.18
- vac.perc.18.second
- vac.perc.12
- vac.perc.12.second
- 
- 
- 
- 
- tweet.percentages.tweet <- "Schattingen
- 
-
- 
-
- 
- 12+
- - 1e prik: %s%s
- - Volledig gevaccineerd: %s%s
- 
- 
- Alle Nederlanders
- - 1e prik: %s%s
- - Volledig gevaccineerd: %s%s
- 
-
- - 1e prikken: %s miljoen
- - Volledig gevaccineerd: %s miljoen
- 
-Niet tegen Delta beschermd:
-- %s miljoen
-- %s%s
- 
-"
- 
- tweet.percentages.tweet <- sprintf(  tweet.percentages.tweet,
-                                      #  vac.perc.18,        deP,
-                                      # vac.perc.18.second, deP,
-                                      
-                                      vac.perc.12,        deP,
-                                      vac.perc.12.second, deP,
-                                      
-                                      vac.perc,           deP,
-                                      vac.perc.second,    deP,
-                                      
-                                      people.vaccinated.short,
-                                      people.fully.vaccinated.short,
-                                      
-                                      people.fully.NOT.vaccinated.short,
-                                      not.ful.vac.perc,    deP
- )
- 
- Encoding(tweet.percentages.tweet) <- "UTF-8"
-#  post_tweet(tweet.percentages.tweet,  media = c("data/belgische_hokjes.png"), in_reply_to_status_id = get_reply_id())
  
  
