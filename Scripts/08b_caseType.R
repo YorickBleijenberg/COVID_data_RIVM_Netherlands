@@ -20,52 +20,55 @@ cases_per_yesterday$Date_statistics_type[cases_per_yesterday$Date_statistics_typ
 cases_per_yesterday$Date_statistics_type[cases_per_yesterday$Date_statistics_type == "DPL"] <- "DPL_old"
 
 
-
 cases_per_yesterday$value <- 1
 cases_per_yesterday_long <- aggregate(cases_per_yesterday$value, by = list(Type_Datum = cases_per_yesterday$Date_statistics_type, Datum = cases_per_yesterday$date, Dag = cases_per_yesterday$Date_file), FUN = sum)
 colnames(cases_per_yesterday_long)[4] <- "value"
-check <- cases_per_yesterday_long[,c("Datum", "Type_Datum", "value" )]
+cases_per_yesterday_long <- cases_per_yesterday_long[,c("Datum", "Type_Datum", "value" )]
 
 
 cases_per_day$value <- 1
 cases_per_day_long <- aggregate(cases_per_day$value, by = list(Type_Datum = cases_per_day$Date_statistics_type, Datum = cases_per_day$date, Dag = cases_per_day$Date_file), FUN = sum)
 colnames(cases_per_day_long)[4] <- "value"
-check2 <- cases_per_day_long[,c("Datum", "Type_Datum", "value" )]
+cases_per_day_long <- cases_per_day_long[,c("Datum", "Type_Datum", "value" )]
 
 
-cases_per_day_long_bind <- rbind(check2, check)   # Adding Rows (adding other df, to the bottom)
-cases_per_day_long_spread <- spread(cases_per_day_long_bind, Type_Datum, value)
-cases_per_day_long_spread_diff <- cases_per_day_long_spread
-cases_per_day_long_spread_diff <- as.data.frame(cases_per_day_long_spread_diff)
-cases_per_day_long_spread_diff$diff <- 0
+cases_per_day_long_bind <- rbind(cases_per_day_long, cases_per_yesterday_long)   # Adding Rows (adding other df, to the bottom)
+cases_per_day_long_spread_diff <- spread(cases_per_day_long_bind, Type_Datum, value)
 cases_per_day_long_spread_diff[is.na(cases_per_day_long_spread_diff)] <- 0
 
-df <- cases_per_day_long_spread_diff
-df$DON_diff <- df$DON - df$DON_old
-df$DOO_diff <- df$DOO - df$DOO_old
-df$DPL_diff <- df$DPL - df$DPL_old
 
-df2 <- df[,c("Datum", "DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff" )]
+cases_per_day_long_spread_diff$DON_diff <- cases_per_day_long_spread_diff$DON - cases_per_day_long_spread_diff$DON_old
+cases_per_day_long_spread_diff$DOO_diff <- cases_per_day_long_spread_diff$DOO - cases_per_day_long_spread_diff$DOO_old
+cases_per_day_long_spread_diff$DPL_diff <- cases_per_day_long_spread_diff$DPL - cases_per_day_long_spread_diff$DPL_old
+
+cases_per_day_long_spread_diff$DON_diff_neg <- cases_per_day_long_spread_diff$DON_diff
+cases_per_day_long_spread_diff$DON_diff_neg[cases_per_day_long_spread_diff$DON_diff_neg > 0] <- 0
+cases_per_day_long_spread_diff$DON_old = cases_per_day_long_spread_diff$DON_old + cases_per_day_long_spread_diff$DON_diff_neg
+
+cases_per_day_long_spread_diff$DOO_diff_neg <- cases_per_day_long_spread_diff$DOO_diff
+cases_per_day_long_spread_diff$DOO_diff_neg[cases_per_day_long_spread_diff$DOO_diff_neg > 0] <- 0
+cases_per_day_long_spread_diff$DOO_old = cases_per_day_long_spread_diff$DOO_old + cases_per_day_long_spread_diff$DOO_diff_neg
+
+cases_per_day_long_spread_diff$DPL_diff_neg <- cases_per_day_long_spread_diff$DPL_diff
+cases_per_day_long_spread_diff$DPL_diff_neg[cases_per_day_long_spread_diff$DPL_diff_neg > 0] <- 0
+cases_per_day_long_spread_diff$DPL_old = cases_per_day_long_spread_diff$DPL_old + cases_per_day_long_spread_diff$DPL_diff_neg
 
 
+cases_per_day_long_spread_diff <- cases_per_day_long_spread_diff[,c("Datum", "DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff" )]
+
+
+#### Gather ####
 
 keycol <- "Datum"
 valuecol <- "type"
 gathercols <- c("DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff")
 
-#df4 <- gather(df2, keycol, valuecol, gathercols)
-#df4$Datum <- as.Date(df4$Datum)
+cases_per_day_diff_gather<- gather(cases_per_day_long_spread_diff, keycol, valuecol, gathercols)
+cases_per_day_diff_gather$Datum <- as.Date(cases_per_day_diff_gather$Datum)
 
-df3 <- gather(df2, keycol, valuecol, gathercols)
-df3$Datum <- as.Date(df3$Datum)
-
-
-df4 <- df3
 
 
 ### press events                         
-#dates_vline <- as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-04"))
-#dates_vline <- which((df4$Datum %in% dates_vline))
 
 dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", 
                                          "2020-11-18", "2020-12-15", "2021-01-23", "2021-02-08",  "2021-03-31",
@@ -78,15 +81,8 @@ dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13
                                  "Halve maatregelen", "Harde klap", "Avondclockdown", "lockdown"))
 
 
-df4 <- df4[df4$Datum>"2020-07-01",]
+df4 <- cases_per_day_diff_gather[cases_per_day_diff_gather$Datum>"2020-07-01",]
 
-
-
-rect5 <- data.frame(xmin = c(as.Date("2020-12-30"), as.Date("2021-01-06")),
-                    xmax = c(as.Date("2021-01-02"), as.Date("2021-01-06")),
-                    ymin = c(0,0),
-                    ymax = c(Inf, Inf),
-                    label.bes = c("kerst", "oud/nieuw"))
 
 
 
@@ -121,10 +117,9 @@ theme_classic()+
   geom_vline(data=dates_vline,  mapping=aes(xintercept=date),  col = "darkgray", lwd = 0.5, linetype= "dashed")+
   geom_text(data=dates_vline  , mapping=aes(x=date, y=14000, label=event), size=5, angle=90, vjust=-0.4, hjust="right", alpha = 0.8)+
   
-  scale_y_continuous( labels = label_comma(big.mark = ".", decimal.mark = ","))+
+  scale_y_continuous(labels = label_comma(big.mark = ".", decimal.mark = ","))+
   
 labs(title = "Besmette personen: verschil met gisteren",
-    # subtitle = "  18-sep, Persco: 'kroeg uurtje eerder dicht'\n  28-sep, Persco: 'we gaan voor een R van 0,9'\n13-okt, Persco: semi-lockdown\n5 t/m 18 nov, verzwaring semi-lockdown", #  OMT: 'Een lagere R is beter'",
      caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
    theme(legend.position = c(0.07, 0.4),
@@ -143,19 +138,20 @@ labs(title = "Besmette personen: verschil met gisteren",
     axis.ticks.length = unit(0.5, "cm"),
     axis.line = element_line(colour = "#F5F5F5"),
     
-    #axis.labels.x=date_format("%d-%b"),
-    
-    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
-#panel.grid.major.x = element_line(colour= "darkgray", linetype = "solid"))
 
- # geom_rect(data = rect5 , aes(xmin = xmin,xmax = xmax, ymin = ymin,ymax = ymax, fill = label.bes), alpha = 0.5) +
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
+
 
 
 ggsave("data/07_cases_type1.png",width=16, height = 9)  
 
 
 
-df4_short  <- df4[df4$Datum>"2021-06-01",]
+
+
+
+
+df4_short  <- cases_per_day_diff_gather[cases_per_day_diff_gather$Datum>"2021-06-01",]
 
 ggplot(df4_short, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
   geom_col()+
@@ -266,12 +262,12 @@ dates_vline_mondays <- as.Date(c("2020-08-10","2020-08-17","2020-08-24",
                   
                  ))   
 
-dates_vline_mondays <- which((df4$Datum %in% dates_vline_mondays))
+dates_vline_mondays <- which((cases_per_day_diff_gather$Datum %in% dates_vline_mondays))
 
 
 
 
-ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
+ggplot(cases_per_day_diff_gather, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
   geom_col()+
 
   theme_classic()+
@@ -290,14 +286,14 @@ ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","
                                 "Melding aan GGD (nieuw/correctie)",
                                 "Melding aan GGD"))+
   
-   geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),
-             col = "darkgray", lwd = 0.5, linetype= "dashed")+
+  # geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),
+  #           col = "darkgray", lwd = 0.5, linetype= "dashed")+
     # geom_text(mapping=aes(x=date, y=0, label=event), size=4, angle=90, vjust=-0.4, hjust=0) +
     labs(title = "Besmette personen: verschil met gisteren",
     #   subtitle = # "Maandagen", #  OMT: 'Een lagere R is beter'",
        caption = paste("Bron: RIVM | Plot: @YorickB ",Sys.Date()))+
   
-  theme(legend.position = c(0.4, 0.8),
+  theme(legend.position = c(0.2, 0.8),
         legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
         legend.title = element_blank(),
         legend.text = element_text(colour="black", size=9, face="bold"))+
