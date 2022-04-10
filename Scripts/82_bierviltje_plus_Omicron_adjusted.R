@@ -5,6 +5,10 @@ case_predict.file <-paste0("C:\\Rdir\\data\\",Sys.Date(),"\\", Sys.Date(),"_casu
 case_predict <- read.csv(case_predict.file,sep=";")
 case_predict <- case_predict[,-c(1,13)]
 colnames(case_predict) <- c("very_young","young", "twenty", "thirty", "forthy", "fithy", "sixty", "seventy", "old","very_old", "date")
+
+case_predict <- case_predict[-c(496),] 
+
+
 case_predict$young = case_predict$very_young+case_predict$young
 case_predict$old = case_predict$very_old+case_predict$old
 case_predict <- case_predict[,-c(1,10)]
@@ -33,14 +37,14 @@ case_predict <- case_predict[case_predict$date>"2021-03-20",]
 #case_predict$old       *0.2
 
 
-#case_predict$young_hosp_pred   = case_predict$young     *0.005
-#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.005
-#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.010
-#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.017
-#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.025
-#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.05
-#case_predict$seventy_hosp_pred = case_predict$seventy   *0.120
-#case_predict$old_hosp_pred     = case_predict$old       *0.2
+# case_predict$young_hosp_pred   = case_predict$young     *0.003   
+# case_predict$twenty_hosp_pred  = case_predict$twenty    *0.005
+# case_predict$thirty_hosp_pred  = case_predict$thirty    *0.010
+# case_predict$forthy_hosp_pred  = case_predict$forthy    *0.017
+# case_predict$fithy_hosp_pred   = case_predict$fithy     *0.035    
+# case_predict$sixty_hosp_pred   = case_predict$sixty     *0.07    
+# case_predict$seventy_hosp_pred = case_predict$seventy   *0.14
+# case_predict$old_hosp_pred     = case_predict$old       *0.2
 
 #case_predict$young_hosp_pred   = case_predict$young     *0.004
 #case_predict$twenty_hosp_pred  = case_predict$twenty    *0.0045
@@ -61,19 +65,75 @@ case_predict <- case_predict[case_predict$date>"2021-03-20",]
 #case_predict$old_hosp_pred     = case_predict$old       *0.127
 
 
-case_predict$young_hosp_pred   = case_predict$young     *0.003
-case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003
-case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006
-case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075
-case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013
-case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03
-case_predict$seventy_hosp_pred = case_predict$seventy   *0.07
-case_predict$old_hosp_pred     = case_predict$old       *0.14
+#case_predict$young_hosp_pred   = case_predict$young     *0.003
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075
+#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.07
+#case_predict$old_hosp_pred     = case_predict$old       *0.14
+
+
+#case_predict$young_hosp_pred   = case_predict$young     *0.003 / 2
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 / 3
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006 / 2.9
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075/ 3
+#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013 / 2
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03  / 1.75
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.07  / 1.5
+#case_predict$old_hosp_pred     = case_predict$old       *0.14  / 1.1
+
+
+#2022-01-20
+
+#case_predict$young_hosp_pred   = case_predict$young     *0.003 / 3.5
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 / 2.5
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006 / 3.5
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075/ 3.5
+#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013 / 4
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03  / 3
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.07  / 2
+#case_predict$old_hosp_pred     = case_predict$old       *0.14  / 1.5
+
+
+#2022-01-28
+
+#case_predict$young_hosp_pred   = case_predict$young     *0.00175  / 1.5
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003  / 1.75
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.005  / 2.2
+
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.006 / 3
+#case_predict$fifthy_hosp_pred   = case_predict$fifthy     *0.013  / 3
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03   / 2.25
+
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.07   / 1.25
+#case_predict$old_hosp_pred     = case_predict$old       *0.14   / 1.1
+
+
+
+#2022-04-02
+
+case_predict$young_hosp_pred   = case_predict$young     *0.00175  / 0.8
+case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003  / 2.25
+case_predict$thirty_hosp_pred  = case_predict$thirty    *0.005  / 2.75
+
+case_predict$forthy_hosp_pred  = case_predict$forthy    *0.006 / 3.25
+case_predict$fifthy_hosp_pred   = case_predict$fithy    *0.013  / 4
+case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03   / 4
+
+case_predict$seventy_hosp_pred = case_predict$seventy   *0.07   / 3.5
+case_predict$old_hosp_pred     = case_predict$old       *0.14   / 2.5
+
+
+
+
+
 
 
 case_predict$hosp_adm_rate = case_predict$young_hosp_pred + case_predict$twenty_hosp_pred+
                               case_predict$thirty_hosp_pred + case_predict$forthy_hosp_pred+
-                              case_predict$fithy_hosp_pred +case_predict$sixty_hosp_pred +
+                              case_predict$fifthy_hosp_pred +case_predict$sixty_hosp_pred +
                               case_predict$seventy_hosp_pred + case_predict$old_hosp_pred
 
 colnames(case_predict) <- c("young", "twenty", "thirty", "forthy",
@@ -84,12 +144,26 @@ colnames(case_predict) <- c("young", "twenty", "thirty", "forthy",
 
 case_predict$date = case_predict$date+7
 
+case_predict_ma <- case_predict
+
 keycol <- "date"
 valuecol <- "type"
 gathercols <- c("0-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+")
 case_predict_input <- gather(case_predict, keycol, valuecol, gathercols)
 
 
+
+colnames(case_predict_ma) <- c("young", "twenty", "thirty", "forthy",
+                            "fithy", "sixty", "seventy", "old",
+                            "date",
+                            "ma0-19", "ma20-29", "ma30-39", "ma40-49", "ma50-59", 
+                            "ma60-69", "ma70-79", "ma80+","hosp_adm_rate")
+
+
+keycol <- "date"
+valuecol <- "type"
+gathercols <- c("ma0-19", "ma20-29", "ma30-39", "ma40-49", "ma50-59", "ma60-69", "ma70-79", "ma80+")
+case_predict_ma_input <- gather(case_predict_ma, keycol, valuecol, gathercols)
 
 
 
@@ -131,6 +205,8 @@ hosp_real <- (hosp_real %>%  mutate(old.Change    = old    - lag(old,    default
 
 hosp_real <- hosp_real[,-c(2:26)]
 
+hosp_real_noMA <- hosp_real
+
 
 #hosp_real.file <-paste("C:\\Rdir\\data\\2021-11-04\\2021-11-04_nice_instroom_hosp.csv")
 #hosp_real <- read.csv(hosp_real.file,sep=";")
@@ -138,14 +214,44 @@ colnames(hosp_real) <- c("date","0-19", "20-29", "30-39", "40-49", "50-59", "60-
 hosp_real$date = as.Date(hosp_real$date)
 
 
-hosp_real$`0-19`  = rollmeanr(hosp_real$`0-19`  , 7, fill = 0)
-hosp_real$`20-29`  = rollmeanr(hosp_real$`20-29` , 7, fill = 0)
-hosp_real$`30-39`  = rollmeanr(hosp_real$`30-39`, 7, fill = 0)
-hosp_real$`40-49` = rollmeanr(hosp_real$`40-49` , 7, fill = 0)
-hosp_real$`50-59`   = rollmeanr(hosp_real$`50-59` , 7, fill = 0)
-hosp_real$`60-69`   = rollmeanr(hosp_real$`60-69` , 7, fill = 0)
-hosp_real$`70-79` = rollmeanr(hosp_real$`70-79` , 7, fill = 0)
-hosp_real$`80+`  = rollmeanr(hosp_real$`80+` , 7, fill = 0)
+hosp_real$`ma0-19`  = rollmeanr(hosp_real$`0-19`  , 7, fill = 0)
+hosp_real$`ma20-29`  = rollmeanr(hosp_real$`20-29` , 7, fill = 0)
+hosp_real$`ma30-39`  = rollmeanr(hosp_real$`30-39`, 7, fill = 0)
+hosp_real$`ma40-49` = rollmeanr(hosp_real$`40-49` , 7, fill = 0)
+hosp_real$`ma50-59`   = rollmeanr(hosp_real$`50-59` , 7, fill = 0)
+hosp_real$`ma60-69`   = rollmeanr(hosp_real$`60-69` , 7, fill = 0)
+hosp_real$`ma70-79` = rollmeanr(hosp_real$`70-79` , 7, fill = 0)
+hosp_real$`ma80+`  = rollmeanr(hosp_real$`80+` , 7, fill = 0)
+
+
+
+keycol <- "date"
+valuecol <- "type"
+gathercols <- c("ma0-19", "ma20-29", "ma30-39", "ma40-49", "ma50-59", "ma60-69", "ma70-79", "ma80+")
+hosp_real_testdata <- gather(hosp_real, keycol, valuecol, gathercols)
+
+
+ggplot()+
+  geom_line(data=hosp_real_testdata, aes(x=date, y=valuecol, color=keycol), size=2)+
+  geom_line(data=case_predict_ma_input, aes(x=date, y=valuecol, color=keycol))+
+  
+  facet_wrap(~ keycol,  scales = "free_y")+
+  #facet_wrap(~ keycol)+
+
+  scale_x_date(date_breaks = "1 month", 
+             date_labels= format("%b"),
+             limits = as.Date(c("2021-11-01", NA)))+
+  labs(title = "Bierviltje - ziekenhuisopnames - Omicron (BA.2) - moving average",
+       subtitle = "Dit klopt niet, want bierviltje.",
+       caption = paste("Source: NICE / RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))+
+
+ggsave("data/plots/bierviltje_plus_2_omicron_ma_adj.png",width=16, height = 9)
+
+
+
+
 
 
 keycol <- "date"
@@ -160,17 +266,18 @@ ggplot()+
   
   facet_wrap(~ keycol,  scales = "free_y")+
   #facet_wrap(~ keycol)+
-
+  
   scale_x_date(date_breaks = "1 month", 
-             date_labels= format("%b"),
-             limits = as.Date(c("2021-08-01", NA)))+
-  labs(title = "Bierviltje - ziekenhuisopnames",
+               date_labels= format("%b"),
+               limits = as.Date(c("2021-11-01", NA)))+
+  labs(title = "Bierviltje - ziekenhuisopnames - Omicron (BA.2)",
        subtitle = "Dit klopt niet, want bierviltje.",
        caption = paste("Source: NICE / RIVM | Plot: @YorickB | ",Sys.Date()))+
   
-  theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))
+  theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))+
+  
+  ggsave("data/plots/bierviltje_plus_2_omicron_adj.png",width=16, height = 9)
 
-ggsave("data/plots/bierviltje_plus_2.png",width=16, height = 9)
 
 
 
@@ -205,14 +312,18 @@ ggplot()+
   scale_y_continuous(limits = c(0,NA))+
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2021-04-01", NA)))+
-  labs(title = "Bierviltje - ziekenhuisopnames",
-       subtitle = "Dit klopt niet, want bierviltje.\nLaatste 3 datapunten nog niet gecorrigeerd voor rapportagevertraging",
-       caption = paste("Source: NICE / RIVM | Plot: @YorickB | ",Sys.Date()))+
+               limits = as.Date(c("2021-11-01", NA)))+
+  labs(title = "Bierviltje - ziekenhuisopnames - Omicron (BA.2)",
+       subtitle = "Dit is een biervitlje, GEEN voorspelling! \n Zwart = datapunten NICE \n Blauw = predictie bierviltje",
+       caption = paste("Source: NICE / RIVM | Plot: @YorickB",Sys.Date()))+
   
-  theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))
+  theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))+
 
-ggsave("data/plots/bierviltje_plus_hosp.png",width=16, height = 9)
+ggsave("data/plots/bierviltje_plus_hosp_omicron_adj.png",width=16, height = 9)
+
+
+
+
 
 
 

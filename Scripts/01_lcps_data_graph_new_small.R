@@ -30,6 +30,12 @@ LCPS_datafeed$Datum <- as.Date(LCPS_datafeed$Datum ,format="%d-%m-%Y")
 #LCPS_datafeed$week<-strftime(LCPS_datafeed$Datum,format = "%V")
 
 
+#### remove last row
+
+#LCPS_datafeed <- nrow(LCPS_datafeed,)
+#n<- dim(LCPS_datafeed)[1]
+#LCPS_datafeed <- LCPS_datafeed[2:722,]
+
 
 File_date_5ax <- paste0("data/",format(Sys.time(), "%Y-%m-%d"),"/",format(Sys.time(), "%Y-%m-%d"), "_COVID-19_LCSP2.csv")
 File_date_5bx <- paste0("LCPS-data/","COVID-19_LCSP_", format(Sys.time(), "%Y-%m-%d"),"2.csv")
@@ -795,28 +801,28 @@ ggplot(LCPS_datafeed_predict)+
                date_labels= format("%b"),
                name="",
 #               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2020-10-17", "2022-02-20")))+
+               limits = as.Date(c("2020-10-17", NA)))+
   
 #  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,12,40,80,100,200,300,400))+
 scale_y_continuous(limits = c(0, 500), labels = label_comma(big.mark = ".", decimal.mark = ","), breaks = c(0,50,100,200,300,400,500))+
    
-    geom_hline(yintercept=100, size = 1)+
-    geom_hline(yintercept=40, size = 1)+
+ #   geom_hline(yintercept=100, size = 1)+
+ #   geom_hline(yintercept=40, size = 1)+
 
-  annotate("text", x = as.Date("2022-02-18"), y = 105, label = "100 per dag", size=4,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 45, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 105, label = "100 per dag", size=4,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 45, label = "40 per dag", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2022-02-18"), y = 175,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 150, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
+#  annotate("text", x = as.Date("2022-05-18"), y = 175,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 150, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2022-02-18"), y = 80,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 58, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
+#  annotate("text", x = as.Date("2022-05-18"), y = 80,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
+#  annotate("text", x = as.Date("2022-05-18"), y = 58, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2022-02-18"), y = 29,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 10, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 29,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
+#  annotate("text", x = as.Date("2022-05-18"), y = 10, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
   
   
-  coord_cartesian(expand = FALSE)+
+  coord_cartesian(expand = TRUE)+
   
   ylab("")+
   labs(title=hosp_new_hosp.2, 
@@ -904,31 +910,31 @@ ggplot(LCPS_datafeed_predict)+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-#               limits = as.Date(c("2020-10-18", NA)))+
-               limits = as.Date(c("2020-10-17", "2022-02-20")))+
+               limits = as.Date(c("2020-10-18", NA)))+
+#               limits = as.Date(c("2020-10-17", "2022-05-20")))+
 #  scale_y_continuous(limits = c(0, 80), breaks = c(0,3,10,20,30,50,70))+
    scale_y_continuous(limits = c(0, 80), breaks = c(0,10,20,30,40,50,60,70))+
   
   
-    geom_hline(yintercept=25,  size = 1)+
-    geom_hline(yintercept=10,  size = 1)+
+#    geom_hline(yintercept=25,  size = 1)+
+#    geom_hline(yintercept=10,  size = 1)+
 
   
-  annotate("text", x = as.Date("2022-02-18"), y = 26, label = "25 per dag", size=4,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 26, label = "25 per dag", size=4,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 11, label = "10 per dag", size=4,color = "black",face = "bold", hjust ="right")+
  
 
-  annotate("text", x = as.Date("2022-02-18"), y = 35,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 32, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 35,  label = "Ernstig", size=10,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 32, label = "(Landelijke maatregelen)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2022-02-18"), y = 17.5,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 14.5, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 17.5,  label = "Zorgelijk", size=10,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 14.5, label = "(CoronaToegangsBewijs nodig)", size=4,color = "black",face = "bold", hjust ="right")+
   
-  annotate("text", x = as.Date("2022-02-18"), y = 5,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
-  annotate("text", x = as.Date("2022-02-18"), y = 3, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
+ #annotate("text", x = as.Date("2022-05-18"), y = 5,  label = "Waakzaam", size=10,color = "black",face = "bold", hjust ="right")+
+ # annotate("text", x = as.Date("2022-05-18"), y = 2, label = "(Geen CTB meer!)", size=4,color = "black",face = "bold", hjust ="right")+
   
   
-  coord_cartesian(expand = FALSE)+
+  coord_cartesian(expand = TRUE)+
   
   xlab("")+
   ylab("")+
@@ -1092,18 +1098,18 @@ Pati%snten nu in het ziekenhuis:
 Kliniek:  %s (%s)
 IC:       %s (%s)
 
-%s%s%s
 
 
 Nieuwe opnames: 
 Kliniek: %s 
 IC:        %s
 
-Huidig risiconiveau:
-%s%s%s
+
 
 #COVID19" 
 
+#Huidig risiconiveau:
+#%s%s%s
 
 tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                             days.covid.in.nl, editionname,
@@ -1112,13 +1118,12 @@ tweet.LCPS.EN.tweet <- sprintf(tweet.LCPS.EN.tweet,
                            
                             hosp.total.b1,  hosp.total.c1,
                             hosp.IC.b2,  hosp.IC.c2,
-                            flag.D,flag.E,inDE,
-
+                         
                             
                             hosp.new.b1,   
-                            hosp.new.b2,
+                            hosp.new.b2  #,
                             
-                            hosp.new.dot, hosp.new.lvl , hosp.new.dot
+                         #   hosp.new.dot, hosp.new.lvl , hosp.new.dot
 )
                             
 
@@ -1136,6 +1141,8 @@ Encoding(tweet.LCPS.EN.tweet) <- "UTF-8"
 source("C:\\Rdir\\Rscripts\\01_lcps_data-NICE_graph.R")
 
 
+ my_timeline <- get_my_timeline()  
+  reply_id <- my_timeline$status_id[1]
 
 #### tweet.NICE.NEW.tweet ####
 
@@ -1148,28 +1155,12 @@ post_tweet(tweet.NICE.NEW.tweet,  media = c("data/plots/77_NICE_age_hosp_per_wee
                                             "data/plots/77_NICE_age_hosp_per_week_rel.png",
                                             "data/plots/77_NICE_age_IC_per_week.png",
                                             "data/plots/77_NICE_age_IC_per_week_rel.png" 
-), in_reply_to_status_id = get_reply_id())
+), in_reply_to_status_id = reply_id)
 
 
 
 
-#### tweet.hospital.effect.tweet ####
 
-tweet.hospital.effect.tweet <- "Opnames"
-
-tweet.hospital.effect.tweet <- sprintf(tweet.hospital.effect.tweet)
-Encoding(tweet.hospital.effect.tweet) <- "UTF-8"
-
- post_tweet(tweet.hospital.effect.tweet,  media = c("data/plots/70_vaccinated_compare_age_clinic_abs.png",
-                                                    "data/plots/16x_omt_check_nice_peak.png",
-                                                  # "data/plots/70_vaccinated_compare_age_clinic.png",
-                                                   "data/plots/71_vaccinated_compare_age_ICU_abs.png",
-                                                  # "data/plots/71_vaccinated_compare_age_IC.png"
-                                                  "data/plots/16x_omt_check_week_on_week.png" 
- ), in_reply_to_status_id = get_reply_id())
-
- 
- 
  
  #### tweet.afschaling.tweet ####
  
@@ -1179,8 +1170,8 @@ Encoding(tweet.hospital.effect.tweet) <- "UTF-8"
  tweet.afschaling.tweet <- sprintf(tweet.afschaling.tweet)
  Encoding(tweet.afschaling.tweet) <- "UTF-8"
  
- post_tweet(tweet.afschaling.tweet,  media = c("data/plots/16b_IC_only_reverse.png"
-                                               ), in_reply_to_status_id = get_reply_id())
+# post_tweet(tweet.afschaling.tweet,  media = c("data/plots/16b_IC_only_reverse.png"
+#                                               ), in_reply_to_status_id = get_reply_id())
  
  
  

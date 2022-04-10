@@ -1,6 +1,7 @@
 
 today <- Sys.Date()
 last.year <- today-365
+first.year <- today-365-365
 
 year.compare.cases <- Merged_data_7MA
 
@@ -16,6 +17,8 @@ year.compare.cases$rawDate <- paste0("2020-", year.compare.cases$rawDate)
 year.compare.cases$rawDate <- as.Date(year.compare.cases$rawDate)
 
 year.compare.cases.last.year <- (year.compare.cases %>% filter(dateInTable == last.year ))
+year.compare.cases.first.year <- (year.compare.cases %>% filter(dateInTable == first.year ))
+
 year.compare.cases.today <- (year.compare.cases %>% filter(dateInTable == today ))
 MAcases.last.year = year.compare.cases.last.year$MACases
 MAdead.last.year = year.compare.cases.last.year$MAdead
@@ -44,7 +47,7 @@ MAdead.today      <- format( MAdead.today,  big.mark="." ,decimal.mark=",")
 
 ggplot(year.compare.cases, aes(x=rawDate, y = MACases))+
     geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+ # scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
@@ -56,7 +59,7 @@ ggplot(year.compare.cases, aes(x=rawDate, y = MACases))+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Nieuwe gevallen - 2020 vs 2021",
+  labs(title = "Nieuwe gevallen - 2020 vs 2021 vs 2022",
        subtitle = paste("7-daags zwevend gemiddele"),
        caption = paste("bron: RIVM  | Plot: @YorickB | ",Sys.Date()))+
 
@@ -80,13 +83,13 @@ ggplot(year.compare.cases, aes(x=rawDate, y = MACases))+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-ggsave("data/plots/11_20.21_compare_cases_all.png",width=16, height = 9)
+ggsave("data/plots/a11_20.21_compare_cases_all.png",width=16, height = 9)
 
 ##### plot deaths #####
 
 ggplot(year.compare.cases, aes(x=rawDate, y = MAdead))+
   geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+#  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
@@ -97,7 +100,7 @@ ggplot(year.compare.cases, aes(x=rawDate, y = MAdead))+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Nieuwe doden - 2020 vs 2021",
+  labs(title = "Nieuwe doden - 2020 vs 2021 vs 2022",
        subtitle = paste("7-daags zwevend gemiddele"),
        caption = paste("bron: RIVM  | Plot: @YorickB | ",Sys.Date()))+
 
@@ -121,7 +124,7 @@ ggplot(year.compare.cases, aes(x=rawDate, y = MAdead))+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-ggsave("data/plots/11_20.21_compare_dead_all.png",width=16, height = 9)
+ggsave("data/plots/a11_20.21_compare_dead_all.png",width=16, height = 9)
 
 
 
@@ -134,9 +137,9 @@ LCPS.compare$Datum <- as.Date(LCPS.compare$Datum ,format="%d-%m-%Y")
 
  
 
-LCPS.compare$total.occupation <- LCPS.compare$IC_Bedden_COVID + LCPS.compare$Kliniek_Bedden
+LCPS.compare$total.occupation <- LCPS.compare$IC_Bedden_COVID_Nederland + LCPS.compare$Kliniek_Bedden_Nederland
 
-LCPS.compare <- LCPS.compare [, -c(2:6)]
+LCPS.compare <- LCPS.compare [, -c(2:7)]
 LCPS.compare$Datum <-as.Date(LCPS.compare$Datum)
 LCPS.compare$year <- format(LCPS.compare$Datum, format= "%Y")
 LCPS.compare$year <- as.factor(LCPS.compare$year)
@@ -162,7 +165,7 @@ MAhospOccu.today      <- format( MAhospOccu.today,  big.mark="." ,decimal.mark="
 
 ggplot(LCPS.compare, aes(x=rawDate, y = total.occupation))+
   geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+ # scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
@@ -174,7 +177,7 @@ ggplot(LCPS.compare, aes(x=rawDate, y = total.occupation))+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Totale bezetting ziekenhuis - 2020 vs 2021",
+  labs(title = "Totale bezetting ziekenhuis - 2020 vs 2021 vs 2022",
        subtitle = paste("Kliniek + IC"),
        caption = paste("bron: LCPS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -198,7 +201,7 @@ ggplot(LCPS.compare, aes(x=rawDate, y = total.occupation))+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/plots/11_20.21_compare_hosp.occu_all.png",width=16, height = 9)
+  ggsave("data/plots/a11_20.21_compare_hosp.occu_all.png",width=16, height = 9)
 
 
 
@@ -245,7 +248,7 @@ MAhospNew.today      <- format( MAhospNew.today,  big.mark="." ,decimal.mark=","
 
 ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
   geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+ # scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
@@ -256,7 +259,7 @@ ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Nieuwe opnames (totaal) - 2020 vs 2021",
+  labs(title = "Nieuwe opnames (totaal) - 2020 vs 2021 vs 2022",
        subtitle = paste("Kliniek + IC"),
        caption = paste("bron: NICE  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -280,7 +283,7 @@ ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))+
   
-  ggsave("data/plots/11_20.21_compare_hosp.new_all.png",width=16, height = 9)
+  ggsave("data/plots/a11_20.21_compare_hosp.new_all.png",width=16, height = 9)
 
 
 
@@ -288,7 +291,7 @@ ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
 
 
 
-tweet.year.compare.all.tweet <- "Vergelijking 2020 - 2021: Hoe staat het ervoor t.o.v. vorig jaar?
+tweet.year.compare.all.tweet <- "Vergelijking 2021 - 2022: Hoe staat het ervoor t.o.v. vorig jaar?
 
 Bezetting ziekenhuis: %s --> %s
 
@@ -310,10 +313,10 @@ tweet.year.compare.all.tweet <- sprintf(tweet.year.compare.all.tweet,
 Encoding(tweet.year.compare.all.tweet) <- "UTF-8"
 
 
-post_tweet(tweet.year.compare.all.tweet,  media = c("data/plots/11_20.21_compare_cases_all.png",
-                                           "data/plots/11_20.21_compare_dead_all.png",
-                                           "data/plots/11_20.21_compare_hosp.occu_all.png",
-                                           "data/plots/11_20.21_compare_hosp.new_all.png"
+post_tweet(tweet.year.compare.all.tweet,  media = c("data/plots/a11_20.21_compare_cases_all.png",
+                                           "data/plots/a11_20.21_compare_dead_all.png",
+                                           "data/plots/a11_20.21_compare_hosp.occu_all.png",
+                                           "data/plots/a11_20.21_compare_hosp.new_all.png"
 ), in_reply_to_status_id = get_reply_id())
 
 

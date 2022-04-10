@@ -117,8 +117,8 @@ ggplot(casus.age.dif.play.long)+
   
    scale_x_date(date_breaks = "month", 
                 date_labels= format("%b"),
-                limits = as.Date(c("2021-08-01", NA)))+
-   scale_y_continuous(limits = c(NA, 200))+
+                limits = as.Date(c("2021-06-01", NA)))+
+   scale_y_continuous(limits = c(NA, NA),labels = label_number(big.mark = ".", decimal.mark = ","))+
   
   scale_color_brewer(palette = "RdYlBu", labels=c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70-79","80-89","90+"))+
   # scale_colour_viridis_d(option = "cividis")+
@@ -163,7 +163,7 @@ ggplot(casus.age.dif.play.long)+
   #scale_x_date(date_breaks = "1 week", 
   #             date_labels= format("%d %b"),
   #             limits = as.Date(c("2021-08-01", NA)))+
-  scale_y_continuous(trans='log2', breaks = c(1,2,4,8,16,32,64,128,256))+
+  scale_y_continuous(trans='log2', breaks = c(1,2,4,8,16,32,64,128,256,512,1024,2048))+
   
   scale_color_brewer(palette = "RdYlBu", labels=c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70-79","80-89","90+"))+
   # scale_colour_viridis_d(option = "cividis")+

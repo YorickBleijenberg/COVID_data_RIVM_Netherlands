@@ -109,7 +109,7 @@ ggplot(data = tested_daily.count,)+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-03", NA)))+
+               limits = as.Date(c("2022-01-01", NA)))+
   
  # geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
 #                       col = "gray", lwd = 0.2, linetype= "dashed")+
@@ -140,7 +140,7 @@ ggplot(data = tested_daily.count,)+
          axis.text.y.right = element_text(color = "#4472C4")
   )+
   
-ggsave("data/plots/22_tests_ggd_daily.png",width=16, height = 9)
+ggsave("data/plots/22_tests_ggd_daily_alma.png",width=16, height = 9)
 
 
 
@@ -169,7 +169,7 @@ ggplot(data = tested_daily.count,)+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2021-06-03", NA)))+
+               limits = as.Date(c("2022-01-01", NA)))+
   
   # geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
   #                       col = "gray", lwd = 0.2, linetype= "dashed")+
@@ -200,7 +200,7 @@ ggplot(data = tested_daily.count,)+
          axis.text.y.right = element_text(color = "#4472C4")
   )+
   
-  ggsave("data/plots/22_tests_ggd_daily_zoom.png",width=16, height = 9)
+  ggsave("data/plots/22_tests_ggd_daily_zoom_alma.png",width=16, height = 9)
 
 
 
@@ -243,7 +243,7 @@ ggplot(data = tested_daily.count,)+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-03", NA)))+
+               limits = as.Date(c("2022-01-01", NA)))+
   
   # geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
   #                       col = "gray", lwd = 0.2, linetype= "dashed")+
@@ -273,7 +273,7 @@ ggplot(data = tested_daily.count,)+
          axis.text.y.left = element_text(color = "red"),
   )+
   
-  ggsave("data/plots/22_tests_ggd_pos_tests.png",width=16, height = 9)
+  ggsave("data/plots/22_tests_ggd_pos_tests_alma.png",width=16, height = 9)
 
 
 
@@ -308,7 +308,7 @@ scale_y_continuous(limits = c(0, NA),labels = label_number(big.mark = ".", decim
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-03", NA)))+
+               limits = as.Date(c("2022-01-01", NA)))+
   
   # geom_vline(xintercept = as.numeric(tested_daily$date [dates_vline_mondays]),
   #                       col = "gray", lwd = 0.2, linetype= "dashed")+
@@ -338,7 +338,7 @@ scale_y_continuous(limits = c(0, NA),labels = label_number(big.mark = ".", decim
          axis.text.y.left = element_text(color = "#ED7D31"),
   )+
   
-  ggsave("data/plots/22_tests_ggd_tests.png",width=16, height = 9)
+  ggsave("data/plots/22_tests_ggd_tests_alma.png",width=16, height = 9)
 
 
 
@@ -362,7 +362,7 @@ ggplot(data = tested_daily.count)+
 
    scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-03", NA)))+
+               limits = as.Date(c("2022-01-01", NA)))+
   
   coord_cartesian(expand = TRUE)+
   
@@ -395,7 +395,7 @@ ggplot(data = tested_daily.count)+
 
 
 
-source("C:\\Rdir\\Rscripts\\30_weekly_numbers_GGD.R")
+source("C:\\Rdir\\Rscripts\\30_weekly_numbers_GGD_alma.R")
 
 
 
@@ -451,15 +451,11 @@ ggd.data.tweet <- sprintf(ggd.data.tweet,
                           )
 Encoding(ggd.data.tweet) <- "UTF-8"
 
-my_timeline <- get_my_timeline()  
-reply_id <- my_timeline$status_id[1]
-
-
-post_tweet(ggd.data.tweet,  media = c("data/plots/22_tests_ggd_pos_tests.png",
-                                      "data/plots/22_tests_ggd_tests.png",
-                                      "data/plots/22_tests_ggd_pos_rate.png",
-                                      "data/plots/65_Cases_by_week_GGD.png"
-                                      ), in_reply_to_status_id = reply_id)
+#post_tweet(ggd.data.tweet,  media = c("data/plots/22_tests_ggd_pos_tests_alma.png",
+ #                                     "data/plots/22_tests_ggd_tests_alma.png",
+  #                                    "data/plots/22_tests_ggd_pos_rate_alma.png",
+   #                                   "data/plots/65_Cases_by_week_GGD_alma.png"
+    #                                  ), in_reply_to_status_id = get_reply_id())
 
 
 

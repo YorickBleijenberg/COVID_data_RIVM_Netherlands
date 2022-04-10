@@ -44,11 +44,11 @@ MAdead.today      <- format( MAdead.today,  big.mark="." ,decimal.mark=",")
 
 ggplot(year.compare.cases, aes(x=rawDate, y = MACases))+
     geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+ # scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-01", "2020-09-30")))+
+               limits = as.Date(c("2020-01-01", "2020-03-01")))+
   scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
   
   
@@ -56,7 +56,7 @@ ggplot(year.compare.cases, aes(x=rawDate, y = MACases))+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Nieuwe gevallen - 2020 vs 2021",
+  labs(title = "Nieuwe gevallen - 2020 vs 2021 vs 2022",
        subtitle = paste("7-daags zwevend gemiddele"),
        caption = paste("bron: RIVM  | Plot: @YorickB | ",Sys.Date()))+
 
@@ -86,18 +86,18 @@ ggsave("data/plots/11_20.21_compare_cases.png",width=16, height = 9)
 
 ggplot(year.compare.cases, aes(x=rawDate, y = MAdead))+
   geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+ # scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-01", "2020-09-30")))+
-  scale_y_continuous(limits = c(0, 20))+ 
+               limits = as.Date(c("2020-01-01", "2020-03-01")))+
+  scale_y_continuous(limits = c(0, NA))+ 
   
   theme_classic()+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Nieuwe doden - 2020 vs 2021",
+  labs(title = "Nieuwe doden - 2020 vs 2021 vs 2022",
        subtitle = paste("7-daags zwevend gemiddele"),
        caption = paste("bron: RIVM  | Plot: @YorickB | ",Sys.Date()))+
 
@@ -134,9 +134,9 @@ LCPS.compare$Datum <- as.Date(LCPS.compare$Datum ,format="%d-%m-%Y")
 
  
 
-LCPS.compare$total.occupation <- LCPS.compare$IC_Bedden_COVID + LCPS.compare$Kliniek_Bedden
+LCPS.compare$total.occupation <- LCPS.compare$IC_Bedden_COVID_Nederland + LCPS.compare$Kliniek_Bedden_Nederland
 
-LCPS.compare <- LCPS.compare [, -c(2:6)]
+LCPS.compare <- LCPS.compare [, -c(2:7)]
 LCPS.compare$Datum <-as.Date(LCPS.compare$Datum)
 LCPS.compare$year <- format(LCPS.compare$Datum, format= "%Y")
 LCPS.compare$year <- as.factor(LCPS.compare$year)
@@ -162,19 +162,19 @@ MAhospOccu.today      <- format( MAhospOccu.today,  big.mark="." ,decimal.mark="
 
 ggplot(LCPS.compare, aes(x=rawDate, y = total.occupation))+
   geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+#  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-01", "2020-09-30")))+
-  scale_y_continuous(limits = c(0, 1200), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
+               limits = as.Date(c("2020-01-01", "2020-03-01")))+
+  scale_y_continuous(limits = c(0, 3000), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
   
   
   theme_classic()+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Totale bezetting ziekenhuis - 2020 vs 2021",
+  labs(title = "Totale bezetting ziekenhuis - 2020 vs 2021 vs 2022",
        subtitle = paste("Kliniek + IC"),
        caption = paste("bron: LCPS  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -245,18 +245,18 @@ MAhospNew.today      <- format( MAhospNew.today,  big.mark="." ,decimal.mark=","
 
 ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
   geom_line(aes(color = year), lwd=3)+
-  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
+#  scale_color_manual(values = c("#3c81b9", "#e5292b"))+
   
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2020-06-01", "2020-09-30")))+
-  scale_y_continuous(limits = c(0, 120), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
+               limits = as.Date(c("2020-01-01", "2020-03-01")))+
+  scale_y_continuous(limits = c(0, NA), labels = label_comma(big.mark = ".", decimal.mark = ","))+ 
   
   theme_classic()+
   xlab("")+ 
   ylab("")+
   
-  labs(title = "Nieuwe opnames (totaal) - 2020 vs 2021",
+  labs(title = "Nieuwe opnames (totaal) - 2020 vs 2021 vs 2022",
        subtitle = paste("Kliniek + IC"),
        caption = paste("bron: NICE  | Plot: @YorickB | ",Sys.Date()))+
   
@@ -288,7 +288,7 @@ ggplot(NICE.compare, aes(x=rawDate, y = total.intake.ma))+
 
 
 
-tweet.year.compare.tweet <- "Vergelijking 2020 - 2021: Hoe staat het er vandaag voor t.o.v. vorig jaar?
+tweet.year.compare.tweet <- "Vergelijking 2021 - 2022: Hoe staat het er vandaag voor t.o.v. vorig jaar?
 
 2020 - 2021
 Bezetting ziekenhuis: %s --> %s

@@ -37,13 +37,13 @@ cases_per_day_long_spread_diff <- spread(cases_per_day_long_bind, Type_Datum, va
 cases_per_day_long_spread_diff[is.na(cases_per_day_long_spread_diff)] <- 0
 
 
-cases_per_day_long_spread_diff$DON_diff <- cases_per_day_long_spread_diff$DON - cases_per_day_long_spread_diff$DON_old
+#cases_per_day_long_spread_diff$DON_diff <- cases_per_day_long_spread_diff$DON - cases_per_day_long_spread_diff$DON_old
 cases_per_day_long_spread_diff$DOO_diff <- cases_per_day_long_spread_diff$DOO - cases_per_day_long_spread_diff$DOO_old
 cases_per_day_long_spread_diff$DPL_diff <- cases_per_day_long_spread_diff$DPL - cases_per_day_long_spread_diff$DPL_old
 
-cases_per_day_long_spread_diff$DON_diff_neg <- cases_per_day_long_spread_diff$DON_diff
-cases_per_day_long_spread_diff$DON_diff_neg[cases_per_day_long_spread_diff$DON_diff_neg > 0] <- 0
-cases_per_day_long_spread_diff$DON_old = cases_per_day_long_spread_diff$DON_old + cases_per_day_long_spread_diff$DON_diff_neg
+#cases_per_day_long_spread_diff$DON_diff_neg <- cases_per_day_long_spread_diff$DON_diff
+#cases_per_day_long_spread_diff$DON_diff_neg[cases_per_day_long_spread_diff$DON_diff_neg > 0] <- 0
+#cases_per_day_long_spread_diff$DON_old = cases_per_day_long_spread_diff$DON_old + cases_per_day_long_spread_diff$DON_diff_neg
 
 cases_per_day_long_spread_diff$DOO_diff_neg <- cases_per_day_long_spread_diff$DOO_diff
 cases_per_day_long_spread_diff$DOO_diff_neg[cases_per_day_long_spread_diff$DOO_diff_neg > 0] <- 0
@@ -54,14 +54,14 @@ cases_per_day_long_spread_diff$DPL_diff_neg[cases_per_day_long_spread_diff$DPL_d
 cases_per_day_long_spread_diff$DPL_old = cases_per_day_long_spread_diff$DPL_old + cases_per_day_long_spread_diff$DPL_diff_neg
 
 
-cases_per_day_long_spread_diff <- cases_per_day_long_spread_diff[,c("Datum", "DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff" )]
+cases_per_day_long_spread_diff <- cases_per_day_long_spread_diff[,c("Datum", "DOO_old","DOO_diff", "DPL_old", "DPL_diff" )]
 
 
 #### Gather ####
 
 keycol <- "Datum"
 valuecol <- "type"
-gathercols <- c("DON_old", "DON_diff","DOO_old","DOO_diff", "DPL_old", "DPL_diff")
+gathercols <- c("DOO_old","DOO_diff", "DPL_old", "DPL_diff")
 
 cases_per_day_diff_gather<- gather(cases_per_day_long_spread_diff, keycol, valuecol, gathercols)
 cases_per_day_diff_gather$Datum <- as.Date(cases_per_day_diff_gather$Datum)
@@ -73,12 +73,14 @@ cases_per_day_diff_gather$Datum <- as.Date(cases_per_day_diff_gather$Datum)
 dates_vline <- data.frame(date=as.Date(c("2020-09-18", "2020-09-28", "2020-10-13", "2020-11-05", 
                                          "2020-11-18", "2020-12-15", "2021-01-23", "2021-02-08",  "2021-03-31",
                                          "2021-06-26", "2021-07-09", "2021-08-30","2021-09-25",
-                                         "2021-11-02", "2021-11-12", "2021-11-28", "2021-12-19")),
+                                         "2021-11-02", "2021-11-12", "2021-11-28", "2021-12-19",
+                                         "2022-01-15")),
                           event=c("kroeg uurtje eerder dicht (regio)","R van 0,9 (landelijke maatregelen)","semi-lockdown",
                                   "verzwaring", "einde verzwaring", "lockdown", "                    avondklok",
                                  "basisscholen open", "avondklok 22:00uur",
                                  "Alles open!", "aanscherpingen", "geen 1,5meter in HO", "geen 1,5 meter meer",
-                                 "Halve maatregelen", "Harde klap", "Avondclockdown", "lockdown"))
+                                 "Halve maatregelen", "Harde klap", "Avondclockdown", "lockdown",
+                                 "Einde lockdown"))
 
 
 df4 <- cases_per_day_diff_gather[cases_per_day_diff_gather$Datum>"2020-07-01",]
@@ -87,7 +89,7 @@ df4 <- cases_per_day_diff_gather[cases_per_day_diff_gather$Datum>"2020-07-01",]
 
 
 
-ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
+ggplot(df4, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old")), width=.7)) +
  geom_col()+
 
 theme_classic()+
@@ -100,14 +102,12 @@ theme_classic()+
                limits = as.Date(c("2020-07-01", Sys.Date() ))
                )+
 
-    scale_fill_manual(values=c("#c55a11", 
-                               "#F8CBAD", 
+    scale_fill_manual(values=c(
                                "#548235", 
                                "#C5E0B4",  
                                "#203864",   #blauw donker
                                "#B4C7E7"),  #blauw
-                      labels=c(   "Melding aan GGD (nieuw/correctie)",
-                                  "Melding aan GGD",
+                      labels=c(   
                                   "Eerste ziektedag (nieuw/correctie)",
                                   "Eerste ziektedag",
                                   "Positieve labuitslag (nieuw/correctie)",
@@ -153,7 +153,7 @@ ggsave("data/07_cases_type1.png",width=16, height = 9)
 
 df4_short  <- cases_per_day_diff_gather[cases_per_day_diff_gather$Datum>"2021-06-01",]
 
-ggplot(df4_short, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
+ggplot(df4_short, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old")), width=.7)) +
   geom_col()+
   
   theme_classic()+
@@ -168,14 +168,12 @@ ggplot(df4_short, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_d
                limits = as.Date(c("2021-06-01", Sys.Date()+5)))+
 
   
-  scale_fill_manual(values=c("#c55a11", 
-                             "#F8CBAD", 
+  scale_fill_manual(values=c(
                              "#548235", 
                              "#C5E0B4",  
                              "#203864",   #blauw donker
                              "#B4C7E7"),  #blauw
-                    labels=c(   "Melding aan GGD (nieuw/correctie)",
-                                "Melding aan GGD",
+                    labels=c(   
                                 "Eerste ziektedag (nieuw/correctie)",
                                 "Eerste ziektedag",
                                 "Positieve labuitslag (nieuw/correctie)",
@@ -267,7 +265,7 @@ dates_vline_mondays <- which((cases_per_day_diff_gather$Datum %in% dates_vline_m
 
 
 
-ggplot(cases_per_day_diff_gather, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old","DON_diff","DON_old")), width=.7)) +
+ggplot(cases_per_day_diff_gather, aes(x=Datum, y=valuecol, fill = factor(keycol, levels=c("DOO_diff","DOO_old","DPL_diff","DPL_old")), width=.7)) +
   geom_col()+
 
   theme_classic()+
@@ -278,13 +276,12 @@ ggplot(cases_per_day_diff_gather, aes(x=Datum, y=valuecol, fill = factor(keycol,
                limits = as.Date(c("2021-10-01", Sys.Date() ))
   )+
   
-  scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7","#c55a11", "#F8CBAD"), 
+  scale_fill_manual(values=c("#548235", "#C5E0B4", "#203864", "#B4C7E7"), 
                     labels=c(    "Eerste ziektedag (nieuw/correctie)",
                                  "Eerste ziektedag",
                                  "Positieve labuitslag (nieuw/correctie)",
-                                "Positieve labuitslag",
-                                "Melding aan GGD (nieuw/correctie)",
-                                "Melding aan GGD"))+
+                                "Positieve labuitslag"
+                                ))+
   
   # geom_vline(xintercept = as.numeric(df4$Datum[dates_vline_mondays]),
   #           col = "darkgray", lwd = 0.5, linetype= "dashed")+
@@ -313,6 +310,64 @@ ggplot(cases_per_day_diff_gather, aes(x=Datum, y=valuecol, fill = factor(keycol,
     ggsave("data/plots/07_cases_type1-monday.png",width=16, height = 9)
 
 
+
+
+
+
+#### Gather ####
+
+
+
+key <- "Datum"
+value <- "type"
+gathercols <- c("DPL_diff","DOO_diff")
+
+dat_wide <- gather(cases_per_day_long_spread_diff, key, value, all_of(gathercols))
+
+dat_wide$Datum <- as.Date(dat_wide$Datum)
+
+two.weeks.ago <-as.Date(Sys.Date()-15)
+dat_wide <- dat_wide[dat_wide$Datum>two.weeks.ago,]
+
+
+
+ggplot(dat_wide, aes(x=Datum, y=value, fill = factor(key, levels=c("DOO_diff","DPL_diff")), width=.7)) +
+  geom_col(position = position_dodge(width = 0.65))+
+  
+  theme_classic()+
+  
+  xlab("")+ 
+  ylab("")+
+  
+  scale_x_date(date_breaks = "1 day", 
+               date_labels= format("%d-%b"),
+               limits = as.Date(c(Sys.Date()-15, Sys.Date()+1)))+
+  
+  scale_fill_manual(values=c("#548235", "#2f5597"), labels=c( "Eerste ziektedag (nieuw/correctie)",
+                                                                         "Positieve labuitslag (nieuw/correctie)"
+  ))+
+  
+  labs(title = "Besmette personen: toegevoegd / gecorrigeerd",
+       caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
+  
+  theme(legend.position = c(0.2, 0.9),
+        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10, face="bold"))+
+  
+  theme(
+    plot.background = element_rect(fill = "#F5F5F5"),
+    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
+    plot.title = element_text(hjust = 0.5,size = 30,face = "bold"),
+    axis.text.x = element_text(face="bold", color="black", size=12),
+    axis.text.y = element_text(face="bold", color="black", size=14),
+    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
+    axis.ticks.length = unit(0.5, "cm"),
+    axis.line = element_line(colour = "#F5F5F5"),
+    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))
+
+
+ggsave("data/07_cases_diff.png",width=16, height = 9)  
 
 
 

@@ -147,7 +147,7 @@ ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
   
   scale_fill_manual( values=c("#ff0000", "#faacac"), labels=c("vandaag gemeld", "eerder gemeld"))+
   
-  scale_x_date(as.Date("2020-07-06"),breaks = "1 week",  labels = date_format("%V"))+
+  scale_x_date(as.Date("2020-07-06"),breaks = "2 week",  labels = date_format("%V"))+
   coord_cartesian(expand = FALSE)+
                      
   labs(title = "Overleden personen",
@@ -175,53 +175,6 @@ ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
   
 ggsave("data/plots/15_dead_diff.png",width=16, height = 9)  
 
-
-
-ggplot(df_merge_trans_long, aes(x=week, y=valuecol, fill=keycol))+
-  geom_bar(stat="identity", position="stack")+
-  
-  scale_x_date(as.Date("2020-07-06"),breaks = "1 week",  labels = date_format("%V"))+
-  coord_cartesian(expand = FALSE)+
-  
-  theme_classic()+
-  
-  #geom_text(aes(label=valuecolvalue), vjust=-0.3, size=3.5)+
-  # geom_text(
-  #  aes(x = week, y = valuecol, label = valuecol, group = keycol),
-  #  position = position_dodge(width = 1),
-  #  vjust = -0.5, size = 10) + 
-  
-  xlab("")+ 
-  ylab("")+
-  
-  #scale_x_date(date_breaks = "1 day", date_labels= format("%d-%b"),limits = as.Date(c(Sys.Date()-14, Sys.Date())))+
-  
-  scale_fill_manual( values=c("#ff0000", "#faacac"), labels=c("Reported today", "reported earlier"))+
-  
-  labs(title = "Deceased",
-       subtitle = "By week of death",
-       caption = paste("Source: RIVM  | Plot: @YorickB | ",Sys.Date()))+
-  
-  theme(legend.position = c(0.5, 0.925),
-        legend.background = element_rect(fill="#F5F5F5",size=0.8,linetype="solid",colour ="black"),
-        legend.title = element_blank(),
-        legend.text = element_text(colour="black", size=27, face="bold"))+
-  
-  theme(
-    plot.background = element_rect(fill = "#F5F5F5"), #background color/size (border color and size)
-    panel.background = element_rect(fill = "#F5F5F5", colour = "#F5F5F5"),
-    plot.title = element_text(hjust = 0.5,size = 25,face = "bold"),
-    plot.subtitle =  element_text(hjust=0.5,color = "black", face = "italic"),
-    axis.text.x = element_text(face="bold", color="black", size=12), #, angle=45),
-    axis.text.y = element_text(face="bold", color="black", size=14),
-    axis.ticks = element_line(colour = "#F5F5F5", size = 1, linetype = "solid"),
-    axis.ticks.length = unit(0.5, "cm"),
-    axis.line = element_line(colour = "#F5F5F5"),
-    axis.title.x=element_blank(),
-    
-    panel.grid.major.y = element_line(colour= "lightgray", linetype = "dashed"))#,
-
-# ggsave("data/15_EN_dead_diff.png",width=16, height = 9)  
 
 
 

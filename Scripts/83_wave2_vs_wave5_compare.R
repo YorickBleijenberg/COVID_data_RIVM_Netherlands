@@ -64,7 +64,7 @@ ggplot(year.compare.cases)+
   
   scale_color_manual(values = c("#3c81b9","#e5292b"),labels=c ("herfst 2020", "herfst 2021") )+
   
-  scale_x_continuous(limits = c(-21, 71), breaks = c(-21,-14,-7,0,7,14,21,28,35,42,49,56,63,70))+
+  scale_x_continuous(limits = c(-21, 180), breaks = c(-21,-14,-7,0,7,14,21,28,35,42,49,56,63,70))+
   scale_y_continuous(limits = c(0, NA))+ 
   
   geom_vline(xintercept=0) +

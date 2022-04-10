@@ -33,14 +33,14 @@ case_predict <- case_predict[case_predict$date>"2021-03-20",]
 #case_predict$old       *0.2
 
 
-#case_predict$young_hosp_pred   = case_predict$young     *0.005
-#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.005
-#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.010
-#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.017
-#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.025
-#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.05
-#case_predict$seventy_hosp_pred = case_predict$seventy   *0.120
-#case_predict$old_hosp_pred     = case_predict$old       *0.2
+case_predict$young_hosp_pred   = case_predict$young     *0.003   
+case_predict$twenty_hosp_pred  = case_predict$twenty    *0.005
+case_predict$thirty_hosp_pred  = case_predict$thirty    *0.010
+case_predict$forthy_hosp_pred  = case_predict$forthy    *0.017
+case_predict$fithy_hosp_pred   = case_predict$fithy     *0.035    
+case_predict$sixty_hosp_pred   = case_predict$sixty     *0.07    
+case_predict$seventy_hosp_pred = case_predict$seventy   *0.14
+case_predict$old_hosp_pred     = case_predict$old       *0.2
 
 #case_predict$young_hosp_pred   = case_predict$young     *0.004
 #case_predict$twenty_hosp_pred  = case_predict$twenty    *0.0045
@@ -61,14 +61,28 @@ case_predict <- case_predict[case_predict$date>"2021-03-20",]
 #case_predict$old_hosp_pred     = case_predict$old       *0.127
 
 
-case_predict$young_hosp_pred   = case_predict$young     *0.003
-case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003
-case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006
-case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075
-case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013
-case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03
-case_predict$seventy_hosp_pred = case_predict$seventy   *0.07
-case_predict$old_hosp_pred     = case_predict$old       *0.14
+#case_predict$young_hosp_pred   = case_predict$young     *0.003
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075
+#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.07
+#case_predict$old_hosp_pred     = case_predict$old       *0.14
+
+
+
+
+
+#case_predict$young_hosp_pred   = case_predict$young     *0.003 / 3
+#case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 / 3
+#case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006 / 2.9
+#case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075/ 3
+#case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013 / 2
+#case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03  / 1.75
+#case_predict$seventy_hosp_pred = case_predict$seventy   *0.07  / 1.5
+#case_predict$old_hosp_pred     = case_predict$old       *0.14  / 1.1
+
 
 
 case_predict$hosp_adm_rate = case_predict$young_hosp_pred + case_predict$twenty_hosp_pred+
@@ -163,14 +177,14 @@ ggplot()+
 
   scale_x_date(date_breaks = "1 month", 
              date_labels= format("%b"),
-             limits = as.Date(c("2021-08-01", NA)))+
-  labs(title = "Bierviltje - ziekenhuisopnames",
+             limits = as.Date(c("2021-04-01", NA)))+
+  labs(title = "Bierviltje - ziekenhuisopnames - Delta",
        subtitle = "Dit klopt niet, want bierviltje.",
        caption = paste("Source: NICE / RIVM | Plot: @YorickB | ",Sys.Date()))+
   
-  theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))
+  theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))+
 
-ggsave("data/plots/bierviltje_plus_2.png",width=16, height = 9)
+ggsave("data/plots/bierviltje_plus_2_delta.png",width=16, height = 9)
 
 
 
@@ -206,13 +220,17 @@ ggplot()+
   scale_x_date(date_breaks = "1 month", 
                date_labels= format("%b"),
                limits = as.Date(c("2021-04-01", NA)))+
-  labs(title = "Bierviltje - ziekenhuisopnames",
+  labs(title = "Bierviltje - ziekenhuisopnames - Delta",
        subtitle = "Dit klopt niet, want bierviltje.\nLaatste 3 datapunten nog niet gecorrigeerd voor rapportagevertraging",
        caption = paste("Source: NICE / RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))
 
-ggsave("data/plots/bierviltje_plus_hosp.png",width=16, height = 9)
+ggsave("data/plots/bierviltje_plus_hosp_delta.png",width=16, height = 9)
+
+
+
+
 
 
 

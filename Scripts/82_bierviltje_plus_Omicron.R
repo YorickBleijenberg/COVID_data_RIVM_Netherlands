@@ -71,14 +71,17 @@ case_predict <- case_predict[case_predict$date>"2021-03-20",]
 #case_predict$old_hosp_pred     = case_predict$old       *0.14
 
 
-case_predict$young_hosp_pred   = case_predict$young     *0.003/3
-case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 /3
-case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006/3
-case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075/3
-case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013/3
-case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03/3
-case_predict$seventy_hosp_pred = case_predict$seventy   *0.07/3
-case_predict$old_hosp_pred     = case_predict$old       *0.14  /3
+omicron_factor = 2
+
+
+case_predict$young_hosp_pred   = case_predict$young     *0.003/ omicron_factor
+case_predict$twenty_hosp_pred  = case_predict$twenty    *0.003 /omicron_factor
+case_predict$thirty_hosp_pred  = case_predict$thirty    *0.006/omicron_factor
+case_predict$forthy_hosp_pred  = case_predict$forthy    *0.0075/omicron_factor
+case_predict$fithy_hosp_pred   = case_predict$fithy     *0.013/omicron_factor
+case_predict$sixty_hosp_pred   = case_predict$sixty     *0.03/omicron_factor
+case_predict$seventy_hosp_pred = case_predict$seventy   *0.07/omicron_factor
+case_predict$old_hosp_pred     = case_predict$old       *0.14  /omicron_factor
 
 
 
@@ -224,6 +227,18 @@ ggplot()+
   theme( plot.title = element_text(hjust = 0.5,size = 30,face = "bold"))
 
 ggsave("data/plots/bierviltje_plus_hosp_omicron.png",width=16, height = 9)
+
+
+
+
+
+
+
+
+# omicron_factor
+
+
+
 
 
 

@@ -5,7 +5,7 @@ copy.verpleeg <- read.csv(read.verpleeg.path,sep=";")
 
 copy.verpleeg$date<-as.Date(copy.verpleeg$Date_of_statistic_reported)   #Adding a date to the case
 
-verpleeg.sm <- copy.verpleeg[ -c(1,2,3,4)]
+verpleeg.sm <- copy.verpleeg[ -c(1,2,3,4,5)]
 
 colnames(verpleeg.sm) <- c("Total_cases","Total_deceased","new_infected_locations","total_infected_locations", "date")
 

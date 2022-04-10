@@ -27,9 +27,14 @@ temp <- tempfile()
 download.file("https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip",temp)
 google_mob_raw2020 <- read.csv(unz(temp, "2020_NL_Region_Mobility_Report.csv"),sep=",")
 google_mob_raw2021 <- read.csv(unz(temp, "2021_NL_Region_Mobility_Report.csv"),sep=",")
+google_mob_raw2022 <- read.csv(unz(temp, "2022_NL_Region_Mobility_Report.csv"),sep=",")
 
 
 google_mob_raw <- rbind(google_mob_raw2020, google_mob_raw2021)
+
+
+google_mob_raw <- rbind(google_mob_raw, google_mob_raw2022)
+
 
 #### convert date column to date ####
 
@@ -72,11 +77,16 @@ Google_mob_NL_short <- Google_mob_NL_short[-1:-6,]
 
 persco.df=data.frame(date=as.Date(c("2020-03-09", "2020-03-12", "2020-03-16", "2020-03-24", "2020-09-18",
                                     "2020-09-28", "2020-10-13", "2020-11-03", "2020-10-25", "2020-11-17",
-                                    "2020-12-15", "2021-01-01", "2021-01-25", "2021-02-08", "2021-03-03",
+                                    "2020-12-15",
+                                    "2021-01-01",
+                                    "2021-01-25", "2021-02-08", "2021-03-03",
                                     "2021-04-04", "2021-04-27", "2021-05-13",
                                     "2021-05-19", "2021-06-05", "2021-06-26", "2021-09-25",
                                     "2021-11-02", "2021-11-12", "2021-11-28", "2021-12-19",
-                                    "2022-01-01"
+                                    "2022-01-01",
+                                    "2022-01-14", "2022-01-25",
+                                    "2022-02-15", "2022-02-25",
+                                    "2022-03-23"
                                     
 )), 
 event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht",
@@ -86,7 +96,10 @@ event=c("Geen handeschudden", "aanvullende maatregelen",  "scholen/horeca dicht"
         "Eerste Paasdag","koningsdag / stap 1", "hemelvaart",
         "Stap 2", "Stap 3 - Einde lockdown",  "Stap 4/5", "Einde 1,5-metersamenleving",
         "Halve Maatregelen", "'Harde klap'", "Avondclockdown", "lockdown",
-        ""
+        "",
+        "einde lockdown", "alles open tot 22:00",
+        "Verder versoepelen", "Einde 1,5-metersamenleving",
+        "Einde alle maatregelen"
         
 ))
 

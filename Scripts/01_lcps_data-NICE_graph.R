@@ -103,9 +103,9 @@ instroom.combi.long1$date = as.Date(instroom.combi.long1$date)
 ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("peak_zkh_NICE","peak_zkh_lcsp","peak_IC_NICE","peak_IC_lcsp"))))+
   
   geom_hline(yintercept=1, size = 1)+ #, linetype = "dashed")+
-  geom_hline(yintercept=0.80, color = "darkgreen", size = 2, linetype = "dashed")+
   
-  geom_hline(yintercept=0.5, size = 1)+ #, linetype = "dashed")+
+#  geom_hline(yintercept=0.80, color = "darkgreen", size = 2, linetype = "dashed")+
+#  geom_hline(yintercept=0.5, size = 1)+ #, linetype = "dashed")+
   
   geom_line(size=2)+
 
@@ -121,12 +121,13 @@ ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("
                date_labels= format("%b"),
                limits = as.Date(c("2020-10-25", NA)))+
   
-  scale_y_continuous(limits = c(0, NA), breaks = c(1.1,1,0.8,0.5,0.25,0) ,labels = label_percent(1))+
+  #scale_y_continuous(limits = c(0, NA), breaks = c(1.2,1.1,1,0.9,0.8,0.5,0.25,0) ,labels = label_percent(1))+
+  scale_y_continuous(limits = c(0, NA), breaks = c(0,0.25,0.5,0.75,1,1.25) ,labels = label_percent(1))+
   
   xlab("")+
   ylab("")+
   
-  labs(title="OMT check - daling vanaf de voorjaarspiek", 
+  labs(title="Aantal opnames t.o.v. de 2021 voorjaarspiek", 
        subtitle="Nieuwe opnames: vergelijking van het lopende 7-daags gemiddelde, met de piek.",
        caption = paste("Bron: NICE / LCPS | Plot: @YorickB | ",Sys.Date()))+
   
@@ -153,7 +154,6 @@ ggplot(instroom.combi.long1, aes(x=date, y=value, color = factor(key, levels=c("
           axis.line = element_line(colour = "#DAE3F3"),
           panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
   
-#ggsave("data/plots/16x_omt_check_nice.png", width=14, height = 14) 
 ggsave("data/plots/16x_omt_check_nice_peak.png",width=16, height = 9)    
 
 
@@ -184,9 +184,9 @@ ggplot(instroom.combi.long2, aes(x=date, y=value2, color = factor(key, levels=c(
   
   scale_x_date(date_breaks = "month", 
                date_labels= format("%b"),
-               limits = as.Date(c("2021-03-01", NA)))+
+               limits = as.Date(c("2021-09-01", NA)))+
   
- # scale_y_continuous(limits = c(-1, 1),breaks = c(-0.5, -0.4,-0.3,-0.2,-0.1,0,0.3,0.2,0.1,0.4), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)
+  scale_y_continuous(limits = c(-1, 1),breaks = c(-1, -0.75, -0.5, -0.25,0,0.25,0.5,0.75,1), labels = label_percent(1))+  #breaks = c(1.1,1,0.9,0.8,1.2,0.7, 0.5,0.25,0)
   
   xlab("")+
   ylab("")+
@@ -214,7 +214,7 @@ ggplot(instroom.combi.long2, aes(x=date, y=value2, color = factor(key, levels=c(
           axis.ticks = element_line(colour = "#DAE3F3", size = 1, linetype = "solid"),
           axis.ticks.length = unit(0.5, "cm"),
           axis.line = element_line(colour = "#DAE3F3"),
-          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed"))+
+          panel.grid.major.y = element_line(colour= "gray", linetype = "dashed")) +
   
 ggsave("data/plots/16x_omt_check_week_on_week.png",width=16, height = 9)    
 

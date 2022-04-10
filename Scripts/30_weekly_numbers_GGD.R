@@ -20,34 +20,28 @@ today = Sys.Date()
 current.week <- as.integer(format(Sys.Date(), "%Y%V"))
 
 
-weeknumber.df <- Merged_data
+GGD.numbers.weekly <-tested_daily.count
 
-colnames(weeknumber.df) = c("date", "Total_reported", "dead")
-
-
-weeknumber.df$date <- as.Date(weeknumber.df$date)
-weeknumber.df$week <- as.integer(format(weeknumber.df$date, "%Y%V"))
+GGD.numbers.weekly$week <- as.integer(format(GGD.numbers.weekly$date, "%Y%V"))
 
 
-weeknumber.df.sh <- weeknumber.df[ -c(3)]
+GGD.numbers.weekly <- GGD.numbers.weekly[ -c(2,4:11)]
 
-weeknumber.df.sh$date <- as.Date(weeknumber.df.sh$date)
+GGD.numbers.weekly$week_day <- weekdays(GGD.numbers.weekly$date)
 
-weeknumber.df.sh$week_day <- weekdays(weeknumber.df.sh$date)
+GGD.numbers.weekly$week_day <- as.factor(GGD.numbers.weekly$week_day)
 
-weeknumber.df.sh$week_day <- as.factor(weeknumber.df.sh$week_day)
+GGD.numbers.weekly <- GGD.numbers.weekly[GGD.numbers.weekly$date > "2020-06-28",]
 
-weeknumber.df.sh.2 <- weeknumber.df.sh[weeknumber.df.sh$date > "2020-06-28",]
-
-weeknumber.df.sh.2$weekbegin <- floor_date(weeknumber.df.sh.2$date, " week", week_start = 1)
+GGD.numbers.weekly$weekbegin <- floor_date(GGD.numbers.weekly$date, " week", week_start = 1)
 
 this.week <-floor_date(as.Date(today), " week", week_start = 1)
 
-weeknumber.df.sh.2_sum <- aggregate(weeknumber.df.sh.2$Total_reported,     by=list(dateInTable=weeknumber.df.sh.2$weekbegin ), FUN=sum)
-week.level = last(weeknumber.df.sh.2_sum$x)
+GGD.numbers.weekly_sum <- aggregate(GGD.numbers.weekly$positive_tests,     by=list(dateInTable=GGD.numbers.weekly$weekbegin ), FUN=sum)
+week.level.ggd = last(GGD.numbers.weekly_sum$x)
 
 
-ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+ggplot(GGD.numbers.weekly, aes(x=weekbegin, y=positive_tests, fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
 
   geom_bar(stat='identity')+
@@ -74,7 +68,7 @@ ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week
     axis.ticks.length = unit(0.5, "cm"),
     axis.line = element_line(colour = "#F5F5F5"))+
   
-  labs(title = "Nieuw gemelde besmettingen per week",
+  labs(title = "Nieuw gemelde besmettingen per week - door de GGD",
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))+
   
   theme(legend.position = c(0.05, 0.5),
@@ -87,23 +81,21 @@ ggplot(weeknumber.df.sh.2, aes(x=weekbegin, y=Total_reported, fill = factor(week
 
   geom_hline(yintercept=6125,       linetype = "dashed")+
   
-geom_segment(aes(x = as.Date("2020-09-01"), y = week.level, xend = today, yend = week.level),linetype = "dotted", color = "black")
+geom_segment(aes(x = as.Date("2020-09-01"), y = week.level.ggd, xend = today, yend = week.level.ggd),linetype = "dotted", color = "black")+
 
-ggsave("data/plots/65_Cases_by_week.png",width=16, height = 9)
-
-
+ggsave("data/plots/65_Cases_by_week_GGD.png",width=16, height = 9)
 
 
 
-weeknumber.df.sh.3 <- weeknumber.df.sh.2
 
-weeknumber.df.sh.3$week_day <- factor(weeknumber.df.sh.3$week_day, levels = c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))
+
+GGD.numbers.weekly$week_day <- factor(GGD.numbers.weekly$week_day, levels = c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))
 
 this.week <-floor_date(as.Date(today), " week", week_start = 1)
  
 
 
-ggplot(weeknumber.df.sh.3, aes(x=weekbegin, y=Total_reported,fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+   #levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
+ggplot(GGD.numbers.weekly, aes(x=weekbegin, y=positive_tests,fill = factor(week_day, levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+   #levels=c("Sunday","Saturday","Friday","Thursday", "Wednesday", "Tuesday","Monday"))))+
   
   geom_rect( aes(xmin = as.Date(this.week)-4,
                  xmax = as.Date(this.week)+4,
@@ -145,9 +137,9 @@ ggplot(weeknumber.df.sh.3, aes(x=weekbegin, y=Total_reported,fill = factor(week_
    panel.grid.minor.y = element_blank(),
    )+
   
-  labs(title = "Nieuw gemelde besmettingen per week",
+  labs(title = "Nieuw gemelde besmettingen per week - door de GGD",
    
        caption = paste("Bron: RIVM | Plot: @YorickB | ",Sys.Date()))
   
-ggsave("data/plots/65_Cases_by_week_facet-grid.png",width=16, height = 9)
+ggsave("data/plots/65_Cases_by_week_facet-grid_GGD.png",width=16, height = 9)
 

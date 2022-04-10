@@ -86,34 +86,34 @@ ggplot(data = lcps_working_4_long,
        mapping = aes(x = date, y = number, color = factor(type, levels=c("over", "needed", "boss_minus","A_IC_neg", "B_IC_covid_nl")), 
                      fill = factor(type, levels=c("over","needed", "boss_minus","A_IC_neg", "B_IC_covid_nl"))))+
   
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =1350, ymax = 1500, color = "black",fill = "black", alpha = 0.9)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =1150, ymax = 1350, color = "black",fill = "black", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =950, ymax = 1150, color = "black",fill = "red", alpha = 0.5)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =400, ymax = 950, color = "black",fill = "blue", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =200, ymax = 400, color = "black",fill = "red", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =100, ymax = 200, color = "black",fill = "yellow", alpha = 0.3)+ 
-  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-02-28"), ymin =0, ymax = 100, color = "black",fill = "blue", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-07-28"), ymin =1350, ymax = 1500, color = "black",fill = "black", alpha = 0.9)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-07-28"), ymin =1150, ymax = 1350, color = "black",fill = "black", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-07-28"), ymin =950, ymax = 1150, color = "black",fill = "red", alpha = 0.5)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-07-28"), ymin =400, ymax = 950, color = "black",fill = "blue", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-07-28"), ymin =200, ymax = 400, color = "black",fill = "red", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-07-28"), ymin =100, ymax = 200, color = "black",fill = "yellow", alpha = 0.3)+ 
+  annotate("rect", xmin = as.Date("2021-08-12"), xmax =as.Date("2022-07-28"), ymin =0, ymax = 100, color = "black",fill = "blue", alpha = 0.3)+ 
 
   
-  geom_text( aes( x=as.Date("2022-02-10"), y=1450, label=" CODE BLACK"),
+  geom_text( aes( x=as.Date("2022-07-03"), y=1450, label=" CODE BLACK"),
              color="white", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-02-10"), y=1300, label="1.350 - Hugo's\nopschalingsdoel"),
+  geom_text( aes( x=as.Date("2022-07-03"), y=1300, label="1.350 - Hugo's\nopschalingsdoel"),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-02-10"), y=1130, label="1.150 - IC max (piek) "),
+  geom_text( aes( x=as.Date("2022-07-03"), y=1130, label="1.150 - IC max (piek) "),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-02-10"), y=930, label="950 - IC max (langdurig)"),
+  geom_text( aes( x=as.Date("2022-07-03"), y=930, label="950 - IC max (langdurig)"),
              color="black", size=4 , angle=0, fontface="bold")+ 
   
-  geom_text( aes( x=as.Date("2022-02-10"), y=380, label="400 - max COVID-19 (zonder griep)"),
+  geom_text( aes( x=as.Date("2022-06-25"), y=380, label="400 - max COVID-19 (zonder griep)"),
              color="black", size=4 , angle=0, fontface="bold")+
   
-  geom_text( aes( x=as.Date("2022-02-10"), y=180, label="200 - max COVID-19 (met griep)"),
+  geom_text( aes( x=as.Date("2022-06-25"), y=180, label="200 - max COVID-19 (met griep)"),
              color="black", size=4 , angle=0, fontface="bold")+
   
-  geom_text( aes( x=as.Date("2022-02-10"), y=50, label="Gommers goed zorg doel:\n max 100 covid op IC"),
+  geom_text( aes( x=as.Date("2022-06-25"), y=50, label="Gommers goede zorg doel:\n max 100 covid op IC"),
              color="black", size=4 , angle=0, fontface="bold")+
   
   geom_bar(stat='identity')+
@@ -163,7 +163,8 @@ ggplot(data = lcps_working_4_long,
 
 ####  IC zoom tweet #####          
 
-
+my_timeline <- get_my_timeline()  
+reply_id <- my_timeline$status_id[1]
 
 
 tweet.zoom.tweet <- 
@@ -190,5 +191,5 @@ tweet.zoom.tweet <- sprintf(tweet.zoom.tweet,
 Encoding(tweet.zoom.tweet) <- "UTF-8"
 
 post_tweet(tweet.zoom.tweet,  media = c("data/plots/16b_IC_only_zoom.png" 
-), in_reply_to_status_id = get_reply_id())
+), in_reply_to_status_id = reply_id)
 

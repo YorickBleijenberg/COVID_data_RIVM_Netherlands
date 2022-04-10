@@ -6,7 +6,7 @@ last.year <- today-365
 
 year.compare.cases <- Merged_data_7MA
 
-year.compare.cases <- year.compare.cases [, -c(2:4,6,8:16)]   
+year.compare.cases <- year.compare.cases [, -c(2:3,6:11)]   
 year.compare.cases$dateInTable <- as.Date(year.compare.cases$dateInTable)
 
 

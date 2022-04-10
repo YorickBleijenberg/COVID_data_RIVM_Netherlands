@@ -27,7 +27,7 @@ RIVM_aantallen_gemeente_per_dag <- read.csv(read.aantal.gemeente.path,sep=";")
 
 
 RIVM_aantallen_gemeente_per_dag$date <- as.Date(RIVM_aantallen_gemeente_per_dag$date)
-RIVM_aantallen_gemeente_per_dag.1  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,4:9,11,12,14)]
+RIVM_aantallen_gemeente_per_dag.1  <- RIVM_aantallen_gemeente_per_dag[ -c(1,2,3,5:10,12,14)]
 
 RIVM_aantallen_gemeente_per_dag.combi <- merge(RIVM_aantallen_gemeente_per_dag.1,gemeente.inwoners)
 
@@ -62,7 +62,7 @@ combi.2 <- combi.1 %>%
 kleur.table  = data.frame()
 
 i=1
-while (i < 353)
+while (i < 346)
 {
   
   combi.iteration <- combi.2    #copy the merged municipality data
